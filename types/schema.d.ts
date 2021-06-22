@@ -742,12 +742,12 @@ export type OrderViewFragment = { __typename?: 'CustomOrder' } & Pick<
   CustomOrder,
   | 'title'
   | 'slug'
-  | 'sizeTitle'
-  | 'sizeDescription'
-  | 'sizeOptions'
   | 'colorTitle'
   | 'colorDescription'
   | 'colorOptions'
+  | 'sizeTitle'
+  | 'sizeDescription'
+  | 'sizeOptions'
 > & {
     description?: Maybe<
       { __typename?: 'CustomOrderDescription' } & Pick<
