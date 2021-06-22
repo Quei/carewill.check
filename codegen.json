@@ -1,23 +1,29 @@
 {
   "schema": {
-    "https://buybutton.store/graphql": {
+    "https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}/environments/master": {
       "headers": {
-        "Authorization": "Bearer xzy"
+        "Authorization": "Bearer ${CONTENTFUL_ACCESS_TOKEN}"
       }
     }
   },
   "documents": [
     {
-      "./framework/bigcommerce/api/**/*.ts": {
+      "./pages/**/*.{ts,tsx}": {
+        "noRequire": true
+      },
+      "./components/**/*.{ts,tsx}": {
+        "noRequire": true
+      },
+      "./lib/contentful/**/*.{ts,tsx}": {
         "noRequire": true
       }
     }
   ],
   "generates": {
-    "./framework/bigcommerce/schema.d.ts": {
+    "./types/schema.d.ts": {
       "plugins": ["typescript", "typescript-operations"]
     },
-    "./framework/bigcommerce/schema.graphql": {
+    "./types/schema.graphql": {
       "plugins": ["schema-ast"]
     }
   },

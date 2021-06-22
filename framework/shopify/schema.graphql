@@ -14,16 +14,6 @@ directive @accessRestricted(
 ) on FIELD_DEFINITION | OBJECT
 
 """
-Contextualize data.
-"""
-directive @inContext(
-  """
-  The country code for context.
-  """
-  country: CountryCode!
-) on QUERY | MUTATION
-
-"""
 A version of the API.
 """
 type ApiVersion {
@@ -5325,7 +5315,7 @@ Represents information about the metafields associated to the specified resource
 """
 interface HasMetafields {
   """
-  The metafield associated with the resource.
+  Returns a metafield found by namespace and key.
   """
   metafield(
     """
@@ -7648,7 +7638,7 @@ type Product implements Node & HasMetafields {
   ): MediaConnection!
 
   """
-  The metafield associated with the resource.
+  Returns a metafield found by namespace and key.
   """
   metafield(
     """
@@ -8150,7 +8140,7 @@ type ProductVariant implements Node & HasMetafields {
   ): Image
 
   """
-  The metafield associated with the resource.
+  Returns a metafield found by namespace and key.
   """
   metafield(
     """

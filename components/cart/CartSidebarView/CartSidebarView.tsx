@@ -1,35 +1,58 @@
-import { FC } from 'react'
-import cn from 'classnames'
-import Link from 'next/link'
-import CartItem from '../CartItem'
-import s from './CartSidebarView.module.css'
-import { Button } from '@components/ui'
-import { UserNav } from '@components/common'
-import { useUI } from '@components/ui/context'
-import { Bag, Cross, Check } from '@components/icons'
-import useCart from '@framework/cart/use-cart'
-import usePrice from '@framework/product/use-price'
+import { FC, useState, useEffect } from 'react';
+import cn from 'classnames';
+import Link from 'next/link';
+import CartItem from '../CartItem';
+import s from './CartSidebarView.module.css';
+import { Button } from '@components/ui';
+import { UserNav } from '@components/common';
+import { useUI } from '@components/ui/context';
+import { Bag, Cross, Check } from '@components/icons';
+import usePrice from '@framework/product/use-price';
+import useCart from '@framework/cart/use-cart';
+import useCustomOrderAddDiscountCode from '@framework/cart/use-custom-order-add-discount-code';
+import useCustomOrderRemoveDiscountCode from '@framework/cart/use-custom-order-remove-discount-code';
+
+type UseCartReturnType = ReturnType<typeof useCart>;
+const useCustomOrderDiscountCode = (data: UseCartReturnType['data']) => {
+  const customOrderAddDiscountCode = useCustomOrderAddDiscountCode();
+  const customOrderRemoveDiscountCode = useCustomOrderRemoveDiscountCode();
+  const customOrderLineItems = data?.lineItems.filter(
+    (item) => item.path === 'custom-order'
+  );
+  const customOrdersQuantity = customOrderLineItems?.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.quantity,
+    0
+  );
+  useEffect(() => {
+    if (customOrdersQuantity && customOrdersQuantity >= 3) {
+      customOrderAddDiscountCode({ quantity: customOrdersQuantity });
+    } else {
+      customOrderRemoveDiscountCode();
+    }
+  }, [customOrdersQuantity]);
+};
 
 const CartSidebarView: FC = () => {
-  const { closeSidebar } = useUI()
-  const { data, isLoading, isEmpty } = useCart()
+  const { closeSidebar } = useUI();
+  const { data, isLoading, isEmpty } = useCart();
 
   const { price: subTotal } = usePrice(
     data && {
       amount: Number(data.subtotalPrice),
       currencyCode: data.currency.code,
     }
-  )
+  );
   const { price: total } = usePrice(
     data && {
       amount: Number(data.totalPrice),
       currencyCode: data.currency.code,
     }
-  )
-  const handleClose = () => closeSidebar()
+  );
+  const handleClose = () => closeSidebar();
+  useCustomOrderDiscountCode(data);
 
-  const error = null
-  const success = null
+  const error = null;
+  const success = null;
 
   return (
     <div
@@ -135,7 +158,7 @@ const CartSidebarView: FC = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CartSidebarView
+export default CartSidebarView;

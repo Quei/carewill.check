@@ -1,16 +1,16 @@
-import { FC } from 'react'
-import Link from 'next/link'
-import { Logo, Container } from '@components/ui'
-import { Searchbar, UserNav } from '@components/common'
-import NavbarRoot from './NavbarRoot'
-import s from './Navbar.module.css'
+import { FC } from 'react';
+import Link from 'next/link';
+import { Container } from '@components/ui';
+import { I18nWidget, UserNav } from '@components/common';
+import NavbarRoot from './NavbarRoot';
+import s from './Navbar.module.css';
 
 interface Link {
-  href: string
-  label: string
+  href: string;
+  label: string;
 }
 interface NavbarProps {
-  links?: Link[]
+  links?: Link[];
 }
 
 const Navbar: FC<NavbarProps> = ({ links }) => (
@@ -18,37 +18,34 @@ const Navbar: FC<NavbarProps> = ({ links }) => (
     <Container>
       <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
         <div className="flex items-center flex-1">
-          <Link href="/">
-            <a className={s.logo} aria-label="Logo">
-              <Logo />
-            </a>
-          </Link>
           <nav className="hidden ml-6 space-x-4 lg:block">
-            <Link href="/search">
-              <a className={s.link}>All</a>
+            <Link href="/">
+              <a className={s.link}>top</a>
             </Link>
-            {links?.map((l) => (
-              <Link href={l.href} key={l.href}>
-                <a className={s.link}>{l.label}</a>
-              </Link>
-            ))}
+            <Link href="/store">
+              <a className={s.link}>store</a>
+            </Link>
+            <Link href="/labo">
+              <a className={s.link}>labo</a>
+            </Link>
+            <Link href="/about-us">
+              <a className={s.link}>about us</a>
+            </Link>
+            {/* <Link href="/search">
+                <a className={s.link}>All</a>
+              </Link> */}
+            {/* <Link href="/search?q=clothes">
+                <a className={s.link}>Clothes</a>
+              </Link> */}
           </nav>
         </div>
-
-        <div className="justify-center flex-1 hidden lg:flex">
-          <Searchbar />
-        </div>
-
+        <I18nWidget />
         <div className="flex justify-end flex-1 space-x-8">
           <UserNav />
         </div>
       </div>
-
-      <div className="flex pb-4 lg:px-6 lg:hidden">
-        <Searchbar id="mobile-search" />
-      </div>
     </Container>
   </NavbarRoot>
-)
+);
 
-export default Navbar
+export default Navbar;

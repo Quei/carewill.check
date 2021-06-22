@@ -1,0 +1,7 @@
+.root {
+  @apply text-center;
+}
+
+.root a {
+  @apply cursor-pointer inline-block w-logo-sm md:w-logo-md lg:w-logo-lg;
+}

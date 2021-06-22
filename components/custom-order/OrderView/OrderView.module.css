@@ -1,0 +1,19 @@
+.root {}
+
+.button {
+  text-align: center;
+  width: 100%;
+  max-width: 300px;
+
+  @screen sm {
+    min-width: 300px;
+  }
+}
+
+.section {
+
+}
+
+.section + .section {
+  margin-top: 30px;
+}

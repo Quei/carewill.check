@@ -16,6 +16,11 @@ module.exports = {
   },
   theme: {
     extend: {
+      width: {
+        'logo-sm': '200px',
+        'logo-md': '400px',
+        'logo-lg': '630px',
+      },
       maxWidth: {
         '8xl': '1920px',
       },
@@ -63,4 +68,4 @@ module.exports = {
       },
     },
   },
-}
+};

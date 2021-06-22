@@ -1,27 +1,27 @@
-import { useCallback } from 'react'
-import debounce from 'lodash.debounce'
+import { useCallback } from 'react';
+import debounce from 'lodash.debounce';
 import type {
   HookFetcherContext,
   MutationHookContext,
-} from '@commerce/utils/types'
-import { ValidationError } from '@commerce/utils/errors'
-import useUpdateItem, { UseUpdateItem } from '@commerce/cart/use-update-item'
+} from '@commerce/utils/types';
+import { ValidationError } from '@commerce/utils/errors';
+import useUpdateItem, { UseUpdateItem } from '@commerce/cart/use-update-item';
 
-import useCart from './use-cart'
-import { handler as removeItemHandler } from './use-remove-item'
-import type { UpdateItemHook, LineItem } from '../types/cart'
+import useCart from './use-cart';
+import { handler as removeItemHandler } from './use-remove-item';
+import type { UpdateItemHook, LineItem } from '../types/cart';
 import {
   getCheckoutId,
   checkoutLineItemUpdateMutation,
   checkoutToCart,
-} from '../utils'
-import { Mutation, MutationCheckoutLineItemsUpdateArgs } from '../schema'
+} from '../utils';
+import { Mutation, MutationCheckoutLineItemsUpdateArgs } from '../schema';
 
 export type UpdateItemActionInput<T = any> = T extends LineItem
   ? Partial<UpdateItemHook['actionInput']>
-  : UpdateItemHook['actionInput']
+  : UpdateItemHook['actionInput'];
 
-export default useUpdateItem as UseUpdateItem<typeof handler>
+export default useUpdateItem as UseUpdateItem<typeof handler>;
 
 export const handler = {
   fetchOptions: {
@@ -39,12 +39,12 @@ export const handler = {
           options: removeItemHandler.fetchOptions,
           input: { itemId },
           fetch,
-        })
+        });
       }
     } else if (item.quantity) {
       throw new ValidationError({
         message: 'The item quantity has to be a valid integer',
-      })
+      });
     }
     const { checkoutLineItemsUpdate } = await fetch<
       Mutation,
@@ -60,30 +60,30 @@ export const handler = {
           },
         ],
       },
-    })
+    });
 
-    return checkoutToCart(checkoutLineItemsUpdate)
+    return checkoutToCart(checkoutLineItemsUpdate);
   },
   useHook: ({ fetch }: MutationHookContext<UpdateItemHook>) => <
     T extends LineItem | undefined = undefined
   >(
     ctx: {
-      item?: T
-      wait?: number
+      item?: T;
+      wait?: number;
     } = {}
   ) => {
-    const { item } = ctx
-    const { mutate } = useCart() as any
+    const { item } = ctx;
+    const { mutate } = useCart() as any;
 
     return useCallback(
       debounce(async (input: UpdateItemActionInput<T>) => {
-        const itemId = input.id ?? item?.id
-        const productId = input.productId ?? item?.productId
-        const variantId = input.productId ?? item?.variantId
+        const itemId = input.id ?? item?.id;
+        const productId = input.productId ?? item?.productId;
+        const variantId = input.productId ?? item?.variantId;
         if (!itemId || !productId || !variantId) {
           throw new ValidationError({
             message: 'Invalid input used for this operation',
-          })
+          });
         }
 
         const data = await fetch({
@@ -95,11 +95,11 @@ export const handler = {
             },
             itemId,
           },
-        })
-        await mutate(data, false)
-        return data
+        });
+        await mutate(data, false);
+        return data;
       }, ctx.wait ?? 500),
       [fetch, mutate]
-    )
+    );
   },
-}
+};

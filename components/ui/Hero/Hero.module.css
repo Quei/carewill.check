@@ -1,9 +1,3 @@
 .root {
-  @apply mx-auto grid grid-cols-1 py-32 gap-4;
-}
-
-@screen md {
-  .root {
-    @apply grid-cols-2;
-  }
+  @apply mx-auto grid grid-cols-1 gap-4;
 }

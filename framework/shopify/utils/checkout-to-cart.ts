@@ -1,5 +1,5 @@
-import type { Cart } from '../types/cart'
-import { CommerceError } from '@commerce/utils/errors'
+import type { Cart } from '../types/cart';
+import { CommerceError } from '@commerce/utils/errors';
 
 import {
   CheckoutLineItemsAddPayload,
@@ -9,15 +9,17 @@ import {
   CheckoutUserError,
   Checkout,
   Maybe,
-} from '../schema'
+  CheckoutDiscountCodeApplyV2Payload,
+  CheckoutDiscountCodeRemovePayload,
+} from '../schema';
 
-import { normalizeCart } from './normalize'
-import throwUserErrors from './throw-user-errors'
+import { normalizeCart } from './normalize';
+import throwUserErrors from './throw-user-errors';
 
 export type CheckoutQuery = {
-  checkout: Checkout
-  checkoutUserErrors?: Array<CheckoutUserError>
-}
+  checkout: Checkout;
+  checkoutUserErrors?: Array<CheckoutUserError>;
+};
 
 export type CheckoutPayload =
   | CheckoutLineItemsAddPayload
@@ -25,18 +27,20 @@ export type CheckoutPayload =
   | CheckoutLineItemsRemovePayload
   | CheckoutCreatePayload
   | CheckoutQuery
+  | CheckoutDiscountCodeApplyV2Payload
+  | CheckoutDiscountCodeRemovePayload;
 
 const checkoutToCart = (checkoutPayload?: Maybe<CheckoutPayload>): Cart => {
-  const checkout = checkoutPayload?.checkout
-  throwUserErrors(checkoutPayload?.checkoutUserErrors)
+  const checkout = checkoutPayload?.checkout;
+  throwUserErrors(checkoutPayload?.checkoutUserErrors);
 
   if (!checkout) {
     throw new CommerceError({
       message: 'Missing checkout object from response',
-    })
+    });
   }
 
-  return normalizeCart(checkout)
-}
+  return normalizeCart(checkout);
+};
 
-export default checkoutToCart
+export default checkoutToCart;

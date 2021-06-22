@@ -1,89 +1,93 @@
-import { ChangeEvent, useEffect, useState } from 'react'
-import cn from 'classnames'
-import Image from 'next/image'
-import Link from 'next/link'
-import s from './CartItem.module.css'
-import { Trash, Plus, Minus } from '@components/icons'
-import { useUI } from '@components/ui/context'
-import type { LineItem } from '@commerce/types/cart'
-import usePrice from '@framework/product/use-price'
-import useUpdateItem from '@framework/cart/use-update-item'
-import useRemoveItem from '@framework/cart/use-remove-item'
+import { ChangeEvent, useEffect, useState } from 'react';
+import cn from 'classnames';
+import Image from 'next/image';
+import Link from 'next/link';
+import s from './CartItem.module.css';
+import { Trash, Plus, Minus } from '@components/icons';
+import { useUI } from '@components/ui/context';
+import type { LineItem } from '@commerce/types/cart';
+import usePrice from '@framework/product/use-price';
+import useUpdateItem from '@framework/cart/use-update-item';
+import useRemoveItem from '@framework/cart/use-remove-item';
 
 type ItemOption = {
-  name: string
-  nameId: number
-  value: string
-  valueId: number
-}
+  name: string;
+  nameId: number;
+  value: string;
+  valueId: number;
+};
 
 const CartItem = ({
   item,
   currencyCode,
   ...rest
 }: {
-  item: LineItem
-  currencyCode: string
+  item: LineItem;
+  currencyCode: string;
 }) => {
-  const { closeSidebarIfPresent } = useUI()
+  const { closeSidebarIfPresent } = useUI();
 
   const { price } = usePrice({
     amount: item.variant.price * item.quantity,
     baseAmount: item.variant.listPrice * item.quantity,
     currencyCode,
-  })
+  });
 
-  const updateItem = useUpdateItem({ item })
-  const removeItem = useRemoveItem()
-  const [quantity, setQuantity] = useState<number | ''>(item.quantity)
-  const [removing, setRemoving] = useState(false)
+  const updateItem = useUpdateItem({ item });
+  const removeItem = useRemoveItem();
+  const [quantity, setQuantity] = useState<number | ''>(item.quantity);
+  const [removing, setRemoving] = useState(false);
 
   const updateQuantity = async (val: number) => {
-    await updateItem({ quantity: val })
-  }
+    await updateItem({ quantity: val });
+  };
 
-  const handleQuantity = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = !e.target.value ? '' : Number(e.target.value)
+  const handleInputQuantity = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = !e.target.value ? '' : Number(e.target.value);
 
     if (!val || (Number.isInteger(val) && val >= 0)) {
-      setQuantity(val)
+      setQuantity(val);
     }
-  }
-  const handleBlur = () => {
-    const val = Number(quantity)
+  };
+
+  const handleInputBlur = () => {
+    const val = Number(quantity);
 
     if (val !== item.quantity) {
-      updateQuantity(val)
+      updateQuantity(val);
     }
-  }
+  };
+
   const increaseQuantity = (n = 1) => {
-    const val = Number(quantity) + n
+    const val = Number(quantity) + n;
 
     if (Number.isInteger(val) && val >= 0) {
-      setQuantity(val)
-      updateQuantity(val)
+      setQuantity(val);
+      updateQuantity(val);
     }
-  }
+  };
+
   const handleRemove = async () => {
-    setRemoving(true)
+    setRemoving(true);
 
     try {
       // If this action succeeds then there's no need to do `setRemoving(true)`
       // because the component will be removed from the view
-      await removeItem(item)
+      await removeItem(item);
     } catch (error) {
-      setRemoving(false)
+      setRemoving(false);
     }
-  }
-  // TODO: Add a type for this
-  const options = (item as any).options
+  };
 
   useEffect(() => {
     // Reset the quantity state if the item quantity changes
     if (item.quantity !== Number(quantity)) {
-      setQuantity(item.quantity)
+      setQuantity(item.quantity);
     }
-  }, [item.quantity])
+  }, [item.quantity]);
+
+  // TODO: Add a type for this
+  const options = (item as any).options;
 
   return (
     <li
@@ -94,15 +98,17 @@ const CartItem = ({
     >
       <div className="w-16 h-16 bg-violet relative overflow-hidden cursor-pointer">
         <Link href={`/product/${item.path}`}>
-          <Image
-            onClick={() => closeSidebarIfPresent()}
-            className={s.productImage}
-            width={150}
-            height={150}
-            src={item.variant.image!.url}
-            alt={item.variant.image!.altText}
-            unoptimized
-          />
+          <div>
+            <Image
+              onClick={() => closeSidebarIfPresent()}
+              className={s.productImage}
+              width={150}
+              height={150}
+              src={item.variant.image!.url}
+              alt={item.variant.image!.altText}
+              unoptimized
+            />
+          </div>
         </Link>
       </div>
       <div className="flex-1 flex flex-col text-base">
@@ -138,8 +144,8 @@ const CartItem = ({
               min={0}
               className={s.quantity}
               value={quantity}
-              onChange={handleQuantity}
-              onBlur={handleBlur}
+              onChange={handleInputQuantity}
+              onBlur={handleInputBlur}
             />
           </label>
           <button type="button" onClick={() => increaseQuantity(1)}>
@@ -157,7 +163,7 @@ const CartItem = ({
         </button>
       </div>
     </li>
-  )
-}
+  );
+};
 
-export default CartItem
+export default CartItem;
