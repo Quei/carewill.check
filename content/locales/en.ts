@@ -2,7 +2,7 @@ export const en: Record<string, any> = {
   product: 'product',
   customOrder: 'custom order',
   collaboration: 'collaboration',
-  fullOrder: 'full order',
+  hauteCouture: 'haute couture',
   formLink: 'enter form',
   relatedPosts: 'related posts',
   addToCart: 'add to cart',

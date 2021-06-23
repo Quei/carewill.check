@@ -1,7 +1,8 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { nonNullableFilter } from '@lib/non-nullable-filter';
 import { Checkbox } from '@components/ui';
+import type { FC, ChangeEventHandler, ChangeEvent } from 'react';
 import type { Maybe, CheckboxesWithImagesImageFragment } from 'types/schema';
 import type { UseFormRegister } from 'react-hook-form';
 
@@ -10,6 +11,7 @@ type Props = {
   options: Maybe<string>[];
   optionName: string;
   register?: UseFormRegister<any>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 };
 
 export const checkboxesWithImagesImageFragment = /* GraphQL */ `
@@ -27,20 +29,31 @@ const CheckboxesWithImages: FC<Props> = ({
   options,
   optionName,
   register,
+  onChange,
 }) => {
+  const [current, setCurrent] = useState(0);
   const nonNullableImages = useMemo(() => images.filter(nonNullableFilter), [
     images,
   ]);
   const nonNullableOptions = useMemo(() => options.filter(nonNullableFilter), [
     options,
   ]);
+
+  const handleClick = useCallback(
+    (event: ChangeEvent<HTMLInputElement>, index: number) => {
+      console.log('change');
+      setCurrent(index);
+      onChange && onChange(event);
+    },
+    [onChange]
+  );
+
   if (nonNullableImages.length !== nonNullableOptions.length) {
     console.error('images length and options length are not equal');
     return null;
   }
-  const ids = nonNullableImages.map((image) => image?.sys.id);
 
-  const [current, setCurrent] = useState(0);
+  const ids = nonNullableImages.map((image) => image?.sys.id);
 
   return (
     <div>
@@ -69,7 +82,7 @@ const CheckboxesWithImages: FC<Props> = ({
             label={option}
             name={optionName}
             register={register}
-            onChange={() => setCurrent(index)}
+            onChange={(event) => handleClick(event, index)}
           />
         ))}
       </div>

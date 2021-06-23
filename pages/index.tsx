@@ -76,9 +76,9 @@ export default function Home({
                 <h3>{f('collaboration')}</h3>
               </a>
             </Link>
-            <Link href="/full-order">
+            <Link href="/haute-couture">
               <a>
-                <h3>{f('fullOrder')}</h3>
+                <h3>{f('hauteCouture')}</h3>
               </a>
             </Link>
             {/* {products.slice(0, 3).map((product, i) => (

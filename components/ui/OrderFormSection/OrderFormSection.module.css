@@ -1,0 +1,23 @@
+.root {
+
+}
+
+.root + .root {
+  margin-top: 100px;
+}
+
+.header {
+
+}
+
+.title {
+  @apply text-2xl;
+}
+
+.description {
+
+}
+
+.content {
+
+}

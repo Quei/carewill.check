@@ -1,1 +1,1 @@
-export { default, orderViewFragment } from './OrderView';
+export { default, customOrderOrderViewFragment } from './OrderView';

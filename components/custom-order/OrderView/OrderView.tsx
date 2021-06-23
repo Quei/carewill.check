@@ -7,32 +7,54 @@ import usePrice from '@framework/product/use-price';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { useProductChoices } from '@lib/hooks/useProductChoices';
 import { useAddToCart } from '@lib/hooks/useAddToCart';
-import { renderRichText } from '@lib/contentful/utils/rich-text';
-import { Button, Checkbox } from '@components/ui';
+import {
+  renderRichText,
+  renderRichTextReact,
+} from '@lib/contentful/utils/rich-text';
+import { Button, Checkbox, OrderFormSection } from '@components/ui';
 import {
   CheckboxesWithImages,
   checkboxesWithImagesImageFragment,
 } from '@components/common';
 import type { Product } from '@commerce/types/product';
 import type { CustomOrderOptions } from 'types/custom-order-options';
-import type { OrderViewFragment } from 'types/schema';
+import type { CustomOrderOrderViewFragment } from 'types/schema';
 
-type Props = OrderViewFragment & {
+type Props = CustomOrderOrderViewFragment & {
   className?: string;
   product: Product;
 };
 
-export const orderViewFragment = /* GraphQL */ `
-  fragment orderView on CustomOrder {
+export const customOrderOrderViewFragment = /* GraphQL */ `
+  fragment customOrderOrderView on CustomOrder {
     title
     description {
       json
     }
     slug
+    customizedPartTitle
+    customizedPartDescription
+    customizedPartPickupImagesCollection {
+      items {
+        sys {
+          id
+        }
+      }
+    }
+    customizedPartImagesCollection {
+      items {
+        ...checkboxesWithImagesImage
+      }
+    }
+    customizedPartOptions
+    customizedPartNotes {
+      json
+    }
+    specTitle
     colorTitle
     colorDescription
     colorOptions
-    colorImagesCollection {
+    colorPickupImagesCollection {
       items {
         ...checkboxesWithImagesImage
       }
@@ -44,22 +66,22 @@ export const orderViewFragment = /* GraphQL */ `
   ${checkboxesWithImagesImageFragment}
 `;
 
-const dummy = {
-  wearFromBelowTitle: '下から着る',
-  wearFromBelowDescription:
-    '下から着ることを予定されますか?<br>(※)傷病によっては下から着ることが楽な場合があります。下からの着方は動画 を参照してください。',
-  wearFromBelowMovie: 'https://www.youtube.com/watch?v=trD0hUqyDM8',
-};
-
 const OrderView: FC<Props> = ({
   product,
   title,
   description,
   slug,
+  customizedPartTitle,
+  customizedPartDescription,
+  customizedPartPickupImagesCollection,
+  customizedPartImagesCollection,
+  customizedPartOptions,
+  customizedPartNotes,
+  specTitle,
   colorTitle,
   colorDescription,
   colorOptions,
-  colorImagesCollection,
+  colorPickupImagesCollection,
   sizeTitle,
   sizeDescription,
   sizeOptions,
@@ -86,8 +108,6 @@ const OrderView: FC<Props> = ({
   const titleText = title ?? '';
   const descriptionText = renderRichText(description);
   const f = useIntlMessage();
-
-  const { wearFromBelowTitle, wearFromBelowDescription } = dummy;
 
   return (
     <div className={cn(s.root, 'fit')}>
@@ -118,21 +138,49 @@ const OrderView: FC<Props> = ({
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <section className={cn(s.section)}>
-            {colorTitle && <h2>{colorTitle}</h2>}
-            {colorDescription && <p>{colorDescription}</p>}
-            {colorImagesCollection?.items && colorOptions && (
+          <OrderFormSection
+            title={customizedPartTitle ?? undefined}
+            description={customizedPartDescription ?? undefined}
+          >
+            {customizedPartImagesCollection?.items && customizedPartOptions && (
               <CheckboxesWithImages
-                images={colorImagesCollection.items}
-                options={colorOptions}
-                optionName={'color'}
+                images={customizedPartImagesCollection.items}
+                options={customizedPartOptions}
+                optionName={'customized-part'}
                 register={register}
               />
             )}
-          </section>
-          <section className={cn(s.section)}>
-            {sizeTitle && <h2>{sizeTitle}</h2>}
-            {sizeDescription && <p>{sizeDescription}</p>}
+            {customizedPartNotes && (
+              <p>{renderRichTextReact(customizedPartNotes)}</p>
+            )}
+          </OrderFormSection>
+          <OrderFormSection title={specTitle ?? undefined}>
+            test
+          </OrderFormSection>
+          <OrderFormSection
+            title={colorTitle ?? undefined}
+            description={colorDescription ?? undefined}
+          >
+            {colorOptions &&
+              colorOptions.map((option, index) => (
+                <React.Fragment key={`color-option-${index}`}>
+                  {option && (
+                    <Checkbox
+                      type="radio"
+                      id={`color-option-${index}`}
+                      value={option}
+                      label={option}
+                      name={'color'}
+                      register={register}
+                    />
+                  )}
+                </React.Fragment>
+              ))}
+          </OrderFormSection>
+          <OrderFormSection
+            title={sizeTitle ?? undefined}
+            description={sizeDescription ?? undefined}
+          >
             {sizeOptions &&
               sizeOptions.map((option, index) => (
                 <React.Fragment key={`size-option-${index}`}>
@@ -148,28 +196,10 @@ const OrderView: FC<Props> = ({
                   )}
                 </React.Fragment>
               ))}
-          </section>
-          <section className={cn(s.section)}>
-            {wearFromBelowTitle && <h2>{wearFromBelowTitle}</h2>}
-            {wearFromBelowDescription && <p>{wearFromBelowDescription}</p>}
-            <p>動画ここに入る</p>
-            {/* <Checkbox
-              type="radio"
-              id={`wear-from-below-option-0`}
-              value={option}
-              label={option}
-              name={'size'}
-              register={register}
-            />
-            <Checkbox
-              type="radio"
-              id={`wear-from-below-option-1`}
-              value={option}
-              label={option}
-              name={'size'}
-              register={register}
-            /> */}
-          </section>
+          </OrderFormSection>
+          <OrderFormSection title={'枚数'}>test</OrderFormSection>
+          <OrderFormSection title={'ギフト包装'}>test</OrderFormSection>
+          <OrderFormSection title={'メッセージ'}>test</OrderFormSection>
         </div>
         <div>
           <Button

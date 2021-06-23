@@ -2,31 +2,31 @@ import { useRouter } from 'next/router';
 import { fetcher } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
-  CustomOrderView,
-  customOrderViewFragment,
-} from '@components/custom-order';
+  HauteCoutureView,
+  hauteCoutureViewFragment,
+} from '@components/haute-couture';
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import type { GetCustomOrderQuery } from 'types/schema';
+import type { GetHauteCoutureQuery } from 'types/schema';
 
-const getCustomOrderQuery = /* GraphQL */ `
-  query GetCustomOrder(
+const getHauteCoutureQuery = /* GraphQL */ `
+  query GetHauteCouture(
     $locale: String!
     $slug: String!
     $preview: Boolean = false
   ) {
-    customOrderCollection(
+    hauteCoutureCollection(
       locale: $locale
       where: { slug: $slug }
       preview: $preview
       limit: 1
     ) {
       items {
-        ...customOrderView
+        ...hauteCoutureView
       }
     }
   }
 
-  ${customOrderViewFragment}
+  ${hauteCoutureViewFragment}
 `;
 
 export async function getStaticProps({
@@ -35,9 +35,9 @@ export async function getStaticProps({
   locales,
   preview,
 }: GetStaticPropsContext<{ slug: string }>) {
-  const SLUG = 'custom-order';
-  const data = await fetcher<GetCustomOrderQuery>({
-    query: getCustomOrderQuery,
+  const SLUG = 'haute-couture';
+  const data = await fetcher<GetHauteCoutureQuery>({
+    query: getHauteCoutureQuery,
     variables: {
       locale,
       slug: SLUG,
@@ -45,7 +45,7 @@ export async function getStaticProps({
     },
   });
 
-  const entry = data?.customOrderCollection?.items?.[0];
+  const entry = data?.hauteCoutureCollection?.items?.[0];
 
   if (!entry) {
     throw new Error(`Contentful Data with slug '${params!.slug}' not found`);
@@ -54,11 +54,8 @@ export async function getStaticProps({
   return {
     props: {
       entry,
-      // NOTE:
-      // pagesは_app→Layout経由で、footerにページリンクとして渡される。
-      // pages,
     },
-    revalidate: 200,
+    revalidate: 60 * 60,
   };
 }
 
@@ -74,7 +71,7 @@ export default function CustomOrder({
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <CustomOrderView {...entry} />
+    <HauteCoutureView {...entry} />
   );
 }
 

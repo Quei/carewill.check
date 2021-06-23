@@ -8,6 +8,15 @@ type Query {
     where: AssetFilter
     order: [AssetOrder]
   ): AssetCollection
+  hauteCouture(id: String!, preview: Boolean, locale: String): HauteCouture
+  hauteCoutureCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: HauteCoutureFilter
+    order: [HauteCoutureOrder]
+  ): HauteCoutureCollection
   customOrder(id: String!, preview: Boolean, locale: String): CustomOrder
   customOrderCollection(
     skip: Int = 0
@@ -310,18 +319,35 @@ type CustomOrder implements Entry {
   slug(locale: String): String
   title(locale: String): String
   description(locale: String): CustomOrderDescription
-  sizeTitle(locale: String): String
-  sizeDescription(locale: String): String
-  sizeOptions(locale: String): [String]
+  customizedPartTitle(locale: String): String
+  customizedPartDescription(locale: String): String
+  customizedPartPickupImagesCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): AssetCollection
+  customizedPartImagesCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): AssetCollection
+  customizedPartOptions(locale: String): [String]
+  customizedPartNotes(locale: String): CustomOrderCustomizedPartNotes
+  specTitle(locale: String): String
   colorTitle(locale: String): String
   colorDescription(locale: String): String
-  colorImagesCollection(
+  colorPickupImagesCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
   ): AssetCollection
   colorOptions(locale: String): [String]
+  sizeTitle(locale: String): String
+  sizeDescription(locale: String): String
+  sizeOptions(locale: String): [String]
 }
 
 type CustomOrderLinkingCollections {
@@ -364,6 +390,27 @@ type AssetCollection {
   skip: Int!
   limit: Int!
   items: [Asset]!
+}
+
+type CustomOrderCustomizedPartNotes {
+  json: JSON!
+  links: CustomOrderCustomizedPartNotesLinks!
+}
+
+type CustomOrderCustomizedPartNotesLinks {
+  entries: CustomOrderCustomizedPartNotesEntries!
+  assets: CustomOrderCustomizedPartNotesAssets!
+}
+
+type CustomOrderCustomizedPartNotesEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type CustomOrderCustomizedPartNotesAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
 }
 
 input AssetFilter {
@@ -506,6 +553,94 @@ enum AssetOrder {
   sys_publishedVersion_DESC
 }
 
+"""
+[See type definition](https://app.contentful.com/spaces/84ae8r15w814/content_types/hauteCouture)
+"""
+type HauteCouture implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): HauteCoutureLinkingCollections
+  slug(locale: String): String
+  title(locale: String): String
+  description(locale: String): HauteCoutureDescription
+}
+
+type HauteCoutureLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type HauteCoutureDescription {
+  json: JSON!
+  links: HauteCoutureDescriptionLinks!
+}
+
+type HauteCoutureDescriptionLinks {
+  entries: HauteCoutureDescriptionEntries!
+  assets: HauteCoutureDescriptionAssets!
+}
+
+type HauteCoutureDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HauteCoutureDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HauteCoutureCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [HauteCouture]!
+}
+
+input HauteCoutureFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  description_exists: Boolean
+  description_contains: String
+  description_not_contains: String
+  OR: [HauteCoutureFilter]
+  AND: [HauteCoutureFilter]
+}
+
+enum HauteCoutureOrder {
+  slug_ASC
+  slug_DESC
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
 input CustomOrderFilter {
   sys: SysFilter
   contentfulMetadata: ContentfulMetadataFilter
@@ -526,6 +661,55 @@ input CustomOrderFilter {
   description_exists: Boolean
   description_contains: String
   description_not_contains: String
+  customizedPartTitle_exists: Boolean
+  customizedPartTitle: String
+  customizedPartTitle_not: String
+  customizedPartTitle_in: [String]
+  customizedPartTitle_not_in: [String]
+  customizedPartTitle_contains: String
+  customizedPartTitle_not_contains: String
+  customizedPartDescription_exists: Boolean
+  customizedPartDescription: String
+  customizedPartDescription_not: String
+  customizedPartDescription_in: [String]
+  customizedPartDescription_not_in: [String]
+  customizedPartDescription_contains: String
+  customizedPartDescription_not_contains: String
+  customizedPartPickupImagesCollection_exists: Boolean
+  customizedPartImagesCollection_exists: Boolean
+  customizedPartOptions_exists: Boolean
+  customizedPartOptions_contains_all: [String]
+  customizedPartOptions_contains_some: [String]
+  customizedPartOptions_contains_none: [String]
+  customizedPartNotes_exists: Boolean
+  customizedPartNotes_contains: String
+  customizedPartNotes_not_contains: String
+  specTitle_exists: Boolean
+  specTitle: String
+  specTitle_not: String
+  specTitle_in: [String]
+  specTitle_not_in: [String]
+  specTitle_contains: String
+  specTitle_not_contains: String
+  colorTitle_exists: Boolean
+  colorTitle: String
+  colorTitle_not: String
+  colorTitle_in: [String]
+  colorTitle_not_in: [String]
+  colorTitle_contains: String
+  colorTitle_not_contains: String
+  colorDescription_exists: Boolean
+  colorDescription: String
+  colorDescription_not: String
+  colorDescription_in: [String]
+  colorDescription_not_in: [String]
+  colorDescription_contains: String
+  colorDescription_not_contains: String
+  colorPickupImagesCollection_exists: Boolean
+  colorOptions_exists: Boolean
+  colorOptions_contains_all: [String]
+  colorOptions_contains_some: [String]
+  colorOptions_contains_none: [String]
   sizeTitle_exists: Boolean
   sizeTitle: String
   sizeTitle_not: String
@@ -544,25 +728,6 @@ input CustomOrderFilter {
   sizeOptions_contains_all: [String]
   sizeOptions_contains_some: [String]
   sizeOptions_contains_none: [String]
-  colorTitle_exists: Boolean
-  colorTitle: String
-  colorTitle_not: String
-  colorTitle_in: [String]
-  colorTitle_not_in: [String]
-  colorTitle_contains: String
-  colorTitle_not_contains: String
-  colorDescription_exists: Boolean
-  colorDescription: String
-  colorDescription_not: String
-  colorDescription_in: [String]
-  colorDescription_not_in: [String]
-  colorDescription_contains: String
-  colorDescription_not_contains: String
-  colorImagesCollection_exists: Boolean
-  colorOptions_exists: Boolean
-  colorOptions_contains_all: [String]
-  colorOptions_contains_some: [String]
-  colorOptions_contains_none: [String]
   OR: [CustomOrderFilter]
   AND: [CustomOrderFilter]
 }
@@ -572,10 +737,14 @@ enum CustomOrderOrder {
   slug_DESC
   title_ASC
   title_DESC
-  sizeTitle_ASC
-  sizeTitle_DESC
+  customizedPartTitle_ASC
+  customizedPartTitle_DESC
+  specTitle_ASC
+  specTitle_DESC
   colorTitle_ASC
   colorTitle_DESC
+  sizeTitle_ASC
+  sizeTitle_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC

@@ -9,11 +9,3 @@
     min-width: 300px;
   }
 }
-
-.section {
-
-}
-
-.section + .section {
-  margin-top: 30px;
-}

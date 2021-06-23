@@ -12,7 +12,7 @@ type Props = InputHTMLType & {
   label: string;
   name: string;
   register?: UseFormRegister<any>;
-  onChange?: () => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 };
 
 const Checkbox: FC<Props> = ({
