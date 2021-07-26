@@ -1,5 +1,5 @@
 .root {
-  @apply appearance-none py-2 w-full pr-2 focus:outline-none;
+  @apply appearance-none rounded-none py-2 w-full pr-2 focus:outline-none;
   border-bottom: 1px solid theme('colors.green');
   &::placeholder {
     @apply text-green opacity-50;
