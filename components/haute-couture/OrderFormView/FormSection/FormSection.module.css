@@ -61,7 +61,7 @@
 }
 
 .closeButtonWrapper {
-  @apply text-center;
+  @apply text-center md:hidden;
   padding-top: 30px;
   padding-bottom: 30px;
 }
