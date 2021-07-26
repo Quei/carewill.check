@@ -1,28 +1,28 @@
-import cn from 'classnames'
-import s from './Input.module.css'
-import React, { InputHTMLAttributes } from 'react'
+import { useCallback } from 'react';
+import cn from 'classnames';
+import s from './Input.module.css';
+import type { VFC, InputHTMLAttributes, ChangeEventHandler } from 'react';
 
-export interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  className?: string
-  onChange?: (...args: any[]) => any
-}
+export type Props = InputHTMLAttributes<HTMLInputElement> & {
+  className?: string;
+  onChange?: (...args: any[]) => any;
+};
 
-const Input: React.FC<Props> = (props) => {
-  const { className, children, onChange, ...rest } = props
-
-  const rootClassName = cn(s.root, {}, className)
-
-  const handleOnChange = (e: any) => {
-    if (onChange) {
-      onChange(e.target.value)
-    }
-    return null
-  }
+const Input: VFC<Props> = ({ className, onChange, ...rest }) => {
+  const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (e) => {
+      if (onChange) {
+        onChange(e.target.value);
+      }
+      return null;
+    },
+    [onChange]
+  );
 
   return (
     <label>
       <input
-        className={rootClassName}
+        className={cn(s.root, className)}
         onChange={handleOnChange}
         autoComplete="off"
         autoCorrect="off"
@@ -31,7 +31,7 @@ const Input: React.FC<Props> = (props) => {
         {...rest}
       />
     </label>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

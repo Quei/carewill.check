@@ -1,21 +1,20 @@
-import type { GetStaticPropsContext } from 'next'
-import commerce from '@lib/api/commerce'
-import { Bag } from '@components/icons'
-import { Layout } from '@components/common'
-import { Container, Text } from '@components/ui'
+import type { GetStaticPropsContext } from 'next';
+import commerce from '@lib/api/commerce';
+import { Bag } from '@components/icons';
+import { Layout } from '@components/common';
+import { Container, Text } from '@components/ui';
 
 export async function getStaticProps({
   preview,
   locale,
   locales,
 }: GetStaticPropsContext) {
-  const config = { locale, locales }
-  const { pages } = await commerce.getAllPages({ config, preview })
-  const { categories } = await commerce.getSiteInfo({ config, preview })
+  const config = { locale, locales };
+  const { pages } = await commerce.getAllPages({ config, preview });
 
   return {
-    props: { pages, categories },
-  }
+    props: { pages },
+  };
 }
 
 export default function Orders() {
@@ -34,7 +33,7 @@ export default function Orders() {
         </p>
       </div>
     </Container>
-  )
+  );
 }
 
-Orders.Layout = Layout
+Orders.Layout = Layout;

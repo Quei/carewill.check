@@ -1,0 +1,16 @@
+.root {
+  padding-top: 74px;
+  padding-bottom: 45px;
+  @screen md {
+    padding-top: 130px;
+    padding-bottom: 90px;
+  }
+}
+
+.imageWrapper {
+  @apply relative;
+
+  & + .description {
+    margin-top: 15px;
+  }
+}

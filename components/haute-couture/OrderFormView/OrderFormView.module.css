@@ -1,0 +1,49 @@
+.description {
+  padding-top: 100px;
+  padding-bottom: 2em;
+  & b {
+    @apply text-red;
+  }
+}
+
+.form {
+  counter-reset: sectionCount;
+  & > * + * {
+    border-top: theme('borderWidth.DEFAULT') solid theme('colors.green');
+  }
+}
+
+.inputDescription {
+  & + * {
+    margin-top: 20px;
+  }
+}
+
+.checkboxes {
+  &.gridLayout {
+    @apply grid gap-x-2 gap-y-2 md:gap-x-0 md:gap-y-7;
+    &.column3 {
+      @apply grid-cols-2 md:grid-cols-3;
+      & img {
+        width: auto;
+        height: 69px;
+        @screen md {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+    &.column4 {
+      @apply grid-cols-3 md:grid-cols-4;
+    }
+  }
+}
+
+.submitBlock {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+.submit {
+  @apply inline-block text-2xl;
+}

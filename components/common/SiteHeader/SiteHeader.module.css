@@ -1,0 +1,51 @@
+.innerRoot {
+  @apply px-site-vertical md:px-site-vertical-md;
+  @screen md {
+    @apply flex;
+    padding-top: 13px;
+    padding-bottom: 15px;
+  }
+}
+
+.stickySentinel {
+  @apply md:absolute md:left-0 md:right-0 md:-top-2 md:h-1;
+}
+
+.smallLogo {
+  @apply flex justify-center relative leading-none;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  & a {
+    @apply block;
+    width: 150px;
+  }
+  @screen md {
+    @apply block w-0 overflow-hidden flex-none md:py-0;
+    &.shownSmallLogo {
+      @apply duration-100;
+      width: 25%;
+    }
+    & a {
+      @apply absolute;
+      width: 163px;
+    }
+  }
+}
+
+.nav {
+  @apply w-full;
+  &.shownSmallLogo {
+  }
+
+  /* NOTE:
+  とりあえず消す
+   */
+  display: none;
+  @screen md {
+    display: block;
+  }
+}
+
+.menuList {
+  @apply flex justify-between;
+}

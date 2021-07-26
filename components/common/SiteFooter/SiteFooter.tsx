@@ -1,44 +1,53 @@
-import { FC } from 'react';
 import cn from 'classnames';
 import s from './SiteFooter.module.css';
 import { Container } from '@components/ui';
+import { MenuListItem } from './MenuListItem';
+import { Sns } from './Sns';
+import type { FC } from 'react';
 import type { Page } from '@commerce/types/page';
+import type { AllNavigations } from 'types/all-navigations';
 
-interface Props {
+type Props = {
   className?: string;
   children?: any;
   pages?: Page[];
-}
-
-const LINKS = [
-  {
-    name: 'twitter',
-    label: 'twitter',
-    url: 'https://google.com',
-  },
-  {
-    name: 'youtube',
-    label: 'youtube',
-    url: 'https://google.com',
-  },
-  {
-    name: 'other',
-    label: 'other',
-    url: 'https://google.com',
-  },
-  {
-    name: 'note',
-    label: 'note',
-    url: 'https://google.com',
-  },
-];
+  allNavigations?: AllNavigations;
+};
 
 const LEGAL_PAGES = ['terms-of-use', 'shipping-returns', 'privacy-policy'];
 
-const SiteFooter: FC<Props> = ({ className, pages }) => {
+const SiteFooter: FC<Props> = ({ className, pages, allNavigations }) => {
   return (
-    <footer className={cn(className, s.root)}>
+    <footer className={cn(s.root, className)}>
       <Container>
+        <div className="bg-red">breadcrumbs</div>
+        {allNavigations && (
+          <nav className={cn(s.navigation)}>
+            <ul>
+              {allNavigations.store && (
+                <MenuListItem
+                  site="store"
+                  title="Store"
+                  menu={allNavigations.store.menu}
+                />
+              )}
+              {allNavigations.labo && (
+                <MenuListItem
+                  site="labo"
+                  title="Labo"
+                  menu={allNavigations.labo.menu}
+                />
+              )}
+              {allNavigations.about && (
+                <MenuListItem
+                  site="about"
+                  title="About us"
+                  menu={allNavigations.about.menu}
+                />
+              )}
+            </ul>
+          </nav>
+        )}
         <div className="">
           <div>
             <p>
@@ -46,20 +55,13 @@ const SiteFooter: FC<Props> = ({ className, pages }) => {
               2019/ファイナリスト&オーディエンス賞受賞 TOKYO STARTUP
               DEGAWA/最優秀出川賞受賞
             </p>
+            <p className="bg-red">LEGAL PAGES</p>
             <p>
               copyright&copy; 株式会社ケアウィル , 2020 All Rights Reserved.
             </p>
           </div>
-          {LINKS && (
-            <ul>
-              {LINKS.map((link) => (
-                <li key={`footer-link-item-${link.name}`}>
-                  <a href={link.url} target="_blank" rel="noopener noreferrer">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {allNavigations?.store?.sns && (
+            <Sns items={allNavigations.store.sns} />
           )}
         </div>
       </Container>

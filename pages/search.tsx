@@ -1,72 +1,75 @@
-import cn from 'classnames'
-import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
-import Link from 'next/link'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
+import cn from 'classnames';
+import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
-import { Layout } from '@components/common'
-import { ProductCard } from '@components/product'
-import type { Product } from '@commerce/types/product'
-import { Container, Grid, Skeleton } from '@components/ui'
+import { Layout } from '@components/common';
+import { ProductCard } from '@components/product';
+import type { Product } from '@commerce/types/product';
+import { Container, Grid, Skeleton } from '@components/ui';
 
-import useSearch from '@framework/product/use-search'
-import commerce from '@lib/api/commerce'
-import rangeMap from '@lib/range-map'
+import useSearch from '@framework/product/use-search';
+import commerce from '@lib/api/commerce';
+import rangeMap from '@lib/range-map';
 
 import {
   filterQuery,
   getCategoryPath,
   getDesignerPath,
   useSearchMeta,
-} from '@lib/search'
+} from '@lib/search';
 
 // TODO(bc) Remove this. This should come from the API
-import getSlug from '@lib/get-slug'
+import getSlug from '@lib/get-slug';
 
 const SORT = Object.entries({
   'latest-desc': 'Latest arrivals',
   'trending-desc': 'Trending',
   'price-asc': 'Price: Low to high',
   'price-desc': 'Price: High to low',
-})
+});
 
 export async function getStaticProps({
   preview,
   locale,
   locales,
 }: GetStaticPropsContext) {
-  const config = { locale, locales }
-  const { pages } = await commerce.getAllPages({ config, preview })
-  const { categories, brands } = await commerce.getSiteInfo({ config, preview })
+  const config = { locale, locales };
+  const { pages } = await commerce.getAllPages({ config, preview });
+  const { categories, brands } = await commerce.getSiteInfo({
+    config,
+    preview,
+  });
   return {
     props: {
       pages,
       categories,
       brands,
     },
-  }
+  };
 }
 
 export default function Search({
   categories,
   brands,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [activeFilter, setActiveFilter] = useState('')
-  const [toggleFilter, setToggleFilter] = useState(false)
+  const [activeFilter, setActiveFilter] = useState('');
+  const [toggleFilter, setToggleFilter] = useState(false);
 
-  const router = useRouter()
-  const { asPath, locale } = router
-  const { q, sort } = router.query
+  const router = useRouter();
+  const { asPath, locale } = router;
+  const { q, sort } = router.query;
   // `q` can be included but because categories and designers can't be searched
   // in the same way of products, it's better to ignore the search input if one
   // of those is selected
-  const query = filterQuery({ sort })
+  const query = filterQuery({ sort });
 
-  const { pathname, category, brand } = useSearchMeta(asPath)
-  const activeCategory = categories.find((cat) => cat.slug === category)
+  const { pathname, category, brand } = useSearchMeta(asPath);
+  const activeCategory = categories.find((cat) => cat.slug === category);
   const activeBrand = brands.find(
     (b) => getSlug(b.node.path) === `brands/${brand}`
-  )?.node
+  )?.node;
 
   const { data } = useSearch({
     search: typeof q === 'string' ? q : '',
@@ -74,16 +77,16 @@ export default function Search({
     brandId: (activeBrand as any)?.entityId,
     sort: typeof sort === 'string' ? sort : '',
     locale,
-  })
+  });
 
   const handleClick = (event: any, filter: string) => {
     if (filter !== activeFilter) {
-      setToggleFilter(true)
+      setToggleFilter(true);
     } else {
-      setToggleFilter(!toggleFilter)
+      setToggleFilter(!toggleFilter);
     }
-    setActiveFilter(filter)
-  }
+    setActiveFilter(filter);
+  };
 
   return (
     <Container>
@@ -459,7 +462,7 @@ export default function Search({
         </div>
       </div>
     </Container>
-  )
+  );
 }
 
-Search.Layout = Layout
+Search.Layout = Layout;

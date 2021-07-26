@@ -1,4 +1,10 @@
 .root {
-  @apply text-center;
+  border-top: theme('borderWidth.DEFAULT') solid theme('colors.green');
 }
 
+.navigation {
+  & > ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

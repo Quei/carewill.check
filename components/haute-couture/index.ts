@@ -3,6 +3,6 @@ export {
   hauteCoutureViewFragment,
 } from './HauteCoutureView';
 export {
-  default as OrderView,
-  hauteCoutureOrderViewFragment,
-} from './OrderView';
+  default as OrderFormView,
+  hauteCoutureOrderFormViewFragment,
+} from './OrderFormView';

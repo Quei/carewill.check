@@ -1,14 +1,42 @@
 .root {
-  @apply grid grid-cols-1 gap-0;
-
-  @screen lg {
-    @apply grid-cols-2;
+  @apply relative w-full overflow-x-auto;
+  /* &::-webkit-scrollbar {
+    height: 1px;
   }
-
-  & > * {
-    @apply bg-transparent box-border overflow-hidden;
+  &::-webkit-scrollbar-track {
   }
+  &::-webkit-scrollbar-thumb {
+    background: var(--green);
+    height: 1px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  } */
 }
 
-.layoutNormal {
+.gridWrapper {
+  @apply grid grid-cols-1;
+  & > * {
+    @apply bg-white;
+  }
+  &.hasBorder {
+    @apply bg-green;
+    gap: theme('borderWidth.DEFAULT');
+  }
+  &.layoutNormal {
+    @apply lg:grid-cols-2;
+  }
+  &.layoutCol3 {
+    @apply lg:grid-cols-3;
+    &.isSlide {
+      @apply grid-cols-3;
+      width: calc(80vw * 3);
+      @screen md {
+        width: 1440px;
+      }
+      @screen 2xl {
+        width: 100%;
+      }
+    }
+  }
 }

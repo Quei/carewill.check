@@ -7,6 +7,7 @@ const Logo = ({ className = '', ...props }) => (
     y="0px"
     viewBox="0 0 302 60"
     enableBackground="new 0 0 302 60"
+    {...props}
   >
     <g>
       <path

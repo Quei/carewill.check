@@ -12,8 +12,9 @@ module.exports = {
         stage: 3,
         features: {
           'custom-properties': false,
+          'nexting-rules': false,
         },
       },
     ],
   ],
-}
+};

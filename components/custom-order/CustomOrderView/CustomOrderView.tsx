@@ -1,11 +1,14 @@
-import { FC } from 'react';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import cn from 'classnames';
 import s from './CustomOrderView.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import { renderRichText } from '@lib/contentful/utils/rich-text';
-import { Page, Header } from '@components/common';
+import {
+  renderRichText,
+  renderRichTextReact,
+} from '@lib/contentful/utils/rich-text';
+import { PageHeader } from '@components/ui';
+import type { FC } from 'react';
 import type { CustomOrderViewFragment } from 'types/schema';
 
 type Props = CustomOrderViewFragment & {
@@ -46,15 +49,12 @@ const CustomOrderView: FC<Props> = ({ title, description, slug }) => {
           // ],
         }}
       />
-      <Page
-        header={
-          <Header title={f('customOrder')} description={descriptionText} />
-        }
-      >
-        <Link href="/custom-order/order">
-          <a>{f('formLink')}</a>
-        </Link>
-      </Page>
+      <PageHeader title={f('customOrder')}>
+        {renderRichTextReact(description)}
+      </PageHeader>
+      <Link href="/custom-order/order-form">
+        <a>{f('formLink')}</a>
+      </Link>
       <section>
         <h2>{f('relatedPosts')}</h2>
       </section>

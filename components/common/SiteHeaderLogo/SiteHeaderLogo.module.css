@@ -1,7 +1,21 @@
 .root {
-  @apply text-center;
+  @apply text-center hidden;
+  @screen md {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    &.isSiteRoot {
+      @apply block;
+    }
+  }
 }
 
-.root a {
-  @apply cursor-pointer inline-block w-logo-sm md:w-logo-md lg:w-logo-lg;
+.link {
+  @apply cursor-pointer inline-block;
+  width: 200px;
+  @screen md {
+    width: 400px;
+  }
+  @screen lg {
+    width: 630px;
+  }
 }

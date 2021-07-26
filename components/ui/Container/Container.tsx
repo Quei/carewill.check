@@ -1,23 +1,14 @@
-import cn from 'classnames'
-import React, { FC } from 'react'
+import cn from 'classnames';
+import s from './Container.module.css';
+import type { FC } from 'react';
 
 interface Props {
-  className?: string
-  children?: any
-  el?: HTMLElement
-  clean?: boolean
+  className?: string;
+  children?: any;
 }
 
-const Container: FC<Props> = ({ children, className, el = 'div', clean }) => {
-  const rootClassName = cn(className, {
-    'mx-auto max-w-8xl px-6': !clean,
-  })
+const Container: FC<Props> = ({ children, className }) => {
+  return <div className={cn(s.root, className)}>{children}</div>;
+};
 
-  let Component: React.ComponentType<
-    React.HTMLAttributes<HTMLDivElement>
-  > = el as any
-
-  return <Component className={rootClassName}>{children}</Component>
-}
-
-export default Container
+export default Container;

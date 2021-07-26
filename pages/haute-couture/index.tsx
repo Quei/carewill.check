@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { fetcher } from '@lib/contentful';
+import { getAllNavigations } from '@lib/contentful/get-all-navigations';
 import { Layout } from '@components/common';
 import {
   HauteCoutureView,
@@ -36,7 +37,7 @@ export async function getStaticProps({
   preview,
 }: GetStaticPropsContext<{ slug: string }>) {
   const SLUG = 'haute-couture';
-  const data = await fetcher<GetHauteCoutureQuery>({
+  const dataPromise = fetcher<GetHauteCoutureQuery>({
     query: getHauteCoutureQuery,
     variables: {
       locale,
@@ -44,6 +45,13 @@ export async function getStaticProps({
       preview,
     },
   });
+
+  const allNavigationsPromise = getAllNavigations({ locale, preview });
+
+  const [data, allNavigations] = await Promise.all([
+    dataPromise,
+    allNavigationsPromise,
+  ]);
 
   const entry = data?.hauteCoutureCollection?.items?.[0];
 
@@ -54,6 +62,7 @@ export async function getStaticProps({
   return {
     props: {
       entry,
+      allNavigations,
     },
     revalidate: 60 * 60,
   };

@@ -14,15 +14,15 @@ module.exports = {
       },
     },
   },
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/aspect-ratio'),
+  ],
   theme: {
     extend: {
-      width: {
-        'logo-sm': '200px',
-        'logo-md': '400px',
-        'logo-lg': '630px',
-      },
       maxWidth: {
         '8xl': '1920px',
+        content: '740px',
       },
       colors: {
         primary: 'var(--primary)',
@@ -55,6 +55,37 @@ module.exports = {
         primary: 'var(--text-primary)',
         secondary: 'var(--text-secondary)',
       },
+      fontFamily: {
+        sans: [
+          'a-otf-futo-go-b101-pr6n',
+          'system-ui',
+          '-apple-system' /* Firefox supports this but not yet `system-ui` */,
+          'Segoe UI',
+          'Roboto',
+          'Helvetica',
+          'Arial',
+          'sans-serif',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+        ],
+      },
+      fontSize: {
+        '2xs': ['12px', 'var(--line-height-base)'],
+        xs: ['14px', 'var(--line-height-base)'],
+        sm: ['15px', 'var(--line-height-base)'],
+        base: ['var(--font-size-base)', 'var(--line-height-base)'],
+        lg: ['20px', 'var(--line-height-base)'],
+        xl: ['24px', 'var(--line-height-base)'],
+        '2xl': ['27px', 'var(--line-height-base)'],
+        '3xl': ['34px', 'var(--line-height-base)'],
+        '4xl': ['38px', 'var(--line-height-base)'],
+      },
+      backgroundColor: {
+        green: `var(--green)`,
+      },
+      borderWidth: {
+        DEFAULT: 'var(--border-width)',
+      },
       boxShadow: {
         'outline-normal': '0 0 0 2px var(--accents-2)',
         magical:
@@ -65,6 +96,19 @@ module.exports = {
       },
       scale: {
         120: '1.2',
+      },
+      screens: {
+        '2xl': '1440px',
+        '3xl': '1536px',
+        'less-than-sm': { max: '639px' },
+        'less-than-md': { max: '767px' },
+      },
+      spacing: {
+        'site-vertical': '10px',
+        'site-vertical-md': '25px',
+      },
+      lineClamp: {
+        11: '11',
       },
     },
   },

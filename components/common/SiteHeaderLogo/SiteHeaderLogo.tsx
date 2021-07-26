@@ -1,20 +1,18 @@
-import { VFC } from 'react';
 import cn from 'classnames';
 import s from './SiteHeaderLogo.module.css';
-import Link from 'next/link';
-import { Logo } from '@components/ui';
+import { Logo, Link } from '@components/ui';
+import type { VFC } from 'react';
 
-interface Props {
+type Props = {
+  className?: string;
   isSiteRoot: boolean;
-}
+};
 
-const SiteHeaderLogo: VFC<Props> = ({ isSiteRoot }) => {
+const SiteHeaderLogo: VFC<Props> = ({ className, isSiteRoot }) => {
   return (
-    <div className={cn(s.root, { 'sr-only': !isSiteRoot })}>
-      <Link href="/">
-        <a aria-label="Logo">
-          <Logo />
-        </a>
+    <div className={cn(s.root, { [s.isSiteRoot]: isSiteRoot }, className)}>
+      <Link className={cn(s.link)} href="/" site="store" aria-label="Logo">
+        <Logo />
       </Link>
     </div>
   );

@@ -1,0 +1,35 @@
+.root {
+  @apply relative;
+  &.hasNoChildren {
+    min-height: 88px;
+    @screen md {
+      min-height: 106px;
+    }
+  }
+
+}
+
+.link {
+  @apply block h-full hover:bg-green hover:text-white;
+}
+
+.content {
+  &.isCentering {
+    @apply flex justify-center items-center;
+    min-height: 117px;
+    @screen md {
+      min-height: 210px;
+    }
+  }
+  &.hasNoPaddingMobile {
+    @apply px-site-vertical;
+  }
+  &:not(.isCentering):not(.hasNoPaddingMobile) {
+    padding-left: 60px;
+    padding-right: 60px;
+    @screen md {
+      padding-left: 155px;
+      padding-right: 155px;
+    }
+  }
+}

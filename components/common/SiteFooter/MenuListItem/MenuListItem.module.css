@@ -1,0 +1,11 @@
+.root {
+  
+}
+
+.title {
+  @apply text-xl;
+}
+
+.children {
+  @apply text-sm;
+}

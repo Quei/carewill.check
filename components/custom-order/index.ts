@@ -3,6 +3,6 @@ export {
   customOrderViewFragment,
 } from './CustomOrderView';
 export {
-  default as OrderView,
-  customOrderOrderViewFragment,
-} from './OrderView';
+  default as OrderFormView,
+  customOrderOrderFormViewFragment,
+} from './OrderFormView';

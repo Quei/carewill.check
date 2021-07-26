@@ -1,3 +1,24 @@
-.root {}
+.root {
+  @apply inline-block relative leading-none;
+  position: relative;
+  display: inline-block;
+}
 
-.input {}
+.input {
+  @apply sr-only;
+  &:checked + .dummyCheckbox {
+    @apply bg-green;
+  }
+}
+
+.dummyCheckbox {
+  @apply inline-block align-middle;
+  width: 14px;
+  height: 14px;
+  border: 1px solid theme('colors.green');
+  margin-right: 0.5em;
+
+  & + span {
+    @apply align-bottom;
+  }
+}

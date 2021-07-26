@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { fetcher } from '@lib/contentful';
+import { getAllNavigations } from '@lib/contentful/get-all-navigations';
 import { Layout } from '@components/common';
 import {
   CustomOrderView,
@@ -36,7 +37,8 @@ export async function getStaticProps({
   preview,
 }: GetStaticPropsContext<{ slug: string }>) {
   const SLUG = 'custom-order';
-  const data = await fetcher<GetCustomOrderQuery>({
+
+  const dataPromise = fetcher<GetCustomOrderQuery>({
     query: getCustomOrderQuery,
     variables: {
       locale,
@@ -44,6 +46,13 @@ export async function getStaticProps({
       preview,
     },
   });
+
+  const allNavigationsPromise = getAllNavigations({ locale, preview });
+
+  const [data, allNavigations] = await Promise.all([
+    dataPromise,
+    allNavigationsPromise,
+  ]);
 
   const entry = data?.customOrderCollection?.items?.[0];
 
@@ -54,9 +63,7 @@ export async function getStaticProps({
   return {
     props: {
       entry,
-      // NOTE:
-      // pagesは_app→Layout経由で、footerにページリンクとして渡される。
-      // pages,
+      allNavigations,
     },
     revalidate: 200,
   };

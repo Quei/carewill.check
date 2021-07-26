@@ -1,0 +1,9 @@
+.root {
+  @apply relative;
+}
+
+.content {
+  & > * + * {
+    border-top: theme('borderWidth.DEFAULT') solid theme('colors.green');
+  }
+}

@@ -1,0 +1,19 @@
+.root {
+  &:not(:hover) {
+    & .children {
+      @apply sr-only;
+    }
+  }
+  &:hover {
+    & .children {
+    }
+  }
+}
+
+.title {
+  @apply text-3xl leading-none;
+}
+
+.children {
+  @apply absolute bg-white;
+}

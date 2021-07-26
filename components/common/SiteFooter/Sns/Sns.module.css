@@ -1,0 +1,10 @@
+.root {
+  @apply flex;
+}
+
+.item {
+  width: 44px;
+  & + .item {
+    margin-left: 10px;
+  }
+}

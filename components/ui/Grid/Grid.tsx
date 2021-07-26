@@ -1,22 +1,34 @@
 import cn from 'classnames';
-import { FC, ReactNode, Component } from 'react';
 import s from './Grid.module.css';
+import type { FC, ReactNode } from 'react';
 
-interface Props {
+type Props = {
   className?: string;
-  children?: ReactNode[] | Component[] | any[];
-  layout?: 'normal';
-}
+  layout?: 'normal' | 'col-3';
+  hasBorder?: boolean;
+  isSlide?: boolean;
+  children?: ReactNode;
+};
 
-const Grid: FC<Props> = ({ className, layout = 'normal', children }) => {
-  const rootClassName = cn(
-    s.root,
-    {
-      [s.layoutNormal]: layout === 'normal',
-    },
-    className
+const Grid: FC<Props> = ({
+  className,
+  layout = 'normal',
+  hasBorder = true,
+  isSlide = false,
+  children,
+}) => {
+  const rootClassName = cn(s.root, { [s.isSlide]: isSlide }, className);
+  const gridClassName = cn(s.gridWrapper, {
+    [s.layoutNormal]: layout === 'normal',
+    [s.layoutCol3]: layout === 'col-3',
+    [s.hasBorder]: hasBorder,
+    [s.isSlide]: isSlide,
+  });
+  return (
+    <div className={rootClassName}>
+      <div className={gridClassName}>{children}</div>
+    </div>
   );
-  return <div className={rootClassName}>{children}</div>;
 };
 
 export default Grid;

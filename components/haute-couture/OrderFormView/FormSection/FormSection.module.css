@@ -1,0 +1,82 @@
+.root {
+  @apply relative overflow-hidden md:overflow-auto;
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-top: 9px;
+  /* &.closed {
+    height: 53px;
+  } */
+  @screen md {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    /* &.closed {
+      height: initial;
+    } */
+  }
+}
+
+.counter {
+  &::before {
+    counter-increment: sectionCount;
+    content: "(" counters(sectionCount, '') ")";
+  }
+}
+
+.motionDiv {
+  @screen md {
+    height: auto !important;
+  }
+}
+
+.title {
+  @apply text-base;
+  &.lineClamp {
+    @apply line-clamp-1 md:line-clamp-none;
+  }
+  &.required {
+    &::after {
+      @apply text-red;
+      content: '＊';
+    }
+  }
+}
+
+.content {
+  @apply text-sm;
+  margin-top: 30px;
+  & > * + * {
+    margin-top: 40px;
+  }
+  @screen md {
+    margin-top: 10px;
+  }
+}
+
+.openButton {
+  @apply absolute z-10 md:hidden;
+  top: 12px;
+  right: 17px;
+}
+
+.closeButtonWrapper {
+  @apply text-center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.closeButton {
+  @apply inline-block;
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid currentColor;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    transform: translateY(-3px) rotate(45deg) ;
+    margin-right: 10px;
+  }
+}

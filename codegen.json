@@ -1,8 +1,18 @@
 {
   "schema": {
-    "https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}/environments/master": {
+    "https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_STORE_SPACE_ID}/environments/master": {
       "headers": {
-        "Authorization": "Bearer ${CONTENTFUL_ACCESS_TOKEN}"
+        "Authorization": "Bearer ${CONTENTFUL_STORE_ACCESS_TOKEN}"
+      }
+    },
+    "https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_LABO_SPACE_ID}/environments/master": {
+      "headers": {
+        "Authorization": "Bearer ${CONTENTFUL_LABO_ACCESS_TOKEN}"
+      }
+    },
+    "https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_ABOUT_SPACE_ID}/environments/master": {
+      "headers": {
+        "Authorization": "Bearer ${CONTENTFUL_ABOUT_ACCESS_TOKEN}"
       }
     }
   },

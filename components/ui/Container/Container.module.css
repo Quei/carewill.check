@@ -1,0 +1,3 @@
+.root {
+  @apply md:max-w-content mx-auto;
+}

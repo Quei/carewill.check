@@ -57,6 +57,7 @@ export const useAddToCart = () => {
       openSidebar();
       setLoading(false);
     } catch (err) {
+      console.error(err);
       setLoading(false);
     }
   };

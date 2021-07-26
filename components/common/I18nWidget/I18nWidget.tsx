@@ -1,8 +1,9 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import cn from 'classnames';
 import s from './I18nWidget.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import type { VFC } from 'react';
 
 interface LOCALE_DATA {
   name: string;
@@ -20,7 +21,7 @@ const LOCALES_MAP: Record<string, LOCALE_DATA> = {
   },
 };
 
-const I18nWidget: FC = () => {
+const I18nWidget: VFC = () => {
   const { locales, asPath: currentPath } = useRouter();
 
   return (

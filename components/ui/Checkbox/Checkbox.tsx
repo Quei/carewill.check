@@ -1,7 +1,12 @@
 import React, { useCallback } from 'react';
 import cn from 'classnames';
 import s from './Checkbox.module.css';
-import type { FC, InputHTMLAttributes, ChangeEventHandler } from 'react';
+import type {
+  FC,
+  InputHTMLAttributes,
+  ChangeEventHandler,
+  ReactNode,
+} from 'react';
 import type { UseFormRegister } from 'react-hook-form';
 
 type InputHTMLType = InputHTMLAttributes<HTMLInputElement>;
@@ -9,23 +14,25 @@ type InputHTMLType = InputHTMLAttributes<HTMLInputElement>;
 type Props = InputHTMLType & {
   className?: string;
   type?: 'radio' | 'checkbox';
-  label: string;
   name: string;
   register?: UseFormRegister<any>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  hasNoLabel?: boolean;
+  children: ReactNode;
 };
 
 const Checkbox: FC<Props> = ({
   className,
   type = 'radio',
-  label,
   name,
+  required = false,
   register,
   onChange,
+  hasNoLabel = false,
+  children,
   ...rest
 }) => {
-  const rootClassName = cn(s.root, {}, className);
-  const registerd = register ? register(name) : null;
+  const registerd = register ? register(name, { required }) : null;
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (event) => {
       registerd?.onChange && registerd.onChange(event);
@@ -33,8 +40,9 @@ const Checkbox: FC<Props> = ({
     },
     [registerd, onChange]
   );
+  const RootElement = hasNoLabel ? 'div' : 'label';
   return (
-    <label className={rootClassName}>
+    <RootElement className={cn(s.root, className)}>
       <input
         className={cn(s.input)}
         type={type}
@@ -44,8 +52,9 @@ const Checkbox: FC<Props> = ({
         ref={registerd?.ref}
         {...rest}
       />
-      {label}
-    </label>
+      <span className={cn(s.dummyCheckbox)} aria-hidden={true} />
+      {children}
+    </RootElement>
   );
 };
 

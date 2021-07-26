@@ -1,0 +1,21 @@
+.link {
+}
+
+.hasBorderEffect {
+  &.current,
+  &:hover {
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: -5px;
+      width: calc(100% + 10px);
+      height: 0;
+      border-bottom: theme('borderWidth.DEFAULT') solid theme('colors.green');
+    }
+  }
+}

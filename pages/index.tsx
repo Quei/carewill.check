@@ -1,10 +1,83 @@
-import Link from 'next/link';
 import commerce from '@lib/api/commerce';
-import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { fetcher } from '@lib/contentful';
+import { getAllNavigations } from '@lib/contentful/get-all-navigations';
 import { Layout } from '@components/common';
-import { Grid, Hero, Container } from '@components/ui';
+import {
+  HomeView,
+  homeStoreViewFragment,
+  homeLaboViewFragment,
+  homeAboutViewFragment,
+} from '@components/home';
 // import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import type {
+  GetHomeStoreQuery,
+  GetHomeLaboQuery,
+  GetHomeAboutQuery,
+} from 'types/schema';
+
+const getHomeStoreQuery = /* GraphQL */ `
+  query GetHomeStore(
+    $locale: String!
+    $slug: String!
+    $preview: Boolean = false
+  ) {
+    homeCollection(
+      locale: $locale
+      where: { slug: $slug }
+      preview: $preview
+      limit: 1
+    ) {
+      items {
+        ...homeStoreView
+      }
+    }
+  }
+
+  ${homeStoreViewFragment}
+`;
+
+const getHomeLaboQuery = /* GraphQL */ `
+  query GetHomeLabo(
+    $locale: String!
+    $slug: String!
+    $preview: Boolean = false
+  ) {
+    homeCollection(
+      locale: $locale
+      where: { slug: $slug }
+      preview: $preview
+      limit: 1
+    ) {
+      items {
+        ...homeLaboView
+      }
+    }
+  }
+
+  ${homeLaboViewFragment}
+`;
+
+const getHomeAboutQuery = /* GraphQL */ `
+  query GetHomeAbout(
+    $locale: String!
+    $slug: String!
+    $preview: Boolean = false
+  ) {
+    homeCollection(
+      locale: $locale
+      where: { slug: $slug }
+      preview: $preview
+      limit: 1
+    ) {
+      items {
+        ...homeAboutView
+      }
+    }
+  }
+
+  ${homeAboutViewFragment}
+`;
 
 export async function getStaticProps({
   preview,
@@ -17,116 +90,83 @@ export async function getStaticProps({
     config,
     preview,
   });
-  const { categories, brands } = await commerce.getSiteInfo({
+  const { brands } = await commerce.getSiteInfo({
     config,
     preview,
   });
   const { pages } = await commerce.getAllPages({ config, preview });
 
+  const SLUG = 'home';
+  const storePromise = fetcher<GetHomeStoreQuery>({
+    query: getHomeStoreQuery,
+    variables: {
+      locale,
+      slug: SLUG,
+      preview,
+    },
+  });
+  const laboPromise = fetcher<GetHomeLaboQuery>({
+    query: getHomeLaboQuery,
+    variables: {
+      locale,
+      slug: SLUG,
+      preview,
+    },
+    site: 'labo',
+  });
+  const aboutPromise = fetcher<GetHomeAboutQuery>({
+    query: getHomeAboutQuery,
+    variables: {
+      locale,
+      slug: SLUG,
+      preview,
+    },
+    site: 'about',
+  });
+
+  const allNavigationsPromise = getAllNavigations({ locale, preview });
+
+  const [storeData, laboData, aboutData, allNavigations] = await Promise.all([
+    storePromise,
+    laboPromise,
+    aboutPromise,
+    allNavigationsPromise,
+  ]);
+  const store = storeData?.homeCollection?.items?.[0];
+  const labo = laboData?.homeCollection?.items?.[0];
+  const about = aboutData?.homeCollection?.items?.[0];
+
   return {
     props: {
       products,
-      categories,
       brands,
       pages,
+      store,
+      labo,
+      about,
+      allNavigations,
+      isSiteRoot: true,
     },
-    revalidate: 14400,
+    // revalidate: 14400,
+    revalidate: 60 * 30,
   };
 }
 
 export default function Home({
   products,
+  brands,
+  pages,
+  store,
+  labo,
+  about,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const f = useIntlMessage();
   return (
     <>
-      <Hero>
-        <div>
-          <p className="text-4xl leading-10 font-extrabold sm:text-5xl sm:leading-none sm:tracking-tight lg:text-6xl">
-            Release Details: The Yeezy BOOST 350 V2 ‘Natural'
-          </p>
-        </div>
-      </Hero>
-      <section>
-        <h2>store</h2>
-        <Container>
-          <div>
-            <p>
-              The Yeezy BOOST 350 V2 lineup continues to grow. We recently had
-              the ‘Carbon’ iteration, and now release details have been locked
-              in for this ‘Natural’ joint. Revealed by Yeezy Mafia earlier this
-              year, the shoe was originally called ‘Abez’, which translated to
-              ‘Tin’ in Hebrew. It’s now undergone a name change, and will be
-              referred to as ‘Natural’.
-            </p>
-          </div>
-          <Grid>
-            <Link href="/product">
-              <a>
-                <h3>{f('product')}</h3>
-              </a>
-            </Link>
-            <Link href="/custom-order">
-              <a>
-                <h3>{f('customOrder')}</h3>
-              </a>
-            </Link>
-            <Link href="/collaboration">
-              <a>
-                <h3>{f('collaboration')}</h3>
-              </a>
-            </Link>
-            <Link href="/haute-couture">
-              <a>
-                <h3>{f('hauteCouture')}</h3>
-              </a>
-            </Link>
-            {/* {products.slice(0, 3).map((product, i) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              imgProps={{
-                width: i === 0 ? 1080 : 540,
-                height: i === 0 ? 1080 : 540,
-              }}
-            />
-          ))} */}
-          </Grid>
-        </Container>
-      </section>
-      <section>
-        <Hero>
-          <div>
-            <p className="text-4xl leading-10 font-extrabold sm:text-5xl sm:leading-none sm:tracking-tight lg:text-6xl">
-              Release Details: The Yeezy BOOST 350 V2 ‘Natural'
-            </p>
-          </div>
-        </Hero>
-        <h2>labo</h2>
-        <div>
-          <p>
-            The Yeezy BOOST 350 V2 lineup continues to grow. We recently had the
-            ‘Carbon’ iteration, and now release details have been locked in for
-            this ‘Natural’ joint. Revealed by Yeezy Mafia earlier this year, the
-            shoe was originally called ‘Abez’, which translated to ‘Tin’ in
-            Hebrew. It’s now undergone a name change, and will be referred to as
-            ‘Natural’.
-          </p>
-        </div>
-      </section>
-      <section>
-        <h2>about us</h2>
-        <div>
-          <p>
-            The Yeezy BOOST 350 V2 lineup continues to grow. We recently had the
-            ‘Carbon’ iteration, and now release details have been locked in for
-            this ‘Natural’ joint. Revealed by Yeezy Mafia earlier this year, the
-            shoe was originally called ‘Abez’, which translated to ‘Tin’ in
-            Hebrew. It’s now undergone a name change, and will be referred to as
-            ‘Natural’.
-          </p>
-        </div>
-      </section>
+      <HomeView
+        store={store ?? undefined}
+        labo={labo ?? undefined}
+        about={about ?? undefined}
+      />
       {/* <HomeAllProductsGrid
         newestProducts={products}
         categories={categories}

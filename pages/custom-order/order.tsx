@@ -3,8 +3,8 @@ import commerce from '@lib/api/commerce';
 import { fetcher as contentfulFetcher } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
-  OrderView,
-  customOrderOrderViewFragment,
+  OrderFormView,
+  customOrderOrderFormViewFragment,
 } from '@components/custom-order';
 import type {
   GetStaticPathsContext,
@@ -26,12 +26,12 @@ const getCustomOrderOrderQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...customOrderOrderView
+        ...customOrderOrderFormView
       }
     }
   }
 
-  ${customOrderOrderViewFragment}
+  ${customOrderOrderFormViewFragment}
 `;
 
 export async function getStaticProps({
@@ -88,7 +88,7 @@ export default function Order({
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <OrderView {...entry} product={product} />
+    <OrderFormView {...entry} product={product} />
   );
 }
 

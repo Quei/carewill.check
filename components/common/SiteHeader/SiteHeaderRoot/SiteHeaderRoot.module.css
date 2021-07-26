@@ -1,0 +1,7 @@
+.root {
+  @apply sticky top-0 bg-primary z-40 border-b border-green;
+  &.hasScrolled {
+    @apply text-red;
+  }
+}
+

@@ -1,0 +1,17 @@
+.root {
+  @apply px-site-vertical md:px-site-vertical-md;
+  padding-top: 40px;
+  padding-bottom: 70px;
+  @screen md {
+    padding-top: 77px;
+    padding-bottom: 100px;
+  }
+}
+
+.title {
+  @apply text-center text-2xl leading-none;
+}
+
+.description {
+  padding-top: 40px;
+}

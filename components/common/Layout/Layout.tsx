@@ -7,13 +7,14 @@ import { IntlProvider } from 'react-intl';
 import { CommerceProvider } from '@framework';
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies';
 import { useUI } from '@components/ui/context';
-import { SiteHeaderLogo, Navbar, SiteFooter } from '@components/common';
+import { SiteHeaderLogo, SiteHeader, SiteFooter } from '@components/common';
 import { Sidebar, Button, Modal, LoadingDots } from '@components/ui';
 import CartSidebarView from '@components/cart/CartSidebarView';
 import LoginView from '@components/auth/LoginView';
 import { ja as localeContentJa, en as localeContentEn } from '@content/locales';
 import type { Page } from '@commerce/types/page';
 import type { Category } from '@commerce/types/site';
+import type { AllNavigations } from 'types/all-navigations';
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -22,6 +23,7 @@ const Loading = () => (
 );
 
 const dynamicProps = {
+  // eslint-disable-next-line react/display-name
   loading: () => <Loading />,
 };
 
@@ -43,14 +45,14 @@ const FeatureBar = dynamic(
 interface Props {
   pageProps: {
     pages?: Page[];
-    categories: Category[];
+    allNavigations: AllNavigations;
     isSiteRoot?: boolean;
   };
 }
 
 const Layout: FC<Props> = ({
   children,
-  pageProps: { categories = [], isSiteRoot, ...pageProps },
+  pageProps: { allNavigations, isSiteRoot, ...pageProps },
 }) => {
   const {
     displaySidebar,
@@ -65,11 +67,6 @@ const Layout: FC<Props> = ({
     return locale === 'ja' ? localeContentJa : localeContentEn;
   }, [locale]);
 
-  const navBarlinks = categories.slice(0, 2).map((c) => ({
-    label: c.name,
-    href: `/search/${c.slug}`,
-  }));
-
   return (
     <CommerceProvider locale={locale}>
       <IntlProvider
@@ -79,9 +76,17 @@ const Layout: FC<Props> = ({
       >
         <div className={cn(s.root)}>
           <SiteHeaderLogo isSiteRoot={isSiteRoot ?? false} />
-          <Navbar links={navBarlinks} />
-          <main className="fit">{children}</main>
-          <SiteFooter pages={pageProps.pages} />
+          <SiteHeader
+            className={cn(s.header)}
+            isSiteRoot={isSiteRoot ?? false}
+            allNavigations={allNavigations}
+          />
+          <main className={cn(s.main, 'fit')}>{children}</main>
+          <SiteFooter
+            className={cn(s.footer)}
+            pages={pageProps.pages}
+            allNavigations={allNavigations}
+          />
 
           <Modal open={displayModal} onClose={closeModal}>
             {modalView === 'LOGIN_VIEW' && <LoginView />}

@@ -1,0 +1,23 @@
+.root {
+  counter-reset: checkboxCount;
+}
+
+.checkbox {
+  @apply relative;
+}
+
+.imageIndex {
+  &::before {
+    counter-increment: checkboxCount;
+    content: "(" counters(checkboxCount, '') ")";
+  }
+}
+
+.imageWrapper {
+  margin-top: 10px;
+}
+
+.imageValue {
+  line-height: 1.4;
+  margin-top: 10px;
+}
