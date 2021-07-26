@@ -30,10 +30,22 @@ type AcceptanceInput = InputBase & {
   type: 'acceptance';
 };
 
+// NOTE:
+// とりあえずbuild用に一時的に用意
+type TempInput = InputBase & {
+  type: 'image' | 'custom';
+};
+
 type Data = {
   title: LanguageContent;
   required?: boolean;
-  inputs: (TextInput | CheckboxesInput | SelectInput | AcceptanceInput)[];
+  inputs: (
+    | TextInput
+    | CheckboxesInput
+    | SelectInput
+    | AcceptanceInput
+    | TempInput
+  )[];
 }[];
 
 export const data: Data = [

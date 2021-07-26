@@ -1,34 +1,34 @@
-import cn from 'classnames'
-import Image from 'next/image'
-import { NextSeo } from 'next-seo'
-import { FC, useEffect, useState } from 'react'
-import s from './ProductView.module.css'
-import { Swatch, ProductSlider } from '@components/product'
-import { Button, Container, Text, useUI } from '@components/ui'
-import type { Product } from '@commerce/types/product'
-import usePrice from '@framework/product/use-price'
-import { useAddItem } from '@framework/cart'
-import { getVariant, SelectedOptions } from '../helpers'
-import WishlistButton from '@components/wishlist/WishlistButton'
+import cn from 'classnames';
+import Image from 'next/image';
+import { NextSeo } from 'next-seo';
+import { FC, useEffect, useState } from 'react';
+import s from './ProductView.module.css';
+import { Swatch, ProductSlider } from '@components/product';
+import { Button, Container, Text, useUI } from '@components/ui';
+import type { Product } from '@commerce/types/product';
+import usePrice from '@framework/product/use-price';
+import { useAddItem } from '@framework/cart';
+import { getVariant, SelectedOptions } from '../helpers';
+import WishlistButton from '@components/wishlist/WishlistButton';
 
 interface Props {
-  children?: any
-  product: Product
-  className?: string
+  children?: any;
+  product: Product;
+  className?: string;
 }
 
 const ProductView: FC<Props> = ({ product }) => {
   // TODO: fix this missing argument issue
   /* @ts-ignore */
-  const addItem = useAddItem()
+  const addItem = useAddItem();
   const { price } = usePrice({
     amount: product.price.value,
     baseAmount: product.price.retailPrice,
     currencyCode: product.price.currencyCode!,
-  })
-  const { openSidebar } = useUI()
-  const [loading, setLoading] = useState(false)
-  const [choices, setChoices] = useState<SelectedOptions>({})
+  });
+  const { openSidebar } = useUI();
+  const [loading, setLoading] = useState(false);
+  const [choices, setChoices] = useState<SelectedOptions>({});
 
   useEffect(() => {
     // Selects the default option
@@ -36,28 +36,28 @@ const ProductView: FC<Props> = ({ product }) => {
       setChoices((choices) => ({
         ...choices,
         [v.displayName.toLowerCase()]: v.values[0].label.toLowerCase(),
-      }))
-    })
-  }, [])
+      }));
+    });
+  }, []);
 
-  const variant = getVariant(product, choices)
+  const variant = getVariant(product, choices);
 
   const addToCart = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       await addItem({
         productId: String(product.id),
         variantId: String(variant ? variant.id : product.variants[0].id),
-      })
-      openSidebar()
-      setLoading(false)
+      });
+      openSidebar();
+      setLoading(false);
     } catch (err) {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <Container className="max-w-none w-full" clean>
+    <Container className="max-w-none w-full">
       <NextSeo
         title={product.name}
         description={product.description}
@@ -113,7 +113,7 @@ const ProductView: FC<Props> = ({ product }) => {
                   {opt.values.map((v, i: number) => {
                     const active = (choices as any)[
                       opt.displayName.toLowerCase()
-                    ]
+                    ];
 
                     return (
                       <Swatch
@@ -127,11 +127,11 @@ const ProductView: FC<Props> = ({ product }) => {
                             return {
                               ...choices,
                               [opt.displayName.toLowerCase()]: v.label.toLowerCase(),
-                            }
-                          })
+                            };
+                          });
                         }}
                       />
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -165,7 +165,7 @@ const ProductView: FC<Props> = ({ product }) => {
         )}
       </div>
     </Container>
-  )
-}
+  );
+};
 
-export default ProductView
+export default ProductView;
