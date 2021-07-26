@@ -1,19 +1,19 @@
-import { FC } from 'react'
-import cn from 'classnames'
-import Link from 'next/link'
-import type { Product } from '@commerce/types/product'
-import s from './ProductCard.module.css'
-import Image, { ImageProps } from 'next/image'
-import WishlistButton from '@components/wishlist/WishlistButton'
+import { FC } from 'react';
+import cn from 'classnames';
+import Link from 'next/link';
+import type { Product } from '@commerce/types/product';
+import s from './ProductCard.module.css';
+import Image, { ImageProps } from 'next/image';
+import WishlistButton from '@components/wishlist/WishlistButton';
 
 interface Props {
-  className?: string
-  product: Product
-  variant?: 'slim' | 'simple'
-  imgProps?: Omit<ImageProps, 'src'>
+  className?: string;
+  product: Product;
+  variant?: 'slim' | 'simple';
+  imgProps?: Omit<ImageProps, 'src'>;
 }
 
-const placeholderImg = '/product-img-placeholder.svg'
+const placeholderImg = '/product-img-placeholder.svg';
 
 const ProductCard: FC<Props> = ({
   className,
@@ -31,7 +31,7 @@ const ProductCard: FC<Props> = ({
               {product.name}
             </span>
           </div>
-          {product?.images && (
+          {/* {product?.images && (
             <Image
               quality="85"
               src={product.images[0]?.url || placeholderImg}
@@ -41,7 +41,7 @@ const ProductCard: FC<Props> = ({
               layout="fixed"
               {...imgProps}
             />
-          )}
+          )} */}
         </div>
       ) : (
         <>
@@ -65,7 +65,7 @@ const ProductCard: FC<Props> = ({
               />
             )}
           </div>
-          <div className={s.imageContainer}>
+          {/* <div className={s.imageContainer}>
             {product?.images && (
               <Image
                 alt={product.name || 'Product Image'}
@@ -78,11 +78,11 @@ const ProductCard: FC<Props> = ({
                 {...imgProps}
               />
             )}
-          </div>
+          </div> */}
         </>
       )}
     </a>
   </Link>
-)
+);
 
-export default ProductCard
+export default ProductCard;

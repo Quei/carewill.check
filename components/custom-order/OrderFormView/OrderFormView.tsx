@@ -97,20 +97,20 @@ const OrderView: VFC<Props> = ({
   title,
   description,
   slug,
-  customizedPartTitle,
-  customizedPartDescription,
-  customizedPartPickupImagesCollection,
-  customizedPartImagesCollection,
-  customizedPartOptions,
-  customizedPartNotes,
-  specTitle,
-  colorTitle,
-  colorDescription,
-  colorOptions,
-  colorPickupImagesCollection,
-  sizeTitle,
-  sizeDescription,
-  sizeOptions,
+  // customizedPartTitle,
+  // customizedPartDescription,
+  // customizedPartPickupImagesCollection,
+  // customizedPartImagesCollection,
+  // customizedPartOptions,
+  // customizedPartNotes,
+  // specTitle,
+  // colorTitle,
+  // colorDescription,
+  // colorOptions,
+  // colorPickupImagesCollection,
+  // sizeTitle,
+  // sizeDescription,
+  // sizeOptions,
 }) => {
   const { price } = usePrice({
     amount: product.price.value,
@@ -168,7 +168,7 @@ const OrderView: VFC<Props> = ({
           {product.price?.currencyCode}
         </div>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {/* <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <OrderFormSection
             title={customizedPartTitle ?? undefined}
@@ -272,7 +272,7 @@ const OrderView: VFC<Props> = ({
             {f('addToCart')}
           </Button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };

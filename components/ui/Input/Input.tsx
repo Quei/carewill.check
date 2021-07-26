@@ -3,7 +3,7 @@ import cn from 'classnames';
 import s from './Input.module.css';
 import type { VFC, InputHTMLAttributes, ChangeEventHandler } from 'react';
 
-export type Props = InputHTMLAttributes<HTMLInputElement> & {
+export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   className?: string;
   onChange?: (...args: any[]) => any;
 };

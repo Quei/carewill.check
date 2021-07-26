@@ -1,4 +1,4 @@
-import useSWR, { responseInterface } from 'swr'
+import useSWR, { responseInterface } from 'swr';
 import type {
   HookSWRInput,
   HookFetchInput,
@@ -7,26 +7,26 @@ import type {
   Fetcher,
   SwrOptions,
   SWRHookSchemaBase,
-} from './types'
-import defineProperty from './define-property'
-import { CommerceError } from './errors'
+} from './types';
+import defineProperty from './define-property';
+import { CommerceError } from './errors';
 
 export type ResponseState<Result> = responseInterface<Result, CommerceError> & {
-  isLoading: boolean
-}
+  isLoading?: boolean;
+};
 
 export type UseData = <H extends SWRHookSchemaBase>(
   options: {
-    fetchOptions: HookFetcherOptions
-    fetcher: HookFetcherFn<H>
+    fetchOptions: HookFetcherOptions;
+    fetcher: HookFetcherFn<H>;
   },
   input: HookFetchInput | HookSWRInput,
   fetcherFn: Fetcher,
   swrOptions?: SwrOptions<H['data'], H['fetcherInput']>
-) => ResponseState<H['data']>
+) => ResponseState<H['data']>;
 
 const useData: UseData = (options, input, fetcherFn, swrOptions) => {
-  const hookInput = Array.isArray(input) ? input : Object.entries(input)
+  const hookInput = Array.isArray(input) ? input : Object.entries(input);
   const fetcher = async (
     url: string,
     query?: string,
@@ -38,41 +38,41 @@ const useData: UseData = (options, input, fetcherFn, swrOptions) => {
         options: { url, query, method },
         // Transform the input array into an object
         input: args.reduce((obj, val, i) => {
-          obj[hookInput[i][0]!] = val
-          return obj
+          obj[hookInput[i][0]!] = val;
+          return obj;
         }, {}),
         fetch: fetcherFn,
-      })
+      });
     } catch (error) {
       // SWR will not log errors, but any error that's not an instance
       // of CommerceError is not welcomed by this hook
       if (!(error instanceof CommerceError)) {
-        console.error(error)
+        console.error(error);
       }
-      throw error
+      throw error;
     }
-  }
+  };
   const response = useSWR(
     () => {
-      const opts = options.fetchOptions
+      const opts = options.fetchOptions;
       return opts
         ? [opts.url, opts.query, opts.method, ...hookInput.map((e) => e[1])]
-        : null
+        : null;
     },
     fetcher,
     swrOptions
-  )
+  );
 
   if (!('isLoading' in response)) {
     defineProperty(response, 'isLoading', {
       get() {
-        return response.data === undefined
+        return response.data === undefined;
       },
       enumerable: true,
-    })
+    });
   }
 
-  return response
-}
+  return response;
+};
 
-export default useData
+export default useData;

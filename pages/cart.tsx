@@ -15,7 +15,8 @@ export async function getStaticProps({
   const config = { locale, locales };
   const { pages } = await commerce.getAllPages({ config, preview });
   return {
-    props: { pages, categories },
+    // props: { pages, categories },
+    props: { pages },
   };
 }
 
