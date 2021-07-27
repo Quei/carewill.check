@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { scroller } from 'react-scroll';
 import cn from 'classnames';
 import s from './FormSection.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
@@ -8,32 +9,51 @@ import type { FC, ReactNode } from 'react';
 
 type Props = {
   className?: string;
+  id: string;
+  nextSectionId: string;
   title: string;
   required?: boolean;
   children: ReactNode;
 };
 
-const useIsOpen = () => {
+const useScrollToNextSection = (nextSectionId: string) => {
+  return useCallback(() => {
+    scroller.scrollTo(nextSectionId, {
+      duration: 250,
+      smooth: true,
+      offset: -55,
+    });
+  }, [nextSectionId]);
+};
+
+const useIsOpen = (scrollToNextSection: () => void) => {
   const [isOpen, setIsOpen] = useState(true);
   const open = useCallback(() => {
     setIsOpen(true);
   }, []);
   const close = useCallback(() => {
     setIsOpen(false);
-  }, []);
+    const id = setTimeout(() => {
+      scrollToNextSection();
+      clearTimeout(id);
+    }, 200);
+  }, [scrollToNextSection]);
   return { isOpen, open, close };
 };
 
 const FormSection: FC<Props> = ({
   className,
+  id,
+  nextSectionId,
   title,
   required = false,
   children,
 }) => {
-  const { isOpen, open, close } = useIsOpen();
+  const scrollToNextSection = useScrollToNextSection(nextSectionId);
+  const { isOpen, open, close } = useIsOpen(scrollToNextSection);
   const f = useIntlMessage();
   return (
-    <section className={cn(s.root, className)}>
+    <section id={id} className={cn(s.root, className)}>
       <p className={cn('block-title', s.counter)} />
       <motion.div
         className={cn(s.motionDiv)}

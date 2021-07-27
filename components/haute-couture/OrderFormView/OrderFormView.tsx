@@ -86,6 +86,8 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
             <FormSection
               className={cn(s.section)}
               key={`section-${index}`}
+              id={`section-${index}`}
+              nextSectionId={`section-${index + 1}`}
               title={item.title[localeLang] ?? ''}
               required={item.required}
             >
