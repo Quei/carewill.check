@@ -1,0 +1,46 @@
+.root {
+  @apply block relative leading-none;
+  &.hasImage {
+    @apply border-1 border-dashed;
+  }
+}
+
+.input {
+  @apply sr-only;
+
+  &:checked + * {
+    @apply bg-green text-white;
+    & svg *{
+      stroke: white;
+    }
+  }
+}
+
+.dummyCheckbox {
+  @apply inline-block align-middle;
+  width: 14px;
+  height: 14px;
+  border: 1px solid theme('colors.green');
+  margin-right: 0.5em;
+
+  & + span {
+    @apply align-bottom;
+  }
+}
+
+.button {
+  @apply h-full;
+}
+
+.imageWrapper {
+  @apply relative;
+  & img,
+  & svg {
+    @apply mx-auto;
+    height: 100%;
+  }
+}
+
+.imageLabel {
+  @apply text-xs text-center py-2 leading-tight;
+}

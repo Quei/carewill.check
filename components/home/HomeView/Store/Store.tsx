@@ -1,11 +1,5 @@
-import cn from 'classnames';
-import s from './Store.module.css';
-import Image from 'next/image';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import {
-  renderTextToDom,
-  renderRichTextReact,
-} from '@lib/contentful/utils/rich-text';
+import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
 import { Grid, Block, BlockContent } from '@components/ui';
 import { Section } from '../Section';
 import type { VFC } from 'react';
@@ -13,7 +7,7 @@ import type { HomeStoreViewFragment } from 'types/schema';
 
 const SITE = 'store';
 
-type Props = HomeStoreViewFragment & {
+export type Props = HomeStoreViewFragment & {
   className?: string;
 };
 
@@ -22,21 +16,29 @@ export const homeStoreViewFragment = /* GraphQL */ `
     description {
       json
     }
-    product {
+    productImage {
       url
-      description
     }
-    customOrder {
-      url
-      description
+    productDescription {
+      json
     }
-    hauteCouture {
+    customOrderImage {
       url
-      description
     }
-    collaboration {
+    customOrderDescription {
+      json
+    }
+    hauteCoutureImage {
       url
-      description
+    }
+    hauteCoutureDescription {
+      json
+    }
+    collaborationImage {
+      url
+    }
+    collaborationDescription {
+      json
     }
   }
 `;
@@ -44,23 +46,27 @@ export const homeStoreViewFragment = /* GraphQL */ `
 const Store: VFC<Props> = ({
   className,
   description,
-  product,
-  customOrder,
-  hauteCouture,
-  collaboration,
+  productImage,
+  productDescription,
+  customOrderImage,
+  customOrderDescription,
+  hauteCoutureImage,
+  hauteCoutureDescription,
+  collaborationImage,
+  collaborationDescription,
 }) => {
   const f = useIntlMessage();
   return (
     <Section title={'Store'} description={renderRichTextReact(description)}>
       <Grid>
-        {product && (
+        {productImage && productDescription && (
           <Block title={f('product')} titleTag="h3" href="/product" site={SITE}>
-            <BlockContent imageSrc={product.url} imageAlt={f('product')}>
-              {product.description}
+            <BlockContent image={{ src: productImage.url, alt: f('product') }}>
+              {renderRichTextReact(productDescription)}
             </BlockContent>
           </Block>
         )}
-        {customOrder && (
+        {customOrderImage && customOrderDescription && (
           <Block
             title={f('customOrder')}
             titleTag="h3"
@@ -68,14 +74,13 @@ const Store: VFC<Props> = ({
             site={SITE}
           >
             <BlockContent
-              imageSrc={customOrder.url}
-              imageAlt={f('customOrder')}
+              image={{ src: customOrderImage.url, alt: f('customOrder') }}
             >
-              {customOrder.description}
+              {renderRichTextReact(customOrderDescription)}
             </BlockContent>
           </Block>
         )}
-        {hauteCouture && (
+        {hauteCoutureImage && hauteCoutureDescription && (
           <Block
             title={f('hauteCouture')}
             titleTag="h3"
@@ -83,14 +88,13 @@ const Store: VFC<Props> = ({
             site={SITE}
           >
             <BlockContent
-              imageSrc={hauteCouture.url}
-              imageAlt={f('hauteCouture')}
+              image={{ src: hauteCoutureImage.url, alt: f('hauteCouture') }}
             >
-              {hauteCouture.description}
+              {renderRichTextReact(hauteCoutureDescription)}
             </BlockContent>
           </Block>
         )}
-        {collaboration && (
+        {collaborationImage && collaborationDescription && (
           <Block
             title={f('collaboration')}
             titleTag="h3"
@@ -98,10 +102,9 @@ const Store: VFC<Props> = ({
             site={SITE}
           >
             <BlockContent
-              imageSrc={collaboration.url}
-              imageAlt={f('collaboration')}
+              image={{ src: collaborationImage.url, alt: f('collaboration') }}
             >
-              {collaboration.description}
+              {renderRichTextReact(collaborationDescription)}
             </BlockContent>
           </Block>
         )}

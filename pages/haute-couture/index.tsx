@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import { fetcher } from '@lib/contentful';
-import { getAllNavigations } from '@lib/contentful/get-all-navigations';
+import { fetcher, getAllNavigations } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
   HauteCoutureView,

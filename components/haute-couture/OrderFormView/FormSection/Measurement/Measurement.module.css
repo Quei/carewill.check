@@ -1,0 +1,53 @@
+.inputs {
+  flex: 0 1 12em;
+  counter-reset: measurementInputCount;
+  @screen md {
+    flex: 0 1 240px;
+  }
+}
+
+.row {
+  @apply flex;
+  border-bottom: 1px solid theme('colors.green');
+  & input {
+    @apply border-none;
+  }
+  & + .row {
+    @apply mt-2.5 md:mt-5;
+  }
+}
+
+.label {
+  @apply flex;
+  &::before {
+    counter-increment: measurementInputCount;
+    content: "(" counters(measurementInputCount, '') ")";
+    margin-right: 0.5em;
+  }
+  & span {
+    @apply sr-only md:not-sr-only;
+    @screen md {
+      min-width: 7em;
+    }
+  }
+}
+
+.attention {
+  @apply text-xs mt-2;
+}
+
+.svg {
+  width: 100%;
+  margin-left: 30px;
+  max-width: 160px;
+  @screen md {
+    margin-left: 100px;
+    max-width: 340px;
+  }
+  & svg {
+    margin-right: -50px;
+    @screen md {
+      margin-right: 0;
+    }
+  }
+}

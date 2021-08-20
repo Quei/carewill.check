@@ -6,7 +6,7 @@ import type { FC, ReactNode } from 'react';
 type Props = {
   className?: string;
   title: string;
-  titleTag?: 'h1' | 'h2' | 'h3';
+  titleTag?: 'h1' | 'h2' | 'h3' | 'p';
   children?: ReactNode;
 };
 

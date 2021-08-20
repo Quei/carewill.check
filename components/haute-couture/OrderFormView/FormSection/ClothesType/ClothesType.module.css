@@ -1,0 +1,16 @@
+.checkboxes {
+  @apply grid grid-cols-2 gap-4 md:grid-cols-4;
+}
+
+.checkbox {
+  height: 100px;
+  & svg {
+    height: 70px;
+  }
+  @screen md {
+    height: 140px;
+    & svg {
+      height: 105px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import cn from 'classnames';
@@ -12,8 +12,7 @@ import { Sidebar, Button, Modal, LoadingDots } from '@components/ui';
 import CartSidebarView from '@components/cart/CartSidebarView';
 import LoginView from '@components/auth/LoginView';
 import { ja as localeContentJa, en as localeContentEn } from '@content/locales';
-import type { Page } from '@commerce/types/page';
-import type { Category } from '@commerce/types/site';
+import type { FC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
 
 const Loading = () => (
@@ -44,7 +43,6 @@ const FeatureBar = dynamic(
 
 interface Props {
   pageProps: {
-    pages?: Page[];
     allNavigations: AllNavigations;
     isSiteRoot?: boolean;
   };
@@ -84,7 +82,6 @@ const Layout: FC<Props> = ({
           <main className={cn(s.main, 'fit')}>{children}</main>
           <SiteFooter
             className={cn(s.footer)}
-            pages={pageProps.pages}
             allNavigations={allNavigations}
           />
 

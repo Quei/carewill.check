@@ -1,5 +1,3 @@
-import cn from 'classnames';
-import s from './AboutUs.module.css';
 import { nonNullableFilter } from '@lib/non-nullable-filter';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
@@ -10,7 +8,7 @@ import type { HomeAboutViewFragment } from 'types/schema';
 
 const SITE = 'about';
 
-type Props = HomeAboutViewFragment & {
+export type Props = HomeAboutViewFragment & {
   className?: string;
 };
 
@@ -49,7 +47,7 @@ const AboutUs: VFC<Props> = ({
     <Section title={'About us'} description={renderRichTextReact(description)}>
       {nonNullableNewsPickUps && (
         <PickupSection
-          title={f('newsPickup')}
+          title={f('about.newsPickup')}
           titleTag="h3"
           items={nonNullableNewsPickUps}
           site={SITE}

@@ -8,6 +8,15 @@ type Query {
     skip: Int = 0
     where: AssetFilter
   ): AssetCollection
+  category(id: String!, preview: Boolean, locale: String): Category
+  categoryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: CategoryFilter
+    order: [CategoryOrder]
+  ): CategoryCollection
   customOrder(id: String!, preview: Boolean, locale: String): CustomOrder
   customOrderCollection(
     skip: Int = 0
@@ -79,6 +88,24 @@ type Query {
     where: ProductFilter
     order: [ProductOrder]
   ): ProductCollection
+  recruiting(id: String!, preview: Boolean, locale: String): Recruiting
+  recruitingCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: RecruitingFilter
+    order: [RecruitingOrder]
+  ): RecruitingCollection
+  staffNote(id: String!, preview: Boolean, locale: String): StaffNote
+  staffNoteCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+    where: StaffNoteFilter
+    order: [StaffNoteOrder]
+  ): StaffNoteCollection
 }
 
 """
@@ -325,11 +352,17 @@ type AssetLinkingCollections {
     locale: String
   ): HauteCoutureCollection
   homeCollection(
+    limit: Int = 100
+    locale: String
+    preview: Boolean
+    skip: Int = 0
+  ): HomeCollection
+  staffNoteCollection(
     skip: Int = 0
     limit: Int = 100
     preview: Boolean
     locale: String
-  ): HomeCollection
+  ): StaffNoteCollection
 }
 
 type EntryCollection {
@@ -342,6 +375,254 @@ type EntryCollection {
 interface Entry {
   contentfulMetadata: ContentfulMetadata!
   sys: Sys!
+}
+
+type StaffNoteCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [StaffNote]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/staffNote)
+"""
+type StaffNote implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): StaffNoteLinkingCollections
+  slug(locale: String): String
+  date(locale: String): DateTime
+  title(locale: String): String
+  image(preview: Boolean, locale: String): Asset
+  content(locale: String): StaffNoteContent
+  categoryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): StaffNoteCategoryCollection
+}
+
+type StaffNoteLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type StaffNoteContent {
+  json: JSON!
+  links: StaffNoteContentLinks!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type StaffNoteContentLinks {
+  entries: StaffNoteContentEntries!
+  assets: StaffNoteContentAssets!
+}
+
+type StaffNoteContentEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type StaffNoteContentAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type StaffNoteCategoryCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Category]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/category)
+"""
+type Category implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): CategoryLinkingCollections
+  slug(locale: String): String
+  title(locale: String): String
+  date(locale: String): DateTime
+}
+
+type CategoryLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  staffNoteCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): StaffNoteCollection
+}
+
+type HomeCollection {
+  items: [Home]!
+  limit: Int!
+  skip: Int!
+  total: Int!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/home)
+"""
+type Home implements Entry {
+  collaborationDescription(locale: String): HomeCollaborationDescription
+  collaborationImage(preview: Boolean, locale: String): Asset
+  contentfulMetadata: ContentfulMetadata!
+  customOrderDescription(locale: String): HomeCustomOrderDescription
+  customOrderImage(preview: Boolean, locale: String): Asset
+  description(locale: String): HomeDescription
+  hauteCoutureDescription(locale: String): HomeHauteCoutureDescription
+  hauteCoutureImage(preview: Boolean, locale: String): Asset
+  linkedFrom(allowedLocales: [String]): HomeLinkingCollections
+  newsPickupCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): HomeNewsPickupCollection
+  productDescription(locale: String): HomeProductDescription
+  productImage(preview: Boolean, locale: String): Asset
+  recruitingDescription(locale: String): HomeRecruitingDescription
+  recruitingHomeDescription(locale: String): HomeRecruitingHomeDescription
+  recruitingHomeImage(preview: Boolean, locale: String): Asset
+  slug(locale: String): String
+  staffNoteDescription(locale: String): HomeStaffNoteDescription
+  staffNoteHomeDescription(locale: String): HomeStaffNoteHomeDescription
+  sys: Sys!
+  title(locale: String): String
+}
+
+type HomeLinkingCollections {
+  entryCollection(
+    limit: Int = 100
+    locale: String
+    preview: Boolean
+    skip: Int = 0
+  ): EntryCollection
+}
+
+type HomeDescription {
+  json: JSON!
+  links: HomeDescriptionLinks!
+}
+
+type HomeDescriptionLinks {
+  assets: HomeDescriptionAssets!
+  entries: HomeDescriptionEntries!
+}
+
+type HomeDescriptionEntries {
+  block: [Entry]!
+  hyperlink: [Entry]!
+  inline: [Entry]!
+}
+
+type HomeDescriptionAssets {
+  block: [Asset]!
+  hyperlink: [Asset]!
+}
+
+type HomeStaffNoteHomeDescription {
+  json: JSON!
+  links: HomeStaffNoteHomeDescriptionLinks!
+}
+
+type HomeStaffNoteHomeDescriptionLinks {
+  entries: HomeStaffNoteHomeDescriptionEntries!
+  assets: HomeStaffNoteHomeDescriptionAssets!
+}
+
+type HomeStaffNoteHomeDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeStaffNoteHomeDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeStaffNoteDescription {
+  json: JSON!
+  links: HomeStaffNoteDescriptionLinks!
+}
+
+type HomeStaffNoteDescriptionLinks {
+  entries: HomeStaffNoteDescriptionEntries!
+  assets: HomeStaffNoteDescriptionAssets!
+}
+
+type HomeStaffNoteDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeStaffNoteDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeRecruitingHomeDescription {
+  json: JSON!
+  links: HomeRecruitingHomeDescriptionLinks!
+}
+
+type HomeRecruitingHomeDescriptionLinks {
+  entries: HomeRecruitingHomeDescriptionEntries!
+  assets: HomeRecruitingHomeDescriptionAssets!
+}
+
+type HomeRecruitingHomeDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeRecruitingHomeDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeRecruitingDescription {
+  json: JSON!
+  links: HomeRecruitingDescriptionLinks!
+}
+
+type HomeRecruitingDescriptionLinks {
+  entries: HomeRecruitingDescriptionEntries!
+  assets: HomeRecruitingDescriptionAssets!
+}
+
+type HomeRecruitingDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeRecruitingDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
 }
 
 type AssetCollection {
@@ -491,6 +772,314 @@ enum AssetOrder {
   width_DESC
 }
 
+input StaffNoteFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  image_exists: Boolean
+  content_exists: Boolean
+  content_contains: String
+  content_not_contains: String
+  categoryCollection_exists: Boolean
+  OR: [StaffNoteFilter]
+  AND: [StaffNoteFilter]
+}
+
+enum StaffNoteOrder {
+  slug_ASC
+  slug_DESC
+  date_ASC
+  date_DESC
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+type CategoryCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Category]!
+}
+
+input CategoryFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  OR: [CategoryFilter]
+  AND: [CategoryFilter]
+}
+
+enum CategoryOrder {
+  slug_ASC
+  slug_DESC
+  title_ASC
+  title_DESC
+  date_ASC
+  date_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input HomeFilter {
+  AND: [HomeFilter]
+  OR: [HomeFilter]
+  collaborationDescription_contains: String
+  collaborationDescription_exists: Boolean
+  collaborationDescription_not_contains: String
+  collaborationImage_exists: Boolean
+  contentfulMetadata: ContentfulMetadataFilter
+  customOrderDescription_contains: String
+  customOrderDescription_exists: Boolean
+  customOrderDescription_not_contains: String
+  customOrderImage_exists: Boolean
+  description_contains: String
+  description_exists: Boolean
+  description_not_contains: String
+  hauteCoutureDescription_contains: String
+  hauteCoutureDescription_exists: Boolean
+  hauteCoutureDescription_not_contains: String
+  hauteCoutureImage_exists: Boolean
+  newsPickupCollection_exists: Boolean
+  productDescription_contains: String
+  productDescription_exists: Boolean
+  productDescription_not_contains: String
+  productImage_exists: Boolean
+  recruitingDescription_contains: String
+  recruitingDescription_exists: Boolean
+  recruitingDescription_not_contains: String
+  recruitingHomeDescription_contains: String
+  recruitingHomeDescription_exists: Boolean
+  recruitingHomeDescription_not_contains: String
+  recruitingHomeImage_exists: Boolean
+  slug: String
+  slug_contains: String
+  slug_exists: Boolean
+  slug_in: [String]
+  slug_not: String
+  slug_not_contains: String
+  slug_not_in: [String]
+  staffNoteDescription_contains: String
+  staffNoteDescription_exists: Boolean
+  staffNoteDescription_not_contains: String
+  staffNoteHomeDescription_contains: String
+  staffNoteHomeDescription_exists: Boolean
+  staffNoteHomeDescription_not_contains: String
+  sys: SysFilter
+  title: String
+  title_contains: String
+  title_exists: Boolean
+  title_in: [String]
+  title_not: String
+  title_not_contains: String
+  title_not_in: [String]
+}
+
+enum HomeOrder {
+  slug_ASC
+  slug_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+  title_ASC
+  title_DESC
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting)
+"""
+type Recruiting implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): RecruitingLinkingCollections
+  slug(locale: String): String
+  title(locale: String): String
+  formLabel(locale: String): String
+  formUrl(locale: String): String
+  content(locale: String): RecruitingContent
+  notes(locale: String): RecruitingNotes
+}
+
+type RecruitingLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type RecruitingContent {
+  json: JSON!
+  links: RecruitingContentLinks!
+}
+
+type RecruitingContentLinks {
+  entries: RecruitingContentEntries!
+  assets: RecruitingContentAssets!
+}
+
+type RecruitingContentEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type RecruitingContentAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type RecruitingNotes {
+  json: JSON!
+  links: RecruitingNotesLinks!
+}
+
+type RecruitingNotesLinks {
+  entries: RecruitingNotesEntries!
+  assets: RecruitingNotesAssets!
+}
+
+type RecruitingNotesEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type RecruitingNotesAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type RecruitingCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Recruiting]!
+}
+
+input RecruitingFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  formLabel_exists: Boolean
+  formLabel: String
+  formLabel_not: String
+  formLabel_in: [String]
+  formLabel_not_in: [String]
+  formLabel_contains: String
+  formLabel_not_contains: String
+  formUrl_exists: Boolean
+  formUrl: String
+  formUrl_not: String
+  formUrl_in: [String]
+  formUrl_not_in: [String]
+  formUrl_contains: String
+  formUrl_not_contains: String
+  content_exists: Boolean
+  content_contains: String
+  content_not_contains: String
+  notes_exists: Boolean
+  notes_contains: String
+  notes_not_contains: String
+  OR: [RecruitingFilter]
+  AND: [RecruitingFilter]
+}
+
+enum RecruitingOrder {
+  slug_ASC
+  slug_DESC
+  title_ASC
+  title_DESC
+  formLabel_ASC
+  formLabel_DESC
+  formUrl_ASC
+  formUrl_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
 """
 [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation)
 """
@@ -512,11 +1101,6 @@ type NavigationLinkingCollections {
     skip: Int = 0
   ): EntryCollection
 }
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON
 
 type NavigationCollection {
   items: [Navigation]!
@@ -547,109 +1131,6 @@ input NavigationFilter {
 }
 
 enum NavigationOrder {
-  slug_ASC
-  slug_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-  title_ASC
-  title_DESC
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/home)
-"""
-type Home implements Entry {
-  collaboration(preview: Boolean, locale: String): Asset
-  contentfulMetadata: ContentfulMetadata!
-  customOrder(preview: Boolean, locale: String): Asset
-  description(locale: String): HomeDescription
-  hauteCouture(preview: Boolean, locale: String): Asset
-  linkedFrom(allowedLocales: [String]): HomeLinkingCollections
-  newsPickupCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): HomeNewsPickupCollection
-  product(preview: Boolean, locale: String): Asset
-  slug(locale: String): String
-  sys: Sys!
-  title(locale: String): String
-}
-
-type HomeLinkingCollections {
-  entryCollection(
-    limit: Int = 100
-    locale: String
-    preview: Boolean
-    skip: Int = 0
-  ): EntryCollection
-}
-
-type HomeDescription {
-  json: JSON!
-  links: HomeDescriptionLinks!
-}
-
-type HomeDescriptionLinks {
-  assets: HomeDescriptionAssets!
-  entries: HomeDescriptionEntries!
-}
-
-type HomeDescriptionEntries {
-  block: [Entry]!
-  hyperlink: [Entry]!
-  inline: [Entry]!
-}
-
-type HomeDescriptionAssets {
-  block: [Asset]!
-  hyperlink: [Asset]!
-}
-
-type HomeCollection {
-  items: [Home]!
-  limit: Int!
-  skip: Int!
-  total: Int!
-}
-
-input HomeFilter {
-  AND: [HomeFilter]
-  OR: [HomeFilter]
-  collaboration_exists: Boolean
-  contentfulMetadata: ContentfulMetadataFilter
-  customOrder_exists: Boolean
-  description_contains: String
-  description_exists: Boolean
-  description_not_contains: String
-  hauteCouture_exists: Boolean
-  newsPickupCollection_exists: Boolean
-  product_exists: Boolean
-  slug: String
-  slug_contains: String
-  slug_exists: Boolean
-  slug_in: [String]
-  slug_not: String
-  slug_not_contains: String
-  slug_not_in: [String]
-  sys: SysFilter
-  title: String
-  title_contains: String
-  title_exists: Boolean
-  title_in: [String]
-  title_not: String
-  title_not_contains: String
-  title_not_in: [String]
-}
-
-enum HomeOrder {
   slug_ASC
   slug_DESC
   sys_firstPublishedAt_ASC
@@ -886,6 +1367,90 @@ enum NewsCategoryOrder {
   sys_firstPublishedAt_DESC
   sys_publishedVersion_ASC
   sys_publishedVersion_DESC
+}
+
+type HomeProductDescription {
+  json: JSON!
+  links: HomeProductDescriptionLinks!
+}
+
+type HomeProductDescriptionLinks {
+  entries: HomeProductDescriptionEntries!
+  assets: HomeProductDescriptionAssets!
+}
+
+type HomeProductDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeProductDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeCustomOrderDescription {
+  json: JSON!
+  links: HomeCustomOrderDescriptionLinks!
+}
+
+type HomeCustomOrderDescriptionLinks {
+  entries: HomeCustomOrderDescriptionEntries!
+  assets: HomeCustomOrderDescriptionAssets!
+}
+
+type HomeCustomOrderDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeCustomOrderDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeHauteCoutureDescription {
+  json: JSON!
+  links: HomeHauteCoutureDescriptionLinks!
+}
+
+type HomeHauteCoutureDescriptionLinks {
+  entries: HomeHauteCoutureDescriptionEntries!
+  assets: HomeHauteCoutureDescriptionAssets!
+}
+
+type HomeHauteCoutureDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeHauteCoutureDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeCollaborationDescription {
+  json: JSON!
+  links: HomeCollaborationDescriptionLinks!
+}
+
+type HomeCollaborationDescriptionLinks {
+  entries: HomeCollaborationDescriptionEntries!
+  assets: HomeCollaborationDescriptionAssets!
+}
+
+type HomeCollaborationDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeCollaborationDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
 }
 
 type HauteCoutureCollection {

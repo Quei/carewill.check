@@ -1,0 +1,60 @@
+.root {
+  @apply relative flex items-center border-none;
+  --button-height: 25px;
+  --button-width: 26px;
+  --border-size: theme('borderWidth.DEFAULT');
+  transition: 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  width: var(--button-width);
+  height: var(--button-height);
+
+  &:focus {
+    outline: none;
+  }
+
+  & i {
+    @apply absolute left-0 w-full bg-green;
+    height: var(--border-size);
+    transition: 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  &[aria-pressed='false'] {
+    & i {
+      &:nth-of-type(1) {
+        top: 5%;
+      }
+      &:nth-of-type(2) {
+        top: calc((var(--button-height) / 2) - (var(--border-size) / 2));
+      }
+      &:nth-of-type(3) {
+        bottom: 5%;
+      }
+    }
+  }
+
+  &[aria-pressed='true'] {
+    & i {
+      &:nth-of-type(1) {
+        top: 0;
+        transform: translateY(
+            calc(calc(var(--button-height) / 2) - calc(var(--border-size) / 2))
+          )
+          rotate(-45deg);
+      }
+
+      &:nth-of-type(2) {
+        opacity: 0;
+      }
+
+      &:nth-of-type(3) {
+        bottom: 0;
+        transform: translateY(
+            calc(
+              (calc(var(--button-height) / 2) - calc(var(--border-size) / 2)) *
+                -1
+            )
+          )
+          rotate(45deg);
+      }
+    }
+  }
+}

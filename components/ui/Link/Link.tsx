@@ -3,20 +3,16 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import s from './Link.module.css';
+import { URLS } from '@config/domains';
 import type { LinkProps as NextLinkProps } from 'next/link';
 import type { Site } from 'types/site';
 
-const URLS = {
-  store: 'https://carewill.co.jp',
-  labo: 'https://labo.carewill.co.jp',
-  about: 'https://about.carewill.co.jp',
-};
-
-type Props = NextLinkProps & {
-  className?: string;
-  site?: Site;
-  hasBorderEffect?: boolean;
-};
+type Props = NextLinkProps &
+  JSX.IntrinsicElements['a'] & {
+    className?: string;
+    site?: Site;
+    hasBorderEffect?: boolean;
+  };
 
 type UseCustomHrefArgs = Pick<Props, 'site' | 'href'>;
 const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
@@ -38,8 +34,8 @@ const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
 };
 
 const useIsCurrent = (href: Props['href']) => {
-  const router = useRouter();
-  return router.pathname === href;
+  const { asPath } = useRouter();
+  return asPath === href;
 };
 
 const Link: React.FC<Props> = ({

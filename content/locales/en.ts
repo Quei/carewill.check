@@ -12,9 +12,27 @@ export const en: Record<string, any> = {
   placeholderTextArea: 'Text here',
   pickup: 'Pickup',
   submit: 'Submit',
-  // about
-  newsPickup: 'News pickup',
-  // haute-couture
-  ['hauteCouture.open']: 'Open',
-  ['hauteCouture.close']: 'Close',
+  all: 'All',
+  morePosts: 'More',
+  index: 'Index',
+  // form
+  ['form.change']: 'Change',
+  ['form.empty']: 'Empty',
+  ['form.submit']: 'Submit',
+  ['form.submit.success']: 'Completed',
+  ['form.submit.ing']: 'Submiting',
+  ['form.select']: 'Select',
+  ['form.error.messageBlock']: '',
+  ['form.error.required']: 'Required',
+  ['form.measurement.attention']: '',
+  ['form.other']: 'Other',
+  ['form.other.placeholder']: '',
+  // labo
+  ['labo.interviews']: 'Project',
+  ['labo.interviewsPickup']: 'Project pickup',
+  ['labo.staffNotes']: 'Staff notes',
+  ['labo.recruiting']: 'Recruiting',
+  ['labo.selectCategory']: 'Select category',
+  // about-us
+  ['about-us.newsPickup']: 'News pickup',
 };

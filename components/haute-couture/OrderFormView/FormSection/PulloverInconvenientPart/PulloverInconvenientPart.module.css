@@ -1,0 +1,54 @@
+.checkboxes {
+  @apply grid grid-cols-2 mt-5 md:grid-cols-4 md:mt-16;
+
+  & > *:nth-of-type(1) {
+    border-right: none;
+    border-bottom: none;
+  }
+    
+  @screen less-than-md {
+    & > *:nth-of-type(3),
+    & > *:nth-of-type(5) {
+      border-right: none;
+      border-bottom: none;
+    }
+    & > *:nth-of-type(2),
+    & > *:nth-of-type(4),
+    & > *:nth-of-type(6)  {
+      border-bottom: none;
+    }
+    & > *:nth-of-type(7) {
+      border-right: none;
+    }
+  }
+  @screen md {
+    & > *:nth-of-type(2),
+    & > *:nth-of-type(3) {
+      border-right: none;
+      border-bottom: none;
+    }
+    & > *:nth-of-type(4) {
+      border-bottom: none;
+    }
+    & > *:nth-of-type(5),
+    & > *:nth-of-type(6),
+    & > *:nth-of-type(7) {
+      border-right: none;
+    }
+  }
+}
+
+.checkbox {
+  height: 170px;
+  & svg {
+    padding-top: 10px;
+    height: 120px;
+  }
+  @screen md {
+    height: 250px;
+    & svg {
+      padding-top: 20px;
+      height: 210px;
+    }
+  }
+}

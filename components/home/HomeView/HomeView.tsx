@@ -1,33 +1,28 @@
-import Link from 'next/link';
-import cn from 'classnames';
-import s from './HomeView.module.css';
-import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import { Grid, Block } from '@components/ui';
 import { Store } from './Store';
 import { Labo } from './Labo';
+import { LaboPreview } from './LaboPreview';
 import { AboutUs } from './AboutUs';
-import { Section } from './Section';
 import type { VFC } from 'react';
-import type {
-  HomeStoreViewFragment,
-  HomeLaboViewFragment,
-  HomeAboutViewFragment,
-} from 'types/schema';
+import type { Props as StoreProps } from './Store';
+import type { Props as LaboProps } from './Labo';
+import type { Props as AboutProps } from './AboutUs';
 
 type Props = {
-  className?: string;
-  store?: HomeStoreViewFragment;
-  labo?: HomeLaboViewFragment;
-  about?: HomeAboutViewFragment;
+  store?: StoreProps;
+  labo?: LaboProps;
+  about?: AboutProps;
 };
 
-const HomeView: VFC<Props> = ({ className, store, labo, about }) => {
-  const f = useIntlMessage();
+const HomeView: VFC<Props> = ({ store, labo, about }) => {
   return (
     <>
       <div className="h-60">slide-show</div>
       {store && <Store {...store} />}
-      {labo && <Labo {...labo} />}
+      {labo && (
+        <LaboPreview>
+          <Labo {...labo} />
+        </LaboPreview>
+      )}
       {about && <AboutUs {...about} />}
     </>
   );

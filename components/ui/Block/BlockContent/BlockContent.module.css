@@ -11,6 +11,6 @@
   @apply relative;
 
   & + .description {
-    margin-top: 15px;
+    @apply mt-4;
   }
 }

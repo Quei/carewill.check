@@ -4,19 +4,17 @@ import { Container } from '@components/ui';
 import { MenuListItem } from './MenuListItem';
 import { Sns } from './Sns';
 import type { FC } from 'react';
-import type { Page } from '@commerce/types/page';
 import type { AllNavigations } from 'types/all-navigations';
 
 type Props = {
   className?: string;
   children?: any;
-  pages?: Page[];
   allNavigations?: AllNavigations;
 };
 
 const LEGAL_PAGES = ['terms-of-use', 'shipping-returns', 'privacy-policy'];
 
-const SiteFooter: FC<Props> = ({ className, pages, allNavigations }) => {
+const SiteFooter: FC<Props> = ({ className, allNavigations }) => {
   return (
     <footer className={cn(s.root, className)}>
       <Container>

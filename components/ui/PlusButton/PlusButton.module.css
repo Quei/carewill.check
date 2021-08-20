@@ -1,0 +1,27 @@
+.plus {
+  @apply relative w-6 h-6;
+  &::before,
+  &::after {
+    @apply absolute top-1/2 left-0 w-full;
+    content: '';
+    border: 2px solid currentColor;
+    transition: transform .1s ease-in-out;
+  }
+  &.thin {
+    &::before,
+    &::after {
+      border-width: 1px;
+    }
+  }
+  &::after {
+    transform: rotate(90deg);
+  }
+  &.hasPressed {
+    &::before {
+      transform: rotate(180deg);
+    }
+    &::after {
+      transform: rotate(180deg);
+    }
+  }
+}

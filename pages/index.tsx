@@ -1,6 +1,5 @@
 import commerce from '@lib/api/commerce';
-import { fetcher } from '@lib/contentful';
-import { getAllNavigations } from '@lib/contentful/get-all-navigations';
+import { fetcher, getAllNavigations } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
   HomeView,
@@ -51,6 +50,16 @@ const getHomeLaboQuery = /* GraphQL */ `
     ) {
       items {
         ...homeLaboView
+      }
+    }
+    staffNoteCollection(
+      locale: $locale
+      preview: $preview
+      order: date_DESC
+      limit: 1
+    ) {
+      items {
+        ...homeLaboLatestStaffNote
       }
     }
   }
@@ -134,6 +143,7 @@ export async function getStaticProps({
   ]);
   const store = storeData?.homeCollection?.items?.[0];
   const labo = laboData?.homeCollection?.items?.[0];
+  const latestStaffNote = laboData?.staffNoteCollection?.items?.[0];
   const about = aboutData?.homeCollection?.items?.[0];
 
   return {
@@ -142,7 +152,7 @@ export async function getStaticProps({
       brands,
       pages,
       store,
-      labo,
+      labo: { ...labo, latestStaffNote },
       about,
       allNavigations,
       isSiteRoot: true,

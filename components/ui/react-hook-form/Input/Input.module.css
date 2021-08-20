@@ -1,0 +1,14 @@
+.root {
+  @apply appearance-none rounded-none w-full pr-2 focus:outline-none;
+  border-bottom: 1px solid theme('colors.green');
+  /* NOTE:
+    16px以上でないと入力時にiOS側で自動ズームされてしまう
+   */
+  font-size: 16px;
+  &::placeholder {
+    @apply text-green opacity-50;
+  }
+  &:focus-visible {
+    @apply shadow-outline-normal;
+  }
+}

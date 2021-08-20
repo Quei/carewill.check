@@ -11,10 +11,28 @@ export const ja: Record<string, any> = {
   errorRequiredCheckbox: '選択してください',
   placeholderTextArea: '入力',
   pickup: 'ピックアップ',
-  submit: '送信',
-  // about
-  newsPickup: 'ニュースピックアップ',
+  all: 'すべて',
+  morePosts: 'もっと見る',
+  index: '一覧',
   // haute-couture
-  ['hauteCouture.open']: '変更',
-  ['hauteCouture.close']: '決定',
+  // form
+  ['form.change']: '変更',
+  ['form.empty']: '未入力',
+  ['form.submit']: '送信',
+  ['form.submit.success']: '送信完了',
+  ['form.submit.ing']: '送信中',
+  ['form.select']: '選択する',
+  ['form.error.messageBlock']: '※以下の必須項目が選択 / 入力されていません。',
+  ['form.error.required']: '必須項目です',
+  ['form.measurement.attention']: '※ご希望の「服」の着丈',
+  ['form.other']: 'その他',
+  ['form.other.placeholder']: 'その他の回答を入力',
+  // labo
+  ['labo.interviews']: '取材記事',
+  ['labo.interviewsPickup']: '取材記事ピックアップ',
+  ['labo.staffNotes']: 'スタッフノート',
+  ['labo.recruiting']: '募集',
+  ['labo.selectCategory']: 'カテゴリーから選ぶ',
+  // about
+  ['about.newsPickup']: 'ニュースピックアップ',
 };

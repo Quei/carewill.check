@@ -1,6 +1,5 @@
 .description {
-  padding-top: 100px;
-  padding-bottom: 2em;
+  @apply pt-24 pb-10;
   & b {
     @apply text-red;
   }
@@ -13,37 +12,18 @@
   }
 }
 
-.inputDescription {
-  & + * {
-    margin-top: 20px;
-  }
-}
-
-.checkboxes {
-  &.gridLayout {
-    @apply grid gap-x-2 gap-y-2 md:gap-x-0 md:gap-y-7;
-    &.column3 {
-      @apply grid-cols-2 md:grid-cols-3;
-      & img {
-        width: auto;
-        height: 69px;
-        @screen md {
-          width: 100%;
-          height: auto;
-        }
-      }
-    }
-    &.column4 {
-      @apply grid-cols-3 md:grid-cols-4;
-    }
-  }
-}
-
-.submitBlock {
-  padding-top: 70px;
-  padding-bottom: 70px;
-}
-
 .submit {
-  @apply inline-block text-2xl;
+  @apply block text-2xl mx-auto;
+  &[disabled] {
+    @apply text-white bg-green border-green;
+    filter: none;
+  }
+}
+
+.messageBlock {
+  @apply text-sm mt-10 md:mt-16;
+}
+
+.thanks {
+  @apply list-disc list-inside;
 }

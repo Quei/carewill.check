@@ -1,0 +1,30 @@
+.svg {
+  & > g:first-of-type > * {
+    stroke:#231815;
+    fill:none;
+    stroke-miterlimit:10;
+    stroke-width:1.49px;
+  }
+}
+.circle {
+  & text {
+    font-size: 15px;
+    fill: #165737;
+    letter-spacing: 0.04em;
+    &.isActiveColorWhite {
+      fill: white;
+    }
+  }
+  & circle,
+  & ellipse,
+  & path{
+    stroke: #165436;
+    stroke-dasharray: 4.24 4.24;
+    stroke-miterlimit: 10;
+    stroke-width: 1.49px;
+    fill: transparent;
+    &.isActive {
+      fill: theme('colors.green');
+    }
+  }
+}

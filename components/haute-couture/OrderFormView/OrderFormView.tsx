@@ -1,29 +1,25 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
+import { scroller } from 'react-scroll';
+import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
+import { useMediaQuery } from '@react-hook/media-query';
 import cn from 'classnames';
 import s from './OrderFormView.module.css';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
-import {
-  PageHeader,
-  Block,
-  Container,
-  Button,
-  Input,
-  Select,
-} from '@components/ui';
+import { Block, Container, Button } from '@components/ui';
 import { FormSection } from './FormSection';
-import { Checkboxes } from './Checkboxes';
-import { Acceptance } from './Acceptance';
+import { ErrorTitles } from './ErrorTitles';
 import type { VFC } from 'react';
-import type { HauteCoutureOptions } from 'types/haute-couture-options';
+import type { DeepMap, FieldError } from 'react-hook-form';
+import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
 import type { HauteCoutureOrderFormViewFragment } from 'types/schema';
-import { data } from './data';
+import { data, thanks } from './data';
+import { useEffect } from 'react';
 
 type Props = HauteCoutureOrderFormViewFragment & {
   className?: string;
@@ -39,15 +35,89 @@ export const hauteCoutureOrderFormViewFragment = /* GraphQL */ `
   }
 `;
 
-const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<HauteCoutureOptions>();
+const getErrorTitles = (errors: DeepMap<HauteCoutureInputs, FieldError>) => {
+  // NOTE:
+  // なぜかuseMemo(() => {}, [errors])をしても
+  // errorsが更新されないので、普通にgetにしておく
+  return data
+    .map((item, index) => {
+      const hasError = item.inputs.some((input) => {
+        return input.name in errors;
+      });
+      if (hasError) {
+        return { title: item.title, index };
+      } else {
+        return null;
+      }
+    })
+    .filter((item) => item);
+};
 
-  const onSubmit: SubmitHandler<HauteCoutureOptions> = (data) => {
-    console.log(data);
+const useCurrentFocusIndex = () => {
+  const [currentFocusIndex, setCurrentFocusIndex] = useState<number>();
+  const handleOnFocus = useCallback((targetIndex: number) => {
+    setCurrentFocusIndex(targetIndex);
+  }, []);
+  const isScreenMd = useMediaQuery('(min-width: 768px)');
+
+  useEffect(() => {
+    if (currentFocusIndex !== undefined) {
+      setTimeout(() => {
+        scroller.scrollTo(`section-${currentFocusIndex}`, {
+          duration: 400,
+          smooth: true,
+          offset: isScreenMd ? -65 : -55,
+        });
+      }, 1000);
+    }
+  }, [currentFocusIndex, isScreenMd]);
+  return { currentFocusIndex, handleOnFocus };
+};
+
+const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
+  const formMethod = useForm<HauteCoutureInputs>({
+    mode: 'onChange',
+    shouldFocusError: false,
+  });
+  const {
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitting,
+      isSubmitSuccessful,
+      isSubmitted,
+      isValid,
+    },
+  } = formMethod;
+
+  const onSubmit: SubmitHandler<HauteCoutureInputs> = (submitData) => {
+    const messageData = data.map((section) => {
+      const title = section.title[localeLang];
+      const answers = section.inputs
+        .filter((input) => input.name !== 'acceptance')
+        .map((input) => {
+          const question =
+            input.type === 'text' && input.label?.[localeLang]
+              ? input.label[localeLang]
+              : title;
+          const answer = submitData[input.name];
+
+          return {
+            name: input.name,
+            question,
+            answer:
+              typeof answer === 'object' && !Array.isArray(answer)
+                ? answer?.value
+                : answer,
+          };
+        });
+      return {
+        title,
+        answers,
+      };
+    });
+    console.log(submitData);
+    console.log(messageData);
   };
 
   const titleText = formTitle ?? '';
@@ -55,6 +125,8 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
   const f = useIntlMessage();
   const { locale } = useRouter();
   const localeLang = locale ? (locale as 'ja' | 'en') : 'ja';
+  const errorTitles = getErrorTitles(errors);
+  const { currentFocusIndex, handleOnFocus } = useCurrentFocusIndex();
 
   return (
     <>
@@ -80,86 +152,56 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
           {renderRichTextReact(formDescription)}
         </Container>
       </Block>
-      <form className={cn(s.form)} onSubmit={handleSubmit(onSubmit)}>
-        {data.map((item, index) => {
-          return (
-            <FormSection
-              className={cn(s.section)}
-              key={`section-${index}`}
-              id={`section-${index}`}
-              nextSectionId={`section-${index + 1}`}
-              title={item.title[localeLang] ?? ''}
-              required={item.required}
-            >
-              {item.inputs.map((input) => {
-                const description =
-                  locale === 'ja'
-                    ? input.description?.ja
-                    : input.description?.en;
-                return (
-                  <div key={`section-${index}-input-${input.name}`}>
-                    {description && (
-                      <p
-                        className={cn(s.inputDescription)}
-                        dangerouslySetInnerHTML={{ __html: description }}
-                      />
-                    )}
-                    {(input.type === 'text' || input.type === 'email') && (
-                      <Input
-                        type={input.type}
-                        placeholder={input?.placeholder?.[localeLang]}
-                      />
-                    )}
-                    {(input.type === 'radio' || input.type === 'checkbox') && (
-                      <Checkboxes
-                        className={cn(
-                          s.checkboxes,
-                          { [s.gridLayout]: input.columnNumber !== undefined },
-                          { [s.column3]: input.columnNumber === 3 },
-                          { [s.column4]: input.columnNumber === 4 }
-                        )}
-                        localeLang={localeLang}
-                        isRadio={input.type === 'radio'}
-                        {...input}
-                      />
-                    )}
-                    {input.type === 'select' && (
-                      <Select name={input.name}>
-                        {input.values.map((value, index) => (
-                          <option
-                            key={`${input.name}-${index}`}
-                            value={value[localeLang]}
-                          >
-                            {value[localeLang]}
-                          </option>
-                        ))}
-                      </Select>
-                    )}
-                    {input.type === 'acceptance' && <Acceptance />}
-                    {input.type !== 'text' &&
-                      input.type !== 'email' &&
-                      input.type !== 'select' &&
-                      input.type !== 'radio' &&
-                      input.type !== 'checkbox' &&
-                      input.type !== 'acceptance' && (
-                        <div className="h-96 border bg-gray-200">
-                          画像インタラクション作成中
-                        </div>
-                      )}
-                  </div>
-                );
-              })}
-            </FormSection>
-          );
-        })}
-        <Block className={cn(s.submitBlock)}>
-          <Container className="text-center">
-            <Button aria-label="Submit" type="submit" className={s.submit}>
-              {f('submit')}
-            </Button>
-          </Container>
-        </Block>
-      </form>
+      <FormProvider {...formMethod}>
+        <form className={cn(s.form)} onSubmit={handleSubmit(onSubmit)}>
+          {data.map((item, index) => {
+            return (
+              <FormSection
+                key={`section-${index}`}
+                id={`section-${index}`}
+                localeLang={localeLang}
+                data={item}
+                onFocus={() => handleOnFocus(index)}
+                index={index}
+                currentFocusIndex={currentFocusIndex}
+              />
+            );
+          })}
+          <Block className={cn('py-16')}>
+            <Container>
+              <Button
+                aria-label="Submit"
+                type="submit"
+                className={s.submit}
+                disabled={isSubmitting || isSubmitSuccessful}
+              >
+                {!isSubmitSuccessful && !isSubmitting && f('form.submit')}
+                {isSubmitSuccessful && f('form.submit.success')}
+                {isSubmitting && f('form.submit.ing')}
+              </Button>
+              {(isSubmitSuccessful || (isSubmitted && !isValid)) && (
+                <div className={cn(s.messageBlock)}>
+                  {isSubmitted && !isValid && (
+                    <ErrorTitles titles={errorTitles} localeLang={localeLang} />
+                  )}
+                  {isSubmitSuccessful && (
+                    <ul className={cn(s.thanks)}>
+                      {thanks.map((message, index) => (
+                        <li
+                          key={`thanks-${index}`}
+                          dangerouslySetInnerHTML={{
+                            __html: message[localeLang],
+                          }}
+                        />
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </Container>
+          </Block>
+        </form>
+      </FormProvider>
     </>
   );
 };

@@ -1,9 +1,9 @@
 .innerRoot {
-  @apply px-site-vertical md:px-site-vertical-md;
+  @apply md:px-0 md:flex;
+  height: 57px;
   @screen md {
-    @apply flex;
     padding-top: 13px;
-    padding-bottom: 15px;
+    height: auto;
   }
 }
 
@@ -12,17 +12,16 @@
 }
 
 .smallLogo {
-  @apply flex justify-center relative leading-none;
-  padding-top: 10px;
-  padding-bottom: 15px;
+  @apply absolute z-20 flex justify-center w-full leading-none md:relative;
+  padding-top: 12px;
   & a {
     @apply block;
     width: 150px;
   }
   @screen md {
     @apply block w-0 overflow-hidden flex-none md:py-0;
-    &.shownSmallLogo {
-      @apply duration-100;
+    &.hasShownSmallLogo {
+      @apply duration-100 md:pl-site-vertical-md;
       width: 25%;
     }
     & a {
@@ -34,18 +33,33 @@
 
 .nav {
   @apply w-full;
-  &.shownSmallLogo {
-  }
+}
 
-  /* NOTE:
-  とりあえず消す
-   */
-  display: none;
+.menuButton {
+  @apply z-20 left-site-vertical;
+  position: absolute !important;
+  top: 18px;
   @screen md {
-    display: block;
+    display: none !important;
   }
 }
 
 .menuList {
-  @apply flex justify-between;
+  @apply hidden md:flex md:justify-between;
+  @screen less-than-md {
+    &.hasShownMenuForMobile {
+      @apply fixed z-10 top-0 left-0 w-full h-full bg-white flex flex-col pt-20 px-site-vertical;
+      border: theme('borderWidth.DEFAULT') solid currentColor;
+      & > li + li {
+        @apply mt-8;
+      }
+    }
+  }
+}
+
+.contactItem {
+  @apply md:pr-site-vertical-md;
+  & a {
+    @apply text-3xl leading-none;
+  }
 }
