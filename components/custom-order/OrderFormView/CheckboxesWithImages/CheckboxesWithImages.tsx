@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { nonNullableFilter } from '@lib/non-nullable-filter';
-import { Checkbox } from '@components/ui';
+// import { Checkbox } from '@components/ui';
 import type { VFC, ChangeEventHandler, ChangeEvent } from 'react';
 import type { Maybe, CheckboxesWithImagesImageFragment } from 'types/schema';
 import type { UseFormRegister } from 'react-hook-form';
@@ -75,18 +75,18 @@ const CheckboxesWithImages: VFC<Props> = ({
       </div>
       <div>
         {nonNullableOptions.map((option, index) => (
-          <Checkbox
-            key={`checkbox-${ids[index]}`}
-            type="radio"
-            id={`${optionName}-option-${index}`}
-            value={option}
-            name={optionName}
-            register={register}
-            required={required}
-            onChange={(event) => handleClick(event, index)}
-          >
-            {option}
-          </Checkbox>
+          // <Checkbox
+          //   key={`checkbox-${ids[index]}`}
+          //   type="radio"
+          //   id={`${optionName}-option-${index}`}
+          //   value={option}
+          //   name={optionName}
+          //   register={register}
+          //   required={required}
+          //   onChange={(event) => handleClick(event, index)}
+          // >
+          //   {option}
+          // </Checkbox>
         ))}
       </div>
     </div>
