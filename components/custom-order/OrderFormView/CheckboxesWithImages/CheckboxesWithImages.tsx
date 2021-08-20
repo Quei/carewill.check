@@ -73,22 +73,22 @@ const CheckboxesWithImages: VFC<Props> = ({
           </div>
         ))}
       </div>
-      <div>
+      {/* <div>
         {nonNullableOptions.map((option, index) => (
-          // <Checkbox
-          //   key={`checkbox-${ids[index]}`}
-          //   type="radio"
-          //   id={`${optionName}-option-${index}`}
-          //   value={option}
-          //   name={optionName}
-          //   register={register}
-          //   required={required}
-          //   onChange={(event) => handleClick(event, index)}
-          // >
-          //   {option}
-          // </Checkbox>
+          <Checkbox
+            key={`checkbox-${ids[index]}`}
+            type="radio"
+            id={`${optionName}-option-${index}`}
+            value={option}
+            name={optionName}
+            register={register}
+            required={required}
+            onChange={(event) => handleClick(event, index)}
+          >
+            {option}
+          </Checkbox>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
