@@ -169,7 +169,7 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
           })}
           <Block className={cn('py-16')}>
             <Container>
-              <Button
+              <button
                 aria-label="Submit"
                 type="submit"
                 className={s.submit}
@@ -178,7 +178,7 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
                 {!isSubmitSuccessful && !isSubmitting && f('form.submit')}
                 {isSubmitSuccessful && f('form.submit.success')}
                 {isSubmitting && f('form.submit.ing')}
-              </Button>
+              </button>
               {(isSubmitSuccessful || (isSubmitted && !isValid)) && (
                 <div className={cn(s.messageBlock)}>
                   {isSubmitted && !isValid && (

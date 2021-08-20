@@ -13,7 +13,7 @@
 }
 
 .submit {
-  @apply block text-2xl mx-auto;
+  @apply block leading-none text-2xl mx-auto border border-green h-14 w-52 hover:text-white hover:bg-green;
   &[disabled] {
     @apply text-white bg-green border-green;
     filter: none;
