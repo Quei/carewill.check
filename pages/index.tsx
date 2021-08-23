@@ -1,5 +1,5 @@
 import commerce from '@lib/api/commerce';
-import { fetcher, getAllNavigations } from '@lib/contentful';
+import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
   HomeView,
@@ -135,11 +135,20 @@ export async function getStaticProps({
 
   const allNavigationsPromise = getAllNavigations({ locale, preview });
 
-  const [storeData, laboData, aboutData, allNavigations] = await Promise.all([
+  const footerPromise = getFooter({ locale, preview });
+
+  const [
+    storeData,
+    laboData,
+    aboutData,
+    allNavigations,
+    footerData,
+  ] = await Promise.all([
     storePromise,
     laboPromise,
     aboutPromise,
     allNavigationsPromise,
+    footerPromise,
   ]);
   const store = storeData?.homeCollection?.items?.[0];
   const labo = laboData?.homeCollection?.items?.[0];
@@ -155,6 +164,7 @@ export async function getStaticProps({
       labo: { ...labo, latestStaffNote },
       about,
       allNavigations,
+      footer: footerData.footer,
       isSiteRoot: true,
     },
     // revalidate: 14400,

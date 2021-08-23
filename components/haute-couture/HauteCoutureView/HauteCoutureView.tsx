@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { NextSeo } from 'next-seo';
 import cn from 'classnames';
 import s from './HauteCoutureView.module.css';
@@ -29,13 +28,7 @@ export const hauteCoutureViewFragment = /* GraphQL */ `
       json
     }
     image {
-      sys {
-        id
-      }
       url
-      title
-      width
-      height
     }
   }
 `;
@@ -83,9 +76,7 @@ const HauteCoutureView: FC<Props> = ({ title, description, image }) => {
       <PageHeader title={titleText}>
         {renderRichTextReact(description)}
       </PageHeader>
-      {image?.url && (
-        <FullImage src={image?.url ?? ''} alt={image?.title ?? ''} />
-      )}
+      {image?.url && <FullImage src={image?.url ?? ''} alt={titleText ?? ''} />}
       <OnelineLink href="/haute-couture/order-form">
         {f('formLink')}
       </OnelineLink>

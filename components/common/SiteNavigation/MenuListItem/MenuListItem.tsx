@@ -10,6 +10,7 @@ type Props = {
   site: Site;
   title: string;
   menu: Repeater[];
+  type: 'header' | 'footer';
 };
 
 const useHasShownChildrenForMobile = () => {
@@ -22,14 +23,27 @@ const useHasShownChildrenForMobile = () => {
   return { hasShownChildrenForMobile, handleOnClickPlusButton };
 };
 
-const MenuListItem: React.VFC<Props> = ({ className, site, title, menu }) => {
+const MenuListItem: React.VFC<Props> = ({
+  className,
+  site,
+  title,
+  menu,
+  type,
+}) => {
   const childrenTargetId = `${title}-children`;
   const {
     hasShownChildrenForMobile,
     handleOnClickPlusButton,
   } = useHasShownChildrenForMobile();
   return (
-    <li className={cn(s.root, className)}>
+    <li
+      className={cn(
+        s.root,
+        { [s.header]: type === 'header' },
+        { [s.footer]: type === 'footer' },
+        className
+      )}
+    >
       <Link className={cn(s.title)} href="/" site={site} hasBorderEffect={true}>
         {title}
       </Link>
@@ -38,6 +52,7 @@ const MenuListItem: React.VFC<Props> = ({ className, site, title, menu }) => {
         targetId={childrenTargetId}
         hasPressed={hasShownChildrenForMobile}
         onClick={handleOnClickPlusButton}
+        isThin={type === 'footer'}
       />
       <ul
         id={childrenTargetId}
@@ -46,7 +61,7 @@ const MenuListItem: React.VFC<Props> = ({ className, site, title, menu }) => {
         })}
       >
         {menu.map(({ id, key, value }) => (
-          <li key={id}>
+          <li key={id} className={cn(s.child)}>
             <Link href={value} site={site} hasBorderEffect={true}>
               {key}
             </Link>

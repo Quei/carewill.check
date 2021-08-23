@@ -16,7 +16,6 @@ type Props = {
 const HomeView: VFC<Props> = ({ store, labo, about }) => {
   return (
     <>
-      <div className="h-60">slide-show</div>
       {store && <Store {...store} />}
       {labo && (
         <LaboPreview>

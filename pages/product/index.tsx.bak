@@ -1,32 +1,32 @@
 import { useRouter } from 'next/router';
-import { fetcher, getAllNavigations } from '@lib/contentful';
+import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
-  CustomOrderView,
-  customOrderViewFragment,
+  ProductArchiveView,
+  productArchiveViewFragment,
 } from '@components/custom-order';
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
-import type { GetCustomOrderQuery } from 'types/schema';
+import type { GetProductArchiveQuery } from 'types/schema';
 
-const getCustomOrderQuery = /* GraphQL */ `
-  query GetCustomOrder(
+const getProductArchiveQuery = /* GraphQL */ `
+  query GetProductArchive(
     $locale: String!
     $slug: String!
     $preview: Boolean = false
   ) {
-    customOrderCollection(
+    productCollection(
       locale: $locale
       where: { slug: $slug }
       preview: $preview
       limit: 1
     ) {
       items {
-        ...customOrderView
+        ...productArchiveView
       }
     }
   }
 
-  ${customOrderViewFragment}
+  ${productArchiveViewFragment}
 `;
 
 export async function getStaticProps({
@@ -35,10 +35,8 @@ export async function getStaticProps({
   locales,
   preview,
 }: GetStaticPropsContext<{ slug: string }>) {
-  const SLUG = 'custom-order';
-
-  const dataPromise = fetcher<GetCustomOrderQuery>({
-    query: getCustomOrderQuery,
+  const dataPromise = fetcher<GetProductArchiveQuery>({
+    query: getProductArchiveQuery,
     variables: {
       locale,
       slug: SLUG,
@@ -48,12 +46,16 @@ export async function getStaticProps({
 
   const allNavigationsPromise = getAllNavigations({ locale, preview });
 
-  const [data, allNavigations] = await Promise.all([
+  const footerPromise = getFooter({ locale, preview });
+
+  const [data, allNavigations, footerData] = await Promise.all([
     dataPromise,
     allNavigationsPromise,
+    footerPromise,
   ]);
 
-  const entry = data?.customOrderCollection?.items?.[0];
+  const entry = data?.productArchiveCollection?.items?.[0];
+  console.log(entry);
 
   if (!entry) {
     throw new Error(`Contentful Data with slug '${params!.slug}' not found`);
@@ -63,12 +65,13 @@ export async function getStaticProps({
     props: {
       entry,
       allNavigations,
+      footer: footerData.footer,
     },
     revalidate: 200,
   };
 }
 
-export default function CustomOrder({
+export default function ProductArchive({
   entry,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
@@ -80,8 +83,8 @@ export default function CustomOrder({
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <CustomOrderView {...entry} />
+    <ProductArchiveView {...entry} />
   );
 }
 
-CustomOrder.Layout = Layout;
+ProductArchive.Layout = Layout;

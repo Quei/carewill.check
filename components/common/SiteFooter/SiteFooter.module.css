@@ -1,10 +1,11 @@
 .root {
-  border-top: theme('borderWidth.DEFAULT') solid theme('colors.green');
+  @apply px-site-vertical pt-24 pb-16 md:px-0 md:pt-32;
+  border-top: theme('borderWidth.DEFAULT') solid currentColor;
 }
 
-.navigation {
-  & > ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.texts {
+  @apply text-2xs mt-6 md:mt-20;
+  & > * + * {
+    @apply mt-4;
   }
 }

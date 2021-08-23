@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import cn from 'classnames';
-import s from './CustomOrderView.module.css';
+import s from './ProductArchiveView.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import {
   renderRichText,
@@ -10,15 +10,15 @@ import {
 import { getOpenGraph } from '@lib/get-open-graph';
 import { PageHeader, OnelineLink, FullImage } from '@components/ui';
 import type { FC } from 'react';
-import type { CustomOrderViewFragment } from 'types/schema';
+import type { ProductArchiveViewFragment } from 'types/schema';
 
-type Props = CustomOrderViewFragment & {
+type Props = ProductArchiveViewFragment & {
   className?: string;
   children?: any;
 };
 
-export const customOrderViewFragment = /* GraphQL */ `
-  fragment customOrderView on CustomOrder {
+export const productArchiveViewFragment = /* GraphQL */ `
+  fragment productArchiveView on Product {
     title
     description {
       json
@@ -29,7 +29,7 @@ export const customOrderViewFragment = /* GraphQL */ `
   }
 `;
 
-const CustomOrderView: FC<Props> = ({ title, description, image }) => {
+const ProductArchiveView: FC<Props> = ({ title, description, image }) => {
   const titleText = title ?? '';
   const descriptionText = renderRichText(description);
   const f = useIntlMessage();
@@ -45,7 +45,7 @@ const CustomOrderView: FC<Props> = ({ title, description, image }) => {
         description={descriptionText}
         openGraph={openGraph}
       />
-      <PageHeader title={f('customOrder')}>
+      <PageHeader title={f('productArchive')}>
         {renderRichTextReact(description)}
       </PageHeader>
       {image?.url && <FullImage src={image?.url ?? ''} alt={titleText ?? ''} />}
@@ -54,4 +54,4 @@ const CustomOrderView: FC<Props> = ({ title, description, image }) => {
   );
 };
 
-export default CustomOrderView;
+export default ProductArchiveView;

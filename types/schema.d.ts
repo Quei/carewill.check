@@ -39,6 +39,8 @@ export type Query = {
   customOrder?: Maybe<CustomOrder>;
   customOrderCollection?: Maybe<CustomOrderCollection>;
   entryCollection?: Maybe<EntryCollection>;
+  footer?: Maybe<Footer>;
+  footerCollection?: Maybe<FooterCollection>;
   hauteCouture?: Maybe<HauteCouture>;
   hauteCoutureCollection?: Maybe<HauteCoutureCollection>;
   home?: Maybe<Home>;
@@ -109,6 +111,21 @@ export type QueryEntryCollectionArgs = {
   preview?: Maybe<Scalars['Boolean']>;
   skip?: Maybe<Scalars['Int']>;
   where?: Maybe<EntryFilter>;
+};
+
+export type QueryFooterArgs = {
+  id: Scalars['String'];
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type QueryFooterCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+  where?: Maybe<FooterFilter>;
+  order?: Maybe<Array<Maybe<FooterOrder>>>;
 };
 
 export type QueryHauteCoutureArgs = {
@@ -378,10 +395,18 @@ export enum ImageFormat {
 
 export type AssetLinkingCollections = {
   __typename?: 'AssetLinkingCollections';
+  customOrderCollection?: Maybe<CustomOrderCollection>;
   entryCollection?: Maybe<EntryCollection>;
   hauteCoutureCollection?: Maybe<HauteCoutureCollection>;
   homeCollection?: Maybe<HomeCollection>;
   staffNoteCollection?: Maybe<StaffNoteCollection>;
+};
+
+export type AssetLinkingCollectionsCustomOrderCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
 };
 
 export type AssetLinkingCollectionsEntryCollectionArgs = {
@@ -599,6 +624,7 @@ export type Home = Entry & {
   customOrderDescription?: Maybe<HomeCustomOrderDescription>;
   customOrderImage?: Maybe<Asset>;
   description?: Maybe<HomeDescription>;
+  endSlideCollection?: Maybe<AssetCollection>;
   hauteCoutureDescription?: Maybe<HomeHauteCoutureDescription>;
   hauteCoutureImage?: Maybe<Asset>;
   linkedFrom?: Maybe<HomeLinkingCollections>;
@@ -613,6 +639,7 @@ export type Home = Entry & {
   staffNoteHomeDescription?: Maybe<HomeStaffNoteHomeDescription>;
   sys: Sys;
   title?: Maybe<Scalars['String']>;
+  topSlideCollection?: Maybe<AssetCollection>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/home) */
@@ -639,6 +666,14 @@ export type HomeCustomOrderImageArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/home) */
 export type HomeDescriptionArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/home) */
+export type HomeEndSlideCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
   locale?: Maybe<Scalars['String']>;
 };
 
@@ -710,6 +745,14 @@ export type HomeStaffNoteHomeDescriptionArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/home) */
 export type HomeTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/home) */
+export type HomeTopSlideCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
   locale?: Maybe<Scalars['String']>;
 };
 
@@ -998,6 +1041,99 @@ export enum AssetOrder {
   WidthDesc = 'width_DESC',
 }
 
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
+export type Navigation = Entry & {
+  __typename?: 'Navigation';
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<NavigationLinkingCollections>;
+  menu?: Maybe<Scalars['JSON']>;
+  slug?: Maybe<Scalars['String']>;
+  sns?: Maybe<Scalars['JSON']>;
+  sys: Sys;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
+export type NavigationLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
+export type NavigationMenuArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
+export type NavigationSlugArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
+export type NavigationSnsArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
+export type NavigationTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type NavigationLinkingCollections = {
+  __typename?: 'NavigationLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type NavigationLinkingCollectionsEntryCollectionArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  locale?: Maybe<Scalars['String']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+export type NavigationCollection = {
+  __typename?: 'NavigationCollection';
+  items: Array<Maybe<Navigation>>;
+  limit: Scalars['Int'];
+  skip: Scalars['Int'];
+  total: Scalars['Int'];
+};
+
+export type NavigationFilter = {
+  AND?: Maybe<Array<Maybe<NavigationFilter>>>;
+  OR?: Maybe<Array<Maybe<NavigationFilter>>>;
+  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
+  slug?: Maybe<Scalars['String']>;
+  slug_contains?: Maybe<Scalars['String']>;
+  slug_exists?: Maybe<Scalars['Boolean']>;
+  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not?: Maybe<Scalars['String']>;
+  slug_not_contains?: Maybe<Scalars['String']>;
+  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  sys?: Maybe<SysFilter>;
+  title?: Maybe<Scalars['String']>;
+  title_contains?: Maybe<Scalars['String']>;
+  title_exists?: Maybe<Scalars['Boolean']>;
+  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not?: Maybe<Scalars['String']>;
+  title_not_contains?: Maybe<Scalars['String']>;
+  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export enum NavigationOrder {
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+}
+
 export type StaffNoteFilter = {
   sys?: Maybe<SysFilter>;
   contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
@@ -1120,6 +1256,7 @@ export type HomeFilter = {
   description_contains?: Maybe<Scalars['String']>;
   description_exists?: Maybe<Scalars['Boolean']>;
   description_not_contains?: Maybe<Scalars['String']>;
+  endSlideCollection_exists?: Maybe<Scalars['Boolean']>;
   hauteCoutureDescription_contains?: Maybe<Scalars['String']>;
   hauteCoutureDescription_exists?: Maybe<Scalars['Boolean']>;
   hauteCoutureDescription_not_contains?: Maybe<Scalars['String']>;
@@ -1157,6 +1294,7 @@ export type HomeFilter = {
   title_not?: Maybe<Scalars['String']>;
   title_not_contains?: Maybe<Scalars['String']>;
   title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  topSlideCollection_exists?: Maybe<Scalars['Boolean']>;
 };
 
 export enum HomeOrder {
@@ -1351,99 +1489,6 @@ export enum RecruitingOrder {
   SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
   SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
-}
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
-export type Navigation = Entry & {
-  __typename?: 'Navigation';
-  contentfulMetadata: ContentfulMetadata;
-  linkedFrom?: Maybe<NavigationLinkingCollections>;
-  menu?: Maybe<Scalars['JSON']>;
-  slug?: Maybe<Scalars['String']>;
-  sns?: Maybe<Scalars['JSON']>;
-  sys: Sys;
-  title?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
-export type NavigationLinkedFromArgs = {
-  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
-export type NavigationMenuArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
-export type NavigationSlugArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
-export type NavigationSnsArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/navigation) */
-export type NavigationTitleArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type NavigationLinkingCollections = {
-  __typename?: 'NavigationLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-};
-
-export type NavigationLinkingCollectionsEntryCollectionArgs = {
-  limit?: Maybe<Scalars['Int']>;
-  locale?: Maybe<Scalars['String']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  skip?: Maybe<Scalars['Int']>;
-};
-
-export type NavigationCollection = {
-  __typename?: 'NavigationCollection';
-  items: Array<Maybe<Navigation>>;
-  limit: Scalars['Int'];
-  skip: Scalars['Int'];
-  total: Scalars['Int'];
-};
-
-export type NavigationFilter = {
-  AND?: Maybe<Array<Maybe<NavigationFilter>>>;
-  OR?: Maybe<Array<Maybe<NavigationFilter>>>;
-  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
-  slug?: Maybe<Scalars['String']>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  sys?: Maybe<SysFilter>;
-  title?: Maybe<Scalars['String']>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export enum NavigationOrder {
-  SlugAsc = 'slug_ASC',
-  SlugDesc = 'slug_DESC',
-  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
-  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
-  SysIdAsc = 'sys_id_ASC',
-  SysIdDesc = 'sys_id_DESC',
-  SysPublishedAtAsc = 'sys_publishedAt_ASC',
-  SysPublishedAtDesc = 'sys_publishedAt_DESC',
-  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
-  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
 }
 
 export type EntryFilter = {
@@ -1731,6 +1776,89 @@ export enum NewsCategoryOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
 
+export type CustomOrderCollection = {
+  __typename?: 'CustomOrderCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<CustomOrder>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
+export type CustomOrder = Entry & {
+  __typename?: 'CustomOrder';
+  sys: Sys;
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<CustomOrderLinkingCollections>;
+  title?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  description?: Maybe<CustomOrderDescription>;
+  image?: Maybe<Asset>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
+export type CustomOrderLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
+export type CustomOrderTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
+export type CustomOrderSlugArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
+export type CustomOrderDescriptionArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
+export type CustomOrderImageArgs = {
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type CustomOrderLinkingCollections = {
+  __typename?: 'CustomOrderLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type CustomOrderLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type CustomOrderDescription = {
+  __typename?: 'CustomOrderDescription';
+  json: Scalars['JSON'];
+  links: CustomOrderDescriptionLinks;
+};
+
+export type CustomOrderDescriptionLinks = {
+  __typename?: 'CustomOrderDescriptionLinks';
+  entries: CustomOrderDescriptionEntries;
+  assets: CustomOrderDescriptionAssets;
+};
+
+export type CustomOrderDescriptionEntries = {
+  __typename?: 'CustomOrderDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type CustomOrderDescriptionAssets = {
+  __typename?: 'CustomOrderDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
 export type HomeProductDescription = {
   __typename?: 'HomeProductDescription';
   json: Scalars['JSON'];
@@ -1951,6 +2079,140 @@ export type HauteCoutureFormDescriptionAssets = {
   block: Array<Maybe<Asset>>;
 };
 
+export type CustomOrderFilter = {
+  sys?: Maybe<SysFilter>;
+  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
+  title_exists?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  title_not?: Maybe<Scalars['String']>;
+  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains?: Maybe<Scalars['String']>;
+  title_not_contains?: Maybe<Scalars['String']>;
+  slug_exists?: Maybe<Scalars['Boolean']>;
+  slug?: Maybe<Scalars['String']>;
+  slug_not?: Maybe<Scalars['String']>;
+  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains?: Maybe<Scalars['String']>;
+  slug_not_contains?: Maybe<Scalars['String']>;
+  description_exists?: Maybe<Scalars['Boolean']>;
+  description_contains?: Maybe<Scalars['String']>;
+  description_not_contains?: Maybe<Scalars['String']>;
+  image_exists?: Maybe<Scalars['Boolean']>;
+  OR?: Maybe<Array<Maybe<CustomOrderFilter>>>;
+  AND?: Maybe<Array<Maybe<CustomOrderFilter>>>;
+};
+
+export enum CustomOrderOrder {
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+}
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type Footer = Entry & {
+  __typename?: 'Footer';
+  sys: Sys;
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<FooterLinkingCollections>;
+  slug?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterSlugArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterContentArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type FooterLinkingCollections = {
+  __typename?: 'FooterLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type FooterLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type FooterCollection = {
+  __typename?: 'FooterCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Footer>>;
+};
+
+export type FooterFilter = {
+  sys?: Maybe<SysFilter>;
+  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
+  slug_exists?: Maybe<Scalars['Boolean']>;
+  slug?: Maybe<Scalars['String']>;
+  slug_not?: Maybe<Scalars['String']>;
+  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains?: Maybe<Scalars['String']>;
+  slug_not_contains?: Maybe<Scalars['String']>;
+  title_exists?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  title_not?: Maybe<Scalars['String']>;
+  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains?: Maybe<Scalars['String']>;
+  title_not_contains?: Maybe<Scalars['String']>;
+  content_exists?: Maybe<Scalars['Boolean']>;
+  content?: Maybe<Scalars['String']>;
+  content_not?: Maybe<Scalars['String']>;
+  content_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  content_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  content_contains?: Maybe<Scalars['String']>;
+  content_not_contains?: Maybe<Scalars['String']>;
+  OR?: Maybe<Array<Maybe<FooterFilter>>>;
+  AND?: Maybe<Array<Maybe<FooterFilter>>>;
+};
+
+export enum FooterOrder {
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+}
+
 export type HauteCoutureFilter = {
   sys?: Maybe<SysFilter>;
   contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
@@ -2084,124 +2346,9 @@ export enum ProductOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
 
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
-export type CustomOrder = Entry & {
-  __typename?: 'CustomOrder';
-  sys: Sys;
-  contentfulMetadata: ContentfulMetadata;
-  linkedFrom?: Maybe<CustomOrderLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
-  description?: Maybe<CustomOrderDescription>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
-export type CustomOrderLinkedFromArgs = {
-  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
-export type CustomOrderTitleArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
-export type CustomOrderSlugArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/customOrder) */
-export type CustomOrderDescriptionArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type CustomOrderLinkingCollections = {
-  __typename?: 'CustomOrderLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-};
-
-export type CustomOrderLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type CustomOrderDescription = {
-  __typename?: 'CustomOrderDescription';
-  json: Scalars['JSON'];
-  links: CustomOrderDescriptionLinks;
-};
-
-export type CustomOrderDescriptionLinks = {
-  __typename?: 'CustomOrderDescriptionLinks';
-  entries: CustomOrderDescriptionEntries;
-  assets: CustomOrderDescriptionAssets;
-};
-
-export type CustomOrderDescriptionEntries = {
-  __typename?: 'CustomOrderDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type CustomOrderDescriptionAssets = {
-  __typename?: 'CustomOrderDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type CustomOrderCollection = {
-  __typename?: 'CustomOrderCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<CustomOrder>>;
-};
-
-export type CustomOrderFilter = {
-  sys?: Maybe<SysFilter>;
-  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  description_exists?: Maybe<Scalars['Boolean']>;
-  description_contains?: Maybe<Scalars['String']>;
-  description_not_contains?: Maybe<Scalars['String']>;
-  OR?: Maybe<Array<Maybe<CustomOrderFilter>>>;
-  AND?: Maybe<Array<Maybe<CustomOrderFilter>>>;
-};
-
-export enum CustomOrderOrder {
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  SlugAsc = 'slug_ASC',
-  SlugDesc = 'slug_DESC',
-  SysIdAsc = 'sys_id_ASC',
-  SysIdDesc = 'sys_id_DESC',
-  SysPublishedAtAsc = 'sys_publishedAt_ASC',
-  SysPublishedAtDesc = 'sys_publishedAt_DESC',
-  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
-  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
-  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
-  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
-}
-
 export type CustomOrderViewFragment = { __typename?: 'CustomOrder' } & Pick<
   CustomOrder,
-  'title' | 'slug'
+  'title'
 > & {
     description?: Maybe<
       { __typename?: 'CustomOrderDescription' } & Pick<
@@ -2209,6 +2356,7 @@ export type CustomOrderViewFragment = { __typename?: 'CustomOrder' } & Pick<
         'json'
       >
     >;
+    image?: Maybe<{ __typename?: 'Asset' } & Pick<Asset, 'url'>>;
   };
 
 export type CheckboxesWithImagesImageFragment = { __typename?: 'Asset' } & Pick<
@@ -2237,12 +2385,7 @@ export type HauteCoutureViewFragment = { __typename?: 'HauteCouture' } & Pick<
         'json'
       >
     >;
-    image?: Maybe<
-      { __typename?: 'Asset' } & Pick<
-        Asset,
-        'url' | 'title' | 'width' | 'height'
-      > & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> }
-    >;
+    image?: Maybe<{ __typename?: 'Asset' } & Pick<Asset, 'url'>>;
   };
 
 export type HauteCoutureOrderFormViewFragment = {
@@ -2289,6 +2432,11 @@ export type HomeLaboLatestStaffNoteFragment = { __typename?: 'StaffNote' } & {
 };
 
 export type HomeStoreViewFragment = { __typename?: 'Home' } & {
+  topSlideCollection?: Maybe<
+    { __typename?: 'AssetCollection' } & {
+      items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
+    }
+  >;
   description?: Maybe<
     { __typename?: 'HomeDescription' } & Pick<HomeDescription, 'json'>
   >;
@@ -2320,7 +2468,22 @@ export type HomeStoreViewFragment = { __typename?: 'Home' } & {
       'json'
     >
   >;
+  endSlideCollection?: Maybe<
+    { __typename?: 'AssetCollection' } & {
+      items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
+    }
+  >;
 };
+
+export type SlideItemFragment = { __typename?: 'Asset' } & Pick<
+  Asset,
+  'contentType' | 'fileName' | 'url' | 'title' | 'description'
+> & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
+
+export type NavigationStoreFragment = { __typename?: 'Navigation' } & Pick<
+  Navigation,
+  'menu' | 'sns'
+>;
 
 export type GetNavigationStoreQueryVariables = Exact<{
   locale: Scalars['String'];
@@ -2332,11 +2495,16 @@ export type GetNavigationStoreQuery = { __typename?: 'Query' } & {
   navigationCollection?: Maybe<
     { __typename?: 'NavigationCollection' } & {
       items: Array<
-        Maybe<{ __typename?: 'Navigation' } & Pick<Navigation, 'menu' | 'sns'>>
+        Maybe<{ __typename?: 'Navigation' } & NavigationStoreFragment>
       >;
     }
   >;
 };
+
+export type NavigationLaboFragment = { __typename?: 'Navigation' } & Pick<
+  Navigation,
+  'menu'
+>;
 
 export type GetNavigationLaboQueryVariables = Exact<{
   locale: Scalars['String'];
@@ -2348,11 +2516,16 @@ export type GetNavigationLaboQuery = { __typename?: 'Query' } & {
   navigationCollection?: Maybe<
     { __typename?: 'NavigationCollection' } & {
       items: Array<
-        Maybe<{ __typename?: 'Navigation' } & Pick<Navigation, 'menu'>>
+        Maybe<{ __typename?: 'Navigation' } & NavigationLaboFragment>
       >;
     }
   >;
 };
+
+export type NavigationAboutFragment = { __typename?: 'Navigation' } & Pick<
+  Navigation,
+  'menu'
+>;
 
 export type GetNavigationAboutQueryVariables = Exact<{
   locale: Scalars['String'];
@@ -2364,8 +2537,27 @@ export type GetNavigationAboutQuery = { __typename?: 'Query' } & {
   navigationCollection?: Maybe<
     { __typename?: 'NavigationCollection' } & {
       items: Array<
-        Maybe<{ __typename?: 'Navigation' } & Pick<Navigation, 'menu'>>
+        Maybe<{ __typename?: 'Navigation' } & NavigationAboutFragment>
       >;
+    }
+  >;
+};
+
+export type FooterFragment = { __typename?: 'Footer' } & Pick<
+  Footer,
+  'content'
+>;
+
+export type GetFooterQueryVariables = Exact<{
+  locale: Scalars['String'];
+  slug: Scalars['String'];
+  preview?: Maybe<Scalars['Boolean']>;
+}>;
+
+export type GetFooterQuery = { __typename?: 'Query' } & {
+  footerCollection?: Maybe<
+    { __typename?: 'FooterCollection' } & {
+      items: Array<Maybe<{ __typename?: 'Footer' } & FooterFragment>>;
     }
   >;
 };
@@ -2387,15 +2579,15 @@ type RichTextEntryHyperlink_Home_Fragment = { __typename: 'Home' } & {
   sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
 };
 
+type RichTextEntryHyperlink_Navigation_Fragment = {
+  __typename: 'Navigation';
+} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
+
 type RichTextEntryHyperlink_Recruiting_Fragment = {
   __typename: 'Recruiting';
 } & Pick<Recruiting, 'slug'> & {
     sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
   };
-
-type RichTextEntryHyperlink_Navigation_Fragment = {
-  __typename: 'Navigation';
-} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
 
 type RichTextEntryHyperlink_News_Fragment = { __typename: 'News' } & {
   sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
@@ -2405,29 +2597,34 @@ type RichTextEntryHyperlink_NewsCategory_Fragment = {
   __typename: 'NewsCategory';
 } & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
 
+type RichTextEntryHyperlink_CustomOrder_Fragment = {
+  __typename: 'CustomOrder';
+} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
+
 type RichTextEntryHyperlink_HauteCouture_Fragment = {
   __typename: 'HauteCouture';
 } & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
+
+type RichTextEntryHyperlink_Footer_Fragment = { __typename: 'Footer' } & {
+  sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
+};
 
 type RichTextEntryHyperlink_Product_Fragment = { __typename: 'Product' } & {
   sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
 };
 
-type RichTextEntryHyperlink_CustomOrder_Fragment = {
-  __typename: 'CustomOrder';
-} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
-
 export type RichTextEntryHyperlinkFragment =
   | RichTextEntryHyperlink_StaffNote_Fragment
   | RichTextEntryHyperlink_Category_Fragment
   | RichTextEntryHyperlink_Home_Fragment
-  | RichTextEntryHyperlink_Recruiting_Fragment
   | RichTextEntryHyperlink_Navigation_Fragment
+  | RichTextEntryHyperlink_Recruiting_Fragment
   | RichTextEntryHyperlink_News_Fragment
   | RichTextEntryHyperlink_NewsCategory_Fragment
+  | RichTextEntryHyperlink_CustomOrder_Fragment
   | RichTextEntryHyperlink_HauteCouture_Fragment
-  | RichTextEntryHyperlink_Product_Fragment
-  | RichTextEntryHyperlink_CustomOrder_Fragment;
+  | RichTextEntryHyperlink_Footer_Fragment
+  | RichTextEntryHyperlink_Product_Fragment;
 
 export type GetCustomOrderQueryVariables = Exact<{
   locale: Scalars['String'];
@@ -2440,22 +2637,6 @@ export type GetCustomOrderQuery = { __typename?: 'Query' } & {
     { __typename?: 'CustomOrderCollection' } & {
       items: Array<
         Maybe<{ __typename?: 'CustomOrder' } & CustomOrderViewFragment>
-      >;
-    }
-  >;
-};
-
-export type GetCustomOrderOrderQueryVariables = Exact<{
-  locale: Scalars['String'];
-  slug: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-}>;
-
-export type GetCustomOrderOrderQuery = { __typename?: 'Query' } & {
-  customOrderCollection?: Maybe<
-    { __typename?: 'CustomOrderCollection' } & {
-      items: Array<
-        Maybe<{ __typename?: 'CustomOrder' } & CustomOrderOrderFormViewFragment>
       >;
     }
   >;

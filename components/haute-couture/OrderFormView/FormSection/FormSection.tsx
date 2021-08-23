@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useFormState, useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
-import YouTube from 'react-youtube';
 import cn from 'classnames';
 import s from './FormSection.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import { ErrorText } from '@components/ui';
+import { YouTube, ErrorText } from '@components/ui';
 import { Input, Checkbox, Select } from '@components/ui/react-hook-form';
 import { Root } from './Root';
 import { ClothesType } from './ClothesType';
@@ -148,20 +147,9 @@ const FormSection: VFC<Props> = ({
           )}
           {data.video && (
             <YouTube
-              containerClassName={cn('aspect-w-16', ' aspect-h-9', s.video)}
-              videoId={data.video}
-              opts={{
-                playerVars: {
-                  autoplay: 1,
-                  controls: 0,
-                  loop: 1,
-                  playlist: data.video,
-                  mute: 1,
-                  modestbranding: 1,
-                  rel: 0,
-                  iv_load_policy: 3,
-                },
-              }}
+              className={cn('aspect-w-16', 'aspect-h-9', s.video)}
+              videoId={ data.video }
+              isLoop={true}
             />
           )}
           {data.componentName && (

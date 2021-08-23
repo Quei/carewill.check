@@ -25,3 +25,5 @@ export { default as DefaultImage } from './DefaultImage';
 export { default as FullImage } from './FullImage';
 export { default as PickupSection } from './PickupSection';
 export { default as PlusButton } from './PlusButton';
+export { default as Slide } from './Slide';
+export { default as YouTube } from './YouTube';

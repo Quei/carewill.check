@@ -1,4 +1,5 @@
 export const en: Record<string, any> = {
+  carewill: 'Carewill',
   product: 'Product',
   customOrder: 'Custom order',
   collaboration: 'Collaboration',

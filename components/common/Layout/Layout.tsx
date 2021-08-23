@@ -14,6 +14,7 @@ import LoginView from '@components/auth/LoginView';
 import { ja as localeContentJa, en as localeContentEn } from '@content/locales';
 import type { FC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
+import type { FooterFragment } from 'types/schema';
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -44,13 +45,14 @@ const FeatureBar = dynamic(
 interface Props {
   pageProps: {
     allNavigations: AllNavigations;
+    footer?: FooterFragment;
     isSiteRoot?: boolean;
   };
 }
 
 const Layout: FC<Props> = ({
   children,
-  pageProps: { allNavigations, isSiteRoot, ...pageProps },
+  pageProps: { allNavigations, footer, isSiteRoot, ...pageProps },
 }) => {
   const {
     displaySidebar,
@@ -83,6 +85,7 @@ const Layout: FC<Props> = ({
           <SiteFooter
             className={cn(s.footer)}
             allNavigations={allNavigations}
+            footer={footer}
           />
 
           <Modal open={displayModal} onClose={closeModal}>

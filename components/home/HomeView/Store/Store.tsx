@@ -1,7 +1,8 @@
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
-import { Grid, Block, BlockContent } from '@components/ui';
+import { Slide, Grid, Block, BlockContent } from '@components/ui';
 import { Section } from '../Section';
+import { slideItemFragment } from '@components/ui/Slide';
 import type { VFC } from 'react';
 import type { HomeStoreViewFragment } from 'types/schema';
 
@@ -13,6 +14,11 @@ export type Props = HomeStoreViewFragment & {
 
 export const homeStoreViewFragment = /* GraphQL */ `
   fragment homeStoreView on Home {
+    topSlideCollection(locale: "ja") {
+      items {
+        ...SlideItem
+      }
+    }
     description {
       json
     }
@@ -40,11 +46,19 @@ export const homeStoreViewFragment = /* GraphQL */ `
     collaborationDescription {
       json
     }
+    endSlideCollection(locale: "ja") {
+      items {
+        ...SlideItem
+      }
+    }
   }
+
+  ${slideItemFragment}
 `;
 
 const Store: VFC<Props> = ({
   className,
+  topSlideCollection,
   description,
   productImage,
   productDescription,
@@ -54,61 +68,71 @@ const Store: VFC<Props> = ({
   hauteCoutureDescription,
   collaborationImage,
   collaborationDescription,
+  endSlideCollection,
 }) => {
   const f = useIntlMessage();
   return (
-    <Section title={'Store'} description={renderRichTextReact(description)}>
-      <Grid>
-        {productImage && productDescription && (
-          <Block title={f('product')} titleTag="h3" href="/product" site={SITE}>
-            <BlockContent image={{ src: productImage.url, alt: f('product') }}>
-              {renderRichTextReact(productDescription)}
-            </BlockContent>
-          </Block>
-        )}
-        {customOrderImage && customOrderDescription && (
-          <Block
-            title={f('customOrder')}
-            titleTag="h3"
-            href="/custom-order"
-            site={SITE}
-          >
-            <BlockContent
-              image={{ src: customOrderImage.url, alt: f('customOrder') }}
+    <>
+      {topSlideCollection?.items && <Slide items={topSlideCollection.items} />}
+      <Section title={'Store'} description={renderRichTextReact(description)}>
+        <Grid>
+          {productImage && productDescription && (
+            <Block
+              title={f('product')}
+              titleTag="h3"
+              href="/product"
+              site={SITE}
             >
-              {renderRichTextReact(customOrderDescription)}
-            </BlockContent>
-          </Block>
-        )}
-        {hauteCoutureImage && hauteCoutureDescription && (
-          <Block
-            title={f('hauteCouture')}
-            titleTag="h3"
-            href="/haute-couture"
-            site={SITE}
-          >
-            <BlockContent
-              image={{ src: hauteCoutureImage.url, alt: f('hauteCouture') }}
+              <BlockContent
+                image={{ src: productImage.url, alt: f('product') }}
+              >
+                {renderRichTextReact(productDescription)}
+              </BlockContent>
+            </Block>
+          )}
+          {customOrderImage && customOrderDescription && (
+            <Block
+              title={f('customOrder')}
+              titleTag="h3"
+              href="/custom-order"
+              site={SITE}
             >
-              {renderRichTextReact(hauteCoutureDescription)}
-            </BlockContent>
-          </Block>
-        )}
-        {collaborationImage && collaborationDescription && (
-          <Block
-            title={f('collaboration')}
-            titleTag="h3"
-            href="/collaboration"
-            site={SITE}
-          >
-            <BlockContent
-              image={{ src: collaborationImage.url, alt: f('collaboration') }}
+              <BlockContent
+                image={{ src: customOrderImage.url, alt: f('customOrder') }}
+              >
+                {renderRichTextReact(customOrderDescription)}
+              </BlockContent>
+            </Block>
+          )}
+          {hauteCoutureImage && hauteCoutureDescription && (
+            <Block
+              title={f('hauteCouture')}
+              titleTag="h3"
+              href="/haute-couture"
+              site={SITE}
             >
-              {renderRichTextReact(collaborationDescription)}
-            </BlockContent>
-          </Block>
-        )}
-        {/* {products.slice(0, 3).map((product, i) => (
+              <BlockContent
+                image={{ src: hauteCoutureImage.url, alt: f('hauteCouture') }}
+              >
+                {renderRichTextReact(hauteCoutureDescription)}
+              </BlockContent>
+            </Block>
+          )}
+          {collaborationImage && collaborationDescription && (
+            <Block
+              title={f('collaboration')}
+              titleTag="h3"
+              href="/collaboration"
+              site={SITE}
+            >
+              <BlockContent
+                image={{ src: collaborationImage.url, alt: f('collaboration') }}
+              >
+                {renderRichTextReact(collaborationDescription)}
+              </BlockContent>
+            </Block>
+          )}
+          {/* {products.slice(0, 3).map((product, i) => (
       <ProductCard
         key={product.id}
         product={product}
@@ -118,9 +142,12 @@ const Store: VFC<Props> = ({
         }}
       />
     ))} */}
-      </Grid>
-      <div className="h-60">movie</div>
-    </Section>
+        </Grid>
+        {endSlideCollection?.items && (
+          <Slide items={endSlideCollection.items} />
+        )}
+      </Section>
+    </>
   );
 };
 

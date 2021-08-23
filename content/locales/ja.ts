@@ -1,4 +1,5 @@
 export const ja: Record<string, any> = {
+  carewill: '株式会社ケアウィル',
   product: 'プロダクト',
   customOrder: 'カスタムオーダー',
   collaboration: 'コラボレーション',

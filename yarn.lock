@@ -1410,6 +1410,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/youtube-player@^5.5.4":
+  version "5.5.4"
+  resolved "https://registry.yarnpkg.com/@types/youtube-player/-/youtube-player-5.5.4.tgz#908cfaa6ed2b11f35604942c0dc76e77768eb7bc"
+  integrity sha512-RATQuYVAD8sHAvQI/wcfdE18R80vieJObZnZ66h78QfVlnXn8xRXsk/LrN6QII2CpaOkvLQp2s7tJacab2ZGhQ==
+
 "@typescript-eslint/parser@^4.20.0":
   version "4.28.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-4.28.0.tgz#2404c16751a28616ef3abab77c8e51d680a12caa"

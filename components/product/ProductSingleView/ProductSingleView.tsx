@@ -2,7 +2,7 @@ import cn from 'classnames';
 import Image from 'next/image';
 import { NextSeo } from 'next-seo';
 import { FC, useEffect, useState } from 'react';
-import s from './ProductView.module.css';
+import s from './ProductSingleView.module.css';
 import { Swatch, ProductSlider } from '@components/product';
 import { Button, Container, Text, useUI } from '@components/ui';
 import type { Product } from '@commerce/types/product';

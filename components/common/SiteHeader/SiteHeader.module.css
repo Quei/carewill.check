@@ -44,22 +44,12 @@
   }
 }
 
-.menuList {
-  @apply hidden md:flex md:justify-between;
+.navigation {
+  @apply hidden md:block;
   @screen less-than-md {
     &.hasShownMenuForMobile {
       @apply fixed z-10 top-0 left-0 w-full h-full bg-white flex flex-col pt-20 px-site-vertical;
       border: theme('borderWidth.DEFAULT') solid currentColor;
-      & > li + li {
-        @apply mt-8;
-      }
     }
-  }
-}
-
-.contactItem {
-  @apply md:pr-site-vertical-md;
-  & a {
-    @apply text-3xl leading-none;
   }
 }

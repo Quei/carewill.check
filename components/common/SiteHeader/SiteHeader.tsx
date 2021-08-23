@@ -2,10 +2,9 @@ import { useState, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import cn from 'classnames';
 import s from './SiteHeader.module.css';
-import { I18nWidget } from '@components/common';
+import { I18nWidget, SiteNavigation } from '@components/common';
 import { Logo, Link } from '@components/ui';
 import { SiteHeaderRoot } from './SiteHeaderRoot';
-import { MenuListItem } from './MenuListItem';
 import { MenuButton } from './MenuButton';
 import type { VFC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
@@ -44,47 +43,20 @@ const SiteHeader: VFC<Props> = ({ isSiteRoot, allNavigations }) => {
             <MenuButton
               className={cn(s.menuButton)}
               hasPressed={hasShownMenu}
-              targetId={'site-menu'}
+              targetId={'site-menu-list'}
               onClick={toggleMenu}
             />
-            <ul
-              id="site-menu"
-              className={cn(s.menuList, {
+            <div
+              className={cn(s.navigation, {
                 [s.hasShownMenuForMobile]: hasShownMenu,
               })}
             >
-              {allNavigations.store && (
-                <MenuListItem
-                  site="store"
-                  title="Store"
-                  menu={allNavigations.store.menu}
-                />
-              )}
-              {allNavigations.labo && (
-                <MenuListItem
-                  site="labo"
-                  title="Labo"
-                  menu={allNavigations.labo.menu}
-                />
-              )}
-              {allNavigations.about && (
-                <MenuListItem
-                  site="about"
-                  title="About us"
-                  menu={allNavigations.about.menu}
-                />
-              )}
-              <li className={cn(s.contactItem)}>
-                <a href="mailto:">Contact</a>
-              </li>
-            </ul>
-
-            {/* <Link href="/search">
-                  <a className={s.link}>All</a>
-                </Link> */}
-            {/* <Link href="/search?q=clothes">
-                  <a className={s.link}>Clothes</a>
-                </Link> */}
+              <SiteNavigation
+                id="site-menu-list"
+                allNavigations={allNavigations}
+                type="header"
+              />
+            </div>
           </nav>
         )}
         {/* {shownSmallLogo && <div>search</div>} */}
