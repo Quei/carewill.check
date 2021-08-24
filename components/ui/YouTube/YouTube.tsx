@@ -64,6 +64,7 @@ const YouTube: VFC<Props> = ({ className, videoId, isLoop, isFit }) => {
           rel: 0,
           iv_load_policy: 3,
           showinfo: 0,
+          playsinline: 1,
         },
       }}
       onReady={onReady}
