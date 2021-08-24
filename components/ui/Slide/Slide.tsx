@@ -79,6 +79,7 @@ const Slide: VFC<Props> = ({ className, items }) => {
                   videoId={item.fileName}
                   isLoop={true}
                   isFit={true}
+                  isAuto={true}
                 />
               )}
               <ItemName

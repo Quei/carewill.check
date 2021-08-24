@@ -148,8 +148,9 @@ const FormSection: VFC<Props> = ({
           {data.video && (
             <YouTube
               className={cn('aspect-w-16', 'aspect-h-9', s.video)}
-              videoId={ data.video }
+              videoId={data.video}
               isLoop={true}
+              isAuto={true}
             />
           )}
           {data.componentName && (

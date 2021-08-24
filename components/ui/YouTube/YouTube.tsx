@@ -10,17 +10,22 @@ type Props = {
   videoId?: string;
   isLoop?: boolean;
   isFit?: boolean;
+  isAuto?: boolean;
 };
 
-const usePlayer = (isLoop: Props['isLoop']) => {
+const usePlayer = ({ isLoop, isAuto }: Pick<Props, 'isLoop' | 'isAuto'>) => {
   const [player, setPlayer] = useState<YouTubePlayer>();
   const onReady = useCallback(
     (event) => {
+      const player = event.target as YouTubePlayer;
       if (isLoop) {
-        setPlayer(event.target as YouTubePlayer);
+        setPlayer(player);
+      }
+      if (isAuto) {
+        player.playVideo();
       }
     },
-    [isLoop]
+    [isLoop, isAuto]
   );
   const onEnd = useCallback(() => {
     if (player && isLoop) {
@@ -47,8 +52,14 @@ const usePlayer = (isLoop: Props['isLoop']) => {
   return { onReady, onEnd };
 };
 
-const YouTube: VFC<Props> = ({ className, videoId, isLoop, isFit }) => {
-  const { onReady, onEnd } = usePlayer(isLoop);
+const YouTube: VFC<Props> = ({
+  className,
+  videoId,
+  isLoop,
+  isFit = false,
+  isAuto = false,
+}) => {
+  const { onReady, onEnd } = usePlayer({ isLoop, isAuto });
   return (
     <ReactYouTube
       containerClassName={cn(s.video, { [s.isFit]: isFit }, className)}
@@ -56,7 +67,7 @@ const YouTube: VFC<Props> = ({ className, videoId, isLoop, isFit }) => {
       videoId={videoId}
       opts={{
         playerVars: {
-          autoplay: 1,
+          autoplay: isAuto ? 1 : 0,
           controls: 0,
           loop: 1,
           mute: 1,
