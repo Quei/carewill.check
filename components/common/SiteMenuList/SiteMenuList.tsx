@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import s from './SiteNavigation.module.css';
+import s from './SiteMenuList.module.css';
 import { MenuListItem } from './MenuListItem';
 import type { VFC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
@@ -11,12 +11,7 @@ type Props = {
   type: 'header' | 'footer';
 };
 
-const SiteNavigation: VFC<Props> = ({
-  className,
-  id,
-  allNavigations,
-  type,
-}) => {
+const SiteMenuList: VFC<Props> = ({ className, id, allNavigations, type }) => {
   return (
     <ul
       className={cn(
@@ -53,11 +48,11 @@ const SiteNavigation: VFC<Props> = ({
       )}
       {type === 'header' && (
         <li className={cn(s.contact)}>
-          <a href="mailto:">Contact</a>
+          <a href="mailto:contact@carewill.co.jp">Contact</a>
         </li>
       )}
     </ul>
   );
 };
 
-export default SiteNavigation;
+export default SiteMenuList;

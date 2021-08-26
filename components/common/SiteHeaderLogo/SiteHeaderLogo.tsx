@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import s from './SiteHeaderLogo.module.css';
+import { I18nWidget } from '@components/common';
 import { Logo, Link } from '@components/ui';
 import type { VFC } from 'react';
 
@@ -14,6 +15,7 @@ const SiteHeaderLogo: VFC<Props> = ({ className, isSiteRoot }) => {
       <Link className={cn(s.link)} href="/" site="store" aria-label="Logo">
         <Logo />
       </Link>
+      <I18nWidget className={cn(s.i18n)} type="header" />
     </div>
   );
 };

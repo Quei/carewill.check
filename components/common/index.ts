@@ -8,4 +8,5 @@ export { default as UserNav } from './UserNav';
 export { default as Head } from './Head';
 export { default as I18nWidget } from './I18nWidget';
 export { default as SiteHeaderLogo } from './SiteHeaderLogo';
-export { default as SiteNavigation } from './SiteNavigation';
+export { default as SiteHeaderNavigation } from './SiteHeaderNavigation';
+export { default as SiteMenuList } from './SiteMenuList';

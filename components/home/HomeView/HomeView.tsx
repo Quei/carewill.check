@@ -17,11 +17,7 @@ const HomeView: VFC<Props> = ({ store, labo, about }) => {
   return (
     <>
       {store && <Store {...store} />}
-      {labo && (
-        <LaboPreview>
-          <Labo {...labo} />
-        </LaboPreview>
-      )}
+      {labo && <Labo {...labo} />}
       {about && <AboutUs {...about} />}
     </>
   );

@@ -85,7 +85,7 @@ const Layout: FC<Props> = ({
           <SiteFooter
             className={cn(s.footer)}
             allNavigations={allNavigations}
-            footer={footer}
+            {...footer}
           />
 
           <Modal open={displayModal} onClose={closeModal}>

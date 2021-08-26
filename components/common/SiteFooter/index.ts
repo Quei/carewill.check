@@ -1,1 +1,1 @@
-export { default } from './SiteFooter';
+export { default, footerFragment } from './SiteFooter';

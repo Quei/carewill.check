@@ -1,7 +1,9 @@
+import cn from 'classnames';
 import { nonNullableFilter } from '@lib/non-nullable-filter';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
 import { Grid, Block, PickupSection } from '@components/ui';
+import { CrossBlock } from '@components/icons';
 import { Section } from '../Section';
 import type { VFC } from 'react';
 import type { HomeAboutViewFragment } from 'types/schema';
@@ -45,18 +47,30 @@ const AboutUs: VFC<Props> = ({
   );
   return (
     <Section title={'About us'} description={renderRichTextReact(description)}>
-      {nonNullableNewsPickUps && (
+      {/* {nonNullableNewsPickUps && (
         <PickupSection
           title={f('about.newsPickup')}
           titleTag="h3"
           items={nonNullableNewsPickUps}
           site={SITE}
         />
-      )}
+      )} */}
       <Grid layout={'col-3'}>
         <Block title="ニュース" href="/news" site={SITE} />
-        <Block title="プロダクトについて" href="/product" site={SITE} />
-        <Block title="サービスについて" href="/service" site={SITE} />
+        <Block
+          title="プロダクトについて"
+          // href="/product"
+          // site={ SITE }
+        >
+          <CrossBlock className={cn('absolute', 'top-0', 'left-0')} />
+        </Block>
+        <Block
+          title="サービスについて"
+          // href="/service"
+          // site={ SITE }
+        >
+          <CrossBlock className={cn('absolute', 'top-0', 'left-0')} />
+        </Block>
         <Block title="クラフトマンシップ" href="/craftmanship" site={SITE} />
         <Block
           title="ミッションステートメント"

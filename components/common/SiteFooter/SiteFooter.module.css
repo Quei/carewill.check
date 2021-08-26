@@ -5,7 +5,26 @@
 
 .texts {
   @apply text-2xs mt-6 md:mt-20;
-  & > * + * {
+  & > * + *:not(.copyRight) {
     @apply mt-4;
   }
+}
+
+.logoList {
+  @apply flex;
+  & > li + li {
+    @apply ml-3;
+  }
+}
+
+.legalPageList {
+  @apply flex;
+  & > li + li {
+    @apply ml-3;
+  }
+}
+
+
+.copyRight {
+  @apply mt-1;
 }

@@ -1,7 +1,19 @@
 import cn from 'classnames';
 import s from './Labo.module.css';
-import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
+import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import {
+  renderRichText,
+  renderRichTextReact,
+} from '@lib/contentful/utils/rich-text';
+import {
+  Grid,
+  Block,
+  BlockContent,
+  BlockContentPickupLarge,
+} from '@components/ui';
+import { CrossBlock } from '@components/icons';
 import { Section } from '../Section';
+import { Pickup } from './Pickup';
 import type { VFC } from 'react';
 import type {
   HomeLaboViewFragment,
@@ -20,7 +32,25 @@ export const homeLaboViewFragment = /* GraphQL */ `
     description {
       json
     }
+    interviewImage {
+      url
+    }
+    interviewHomeDescription {
+      json
+    }
+    staffNoteHomeDescription {
+      json
+    }
+    recruitingImage {
+      url
+    }
+    recruitingHomeDescription {
+      json
+    }
   }
+`;
+
+export const homeLaboLatestStaffNoteFragment = /* GraphQL */ `
   fragment homeLaboLatestStaffNote on StaffNote {
     content {
       json
@@ -28,13 +58,71 @@ export const homeLaboViewFragment = /* GraphQL */ `
   }
 `;
 
-const Labo: VFC<Props> = ({ className, description, latestStaffNote }) => {
+const Labo: VFC<Props> = ({
+  className,
+  description,
+  interviewImage,
+  interviewHomeDescription,
+  staffNoteHomeDescription,
+  recruitingImage,
+  recruitingHomeDescription,
+  latestStaffNote,
+}) => {
+  const f = useIntlMessage();
   return (
     <Section
       className={cn(s.root)}
       title={'Labo'}
       description={renderRichTextReact(description)}
-    ></Section>
+    >
+      <Grid>
+        {interviewImage && interviewHomeDescription && (
+          <Block title={f('labo.interviews')} titleTag="h3">
+            <BlockContent
+              image={{ src: interviewImage.url, alt: f('store.product') }}
+            >
+              {renderRichTextReact(interviewHomeDescription)}
+            </BlockContent>
+            <CrossBlock className="absolute top-0 left-0" />
+          </Block>
+        )}
+        <Block
+          title={f('labo.staffNotes')}
+          titleTag="h3"
+          href="/staff-notes"
+          site={SITE}
+        >
+          <BlockContent
+            image={{
+              node: (
+                <div className={cn(s.staffNoteImageTexts)}>
+                  <p>{renderRichText(latestStaffNote?.content)}</p>
+                </div>
+              ),
+            }}
+          >
+            {renderRichTextReact(staffNoteHomeDescription)}
+          </BlockContent>
+        </Block>
+      </Grid>
+      {/* <Pickup title={f('labo.interviewsPickup')} site={SITE} /> */}
+      <section>
+        <Block
+          title={f('labo.recruiting')}
+          titleTag="h3"
+          href="/recruiting/partnership"
+          site={SITE}
+        >
+          <BlockContentPickupLarge
+            imageSrc={recruitingImage?.url}
+            imageAlt={f('labo.recruiting')}
+            isImageLayoutCenter={true}
+          >
+            {renderRichTextReact(recruitingHomeDescription)}
+          </BlockContentPickupLarge>
+        </Block>
+      </section>
+    </Section>
   );
 };
 

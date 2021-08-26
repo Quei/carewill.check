@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import { scroller } from 'react-scroll';
 import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
-import { useMediaQuery } from '@react-hook/media-query';
 import cn from 'classnames';
 import s from './OrderFormView.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { useScreen } from '@lib/hooks/useScreen';
 import {
   renderRichText,
   renderRichTextReact,
@@ -58,7 +58,7 @@ const useCurrentFocusIndex = () => {
   const handleOnFocus = useCallback((targetIndex: number) => {
     setCurrentFocusIndex(targetIndex);
   }, []);
-  const isScreenMd = useMediaQuery('(min-width: 768px)');
+  const { isScreenMd } = useScreen();
 
   useEffect(() => {
     if (currentFocusIndex !== undefined) {

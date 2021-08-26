@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useFormState } from 'react-hook-form';
-import { useMediaQuery } from '@react-hook/media-query';
 import cn from 'classnames';
 import s from './Measurement.module.css';
 import { useMounted } from '@lib/hooks/useMounted';
+import { useScreen } from '@lib/hooks/useScreen';
 import { ErrorText } from '@components/ui';
 import { Input } from '@components/ui/react-hook-form';
 import { BodyPC, BodySP } from './svg';
@@ -20,7 +20,7 @@ type Props = {
 };
 
 const useIsScreenMd = () => {
-  const isScreenMd = useMediaQuery('(min-width: 768px)');
+  const { isScreenMd } = useScreen();
   const mounted = useMounted();
   return isScreenMd && mounted;
 };

@@ -1,12 +1,7 @@
 import { fetcher } from '@lib/contentful';
+import { footerFragment } from '@components/common/SiteFooter';
 import type { GetStaticPropsContext } from 'next';
 import type { GetFooterQuery } from 'types/schema';
-
-const footerContent = /* GraphQL */ `
-  fragment footer on Footer {
-    content
-  }
-`;
 
 const getFooterQuery = /* GraphQL */ `
   query GetFooter($locale: String!, $slug: String!, $preview: Boolean = false) {
@@ -21,7 +16,7 @@ const getFooterQuery = /* GraphQL */ `
       }
     }
   }
-  ${footerContent}
+  ${footerFragment}
 `;
 
 export const getFooter = async ({

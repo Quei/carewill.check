@@ -1,8 +1,8 @@
 import { useFormContext } from 'react-hook-form';
-import { useMediaQuery } from '@react-hook/media-query';
 import { motion } from 'framer-motion';
 import cn from 'classnames';
 import s from './Root.module.css';
+import { useScreen } from '@lib/hooks/useScreen';
 import { Block, Container } from '@components/ui';
 import type { FC, ReactNode } from 'react';
 
@@ -29,7 +29,7 @@ const Root: FC<Props> = ({
   hasError,
   children,
 }) => {
-  const isScreenMd = useMediaQuery('(min-width: 768px)');
+  const { isScreenMd } = useScreen();
   return (
     <section id={id} className={cn('relative', className)}>
       <p className={cn('block-title', s.counter)} />

@@ -3,13 +3,18 @@
 }
 
 .item {
-  @apply cursor-pointer;
-}
-
-.item:hover {
-  @apply underline;
+  @apply cursor-pointer hover:underline;
+  &.header {
+    @apply hover:line-through;
+    &.isCurrent {
+      @apply line-through;
+    }
+  }
+  &.footer {
+    @apply hover:underline;
+  }
 }
 
 .slash {
-  @apply mx-1;
+  @apply mx-0.5;
 }

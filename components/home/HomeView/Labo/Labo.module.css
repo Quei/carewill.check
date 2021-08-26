@@ -1,3 +1,11 @@
 .root {
 
 }
+
+.staffNoteImageTexts {
+  @apply bg-light-gray text-2xl overflow-hidden;
+  line-height: 1.57;
+  /* @screen md {
+    font-size: 1.99vw;
+  } */
+}

@@ -1,11 +1,5 @@
 export const en: Record<string, any> = {
   carewill: 'Carewill',
-  product: 'Product',
-  customOrder: 'Custom order',
-  collaboration: 'Collaboration',
-  hauteCouture: 'Haute couture',
-  form: 'Form',
-  formLink: 'Enter form',
   pdfLink: 'PDF',
   relatedPosts: 'Related posts',
   addToCart: 'Add to cart',
@@ -16,7 +10,16 @@ export const en: Record<string, any> = {
   all: 'All',
   morePosts: 'More',
   index: 'Index',
+  makuakeLink: 'Makuake',
+  // store
+  ['store.product']: 'Product',
+  ['store.customOrder']: 'Custom order',
+  ['store.collaboration']: 'Collaboration',
+  ['store.hauteCouture']: 'Haute couture',
   // form
+  // haute-couture
+  form: 'Form',
+  formLink: 'Enter form',
   ['form.change']: 'Change',
   ['form.empty']: 'Empty',
   ['form.submit']: 'Submit',
@@ -36,4 +39,6 @@ export const en: Record<string, any> = {
   ['labo.selectCategory']: 'Select category',
   // about-us
   ['about-us.newsPickup']: 'News pickup',
+  ['about.tokushoho']: 'Specified commercial transaction act',
+  ['about.privacyPolicy']: 'Privacy policy',
 };

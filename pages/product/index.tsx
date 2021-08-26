@@ -1,32 +1,33 @@
 import { useRouter } from 'next/router';
-import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
+import {
+  fetcher,
+  getAllNavigations,
+  getAllProducts,
+  getFooter,
+} from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
   ProductArchiveView,
-  productArchiveViewFragment,
-} from '@components/custom-order';
+  productArchiveViewDescriptionFragment,
+} from '@components/product';
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import type { GetProductArchiveQuery } from 'types/schema';
 
 const getProductArchiveQuery = /* GraphQL */ `
-  query GetProductArchive(
-    $locale: String!
-    $slug: String!
-    $preview: Boolean = false
-  ) {
-    productCollection(
+  query GetProductArchive($locale: String!, $preview: Boolean = false) {
+    homeCollection(
       locale: $locale
-      where: { slug: $slug }
+      where: { slug: "home" }
       preview: $preview
       limit: 1
     ) {
       items {
-        ...productArchiveView
+        ...productArchiveViewDescription
       }
     }
   }
 
-  ${productArchiveViewFragment}
+  ${productArchiveViewDescriptionFragment}
 `;
 
 export async function getStaticProps({
@@ -34,36 +35,39 @@ export async function getStaticProps({
   locale,
   locales,
   preview,
-}: GetStaticPropsContext<{ slug: string }>) {
-  const dataPromise = fetcher<GetProductArchiveQuery>({
+}: GetStaticPropsContext) {
+  const promise = fetcher<GetProductArchiveQuery>({
     query: getProductArchiveQuery,
     variables: {
       locale,
-      slug: SLUG,
       preview,
     },
+    site: 'store',
+  });
+
+  const allProductsPromise = getAllProducts({
+    locale,
+    preview,
   });
 
   const allNavigationsPromise = getAllNavigations({ locale, preview });
 
   const footerPromise = getFooter({ locale, preview });
 
-  const [data, allNavigations, footerData] = await Promise.all([
-    dataPromise,
+  const [data, allProducts, allNavigations, footerData] = await Promise.all([
+    promise,
+    allProductsPromise,
     allNavigationsPromise,
     footerPromise,
   ]);
 
-  const entry = data?.productArchiveCollection?.items?.[0];
-  console.log(entry);
-
-  if (!entry) {
-    throw new Error(`Contentful Data with slug '${params!.slug}' not found`);
-  }
+  const home = data?.homeCollection?.items?.[0];
+  const { posts } = allProducts;
 
   return {
     props: {
-      entry,
+      home,
+      posts: posts,
       allNavigations,
       footer: footerData.footer,
     },
@@ -72,18 +76,15 @@ export async function getStaticProps({
 }
 
 export default function ProductArchive({
-  entry,
+  home,
+  posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
-
-  if (!entry) {
-    return null;
-  }
 
   return router.isFallback ? (
     <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
   ) : (
-    <ProductArchiveView {...entry} />
+    <ProductArchiveView home={home} posts={posts} />
   );
 }
 

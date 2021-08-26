@@ -1,8 +1,11 @@
+import cn from 'classnames';
+import s from './Store.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
 import { Slide, Grid, Block, BlockContent } from '@components/ui';
 import { Section } from '../Section';
 import { slideItemFragment } from '@components/ui/Slide';
+import { CrossBlock } from '@components/icons';
 import type { VFC } from 'react';
 import type { HomeStoreViewFragment } from 'types/schema';
 
@@ -25,25 +28,25 @@ export const homeStoreViewFragment = /* GraphQL */ `
     productImage {
       url
     }
-    productDescription {
+    productHomeDescription {
       json
     }
     customOrderImage {
       url
     }
-    customOrderDescription {
+    customOrderHomeDescription {
       json
     }
     hauteCoutureImage {
       url
     }
-    hauteCoutureDescription {
+    hauteCoutureHomeDescription {
       json
     }
     collaborationImage {
       url
     }
-    collaborationDescription {
+    collaborationHomeDescription {
       json
     }
     endSlideCollection(locale: "ja") {
@@ -61,75 +64,87 @@ const Store: VFC<Props> = ({
   topSlideCollection,
   description,
   productImage,
-  productDescription,
+  productHomeDescription,
   customOrderImage,
-  customOrderDescription,
+  customOrderHomeDescription,
   hauteCoutureImage,
-  hauteCoutureDescription,
+  hauteCoutureHomeDescription,
   collaborationImage,
-  collaborationDescription,
+  collaborationHomeDescription,
   endSlideCollection,
 }) => {
   const f = useIntlMessage();
   return (
     <>
-      {topSlideCollection?.items && <Slide items={topSlideCollection.items} />}
+      {topSlideCollection?.items && (
+        <Slide className={cn('h-screen')} items={topSlideCollection.items} />
+      )}
       <Section title={'Store'} description={renderRichTextReact(description)}>
         <Grid>
-          {productImage && productDescription && (
+          {productImage && productHomeDescription && (
             <Block
-              title={f('product')}
+              title={f('store.product')}
               titleTag="h3"
               href="/product"
               site={SITE}
             >
               <BlockContent
-                image={{ src: productImage.url, alt: f('product') }}
+                image={{ src: productImage.url, alt: f('store.product') }}
               >
-                {renderRichTextReact(productDescription)}
+                {renderRichTextReact(productHomeDescription)}
               </BlockContent>
             </Block>
           )}
-          {customOrderImage && customOrderDescription && (
+          {customOrderImage && customOrderHomeDescription && (
             <Block
-              title={f('customOrder')}
+              title={f('store.customOrder')}
               titleTag="h3"
               href="/custom-order"
               site={SITE}
             >
               <BlockContent
-                image={{ src: customOrderImage.url, alt: f('customOrder') }}
+                image={{
+                  src: customOrderImage.url,
+                  alt: f('store.customOrder'),
+                }}
               >
-                {renderRichTextReact(customOrderDescription)}
+                {renderRichTextReact(customOrderHomeDescription)}
               </BlockContent>
             </Block>
           )}
-          {hauteCoutureImage && hauteCoutureDescription && (
+          {hauteCoutureImage && hauteCoutureHomeDescription && (
             <Block
-              title={f('hauteCouture')}
+              title={f('store.hauteCouture')}
               titleTag="h3"
               href="/haute-couture"
               site={SITE}
             >
               <BlockContent
-                image={{ src: hauteCoutureImage.url, alt: f('hauteCouture') }}
+                image={{
+                  src: hauteCoutureImage.url,
+                  alt: f('store.hauteCouture'),
+                }}
               >
-                {renderRichTextReact(hauteCoutureDescription)}
+                {renderRichTextReact(hauteCoutureHomeDescription)}
               </BlockContent>
             </Block>
           )}
-          {collaborationImage && collaborationDescription && (
+          {collaborationImage && collaborationHomeDescription && (
             <Block
-              title={f('collaboration')}
+              title={f('store.collaboration')}
               titleTag="h3"
-              href="/collaboration"
+              // href="/collaboration"
               site={SITE}
             >
               <BlockContent
-                image={{ src: collaborationImage.url, alt: f('collaboration') }}
+                image={{
+                  src: collaborationImage.url,
+                  alt: f('store.collaboration'),
+                }}
               >
-                {renderRichTextReact(collaborationDescription)}
+                {renderRichTextReact(collaborationHomeDescription)}
               </BlockContent>
+              <CrossBlock className="absolute top-0 left-0" />
             </Block>
           )}
           {/* {products.slice(0, 3).map((product, i) => (
@@ -144,7 +159,7 @@ const Store: VFC<Props> = ({
     ))} */}
         </Grid>
         {endSlideCollection?.items && (
-          <Slide items={endSlideCollection.items} />
+          <Slide className={cn('h-screen')} items={endSlideCollection.items} />
         )}
       </Section>
     </>

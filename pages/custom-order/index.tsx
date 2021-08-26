@@ -44,6 +44,7 @@ export async function getStaticProps({
       slug: SLUG,
       preview,
     },
+    site: 'store',
   });
 
   const allNavigationsPromise = getAllNavigations({ locale, preview });
@@ -57,7 +58,6 @@ export async function getStaticProps({
   ]);
 
   const entry = data?.customOrderCollection?.items?.[0];
-  console.log(entry);
 
   if (!entry) {
     throw new Error(`Contentful Data with slug '${params!.slug}' not found`);

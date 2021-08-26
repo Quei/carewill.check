@@ -5,6 +5,7 @@ import {
   HomeView,
   homeStoreViewFragment,
   homeLaboViewFragment,
+  homeLaboLatestStaffNoteFragment,
   homeAboutViewFragment,
 } from '@components/home';
 // import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
@@ -65,6 +66,7 @@ const getHomeLaboQuery = /* GraphQL */ `
   }
 
   ${homeLaboViewFragment}
+  ${homeLaboLatestStaffNoteFragment}
 `;
 
 const getHomeAboutQuery = /* GraphQL */ `

@@ -26,6 +26,7 @@ export const slideItemFragment = /* GraphQL */ `
 type Props = {
   className?: string;
   items: Array<Maybe<SlideItemFragment>>;
+  disableLink?: boolean;
 };
 
 const SLIDE_DURATION = 1000;
@@ -33,6 +34,7 @@ const SLIDE_INTERVAL = 5000;
 
 const useSlider = () => {
   const [pause, setPause] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
     duration: SLIDE_DURATION,
@@ -41,6 +43,10 @@ const useSlider = () => {
     },
     dragEnd: () => {
       setPause(false);
+    },
+    slideChanged: (KeenSlider) => {
+      const { relativeSlide } = KeenSlider.details();
+      setCurrentIndex(relativeSlide);
     },
   });
   useEffect(() => {
@@ -56,44 +62,56 @@ const useSlider = () => {
   const toggle = useCallback(() => {
     setPause((value) => !value);
   }, []);
-  return { sliderRef, pause, toggle };
+  return { sliderRef, pause, toggle, currentIndex };
 };
 
-const Slide: VFC<Props> = ({ className, items }) => {
-  const { sliderRef, pause, toggle } = useSlider();
+const Slide: VFC<Props> = ({ className, items, disableLink = false }) => {
+  const { sliderRef, pause, toggle, currentIndex } = useSlider();
+
   const nonNullableItems = useMemo(() => items.filter(nonNullableFilter), [
     items,
   ]);
   return (
-    <div className={cn('relative', className)}>
-      <div ref={sliderRef} className={cn('keen-slider')}>
-        {nonNullableItems.map((item) => {
+    <div className={cn(s.root, className)}>
+      <div ref={sliderRef} className={cn('keen-slider', 'h-full')}>
+        {nonNullableItems.map((item, index) => {
           return (
-            <div className={cn('keen-slider__slide', s.item)} key={item.sys.id}>
-              {item.contentType?.startsWith('image') && item.url && (
-                <Image src={item.url} alt="" layout="fill" objectFit="cover" />
+            <Fragment key={item.sys.id}>
+              <div className={cn('keen-slider__slide', s.item)}>
+                {item.contentType?.startsWith('image') && item.url && (
+                  <Image
+                    src={item.url}
+                    alt=""
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
+                {!item.contentType?.startsWith('image') && item.fileName && (
+                  <YouTube
+                    className={cn('w-full', 'h-full', 'pointer-events-none')}
+                    videoId={item.fileName}
+                    isLoop={true}
+                    isFit={true}
+                    isAuto={true}
+                  />
+                )}
+              </div>
+              {!disableLink && (
+                <ItemName
+                  className={cn(s.itemName, {
+                    ['sr-only']: currentIndex !== index,
+                  })}
+                  description={item.description}
+                >
+                  {item.title}
+                </ItemName>
               )}
-              {!item.contentType?.startsWith('image') && item.fileName && (
-                <YouTube
-                  className={cn('w-full', 'h-full', 'pointer-events-none')}
-                  videoId={item.fileName}
-                  isLoop={true}
-                  isFit={true}
-                  isAuto={true}
-                />
-              )}
-              <ItemName
-                className={cn(s.itemName)}
-                description={item.description}
-              >
-                {item.title}
-              </ItemName>
-            </div>
+            </Fragment>
           );
         })}
       </div>
       <button
-        className={cn(s.toggleButton)}
+        className={cn(s.toggleButton, { [s.centering]: disableLink })}
         onClick={toggle}
         aria-pressed={pause}
       >

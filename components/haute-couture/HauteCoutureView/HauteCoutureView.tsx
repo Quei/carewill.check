@@ -81,12 +81,12 @@ const HauteCoutureView: FC<Props> = ({ title, description, image }) => {
         {f('formLink')}
       </OnelineLink>
       <OnelineLink href="/">{f('pdfLink')}</OnelineLink>
-      <PickupSection
+      {/* <PickupSection
         title={f('pickup')}
         titleTag="h2"
         items={DummyItems}
         site={'labo'}
-      />
+      /> */}
     </>
   );
 };

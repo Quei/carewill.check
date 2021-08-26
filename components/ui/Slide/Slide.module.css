@@ -1,18 +1,30 @@
-.item {
+.root {
   @apply relative;
-  height: 100vh;
+  &:hover {
+    & .itemName,
+    & .toggleButton {
+      @apply opacity-100;
+    }
+  }
+}
+
+.item {
+  @apply relative h-full;
 }
 
 .itemName {
-  @apply absolute z-10 top-1/2 left-1/2;
+  @apply opacity-0 absolute z-10 top-1/2 left-1/2;
   transform: translate(-50%, -100%);
 }
 
 .toggleButton {
-  @apply absolute z-10 top-1/2 left-1/2 bg-white border border-green hover:bg-green;
+  @apply opacity-0 absolute z-10 top-1/2 left-1/2 bg-white border border-green hover:bg-green;
   transform: translate(-50%, 100%);
   width: 52px;
   height: 46px;
+  &.centering {
+    transform: translate(-50%, -50%);
+  }
   &:hover {
     & svg > * {
       stroke: white;

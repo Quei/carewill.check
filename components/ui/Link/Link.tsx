@@ -33,9 +33,20 @@ const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
   }, [site, href]);
 };
 
-const useIsCurrent = (href: Props['href']) => {
+const useIsCurrent = (href: string) => {
   const { asPath } = useRouter();
   return asPath === href;
+};
+
+const useIsTargetBlank = (href: string) => {
+  return useMemo(() => {
+    if (href.startsWith('/')) {
+      return false;
+    } else {
+      const url = new URL(href);
+      return !/carewill\.co\.jp/.test(url.hostname);
+    }
+  }, [href]);
 };
 
 const Link: React.FC<Props> = ({
@@ -48,6 +59,7 @@ const Link: React.FC<Props> = ({
 }) => {
   const customHref = useCustomHref({ site, href });
   const isCurrent = useIsCurrent(customHref);
+  const isTargetBlank = useIsTargetBlank(customHref);
   return (
     <NextLink href={customHref}>
       <a
@@ -60,6 +72,7 @@ const Link: React.FC<Props> = ({
           },
           className
         )}
+        target={isTargetBlank ? '_blank' : undefined}
       >
         {children}
       </a>

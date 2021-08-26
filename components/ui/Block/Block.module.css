@@ -15,7 +15,7 @@
 
 .content {
   &.isCentering {
-    @apply flex justify-center items-center;
+    @apply flex justify-center items-center h-full;
     min-height: 117px;
     @screen md {
       min-height: 210px;
@@ -24,7 +24,7 @@
   &.hasNoPaddingMobile {
     @apply px-site-vertical;
   }
-  &:not(.isCentering):not(.hasNoPaddingMobile) {
+  &:not(.hasNoPaddingMobile) {
     padding-left: 60px;
     padding-right: 60px;
     @screen md {
