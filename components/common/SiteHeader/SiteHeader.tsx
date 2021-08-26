@@ -1,11 +1,9 @@
-import { useState, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 import cn from 'classnames';
 import s from './SiteHeader.module.css';
 import { SiteHeaderNavigation } from '@components/common';
 import { Logo, Link } from '@components/ui';
 import { SiteHeaderRoot } from './SiteHeaderRoot';
-import { MenuButton } from './MenuButton';
 import type { VFC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
 
