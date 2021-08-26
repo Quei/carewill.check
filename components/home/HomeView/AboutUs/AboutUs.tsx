@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import s from './AboutUs.module.css';
 import { nonNullableFilter } from '@lib/non-nullable-filter';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
@@ -56,8 +57,14 @@ const AboutUs: VFC<Props> = ({
         />
       )} */}
       <Grid layout={'col-3'}>
-        <Block title="ニュース" href="/news" site={SITE} />
         <Block
+          className={cn(s.block)}
+          title="ニュース"
+          href="/news"
+          site={SITE}
+        />
+        <Block
+          className={cn(s.block)}
           title="プロダクトについて"
           // href="/product"
           // site={ SITE }
@@ -65,19 +72,31 @@ const AboutUs: VFC<Props> = ({
           <CrossBlock className={cn('absolute', 'top-0', 'left-0')} />
         </Block>
         <Block
+          className={cn(s.block)}
           title="サービスについて"
           // href="/service"
           // site={ SITE }
         >
           <CrossBlock className={cn('absolute', 'top-0', 'left-0')} />
         </Block>
-        <Block title="クラフトマンシップ" href="/craftmanship" site={SITE} />
         <Block
+          className={cn(s.block)}
+          title="クラフトマンシップ"
+          href="/craftmanship"
+          site={SITE}
+        />
+        <Block
+          className={cn(s.block)}
           title="ミッションステートメント"
           href="/mission-statement"
           site={SITE}
         />
-        <Block title="会社情報" href="/company" site={SITE} />
+        <Block
+          className={cn(s.block)}
+          title="会社情報"
+          href="/company"
+          site={SITE}
+        />
       </Grid>
     </Section>
   );
