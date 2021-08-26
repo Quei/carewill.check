@@ -22,7 +22,7 @@ const useMenu = () => {
     setHasShowMenu((value) => !value);
   }, []);
 
-  const menuListWrapperRef = useRef<HTMLDivElement>();
+  const menuListWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (menuListWrapperRef.current) {
