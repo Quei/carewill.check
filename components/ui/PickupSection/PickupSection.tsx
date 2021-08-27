@@ -44,7 +44,7 @@ const getHref = ({
     }
   } else if (site === 'labo') {
     if (__typename === 'StaffNote') {
-      base = '/staff-note';
+      base = '/staff-notes';
     } else if (__typename == 'Interview') {
       base = '/interviews';
     }
