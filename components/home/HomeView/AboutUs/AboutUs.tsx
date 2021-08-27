@@ -54,14 +54,14 @@ const AboutUs: VFC<Props> = ({
   const menuList = navigation?.menu ? (navigation.menu as Repeater[]) : null;
   return (
     <Section title={'About us'} description={renderRichTextReact(description)}>
-      {nonNullableNewsPickUps && (
+      {/* {nonNullableNewsPickUps && (
         <PickupSection
           title={f('about.newsPickup')}
           titleTag="h3"
           items={nonNullableNewsPickUps}
           site={SITE}
         />
-      )}
+      )} */}
       <Grid layout={'col-3'}>
         {menuList &&
           menuList.map((menu, index) => (
