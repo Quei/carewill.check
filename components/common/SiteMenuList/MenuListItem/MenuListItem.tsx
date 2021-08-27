@@ -60,13 +60,18 @@ const MenuListItem: React.VFC<Props> = ({
           [s.hasShownChildrenForMobile]: hasShownChildrenForMobile,
         })}
       >
-        {menu.map(({ id, key, value }) => (
-          <li key={id} className={cn(s.child)}>
-            <Link href={value} site={site} hasBorderEffect={true}>
-              {key}
-            </Link>
-          </li>
-        ))}
+        {menu.map(({ id, key, value }) => {
+          if (!key || !value) {
+            return null;
+          }
+          return (
+            <li key={id} className={cn(s.child)}>
+              <Link href={value} site={site} hasBorderEffect={true}>
+                {key}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </li>
   );

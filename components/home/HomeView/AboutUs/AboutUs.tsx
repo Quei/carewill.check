@@ -6,12 +6,17 @@ import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
 import { Grid, Block, PickupSection } from '@components/ui';
 import { Section } from '../Section';
 import type { VFC } from 'react';
-import type { HomeAboutViewFragment } from 'types/schema';
+import type {
+  HomeAboutViewFragment,
+  NavigationAboutFragment,
+} from 'types/schema';
+import type { Repeater } from 'types/all-navigations';
 
 const SITE = 'about';
 
 export type Props = HomeAboutViewFragment & {
   className?: string;
+  navigation?: NavigationAboutFragment;
 };
 
 export const homeAboutViewFragment = /* GraphQL */ `
@@ -40,11 +45,13 @@ const AboutUs: VFC<Props> = ({
   className,
   description,
   newsPickupCollection,
+  navigation,
 }) => {
   const f = useIntlMessage();
   const nonNullableNewsPickUps = newsPickupCollection?.items.filter(
     nonNullableFilter
   );
+  const menuList = navigation?.menu ? (navigation.menu as Repeater[]) : null;
   return (
     <Section title={'About us'} description={renderRichTextReact(description)}>
       {/* {nonNullableNewsPickUps && (
@@ -56,26 +63,16 @@ const AboutUs: VFC<Props> = ({
         />
       )} */}
       <Grid layout={'col-3'}>
-        <Block title="ニュース" href="/news" site={SITE} />
-        <Block
-          title="プロダクトについて"
-          // href="/product"
-          // site={ SITE }
-          isClose={true}
-        />
-        <Block
-          title="サービスについて"
-          // href="/service"
-          // site={ SITE }
-          isClose={true}
-        />
-        <Block title="クラフトマンシップ" href="/craftmanship" site={SITE} />
-        <Block
-          title="ミッションステートメント"
-          href="/mission-statement"
-          site={SITE}
-        />
-        <Block title="会社情報" href="/company" site={SITE} />
+        {menuList &&
+          menuList.map((menu, index) => (
+            <Block
+              key={`about-menu-list-item-${index}`}
+              title={menu.key}
+              href={menu.value !== '' ? menu.value : undefined}
+              site={SITE}
+              isClose={menu.value === ''}
+            />
+          ))}
       </Grid>
     </Section>
   );

@@ -181,6 +181,7 @@ export default function Home({
   store,
   labo,
   about,
+  allNavigations,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -188,6 +189,7 @@ export default function Home({
         store={store ?? undefined}
         labo={labo ?? undefined}
         about={about ?? undefined}
+        aboutNavigation={allNavigations.about}
       />
       {/* <HomeAllProductsGrid
         newestProducts={products}

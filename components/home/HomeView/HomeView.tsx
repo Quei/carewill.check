@@ -6,19 +6,23 @@ import type { VFC } from 'react';
 import type { Props as StoreProps } from './Store';
 import type { Props as LaboProps } from './Labo';
 import type { Props as AboutProps } from './AboutUs';
+import type { Maybe, NavigationAboutFragment } from 'types/schema';
 
 type Props = {
   store?: StoreProps;
   labo?: LaboProps;
   about?: AboutProps;
+  aboutNavigation?: Maybe<NavigationAboutFragment>;
 };
 
-const HomeView: VFC<Props> = ({ store, labo, about }) => {
+const HomeView: VFC<Props> = ({ store, labo, about, aboutNavigation }) => {
   return (
     <>
       {store && <Store {...store} />}
       {labo && <Labo {...labo} />}
-      {about && <AboutUs {...about} />}
+      {about && (
+        <AboutUs {...about} navigation={aboutNavigation ?? undefined} />
+      )}
     </>
   );
 };

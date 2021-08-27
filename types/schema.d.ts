@@ -2886,22 +2886,6 @@ export type RichTextEntryHyperlinkFragment =
   | RichTextEntryHyperlink_CustomOrder_Fragment
   | RichTextEntryHyperlink_HauteCouture_Fragment;
 
-export type GetCustomOrderQueryVariables = Exact<{
-  locale: Scalars['String'];
-  slug: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-}>;
-
-export type GetCustomOrderQuery = { __typename?: 'Query' } & {
-  customOrderCollection?: Maybe<
-    { __typename?: 'CustomOrderCollection' } & {
-      items: Array<
-        Maybe<{ __typename?: 'CustomOrder' } & CustomOrderViewFragment>
-      >;
-    }
-  >;
-};
-
 export type GetHauteCoutureQueryVariables = Exact<{
   locale: Scalars['String'];
   slug: Scalars['String'];

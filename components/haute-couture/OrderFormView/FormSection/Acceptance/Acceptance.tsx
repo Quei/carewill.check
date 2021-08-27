@@ -18,7 +18,11 @@ const Acceptance: VFC<Props> = ({ className }) => {
     >
       {locale === 'ja' && (
         <span>
-          <Link className="underline hover:no-underline" href="/privacy-policy">
+          <Link
+            className="underline hover:no-underline"
+            href="/privacy-policy"
+            site="about"
+          >
             個人情報の取扱い
           </Link>
           に同意します
