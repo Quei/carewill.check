@@ -7,18 +7,24 @@ import {
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
 import { getOpenGraph } from '@lib/get-open-graph';
+import { LaboRelatedPosts } from '@components/common';
 import {
   PageHeader,
   OnelineLink,
   PickupSection,
   FullImage,
 } from '@components/ui';
-import type { FC } from 'react';
-import type { HauteCoutureViewFragment } from 'types/schema';
+import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
+import type { VFC } from 'react';
+import type {
+  Maybe,
+  HauteCoutureViewFragment,
+  RelatedStaffNoteFragment,
+} from 'types/schema';
 
 type Props = HauteCoutureViewFragment & {
   className?: string;
-  children?: any;
+  relatedPosts?: RelatedPosts;
 };
 
 export const hauteCoutureViewFragment = /* GraphQL */ `
@@ -57,7 +63,12 @@ const DummyItems = [
   },
 ];
 
-const HauteCoutureView: FC<Props> = ({ title, description, image }) => {
+const HauteCoutureView: VFC<Props> = ({
+  title,
+  description,
+  image,
+  relatedPosts,
+}) => {
   const titleText = title ?? '';
   const descriptionText = renderRichText(description);
   const f = useIntlMessage();
@@ -81,6 +92,7 @@ const HauteCoutureView: FC<Props> = ({ title, description, image }) => {
         {f('formLink')}
       </OnelineLink>
       <OnelineLink href="/">{f('pdfLink')}</OnelineLink>
+      <LaboRelatedPosts relatedPosts={relatedPosts} />
       {/* <PickupSection
         title={f('pickup')}
         titleTag="h2"

@@ -35,7 +35,7 @@ export const ja: Record<string, any> = {
   ['labo.interviewsPickup']: '取材記事ピックアップ',
   ['labo.staffNotes']: 'スタッフノート',
   ['labo.recruiting']: '募集',
-  ['labo.selectCategory']: 'カテゴリーから選ぶ',
+  ['labo.selectCategory']: 'カテゴリー',
   // about
   ['about.newsPickup']: 'ニュースピックアップ',
   ['about.tokushoho']: '特定商取引',

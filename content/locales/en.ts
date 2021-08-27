@@ -36,7 +36,7 @@ export const en: Record<string, any> = {
   ['labo.interviewsPickup']: 'Project pickup',
   ['labo.staffNotes']: 'Staff notes',
   ['labo.recruiting']: 'Recruiting',
-  ['labo.selectCategory']: 'Select category',
+  ['labo.selectCategory']: 'Category',
   // about-us
   ['about-us.newsPickup']: 'News pickup',
   ['about.tokushoho']: 'Specified commercial transaction act',

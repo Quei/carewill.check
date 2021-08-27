@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import s from './SiteMenuList.module.css';
+import { Link } from '@components/ui';
 import { MenuListItem } from './MenuListItem';
 import type { VFC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
@@ -48,7 +49,9 @@ const SiteMenuList: VFC<Props> = ({ className, id, allNavigations, type }) => {
       )}
       {type === 'header' && (
         <li className={cn(s.contact)}>
-          <a href="mailto:contact@carewill.co.jp">Contact</a>
+          <Link href="/company/contact" site="about">
+            Contact
+          </Link>
         </li>
       )}
     </ul>

@@ -2500,6 +2500,19 @@ export enum HauteCoutureOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
 
+export type RelatedStaffNoteFragment = { __typename: 'StaffNote' } & Pick<
+  StaffNote,
+  'title' | 'slug' | 'date'
+> & {
+    sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
+    content?: Maybe<
+      { __typename?: 'StaffNoteContent' } & Pick<StaffNoteContent, 'json'>
+    >;
+    image?: Maybe<
+      { __typename?: 'Asset' } & Pick<Asset, 'url' | 'title' | 'description'>
+    >;
+  };
+
 export type FooterFragment = { __typename?: 'Footer' } & Pick<
   Footer,
   'content'
@@ -2818,6 +2831,45 @@ export type GetFooterQuery = { __typename?: 'Query' } & {
   footerCollection?: Maybe<
     { __typename?: 'FooterCollection' } & {
       items: Array<Maybe<{ __typename?: 'Footer' } & FooterFragment>>;
+    }
+  >;
+};
+
+export type GetAllStaffNotesByCategoryQueryVariables = Exact<{
+  locale: Scalars['String'];
+  preview?: Maybe<Scalars['Boolean']>;
+  slug: Scalars['String'];
+  limit?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+}>;
+
+export type GetAllStaffNotesByCategoryQuery = { __typename?: 'Query' } & {
+  categoryCollection?: Maybe<
+    { __typename?: 'CategoryCollection' } & {
+      items: Array<
+        Maybe<
+          { __typename?: 'Category' } & Pick<Category, 'title'> & {
+              linkedFrom?: Maybe<
+                { __typename?: 'CategoryLinkingCollections' } & {
+                  staffNoteCollection?: Maybe<
+                    { __typename?: 'StaffNoteCollection' } & Pick<
+                      StaffNoteCollection,
+                      'total'
+                    > & {
+                        items: Array<
+                          Maybe<
+                            {
+                              __typename?: 'StaffNote';
+                            } & RelatedStaffNoteFragment
+                          >
+                        >;
+                      }
+                  >;
+                }
+              >;
+            }
+        >
+      >;
     }
   >;
 };

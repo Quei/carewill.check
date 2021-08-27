@@ -4,16 +4,19 @@ import s from './PickupSection.module.css';
 import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
 import { Grid, Block, BlockContentPickup } from '@components/ui';
 import type { VFC } from 'react';
-import type { Maybe } from 'types/schema';
+import type { Maybe, Asset } from 'types/schema';
 import type { Site } from 'types/site';
 
 type ItemProps = {
   __typename?: any;
+  sys: { id?: Maybe<string> };
   title?: Maybe<string>;
   slug?: Maybe<string>;
   date?: Maybe<any>;
-  sys: { id?: Maybe<string> };
   content?: Maybe<any>;
+  image?: Maybe<
+    { __typename?: 'Asset' } & Pick<Asset, 'url' | 'title' | 'description'>
+  >;
 };
 
 type Props = {
@@ -21,6 +24,7 @@ type Props = {
   title?: string;
   titleTag?: 'h1' | 'h2' | 'h3' | 'h4';
   items: Array<ItemProps>;
+  hasContentTypeTag?: boolean;
   site: Site;
 };
 
@@ -38,6 +42,12 @@ const getHref = ({
     if (__typename === 'News') {
       base = '/news';
     }
+  } else if (site === 'labo') {
+    if (__typename === 'StaffNote') {
+      base = '/staff-note';
+    } else if (__typename == 'Interview') {
+      base = '/interviews';
+    }
   }
 
   return `${base}/${encodeURIComponent(slug)}`;
@@ -48,6 +58,7 @@ const PickupSection: VFC<Props> = ({
   title,
   titleTag: TitleTag = 'h1',
   items,
+  hasContentTypeTag = false,
   site,
 }) => {
   return (
@@ -70,7 +81,16 @@ const PickupSection: VFC<Props> = ({
               title={item.title}
               titleTag="h4"
               date={item.date}
-              hasImage={false}
+              contentType={
+                site === 'labo' && hasContentTypeTag
+                  ? item.__typename
+                  : undefined
+              }
+              hasImage={site === 'about' ? false : true}
+              imageSrc={item?.image?.url}
+              imageAlt={
+                item?.image?.description ?? item?.image?.title ?? item.title
+              }
             >
               {renderRichTextReact(item?.content)}
             </BlockContentPickup>
