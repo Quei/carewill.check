@@ -1,5 +1,4 @@
 .root {
-  @apply relative;
   &.hasNoChildren {
     min-height: 88px;
     @screen md {
@@ -7,10 +6,6 @@
     }
   }
 
-}
-
-.link {
-  @apply block h-full hover:bg-green hover:text-white;
 }
 
 .content {

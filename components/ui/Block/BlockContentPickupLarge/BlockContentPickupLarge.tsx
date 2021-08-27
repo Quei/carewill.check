@@ -49,7 +49,14 @@ const BlockContentPickupLarge: FC<Props> = ({
       </div>
       <Container>
         {title && (
-          <div className={cn(s.header)}>
+          <div
+            className={cn(
+              'md:flex',
+              'md:justify-center',
+              'md:text-2xl',
+              s.header
+            )}
+          >
             {date && (
               <time dateTime={dayjs(date).format('YYYY.MM.DD')}>
                 {dayjs(date).format('YYYY.MM.DD')}
@@ -58,7 +65,11 @@ const BlockContentPickupLarge: FC<Props> = ({
             <TitleTag>{title}</TitleTag>
           </div>
         )}
-        {children && <div className={cn(s.description)}>{children}</div>}
+        {children && (
+          <div className={cn('line-clamp-4', 'mt-4', 'md:mt-1')}>
+            {children}
+          </div>
+        )}
       </Container>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect, useCallback, Fragment } from 'react';
+import { useRouter } from 'next/router';
 import { useKeenSlider } from 'keen-slider/react';
 import Image from 'next/image';
 import cn from 'classnames';
@@ -23,9 +24,14 @@ export const slideItemFragment = /* GraphQL */ `
   }
 `;
 
+// NOTE:
+// youtubeの埋め込みのlocalizationが、
+// contentfulのmediaだと上手く機能しないので、
+// 日英両方取得して、英語の場合でもyoutubeのみは日本語の物を使用する。
 type Props = {
   className?: string;
   items: Array<Maybe<SlideItemFragment>>;
+  itemsEnglish: Array<Maybe<SlideItemFragment>>;
   disableLink?: boolean;
 };
 
@@ -65,19 +71,44 @@ const useSlider = () => {
   return { sliderRef, pause, toggle, currentIndex };
 };
 
-const Slide: VFC<Props> = ({ className, items, disableLink = false }) => {
-  const { sliderRef, pause, toggle, currentIndex } = useSlider();
+const useSlideItems = ({
+  items,
+  itemsEnglish,
+}: Pick<Props, 'items' | 'itemsEnglish'>) => {
+  const { locale } = useRouter();
+  return useMemo(() => {
+    if (locale === 'ja') {
+      return items.filter(nonNullableFilter);
+    } else {
+      return itemsEnglish.filter(nonNullableFilter).map((item, index) => {
+        if (!item?.contentType?.startsWith('image')) {
+          const itemJapanese = items[index];
+          return {
+            ...itemJapanese,
+            title: item.title,
+          } as SlideItemFragment;
+        }
+        return item;
+      });
+    }
+  }, [items, itemsEnglish, locale]);
+};
 
-  const nonNullableItems = useMemo(() => items.filter(nonNullableFilter), [
-    items,
-  ]);
+const Slide: VFC<Props> = ({
+  className,
+  items,
+  itemsEnglish,
+  disableLink = false,
+}) => {
+  const { sliderRef, pause, toggle, currentIndex } = useSlider();
+  const slideItems = useSlideItems({ items, itemsEnglish });
   return (
-    <div className={cn(s.root, className)}>
+    <div className={cn('relative', s.root, className)}>
       <div ref={sliderRef} className={cn('keen-slider', 'h-full')}>
-        {nonNullableItems.map((item, index) => {
+        {slideItems.map((item, index) => {
           return (
             <Fragment key={item.sys.id}>
-              <div className={cn('keen-slider__slide', s.item)}>
+              <div className={cn('keen-slider__slide', 'relative', 'h-full')}>
                 {item.contentType?.startsWith('image') && item.url && (
                   <Image
                     src={item.url}
@@ -98,9 +129,17 @@ const Slide: VFC<Props> = ({ className, items, disableLink = false }) => {
               </div>
               {!disableLink && (
                 <ItemName
-                  className={cn(s.itemName, {
-                    ['sr-only']: currentIndex !== index,
-                  })}
+                  className={cn(
+                    'opacity-0',
+                    'absolute',
+                    'z-10',
+                    'top-1/2',
+                    'left-1/2',
+                    s.itemName,
+                    {
+                      ['sr-only']: currentIndex !== index,
+                    }
+                  )}
                   description={item.description}
                 >
                   {item.title}
@@ -111,7 +150,19 @@ const Slide: VFC<Props> = ({ className, items, disableLink = false }) => {
         })}
       </div>
       <button
-        className={cn(s.toggleButton, { [s.centering]: disableLink })}
+        className={cn(
+          'opacity-0',
+          'absolute',
+          'z-10',
+          'top-1/2',
+          'left-1/2',
+          'bg-white',
+          'border',
+          'border-green',
+          'hover:bg-green',
+          s.toggleButton,
+          { [s.centering]: disableLink }
+        )}
         onClick={toggle}
         aria-pressed={pause}
       >

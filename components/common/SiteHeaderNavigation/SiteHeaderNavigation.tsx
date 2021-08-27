@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import {
   disableBodyScroll,
   enableBodyScroll,
@@ -36,6 +37,11 @@ const useMenu = () => {
       clearAllBodyScrollLocks();
     };
   }, [hasShownMenu]);
+
+  const { asPath } = useRouter();
+  useEffect(() => {
+    setHasShowMenu(false);
+  }, [asPath]);
   return { hasShownMenu, toggleMenu, menuListWrapperRef };
 };
 

@@ -1,5 +1,4 @@
 .root {
-  @apply relative;
   &:hover {
     & .itemName,
     & .toggleButton {
@@ -8,17 +7,11 @@
   }
 }
 
-.item {
-  @apply relative h-full;
-}
-
 .itemName {
-  @apply opacity-0 absolute z-10 top-1/2 left-1/2;
   transform: translate(-50%, -100%);
 }
 
 .toggleButton {
-  @apply opacity-0 absolute z-10 top-1/2 left-1/2 bg-white border border-green hover:bg-green;
   transform: translate(-50%, 100%);
   width: 52px;
   height: 46px;

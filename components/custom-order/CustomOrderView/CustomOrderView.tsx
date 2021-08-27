@@ -13,7 +13,6 @@ import { PageHeader, OnelineLink, Slide } from '@components/ui';
 import { slideItemFragment } from '@components/ui/Slide';
 import type { FC } from 'react';
 import type { CustomOrderViewFragment } from 'types/schema';
-import { useMediaQuery } from '@react-hook/media-query';
 import { useMemo } from 'react';
 
 type Props = CustomOrderViewFragment & {
@@ -27,12 +26,22 @@ export const customOrderViewFragment = /* GraphQL */ `
     description {
       json
     }
-    imageCollection {
+    imageCollection(locale: "ja") {
       items {
         ...SlideItem
       }
     }
-    mobileImageCollection {
+    imageCollectionEnglish: imageCollection(locale: "en") {
+      items {
+        ...SlideItem
+      }
+    }
+    mobileImageCollection(locale: "ja") {
+      items {
+        ...SlideItem
+      }
+    }
+    mobileImageCollectionEnglish: mobileImageCollection(locale: "ja") {
       items {
         ...SlideItem
       }
@@ -44,23 +53,39 @@ export const customOrderViewFragment = /* GraphQL */ `
 
 const useImage = ({
   imageCollection,
+  imageCollectionEnglish,
   mobileImageCollection,
-}: Pick<Props, 'imageCollection' | 'mobileImageCollection'>) => {
+  mobileImageCollectionEnglish,
+}: Pick<
+  Props,
+  | 'imageCollection'
+  | 'imageCollectionEnglish'
+  | 'mobileImageCollection'
+  | 'mobileImageCollectionEnglish'
+>) => {
   const { isScreenMd } = useScreen();
   return useMemo(() => {
     if (isScreenMd) {
-      return imageCollection;
+      return { ja: imageCollection, en: imageCollectionEnglish };
     } else {
-      return mobileImageCollection;
+      return { ja: mobileImageCollection, en: mobileImageCollectionEnglish };
     }
-  }, [isScreenMd, imageCollection, mobileImageCollection]);
+  }, [
+    isScreenMd,
+    imageCollection,
+    imageCollectionEnglish,
+    mobileImageCollection,
+    mobileImageCollectionEnglish,
+  ]);
 };
 
 const CustomOrderView: FC<Props> = ({
   title,
   description,
   imageCollection,
+  imageCollectionEnglish,
   mobileImageCollection,
+  mobileImageCollectionEnglish,
 }) => {
   const titleText = title ?? '';
   const descriptionText = renderRichText(description);
@@ -71,7 +96,12 @@ const CustomOrderView: FC<Props> = ({
     description: descriptionText,
     image: firstImage,
   });
-  const image = useImage({ imageCollection, mobileImageCollection });
+  const image = useImage({
+    imageCollection,
+    imageCollectionEnglish,
+    mobileImageCollection,
+    mobileImageCollectionEnglish,
+  });
 
   return (
     <>
@@ -83,13 +113,14 @@ const CustomOrderView: FC<Props> = ({
       <PageHeader title={f('store.customOrder')}>
         {renderRichTextReact(description)}
       </PageHeader>
-      {image?.items && (
+      {image?.ja?.items && image?.en?.items && (
         <div
           className={cn('less-than-md:aspect-w-1', 'less-than-md:aspect-h-1')}
         >
           <Slide
             className={cn('h-full', 'md:h-screen')}
-            items={image.items}
+            items={image.ja.items}
+            itemsEnglish={image.en.items}
             disableLink={true}
           />
         </div>

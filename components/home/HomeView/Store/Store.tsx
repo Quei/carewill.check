@@ -5,7 +5,6 @@ import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
 import { Slide, Grid, Block, BlockContent } from '@components/ui';
 import { Section } from '../Section';
 import { slideItemFragment } from '@components/ui/Slide';
-import { CrossBlock } from '@components/icons';
 import type { VFC } from 'react';
 import type { HomeStoreViewFragment } from 'types/schema';
 
@@ -18,6 +17,11 @@ export type Props = HomeStoreViewFragment & {
 export const homeStoreViewFragment = /* GraphQL */ `
   fragment homeStoreView on Home {
     topSlideCollection(locale: "ja") {
+      items {
+        ...SlideItem
+      }
+    }
+    topSlideCollectionEnglish: topSlideCollection(locale: "en") {
       items {
         ...SlideItem
       }
@@ -54,6 +58,11 @@ export const homeStoreViewFragment = /* GraphQL */ `
         ...SlideItem
       }
     }
+    endSlideCollectionEnglish: endSlideCollection(locale: "en") {
+      items {
+        ...SlideItem
+      }
+    }
   }
 
   ${slideItemFragment}
@@ -62,6 +71,7 @@ export const homeStoreViewFragment = /* GraphQL */ `
 const Store: VFC<Props> = ({
   className,
   topSlideCollection,
+  topSlideCollectionEnglish,
   description,
   productImage,
   productHomeDescription,
@@ -72,12 +82,17 @@ const Store: VFC<Props> = ({
   collaborationImage,
   collaborationHomeDescription,
   endSlideCollection,
+  endSlideCollectionEnglish,
 }) => {
   const f = useIntlMessage();
   return (
     <>
-      {topSlideCollection?.items && (
-        <Slide className={cn('h-screen')} items={topSlideCollection.items} />
+      {topSlideCollection?.items && topSlideCollectionEnglish?.items && (
+        <Slide
+          className={cn('h-screen')}
+          items={topSlideCollection.items}
+          itemsEnglish={topSlideCollectionEnglish.items}
+        />
       )}
       <Section title={'Store'} description={renderRichTextReact(description)}>
         <Grid>
@@ -99,8 +114,9 @@ const Store: VFC<Props> = ({
             <Block
               title={f('store.customOrder')}
               titleTag="h3"
-              href="/custom-order"
-              site={SITE}
+              // href="/custom-order"
+              // site={SITE}
+              isClose={true}
             >
               <BlockContent
                 image={{
@@ -134,7 +150,8 @@ const Store: VFC<Props> = ({
               title={f('store.collaboration')}
               titleTag="h3"
               // href="/collaboration"
-              site={SITE}
+              // site={SITE}
+              isClose={true}
             >
               <BlockContent
                 image={{
@@ -144,7 +161,6 @@ const Store: VFC<Props> = ({
               >
                 {renderRichTextReact(collaborationHomeDescription)}
               </BlockContent>
-              <CrossBlock className="absolute top-0 left-0" />
             </Block>
           )}
           {/* {products.slice(0, 3).map((product, i) => (
@@ -158,8 +174,12 @@ const Store: VFC<Props> = ({
       />
     ))} */}
         </Grid>
-        {endSlideCollection?.items && (
-          <Slide className={cn('h-screen')} items={endSlideCollection.items} />
+        {endSlideCollection?.items && endSlideCollectionEnglish?.items && (
+          <Slide
+            className={cn('h-screen')}
+            items={endSlideCollection.items}
+            itemsEnglish={endSlideCollectionEnglish.items}
+          />
         )}
       </Section>
     </>

@@ -11,7 +11,7 @@ type Props = {
 
 const Sns: VFC<Props> = ({ className, items }) => {
   return (
-    <ul className={cn(s.root, className)}>
+    <ul className={cn('flex', className)}>
       {items.map((item) => (
         <li className={cn(s.item)} key={`footer-link-item-${item.id}`}>
           <a href={item.value} target="_blank" rel="noopener noreferrer">

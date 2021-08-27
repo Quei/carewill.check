@@ -11,7 +11,6 @@ import {
   BlockContent,
   BlockContentPickupLarge,
 } from '@components/ui';
-import { CrossBlock } from '@components/icons';
 import { Section } from '../Section';
 import { Pickup } from './Pickup';
 import type { VFC } from 'react';
@@ -70,20 +69,15 @@ const Labo: VFC<Props> = ({
 }) => {
   const f = useIntlMessage();
   return (
-    <Section
-      className={cn(s.root)}
-      title={'Labo'}
-      description={renderRichTextReact(description)}
-    >
+    <Section title={'Labo'} description={renderRichTextReact(description)}>
       <Grid>
         {interviewImage && interviewHomeDescription && (
-          <Block title={f('labo.interviews')} titleTag="h3">
+          <Block title={f('labo.interviews')} titleTag="h3" isClose={true}>
             <BlockContent
               image={{ src: interviewImage.url, alt: f('store.product') }}
             >
               {renderRichTextReact(interviewHomeDescription)}
             </BlockContent>
-            <CrossBlock className="absolute top-0 left-0" />
           </Block>
         )}
         <Block
@@ -95,7 +89,14 @@ const Labo: VFC<Props> = ({
           <BlockContent
             image={{
               node: (
-                <div className={cn(s.staffNoteImageTexts)}>
+                <div
+                  className={cn(
+                    'bg-light-gray',
+                    'text-2xl',
+                    'overflow-hidden',
+                    s.staffNoteImageTexts
+                  )}
+                >
                   <p>{renderRichText(latestStaffNote?.content)}</p>
                 </div>
               ),

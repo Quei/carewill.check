@@ -10,7 +10,7 @@ type Props = {
 
 const BlockContentChildPage: FC<Props> = ({ className, children }) => {
   return (
-    <div className={cn(s.root, className)}>
+    <div className={cn('py-24', className)}>
       <Container>{children}</Container>
     </div>
   );

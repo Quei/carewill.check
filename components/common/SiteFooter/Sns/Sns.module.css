@@ -1,13 +1,14 @@
-.root {
-  @apply flex;
-}
-
 .item {
   width: 44px;
+  @screen md {
+    width: 20px;
+  }
   & + .item {
     margin-left: 10px;
+    @screen md {
+      margin-left: 20px;
+    }
   }
-
   & a:hover {
     & :global(.circle) {
       fill: white;

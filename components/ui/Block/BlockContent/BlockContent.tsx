@@ -14,7 +14,9 @@ const BlockContent: FC<Props> = ({ className, image, children }) => {
   return (
     <div className={cn(s.root, className)}>
       {image && (
-        <div className={cn('aspect-w-1', 'aspect-h-1', s.imageWrapper)}>
+        <div
+          className={cn('aspect-w-1', 'aspect-h-1', 'relative', s.imageWrapper)}
+        >
           {'node' in image && image.node}
           {'src' in image && image.src && (
             <Image

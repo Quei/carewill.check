@@ -2532,7 +2532,17 @@ export type CustomOrderViewFragment = { __typename?: 'CustomOrder' } & Pick<
         items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
       }
     >;
+    imageCollectionEnglish?: Maybe<
+      { __typename?: 'AssetCollection' } & {
+        items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
+      }
+    >;
     mobileImageCollection?: Maybe<
+      { __typename?: 'AssetCollection' } & {
+        items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
+      }
+    >;
+    mobileImageCollectionEnglish?: Maybe<
       { __typename?: 'AssetCollection' } & {
         items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
       }
@@ -2637,6 +2647,11 @@ export type HomeStoreViewFragment = { __typename?: 'Home' } & {
       items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
     }
   >;
+  topSlideCollectionEnglish?: Maybe<
+    { __typename?: 'AssetCollection' } & {
+      items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
+    }
+  >;
   description?: Maybe<
     { __typename?: 'HomeDescription' } & Pick<HomeDescription, 'json'>
   >;
@@ -2669,6 +2684,11 @@ export type HomeStoreViewFragment = { __typename?: 'Home' } & {
     >
   >;
   endSlideCollection?: Maybe<
+    { __typename?: 'AssetCollection' } & {
+      items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
+    }
+  >;
+  endSlideCollectionEnglish?: Maybe<
     { __typename?: 'AssetCollection' } & {
       items: Array<Maybe<{ __typename?: 'Asset' } & SlideItemFragment>>;
     }

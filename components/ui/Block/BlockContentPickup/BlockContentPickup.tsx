@@ -30,7 +30,7 @@ const BlockContentPickup: FC<Props> = ({
   return (
     <div className={cn(s.root, className)}>
       {hasImage && (
-        <div className={cn('aspect-w-1', 'aspect-h-1', s.imageWrapper)}>
+        <div className={cn('aspect-w-1', 'aspect-h-1')}>
           {!imageSrc && <DefaultImage />}
           {imageSrc && (
             <Image
@@ -44,20 +44,31 @@ const BlockContentPickup: FC<Props> = ({
       )}
       {date && (
         <time
-          className={cn(s.date)}
+          className={cn('block', 'mt-2.5', 'md:mt-4')}
           dateTime={dayjs(date).format('YYYY.MM.DD')}
         >
           {dayjs(date).format('YYYY.MM.DD')}
         </time>
       )}
       {title && (
-        <TitleTag className={cn(s.title, { [s.hasImageTitle]: hasImage })}>
+        <TitleTag
+          className={cn('mt-6', 'line-clamp-5', s.title, {
+            [s.hasImageTitle]: hasImage,
+          })}
+        >
           {title}
         </TitleTag>
       )}
       {children && (
         <div
-          className={cn(s.description, { [s.hasImageDescription]: hasImage })}
+          className={cn(
+            'text-sm',
+            'mt-6',
+            'line-clamp-5',
+            'md:line-clamp-11',
+            s.description,
+            { [s.hasImageDescription]: hasImage }
+          )}
         >
           {children}
         </div>

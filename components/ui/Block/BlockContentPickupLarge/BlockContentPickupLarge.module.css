@@ -22,16 +22,11 @@
   }
 }
 
-.header {
-  @apply md:flex md:justify-center md:text-2xl;
+.header { 
   & > * + * {
     @apply mt-4 md:mt-0;
     @screen md {
       margin-left: 2em;
     }
   }
-}
-
-.description {
-  @apply line-clamp-4 mt-4 md:mt-1;
 }

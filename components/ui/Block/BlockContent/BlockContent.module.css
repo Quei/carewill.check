@@ -7,9 +7,7 @@
   }
 }
 
-.imageWrapper {
-  @apply relative;
-
+.imageWrapper  {
   & + .description {
     @apply mt-4;
   }
