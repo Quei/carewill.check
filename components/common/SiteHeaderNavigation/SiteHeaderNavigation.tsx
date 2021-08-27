@@ -56,6 +56,7 @@ const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
         ref={menuListWrapperRef}
       >
         <SiteMenuList
+          className={cn(s.menuList)}
           id="site-menu-list"
           allNavigations={allNavigations}
           type="header"
