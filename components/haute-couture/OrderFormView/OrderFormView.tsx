@@ -100,7 +100,6 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
               ? input.label[localeLang]
               : title;
           const answer = submitData[input.name];
-          console.log(answer);
 
           let answerText = '';
           if (answer !== null && answer !== undefined) {
@@ -124,8 +123,6 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
         answers,
       };
     });
-
-    console.log(messageData);
 
     const res = await fetch('/api/contact', {
       method: 'POST',

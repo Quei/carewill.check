@@ -5,7 +5,7 @@ import { hauteCouture } from './template';
 const contact = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const transporter = createTransport({
-      host: 'sv8036.xserver.jp',
+      host: process.env.MAIL_HOST,
       port: 465,
       secure: true,
       auth: {

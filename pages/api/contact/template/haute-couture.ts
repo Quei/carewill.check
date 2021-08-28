@@ -6,7 +6,10 @@ type Data = {
     answer: string;
   }[];
 }[];
-export const hauteCouture = (data: Data) => {
+export const hauteCouture = (data?: Data) => {
+  if (!data) {
+    return null;
+  }
   const message = data.map((item, index) => {
     const answersText = item.answers.map(({ name, question, answer }) => {
       return `
