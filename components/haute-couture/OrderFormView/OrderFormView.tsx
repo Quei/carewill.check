@@ -76,7 +76,6 @@ const useCurrentFocusIndex = () => {
 
 const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
   const formMethod = useForm<HauteCoutureInputs>({
-    mode: 'onChange',
     shouldFocusError: false,
   });
   const {
@@ -90,7 +89,7 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
     },
   } = formMethod;
 
-  const onSubmit: SubmitHandler<HauteCoutureInputs> = (submitData) => {
+  const onSubmit: SubmitHandler<HauteCoutureInputs> = async (submitData) => {
     const messageData = data.map((section) => {
       const title = section.title[localeLang];
       const answers = section.inputs
@@ -101,14 +100,23 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
               ? input.label[localeLang]
               : title;
           const answer = submitData[input.name];
+          console.log(answer);
+
+          let answerText = '';
+          if (answer !== null && answer !== undefined) {
+            if (typeof answer === 'string') {
+              answerText = answer;
+            } else if (Array.isArray(answer)) {
+              answerText = answer.join(', ');
+            } else if (typeof answer === 'object') {
+              answerText = answer.value;
+            }
+          }
 
           return {
             name: input.name,
             question,
-            answer:
-              typeof answer === 'object' && !Array.isArray(answer)
-                ? answer?.value
-                : answer,
+            answer: answerText,
           };
         });
       return {
@@ -116,8 +124,23 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
         answers,
       };
     });
-    console.log(submitData);
+
     console.log(messageData);
+
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        data: messageData,
+        type: 'haute-couture',
+      }),
+    });
+    if (res.status === 200) {
+      const json = await res.json();
+      console.log(json);
+    } else {
+      console.log('Send mail error');
+    }
   };
 
   const titleText = formTitle ?? '';
@@ -161,9 +184,9 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
                 id={`section-${index}`}
                 localeLang={localeLang}
                 data={item}
-                onFocus={() => handleOnFocus(index)}
+                // onFocus={() => handleOnFocus(index)}
                 index={index}
-                currentFocusIndex={currentFocusIndex}
+                // currentFocusIndex={currentFocusIndex}
               />
             );
           })}

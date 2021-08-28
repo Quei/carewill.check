@@ -159,8 +159,8 @@ const FormSection: VFC<Props> = ({
                 <ClothesType
                   localeLang={localeLang}
                   inputs={data.inputs}
-                  onFocus={onFocus}
-                  onChange={delayClose}
+                  // onFocus={onFocus}
+                  // onChange={delayClose}
                 />
               )}
               {data.componentName === 'ClothesTypeOther' && (
@@ -169,35 +169,35 @@ const FormSection: VFC<Props> = ({
                   inputs={data.inputs}
                   hasRequired={hasRequired}
                   setHasRequired={setHasRequired}
-                  onFocus={onFocus}
+                  // onFocus={onFocus}
                 />
               )}
               {data.componentName === 'Hurt' && (
                 <Hurt
                   localeLang={localeLang}
                   inputs={data.inputs}
-                  onFocus={onFocus}
+                  // onFocus={onFocus}
                 />
               )}
               {data.componentName === 'PulloverOfExtraSpace' && (
                 <PulloverOfExtraSpace
                   localeLang={localeLang}
                   inputs={data.inputs}
-                  onFocus={onFocus}
+                  // onFocus={onFocus}
                 />
               )}
               {data.componentName === 'PulloverInconvenientPart' && (
                 <PulloverInconvenientPart
                   localeLang={localeLang}
                   inputs={data.inputs}
-                  onFocus={onFocus}
+                  // onFocus={onFocus}
                 />
               )}
               {data.componentName === 'Measurement' && (
                 <Measurement
                   localeLang={localeLang}
                   inputs={data.inputs}
-                  onFocus={onFocus}
+                  // onFocus={onFocus}
                 />
               )}
             </>
@@ -225,7 +225,7 @@ const FormSection: VFC<Props> = ({
                       required={input.required}
                       type={input.type}
                       placeholder={input?.placeholder?.[localeLang]}
-                      onFocus={onFocus}
+                      // onFocus={onFocus}
                     />
                   )}
                   {(input.type === 'radio' || input.type === 'checkbox') && (
@@ -239,7 +239,7 @@ const FormSection: VFC<Props> = ({
                           value={value[localeLang]}
                           required={input.required}
                           image={value.image}
-                          onFocus={onFocus}
+                          // onFocus={onFocus}
                         >
                           {value[localeLang]}
                         </Checkbox>
@@ -258,8 +258,8 @@ const FormSection: VFC<Props> = ({
                           label: value[localeLang],
                         };
                       })}
-                      onFocus={onFocus}
-                      onChange={delayClose}
+                      // onFocus={onFocus}
+                      // onChange={delayClose}
                     />
                   )}
                   {input.type === 'acceptance' && <Acceptance />}
