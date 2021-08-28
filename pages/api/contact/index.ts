@@ -12,6 +12,10 @@ const contact = async (req: NextApiRequest, res: NextApiResponse) => {
         user: process.env.MAIL_ADDRESS_WEB,
         pass: process.env.MAIL_PASS_WEB,
       },
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false,
+      },
     });
     let subject = 'お問い合わせ';
     let text = '';
