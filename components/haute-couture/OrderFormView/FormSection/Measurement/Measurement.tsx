@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { useFormState } from 'react-hook-form';
+import { useState, useEffect, useCallback } from 'react';
+import { useFormState, useFormContext } from 'react-hook-form';
 import cn from 'classnames';
 import s from './Measurement.module.css';
 import { useMounted } from '@lib/hooks/useMounted';
@@ -25,15 +25,32 @@ const useIsScreenMd = () => {
   return isScreenMd && mounted;
 };
 
+const useRequired = ({ inputs }: Pick<Props, 'inputs'>) => {
+  const [hasRequired, setHasRequired] = useState(true);
+  const { watch } = useFormContext<HauteCoutureInputs>();
+  const names = inputs.map((input) => input.name);
+  const values = watch(names);
+  useEffect(() => {
+    if (values.some((value) => value)) {
+      setHasRequired(false);
+    } else {
+      setHasRequired(true);
+    }
+  }, [values, setHasRequired]);
+  return { hasRequired };
+};
+
 const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
   const text = inputs as TextInput[];
   const { errors } = useFormState<HauteCoutureInputs>();
-  const hasError = useMemo(
-    () => inputs.map((input) => input.name).some((name) => name in errors),
-    [inputs, errors]
-  );
+  // NOTE:
+  // hasErrorをuseMemoしても何故か更新されないので、
+  // useMemoを使わずそのまま書く
+  const hasError = inputs
+    .map((input) => input.name)
+    .some((name) => name in errors);
+  const { hasRequired } = useRequired({ inputs });
   const isScreenMd = useIsScreenMd();
-
   const f = useIntlMessage();
   return (
     <div>
@@ -47,13 +64,16 @@ const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
               <Input
                 id={input.name}
                 name={input.name}
-                required={input.required}
+                required={hasRequired}
                 placeholder={
                   isScreenMd
                     ? input.placeholder?.[localeLang]
                     : input.label?.[localeLang]
                 }
+                type="number"
+                step="0.1"
                 onFocus={onFocus}
+                // onChange={onChange}
               />
             </div>
           ))}
@@ -64,7 +84,7 @@ const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
           {!isScreenMd && <BodySP />}
         </div>
       </div>
-      {hasError && (
+      {hasError && hasRequired && (
         <ErrorText className="mt-3">
           {/*　共通なので、ErrorMessageは使用しない */}
           {f('form.error.required')}

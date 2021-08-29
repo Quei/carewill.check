@@ -35,7 +35,15 @@ const Input: VFC<Props> = ({
 
   return (
     <input
-      className={cn(s.root, className)}
+      className={cn(
+        'appearance-none',
+        'rounded-none',
+        'w-full',
+        'pr-2',
+        'focus:outline-none',
+        s.root,
+        className
+      )}
       autoComplete="off"
       autoCorrect="off"
       autoCapitalize="off"

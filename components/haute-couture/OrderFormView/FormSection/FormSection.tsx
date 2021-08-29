@@ -82,13 +82,13 @@ const useIsOpen = ({
   return { isOpen, open, delayClose };
 };
 
-const useSectionStatus = (inputNames: InputNames) => {
-  const f = useIntlMessage();
-  const { getValues } = useFormContext<HauteCoutureInputs>();
-  const values = getValues(inputNames);
-  const hasValue = values.some((value) => value);
-  return hasValue ? f('form.change') : f('form.empty');
-};
+// const useSectionStatus = (inputNames: InputNames) => {
+//   const f = useIntlMessage();
+//   const { getValues } = useFormContext<HauteCoutureInputs>();
+//   const values = getValues(inputNames);
+//   const hasValue = values.some((value) => value);
+//   return hasValue ? f('form.change') : f('form.empty');
+// };
 
 const FormSection: VFC<Props> = ({
   id,
@@ -116,7 +116,7 @@ const FormSection: VFC<Props> = ({
     hasError,
     hasRequired,
   });
-  const sectionStatus = useSectionStatus(inputNames);
+  // const sectionStatus = useSectionStatus(inputNames);
 
   return (
     <Root
@@ -125,7 +125,7 @@ const FormSection: VFC<Props> = ({
       isOpen={isOpen}
       open={open}
       required={hasRequired}
-      status={sectionStatus}
+      // status={sectionStatus}
       hasError={hasError}
     >
       <div className={cn('pt-2.5', 'pb-14', 'md:py-16')}>

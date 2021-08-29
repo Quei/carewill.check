@@ -29,7 +29,7 @@ title: ${item.title}
 answer: ${answersText}`;
   });
   return {
-    subject: 'オートクチュールの注文を受け付けました',
+    subject: 'オートクチュールの入力を受け付けました',
     text: message.join('\n\n'),
     to: process.env.MAIL_ADDRESS_HAUTE_COUTURE!,
   };

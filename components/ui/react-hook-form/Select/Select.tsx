@@ -43,10 +43,14 @@ const customStyles: NamedProps<OptionTypeBase>['styles'] = {
   }),
   control: (provided, state) => ({
     ...provided,
+    fontSize: '16px',
     border: '1px solid currentColor',
-    // borderRadius: 0,
     minHeight: 'initial',
-    lineHeight: 1,
+    height: '28px',
+  }),
+  valueContainer: (provided, state) => ({
+    ...provided,
+    height: '100%',
   }),
   placeholder: (provided, state) => ({
     ...provided,
@@ -55,13 +59,11 @@ const customStyles: NamedProps<OptionTypeBase>['styles'] = {
   singleValue: (provided, state) => ({
     ...provided,
     color: 'currentcolor',
-    // position: 'relative',
-    // top: 'initial',
   }),
   input: (provided, state) => ({
     ...provided,
     width: 0,
-    height: '20px',
+    // height: '20px',
     caretColor: 'transparent',
   }),
   indicatorSeparator: (provided, state) => ({
@@ -93,7 +95,7 @@ const customStyles: NamedProps<OptionTypeBase>['styles'] = {
 const CustomDropdownIndicator: Components['DropdownIndicator'] = (props) => {
   return (
     <components.DropdownIndicator {...props}>
-      <div className={cn(s.dropdownIndicator)} />
+      <div className={cn('relative', s.dropdownIndicator)} />
     </components.DropdownIndicator>
   );
 };
@@ -161,7 +163,7 @@ const Select: FC<Props> = ({
   });
   return (
     <>
-      <label className={cn('block', className)}>
+      <label className={cn('block', s.select, className)}>
         <Controller
           control={control as Control<SelectInputs>}
           name={name}
@@ -170,7 +172,6 @@ const Select: FC<Props> = ({
           }}
           render={({ field }) => (
             <ReactSelect
-              className={cn(s.select)}
               instanceId={id}
               theme={customTheme}
               styles={customStyles}
@@ -180,6 +181,7 @@ const Select: FC<Props> = ({
               }}
               options={customOptions}
               onFocus={onFocus}
+              isSearchable={false}
               {...field}
               // NOTE:
               // onChangeを上書きするため、

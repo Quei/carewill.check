@@ -49,9 +49,18 @@ const Checkbox: FC<Props> = ({
   );
   const RootElement = hasNoLabel ? 'div' : 'label';
   return (
-    <RootElement className={cn(s.root, { [s.hasImage]: image }, className)}>
+    <RootElement
+      className={cn(
+        'block',
+        'relative',
+        'leading-none',
+        s.root,
+        { [s.hasImage]: image },
+        className
+      )}
+    >
       <input
-        className={cn(s.input)}
+        className={cn('sr-only', s.input)}
         type={type}
         name={name}
         onChange={handleOnChange}
@@ -61,19 +70,24 @@ const Checkbox: FC<Props> = ({
       />
       {!image && (
         <>
-          <span className={cn(s.dummyCheckbox)} aria-hidden={true} />
+          <span
+            className={cn('inline-block', 'align-middle', s.dummyCheckbox)}
+            aria-hidden={true}
+          />
           {children}
         </>
       )}
       {image && (
         <div className={cn('h-full')}>
-          <div className={cn(s.imageWrapper)}>
+          <div className={cn('relative', s.imageWrapper)}>
             {typeof image === 'string' && (
               <Image src={image} layout="fill" alt="" />
             )}
             {typeof image !== 'string' && image}
           </div>
-          <p className={cn(s.imageLabel)}>{children}</p>
+          <p className={cn('text-xs', 'text-center', 'py-2', 'leading-tight')}>
+            {children}
+          </p>
         </div>
       )}
     </RootElement>

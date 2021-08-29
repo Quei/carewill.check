@@ -509,23 +509,24 @@ export const data: Data[] = [
   },
 ];
 
+const hauteCoutureAddress = process.env.MAIL_ADDRESS_HAUTE_COUTURE;
 export const thanks = [
   {
     ja:
-      'ご入力ありがとうございました!いただいた e-mail 宛に、当社よりメールを自動配信いたします。',
-    en: '',
+      'ご入力ありがとうございました!いただいたe-mail宛に、当社よりメールを自動配信いたします。',
+    en:
+      'Thank you for your input! You will receive an automatic email from us to the email address you provided.',
   },
   {
-    ja: '自動配信メールはお手元に届かない場合は xxx までご連絡下さい。',
-    en: '',
+    ja: `自動配信メールはお手元に届かない場合は${hauteCoutureAddress}までご連絡下さい。`,
+    en: `If you do not receive the automatic email, please contact ${hauteCoutureAddress}.`,
   },
   {
     ja: 'その後、ヒアリングを経てデザインや金額は確定されます。',
-    en: '',
+    en: 'Then, after the hearing, the design and price will be finalized.',
   },
   {
-    ja:
-      'ご希望の服をより正確に知るために、ご希望の服に近い【参考写真】がございましたら〇〇宛に送付いただければ助かります。現在着ているもの、インターネット上にあるものなど何でも構いません。',
-    en: '',
+    ja: `ご希望の服をより正確に知るために、ご希望の服に近い【参考写真】がございましたら${hauteCoutureAddress}宛に送付いただければ助かります。現在着ているもの、インターネット上にあるものなど何でも構いません。`,
+    en: `To get a more accurate idea of what you are looking for, it would be helpful if you could send us a [reference photo] that is similar to your desired outfit to ${hauteCoutureAddress}.It can be anything you are currently wearing or anything you can find on the Internet.`,
   },
 ];

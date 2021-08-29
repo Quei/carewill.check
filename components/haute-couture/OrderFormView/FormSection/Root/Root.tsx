@@ -13,7 +13,7 @@ type Props = {
   isOpen: boolean;
   open: () => void;
   required?: boolean;
-  status: string;
+  // status: string;
   hasError?: boolean;
   children?: ReactNode;
 };
@@ -25,15 +25,15 @@ const Root: FC<Props> = ({
   isOpen,
   open,
   required,
-  status,
+  // status,
   hasError,
   children,
 }) => {
-  const { isScreenMd } = useScreen();
+  // const { isScreenMd } = useScreen();
   return (
     <section id={id} className={cn('relative', className)}>
       <p className={cn('block-title', s.counter)} />
-      <motion.div
+      {/* <motion.div
         initial={{ overflow: 'visible', height: 'auto' }}
         animate={
           isOpen
@@ -49,34 +49,34 @@ const Root: FC<Props> = ({
               }
         }
         transition={{ duration: 0.35, delay: 0.1 }}
-      >
-        <Block>
-          <Container>
-            <div
-              // NOTE:
-              // buttonにすると、
-              // react-hook-formが反応するので、
-              // divにしておく
-              className={cn(
-                s.openButton,
-                { [s.isOpen]: isOpen },
-                { [s.hasError]: hasError }
-              )}
-              onClick={open}
-              aria-hidden={true}
-            >
-              <span
-                className={cn(s.dummyTitle, { [s.required]: required })}
-                dangerouslySetInnerHTML={{ __html: title }}
-              />
-              <span className={cn(s.status)}>{status}</span>
-            </div>
-            <div className={cn(s.children, { [s.isHide]: !isOpen })}>
-              {children}
-            </div>
-          </Container>
-        </Block>
-      </motion.div>
+      > */}
+      <Block>
+        <Container>
+          <div
+            // NOTE:
+            // buttonにすると、
+            // react-hook-formが反応するので、
+            // divにしておく
+            className={cn(
+              s.openButton,
+              { [s.isOpen]: isOpen },
+              { [s.hasError]: hasError }
+            )}
+            onClick={open}
+            aria-hidden={true}
+          >
+            <span
+              className={cn(s.dummyTitle, { [s.required]: required })}
+              dangerouslySetInnerHTML={{ __html: title }}
+            />
+            {/* <span className={cn(s.status)}>{status}</span> */}
+          </div>
+          <div className={cn(s.children, { [s.isHide]: !isOpen })}>
+            {children}
+          </div>
+        </Container>
+      </Block>
+      {/* </motion.div> */}
     </section>
   );
 };

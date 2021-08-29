@@ -19,18 +19,23 @@ export const en: Record<string, any> = {
   // form
   // haute-couture
   form: 'Form',
-  formLink: 'Enter form',
+  formLink: 'Form',
   ['form.change']: 'Change',
   ['form.empty']: 'Empty',
   ['form.submit']: 'Submit',
   ['form.submit.success']: 'Completed',
   ['form.submit.ing']: 'Submiting',
   ['form.select']: 'Select',
-  ['form.error.messageBlock']: '',
+  ['form.error.messageBlock']:
+    '*The following required fields have not been selected/entered.',
   ['form.error.required']: 'Required',
-  ['form.measurement.attention']: '',
+  ['form.error.number']: 'Please enter a number.',
+  ['form.error.email']: 'Please enter alphanumeric characters and symbols.',
+  ['form.error.acceptance']: 'Please check.',
+  ['form.measurement.attention']:
+    'The length of the "clothes" you want to wear.',
   ['form.other']: 'Other',
-  ['form.other.placeholder']: '',
+  ['form.other.placeholder']: 'Enter any other answers.',
   // labo
   ['labo.interviews']: 'Project',
   ['labo.interviewsPickup']: 'Project pickup',
