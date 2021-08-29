@@ -9,6 +9,7 @@ import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
 export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   className?: string;
   name: keyof HauteCoutureInputs;
+  errorMessage?: string;
   onChange?: (...args: any[]) => any;
 };
 
@@ -16,13 +17,18 @@ const Input: VFC<Props> = ({
   className,
   name,
   required = false,
+  type,
   onChange,
   ...rest
 }) => {
   const f = useIntlMessage();
   const { register } = useFormContext<HauteCoutureInputs>();
   const registerd = register(name, {
-    required: required && f('form.error.required'),
+    required:
+      required &&
+      (type === 'email'
+        ? f('form.error.required.email')
+        : f('form.error.required')),
   });
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (event) => {
@@ -52,6 +58,7 @@ const Input: VFC<Props> = ({
       onChange={handleOnChange}
       onBlur={registerd?.onBlur}
       ref={registerd?.ref}
+      type={type}
       {...rest}
     />
   );

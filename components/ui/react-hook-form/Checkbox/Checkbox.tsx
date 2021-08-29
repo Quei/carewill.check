@@ -38,7 +38,11 @@ const Checkbox: FC<Props> = ({
   const f = useIntlMessage();
   const { register } = useFormContext<HauteCoutureInputs>();
   const registerd = register(name, {
-    required: required && f('form.error.required'),
+    required:
+      required &&
+      (name === 'acceptance'
+        ? f('form.error.required.acceptance')
+        : f('form.error.required')),
   });
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (event) => {

@@ -29,9 +29,9 @@ export const en: Record<string, any> = {
   ['form.error.messageBlock']:
     '*The following required fields have not been selected/entered.',
   ['form.error.required']: 'Required',
-  ['form.error.number']: 'Please enter a number.',
-  ['form.error.email']: 'Please enter alphanumeric characters and symbols.',
-  ['form.error.acceptance']: 'Please check.',
+  ['form.error.required.email']:
+    'Please enter alphanumeric characters and symbols.',
+  ['form.error.required.acceptance']: 'Please check.',
   ['form.measurement.attention']:
     'The length of the "clothes" you want to wear.',
   ['form.other']: 'Other',

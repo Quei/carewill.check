@@ -111,6 +111,10 @@ a {
   animation-name: fadeIn;
 }
 
+input {
+  border-radius: 0;
+}
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
