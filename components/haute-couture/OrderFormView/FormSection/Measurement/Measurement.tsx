@@ -72,6 +72,9 @@ const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
                 }
                 type="number"
                 step="0.1"
+                pattern="\d*"
+                min="0"
+                max="200"
                 onFocus={onFocus}
                 // onChange={onChange}
               />
