@@ -89,62 +89,67 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
     },
   } = formMethod;
 
-  const onSubmit: SubmitHandler<HauteCoutureInputs> = async (submitData) => {
-    const messageData = data.map((section) => {
-      const title = section.title[localeLang];
-      const answers = section.inputs
-        .filter((input) => input.name !== 'acceptance')
-        .map((input) => {
-          const question =
-            input.type === 'text' && input.label?.[localeLang]
-              ? input.label[localeLang]
-              : title;
-          const answer = submitData[input.name];
+  const { locale } = useRouter();
+  const localeLang = locale ? (locale as 'ja' | 'en') : 'ja';
 
-          let answerText = '';
-          if (answer !== null && answer !== undefined) {
-            if (typeof answer === 'string') {
-              answerText = answer;
-            } else if (Array.isArray(answer)) {
-              answerText = answer.join(', ');
-            } else if (typeof answer === 'object') {
-              answerText = answer.value;
+  const onSubmit: SubmitHandler<HauteCoutureInputs> = useCallback(
+    async (submitData) => {
+      const messageData = data.map((section) => {
+        const title = section.title[localeLang];
+        const answers = section.inputs
+          .filter((input) => input.name !== 'acceptance')
+          .map((input) => {
+            const question =
+              input.type === 'text' && input.label?.[localeLang]
+                ? input.label[localeLang]
+                : title;
+            const answer = submitData[input.name];
+
+            let answerText = '';
+            if (answer !== null && answer !== undefined) {
+              if (typeof answer === 'string') {
+                answerText = answer;
+              } else if (Array.isArray(answer)) {
+                answerText = answer.join(', ');
+              } else if (typeof answer === 'object') {
+                answerText = answer.value;
+              }
             }
-          }
 
-          return {
-            name: input.name,
-            question,
-            answer: answerText,
-          };
-        });
-      return {
-        title,
-        answers,
-      };
-    });
+            return {
+              name: input.name,
+              question,
+              answer: answerText,
+            };
+          });
+        return {
+          title,
+          answers,
+        };
+      });
 
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        data: messageData,
-        type: 'haute-couture',
-      }),
-    });
-    if (res.status === 200) {
-      const json = await res.json();
-      console.log(json);
-    } else {
-      console.log('Send mail error');
-    }
-  };
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          data: messageData,
+          type: 'haute-couture',
+          locale: localeLang,
+        }),
+      });
+      if (res.status === 200) {
+        const json = await res.json();
+        console.log(json);
+      } else {
+        console.log('Send mail error');
+      }
+    },
+    [localeLang]
+  );
 
   const titleText = formTitle ?? '';
   const descriptionText = renderRichText(formDescription);
   const f = useIntlMessage();
-  const { locale } = useRouter();
-  const localeLang = locale ? (locale as 'ja' | 'en') : 'ja';
   const errorTitles = getErrorTitles(errors);
   const { currentFocusIndex, handleOnFocus } = useCurrentFocusIndex();
 
