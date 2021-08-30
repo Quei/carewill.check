@@ -215,7 +215,6 @@ export const data: Data[] = [
         values: [
           { ja: '要支援1', en: 'Needs support level 1' },
           { ja: '要支援2', en: 'Needs support level 2' },
-          { ja: '要支援3', en: 'Needs support level 3' },
           { ja: '要介護1', en: 'Nursing care level 1' },
           { ja: '要介護2', en: 'Nursing care level 2' },
           { ja: '要介護3', en: 'Nursing care level 3' },

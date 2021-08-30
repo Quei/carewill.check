@@ -1441,40 +1441,6 @@ enum NewsCategoryOrder {
   sys_publishedVersion_DESC
 }
 
-type FooterCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Footer]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer)
-"""
-type Footer implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): FooterLinkingCollections
-  slug(locale: String): String
-  title(locale: String): String
-  content(locale: String): String
-  logoCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): AssetCollection
-}
-
-type FooterLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-}
-
 type HomeProductHomeDescription {
   json: JSON!
   links: HomeProductHomeDescriptionLinks!
@@ -1578,6 +1544,40 @@ type HomeCollaborationHomeDescriptionEntries {
 type HomeCollaborationHomeDescriptionAssets {
   hyperlink: [Asset]!
   block: [Asset]!
+}
+
+type FooterCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Footer]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer)
+"""
+type Footer implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): FooterLinkingCollections
+  slug(locale: String): String
+  title(locale: String): String
+  content(locale: String): String
+  logoCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): AssetCollection
+}
+
+type FooterLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
 }
 
 type ProductCollection {

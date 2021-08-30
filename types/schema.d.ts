@@ -1843,66 +1843,6 @@ export enum NewsCategoryOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
 
-export type FooterCollection = {
-  __typename?: 'FooterCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Footer>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
-export type Footer = Entry & {
-  __typename?: 'Footer';
-  sys: Sys;
-  contentfulMetadata: ContentfulMetadata;
-  linkedFrom?: Maybe<FooterLinkingCollections>;
-  slug?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  content?: Maybe<Scalars['String']>;
-  logoCollection?: Maybe<AssetCollection>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
-export type FooterLinkedFromArgs = {
-  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
-export type FooterSlugArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
-export type FooterTitleArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
-export type FooterContentArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
-export type FooterLogoCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type FooterLinkingCollections = {
-  __typename?: 'FooterLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-};
-
-export type FooterLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
 export type HomeProductHomeDescription = {
   __typename?: 'HomeProductHomeDescription';
   json: Scalars['JSON'];
@@ -2026,6 +1966,66 @@ export type HomeCollaborationHomeDescriptionAssets = {
   __typename?: 'HomeCollaborationHomeDescriptionAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
+};
+
+export type FooterCollection = {
+  __typename?: 'FooterCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Footer>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type Footer = Entry & {
+  __typename?: 'Footer';
+  sys: Sys;
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<FooterLinkingCollections>;
+  slug?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']>;
+  logoCollection?: Maybe<AssetCollection>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterSlugArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterContentArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/footer) */
+export type FooterLogoCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type FooterLinkingCollections = {
+  __typename?: 'FooterLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type FooterLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
 };
 
 export type ProductCollection = {

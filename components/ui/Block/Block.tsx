@@ -15,7 +15,6 @@ export type Props = {
   hasNoPaddingMobile?: boolean;
   onPointerEnter?: PointerEventHandler;
   onPointerLeave?: PointerEventHandler;
-  isClose?: boolean;
   children?: ReactNode;
 };
 
@@ -46,7 +45,6 @@ const Block: FC<Props> = ({
   hasNoPaddingMobile = false,
   onPointerEnter,
   onPointerLeave,
-  isClose,
   children,
 }) => {
   return (
@@ -55,7 +53,6 @@ const Block: FC<Props> = ({
         'relative',
         s.root,
         { [s.hasNoChildren]: !children },
-        { ['pointer-events-none']: isClose },
         className
       )}
       onPointerEnter={onPointerEnter}
@@ -81,7 +78,6 @@ const Block: FC<Props> = ({
           </div>
         )}
       </LinkWrapper>
-      {isClose && <CrossBlock className="absolute top-0 left-0" />}
     </div>
   );
 };

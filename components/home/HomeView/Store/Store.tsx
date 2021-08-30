@@ -116,7 +116,6 @@ const Store: VFC<Props> = ({
               titleTag="h3"
               // href="/custom-order"
               // site={SITE}
-              isClose={true}
             >
               <BlockContent
                 image={{
@@ -151,7 +150,6 @@ const Store: VFC<Props> = ({
               titleTag="h3"
               // href="/collaboration"
               // site={SITE}
-              isClose={true}
             >
               <BlockContent
                 image={{

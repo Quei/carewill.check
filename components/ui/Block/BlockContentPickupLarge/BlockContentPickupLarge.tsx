@@ -66,7 +66,7 @@ const BlockContentPickupLarge: FC<Props> = ({
           </div>
         )}
         {children && (
-          <div className={cn('line-clamp-4', 'mt-4', 'md:mt-1')}>
+          <div className={cn('mt-4', 'md:mt-1')}>
             {children}
           </div>
         )}

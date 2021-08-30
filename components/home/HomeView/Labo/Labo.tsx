@@ -72,11 +72,16 @@ const Labo: VFC<Props> = ({
     <Section title={'Labo'} description={renderRichTextReact(description)}>
       <Grid>
         {interviewImage && interviewHomeDescription && (
-          <Block title={f('labo.interviews')} titleTag="h3" isClose={true}>
+          <Block title={f('labo.interviews')} titleTag="h3">
             <BlockContent
               image={{ src: interviewImage.url, alt: f('store.product') }}
             >
               {renderRichTextReact(interviewHomeDescription)}
+              <p className={cn('text-center', 'mt-5', 'text-xl')}>
+                <a className={cn('underline', 'hover:no-underline')} href="https://google.com" target="_blank" rel="noreferrer">
+                  {f('makuakeLink')}
+                </a>
+              </p>
             </BlockContent>
           </Block>
         )}

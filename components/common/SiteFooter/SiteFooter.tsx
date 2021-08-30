@@ -5,6 +5,7 @@ import cn from 'classnames';
 import s from './SiteFooter.module.css';
 import { nonNullableFilter } from '@lib/non-nullable-filter';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { renderTextToDom } from '@lib/contentful/utils/rich-text';
 import { SiteMenuList, I18nWidget } from '@components/common';
 import { Container, Link, ScrollerToTop } from '@components/ui';
 import { Sns } from './Sns';
@@ -34,7 +35,7 @@ export const footerFragment = /* GraphQL */ `
 `;
 
 const LEGAL_PAGES = [
-  { name: 'tokushoho', url: '/tokushoho' },
+  // { name: 'tokushoho', url: '/tokushoho' },
   { name: 'privacyPolicy', url: '/privacy-policy' },
 ];
 
@@ -58,7 +59,7 @@ const SiteFooter: FC<Props> = ({
           </nav>
         )}
         <div className={cn(s.texts)}>
-          {content && <p>{content}</p>}
+          {content && <p>{renderTextToDom(content)}</p>}
           {nonNullableLogoItems && (
             <ul className={cn(s.logoList)}>
               {nonNullableLogoItems.map((logo) => (
