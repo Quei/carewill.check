@@ -35,7 +35,7 @@ const ClothesType: VFC<Props> = ({
   }
   return (
     <div className={cn(className)}>
-      <div className={cn(s.checkboxes)}>
+      <div className={cn('grid', 'grid-cols-2', 'gap-4', 'md:grid-cols-4')}>
         {radio.values.map((value, index) => {
           const SVG = SVGComponents[index];
           return (
