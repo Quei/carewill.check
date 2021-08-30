@@ -13,8 +13,7 @@
   }
 }
 
-.contact {
-  @apply md:pr-site-vertical-md;
+.contact { 
   & a {
     @apply text-3xl leading-none;
   }

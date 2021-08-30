@@ -48,15 +48,21 @@ const useMenu = () => {
 const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
   const { hasShownMenu, toggleMenu, menuListWrapperRef } = useMenu();
   return (
-    <nav className={cn(s.root, className)}>
+    <nav className={cn('w-full', className)}>
       <MenuButton
-        className={cn(s.menuButton)}
+        className={cn(
+          'z-20',
+          'left-site-vertical',
+          'absolute',
+          'md:hidden',
+          s.menuButton
+        )}
         hasPressed={hasShownMenu}
         targetId={'site-menu-list'}
         onClick={toggleMenu}
       />
       <div
-        className={cn(s.menuListWrapper, {
+        className={cn('hidden', 'md:block', s.menuListWrapper, {
           [s.hasShownMenuForMobile]: hasShownMenu,
         })}
         ref={menuListWrapperRef}
@@ -67,7 +73,16 @@ const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
           allNavigations={allNavigations}
           type="header"
         />
-        <I18nWidget className={cn(s.i18n)} type="header" />
+        <I18nWidget
+          className={cn(
+            'absolute',
+            'bottom-4',
+            'left-site-vertical',
+            'text-2xl',
+            'md:hidden'
+          )}
+          type="header"
+        />
       </div>
     </nav>
   );

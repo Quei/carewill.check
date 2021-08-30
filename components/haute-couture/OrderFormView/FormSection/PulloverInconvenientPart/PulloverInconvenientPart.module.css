@@ -39,16 +39,15 @@
 }
 
 .checkbox {
-  height: 170px;
+  min-height: 150px;
   & svg {
     padding-top: 10px;
-    height: 120px;
+    max-height: 150px;
   }
   @screen md {
-    height: 250px;
     & svg {
       padding-top: 20px;
-      height: 210px;
+      max-height: 240px;
     }
   }
 }

@@ -27,6 +27,9 @@ const PlusButton: VFC<Props> = ({
     >
       <div
         className={cn(
+          'relative',
+          'w-6',
+          'h-6',
           s.plus,
           { [s.isThin]: isThin },
           { [s.hasPressed]: hasPressed }

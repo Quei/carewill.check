@@ -1,18 +1,8 @@
-.root {
-  @apply w-full;
-}
-
 .menuButton {
-  @apply z-20 left-site-vertical;
-  position: absolute !important;
   top: 18px;
-  @screen md {
-    display: none !important;
-  }
 }
 
 .menuListWrapper {
-  @apply hidden md:block;
   @screen less-than-md {
     &.hasShownMenuForMobile {
       --header-height: 60px;
@@ -28,8 +18,4 @@
       }
     }
   }
-}
-
-.i18n {
-  @apply absolute bottom-4 left-site-vertical text-2xl md:hidden;
 }

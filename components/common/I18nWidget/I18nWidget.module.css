@@ -1,9 +1,4 @@
-.root {
-  @apply flex;
-}
-
 .item {
-  @apply cursor-pointer hover:underline;
   &.header {
     @apply hover:line-through;
     &.isCurrent {
@@ -13,8 +8,4 @@
   &.footer {
     @apply hover:underline;
   }
-}
-
-.slash {
-  @apply mx-0.5;
 }

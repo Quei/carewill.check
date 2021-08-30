@@ -30,19 +30,25 @@ const I18nWidget: VFC<Props> = ({ className, type }) => {
   const { locales, locale: currentLocale, asPath: currentPath } = useRouter();
 
   return (
-    <ul className={cn(s.root, className)}>
+    <ul className={cn('flex', className)}>
       {locales?.map((locale, index) => (
         <li key={locale}>
           {index !== 0 && (
-            <span className={cn(s.slash)} aria-hidden={true}>
+            <span className={cn('mx-0.5')} aria-hidden={true}>
               /
             </span>
           )}
           <Link href={currentPath} locale={locale}>
             <a
-              className={cn(s.item, s[type], {
-                [s.isCurrent]: locale === currentLocale,
-              })}
+              className={cn(
+                'cursor-pointer',
+                'hover:underline',
+                s.item,
+                s[type],
+                {
+                  [s.isCurrent]: locale === currentLocale,
+                }
+              )}
               aria-label={LOCALES_MAP[locale as Lang].name}
             >
               {LOCALES_MAP[locale as Lang].label}

@@ -1,5 +1,4 @@
-.plus {
-  @apply relative w-6 h-6;
+.plus { 
   &::before,
   &::after {
     @apply absolute top-1/2 left-0 w-full;

@@ -89,7 +89,15 @@ const Checkbox: FC<Props> = ({
             )}
             {typeof image !== 'string' && image}
           </div>
-          <p className={cn('text-xs', 'text-center', 'py-2', 'leading-tight')}>
+          <p
+            className={cn(
+              'text-xs',
+              'text-center',
+              'py-2',
+              'px-4',
+              'leading-snug'
+            )}
+          >
             {children}
           </p>
         </div>

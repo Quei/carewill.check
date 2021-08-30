@@ -1,5 +1,4 @@
 .root {
-  @apply relative flex items-center border-none;
   --button-height: 25px;
   --button-width: 26px;
   --border-size: theme('borderWidth.DEFAULT');

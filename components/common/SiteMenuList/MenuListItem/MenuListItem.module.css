@@ -1,6 +1,4 @@
 .root {
-  @apply relative;
-
   &.header {
     @apply md:pl-site-vertical-md md:w-full;
     &:hover {
@@ -52,8 +50,4 @@
       @apply mt-1.5 md:mt-0;
     }
   }
-}
-
-.button {
-  @apply absolute top-2 right-4 focus:outline-none md:hidden;
 }

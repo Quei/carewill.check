@@ -17,7 +17,14 @@ const MenuButton: VFC<Props> = ({
 }) => {
   return (
     <button
-      className={cn(s.root, className)}
+      className={cn(
+        'relative',
+        'flex',
+        'items-center',
+        'border-none',
+        s.root,
+        className
+      )}
       aria-pressed={hasPressed}
       aria-expanded={hasPressed}
       aria-controls={targetId}
