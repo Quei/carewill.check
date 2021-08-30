@@ -1,5 +1,4 @@
 .root {
-  @apply relative w-full overflow-x-auto;
   /* &::-webkit-scrollbar {
     height: 1px;
   }

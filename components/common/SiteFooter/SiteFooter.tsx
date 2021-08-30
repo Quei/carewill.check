@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import cn from 'classnames';
@@ -45,6 +46,7 @@ const SiteFooter: FC<Props> = ({
   content,
   logoCollection,
 }) => {
+  const { locale } = useRouter();
   const f = useIntlMessage();
   const nonNullableLogoItems = useMemo(() => {
     return logoCollection?.items?.filter(nonNullableFilter);
@@ -89,6 +91,12 @@ const SiteFooter: FC<Props> = ({
           <p className={cn(s.copyRight)}>
             copyright&copy; {f('carewill')} , {dayjs().format('YYYY')} All
             Rights Reserved.
+            {locale === 'ja' && (
+              <>
+                <br />
+                「令和2年度補正 ものづくり補助金により作成」
+              </>
+            )}
           </p>
         </div>
         {allNavigations?.store?.sns && (

@@ -43,7 +43,7 @@ export const en: Record<string, any> = {
   ['labo.recruiting']: 'Recruiting',
   ['labo.selectCategory']: 'Category',
   // about-us
-  ['about-us.newsPickup']: 'News pickup',
+  ['about.newsPickup']: 'News pickup',
   ['about.tokushoho']: 'Specified commercial transaction act',
   ['about.privacyPolicy']: 'Privacy policy',
 };

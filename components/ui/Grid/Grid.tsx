@@ -17,7 +17,14 @@ const Grid: FC<Props> = ({
   isSlide = false,
   children,
 }) => {
-  const rootClassName = cn(s.root, { [s.isSlide]: isSlide }, className);
+  const rootClassName = cn(
+    'relative',
+    'w-full',
+    'overflow-x-auto',
+    s.root,
+    { [s.isSlide]: isSlide },
+    className
+  );
   const gridClassName = cn(s.gridWrapper, {
     [s.layoutNormal]: layout === 'normal',
     [s.layoutCol3]: layout === 'col-3',

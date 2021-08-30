@@ -1101,6 +1101,185 @@ export enum AssetOrder {
   WidthDesc = 'width_DESC',
 }
 
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type Recruiting = Entry & {
+  __typename?: 'Recruiting';
+  sys: Sys;
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<RecruitingLinkingCollections>;
+  slug?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  formLabel?: Maybe<Scalars['String']>;
+  formUrl?: Maybe<Scalars['String']>;
+  content?: Maybe<RecruitingContent>;
+  notes?: Maybe<RecruitingNotes>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type RecruitingLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type RecruitingSlugArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type RecruitingTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type RecruitingFormLabelArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type RecruitingFormUrlArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type RecruitingContentArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
+export type RecruitingNotesArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type RecruitingLinkingCollections = {
+  __typename?: 'RecruitingLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type RecruitingLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type RecruitingContent = {
+  __typename?: 'RecruitingContent';
+  json: Scalars['JSON'];
+  links: RecruitingContentLinks;
+};
+
+export type RecruitingContentLinks = {
+  __typename?: 'RecruitingContentLinks';
+  entries: RecruitingContentEntries;
+  assets: RecruitingContentAssets;
+};
+
+export type RecruitingContentEntries = {
+  __typename?: 'RecruitingContentEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type RecruitingContentAssets = {
+  __typename?: 'RecruitingContentAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type RecruitingNotes = {
+  __typename?: 'RecruitingNotes';
+  json: Scalars['JSON'];
+  links: RecruitingNotesLinks;
+};
+
+export type RecruitingNotesLinks = {
+  __typename?: 'RecruitingNotesLinks';
+  entries: RecruitingNotesEntries;
+  assets: RecruitingNotesAssets;
+};
+
+export type RecruitingNotesEntries = {
+  __typename?: 'RecruitingNotesEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type RecruitingNotesAssets = {
+  __typename?: 'RecruitingNotesAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type RecruitingCollection = {
+  __typename?: 'RecruitingCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Recruiting>>;
+};
+
+export type RecruitingFilter = {
+  sys?: Maybe<SysFilter>;
+  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
+  slug_exists?: Maybe<Scalars['Boolean']>;
+  slug?: Maybe<Scalars['String']>;
+  slug_not?: Maybe<Scalars['String']>;
+  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains?: Maybe<Scalars['String']>;
+  slug_not_contains?: Maybe<Scalars['String']>;
+  title_exists?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  title_not?: Maybe<Scalars['String']>;
+  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains?: Maybe<Scalars['String']>;
+  title_not_contains?: Maybe<Scalars['String']>;
+  formLabel_exists?: Maybe<Scalars['Boolean']>;
+  formLabel?: Maybe<Scalars['String']>;
+  formLabel_not?: Maybe<Scalars['String']>;
+  formLabel_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  formLabel_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  formLabel_contains?: Maybe<Scalars['String']>;
+  formLabel_not_contains?: Maybe<Scalars['String']>;
+  formUrl_exists?: Maybe<Scalars['Boolean']>;
+  formUrl?: Maybe<Scalars['String']>;
+  formUrl_not?: Maybe<Scalars['String']>;
+  formUrl_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  formUrl_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  formUrl_contains?: Maybe<Scalars['String']>;
+  formUrl_not_contains?: Maybe<Scalars['String']>;
+  content_exists?: Maybe<Scalars['Boolean']>;
+  content_contains?: Maybe<Scalars['String']>;
+  content_not_contains?: Maybe<Scalars['String']>;
+  notes_exists?: Maybe<Scalars['Boolean']>;
+  notes_contains?: Maybe<Scalars['String']>;
+  notes_not_contains?: Maybe<Scalars['String']>;
+  OR?: Maybe<Array<Maybe<RecruitingFilter>>>;
+  AND?: Maybe<Array<Maybe<RecruitingFilter>>>;
+};
+
+export enum RecruitingOrder {
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  FormLabelAsc = 'formLabel_ASC',
+  FormLabelDesc = 'formLabel_DESC',
+  FormUrlAsc = 'formUrl_ASC',
+  FormUrlDesc = 'formUrl_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+}
+
 export type HomeFilter = {
   AND?: Maybe<Array<Maybe<HomeFilter>>>;
   OR?: Maybe<Array<Maybe<HomeFilter>>>;
@@ -1369,185 +1548,6 @@ export enum CategoryOrder {
   TitleDesc = 'title_DESC',
   DateAsc = 'date_ASC',
   DateDesc = 'date_DESC',
-  SysIdAsc = 'sys_id_ASC',
-  SysIdDesc = 'sys_id_DESC',
-  SysPublishedAtAsc = 'sys_publishedAt_ASC',
-  SysPublishedAtDesc = 'sys_publishedAt_DESC',
-  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
-  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
-  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
-  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
-}
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type Recruiting = Entry & {
-  __typename?: 'Recruiting';
-  sys: Sys;
-  contentfulMetadata: ContentfulMetadata;
-  linkedFrom?: Maybe<RecruitingLinkingCollections>;
-  slug?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  formLabel?: Maybe<Scalars['String']>;
-  formUrl?: Maybe<Scalars['String']>;
-  content?: Maybe<RecruitingContent>;
-  notes?: Maybe<RecruitingNotes>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type RecruitingLinkedFromArgs = {
-  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type RecruitingSlugArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type RecruitingTitleArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type RecruitingFormLabelArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type RecruitingFormUrlArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type RecruitingContentArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/recruiting) */
-export type RecruitingNotesArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type RecruitingLinkingCollections = {
-  __typename?: 'RecruitingLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-};
-
-export type RecruitingLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type RecruitingContent = {
-  __typename?: 'RecruitingContent';
-  json: Scalars['JSON'];
-  links: RecruitingContentLinks;
-};
-
-export type RecruitingContentLinks = {
-  __typename?: 'RecruitingContentLinks';
-  entries: RecruitingContentEntries;
-  assets: RecruitingContentAssets;
-};
-
-export type RecruitingContentEntries = {
-  __typename?: 'RecruitingContentEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type RecruitingContentAssets = {
-  __typename?: 'RecruitingContentAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type RecruitingNotes = {
-  __typename?: 'RecruitingNotes';
-  json: Scalars['JSON'];
-  links: RecruitingNotesLinks;
-};
-
-export type RecruitingNotesLinks = {
-  __typename?: 'RecruitingNotesLinks';
-  entries: RecruitingNotesEntries;
-  assets: RecruitingNotesAssets;
-};
-
-export type RecruitingNotesEntries = {
-  __typename?: 'RecruitingNotesEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type RecruitingNotesAssets = {
-  __typename?: 'RecruitingNotesAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type RecruitingCollection = {
-  __typename?: 'RecruitingCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Recruiting>>;
-};
-
-export type RecruitingFilter = {
-  sys?: Maybe<SysFilter>;
-  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  formLabel_exists?: Maybe<Scalars['Boolean']>;
-  formLabel?: Maybe<Scalars['String']>;
-  formLabel_not?: Maybe<Scalars['String']>;
-  formLabel_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  formLabel_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  formLabel_contains?: Maybe<Scalars['String']>;
-  formLabel_not_contains?: Maybe<Scalars['String']>;
-  formUrl_exists?: Maybe<Scalars['Boolean']>;
-  formUrl?: Maybe<Scalars['String']>;
-  formUrl_not?: Maybe<Scalars['String']>;
-  formUrl_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  formUrl_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  formUrl_contains?: Maybe<Scalars['String']>;
-  formUrl_not_contains?: Maybe<Scalars['String']>;
-  content_exists?: Maybe<Scalars['Boolean']>;
-  content_contains?: Maybe<Scalars['String']>;
-  content_not_contains?: Maybe<Scalars['String']>;
-  notes_exists?: Maybe<Scalars['Boolean']>;
-  notes_contains?: Maybe<Scalars['String']>;
-  notes_not_contains?: Maybe<Scalars['String']>;
-  OR?: Maybe<Array<Maybe<RecruitingFilter>>>;
-  AND?: Maybe<Array<Maybe<RecruitingFilter>>>;
-};
-
-export enum RecruitingOrder {
-  SlugAsc = 'slug_ASC',
-  SlugDesc = 'slug_DESC',
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  FormLabelAsc = 'formLabel_ASC',
-  FormLabelDesc = 'formLabel_DESC',
-  FormUrlAsc = 'formUrl_ASC',
-  FormUrlDesc = 'formUrl_DESC',
   SysIdAsc = 'sys_id_ASC',
   SysIdDesc = 'sys_id_DESC',
   SysPublishedAtAsc = 'sys_publishedAt_ASC',
@@ -1842,6 +1842,133 @@ export enum NewsCategoryOrder {
   SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
+
+export type HauteCoutureCollection = {
+  __typename?: 'HauteCoutureCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<HauteCouture>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCouture = Entry & {
+  __typename?: 'HauteCouture';
+  sys: Sys;
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<HauteCoutureLinkingCollections>;
+  title?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  description?: Maybe<HauteCoutureDescription>;
+  image?: Maybe<Asset>;
+  formTitle?: Maybe<Scalars['String']>;
+  formDescription?: Maybe<HauteCoutureFormDescription>;
+  orderSheet?: Maybe<Asset>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureSlugArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureDescriptionArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureImageArgs = {
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureFormTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureFormDescriptionArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureOrderSheetArgs = {
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type HauteCoutureLinkingCollections = {
+  __typename?: 'HauteCoutureLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type HauteCoutureLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type HauteCoutureDescription = {
+  __typename?: 'HauteCoutureDescription';
+  json: Scalars['JSON'];
+  links: HauteCoutureDescriptionLinks;
+};
+
+export type HauteCoutureDescriptionLinks = {
+  __typename?: 'HauteCoutureDescriptionLinks';
+  entries: HauteCoutureDescriptionEntries;
+  assets: HauteCoutureDescriptionAssets;
+};
+
+export type HauteCoutureDescriptionEntries = {
+  __typename?: 'HauteCoutureDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type HauteCoutureDescriptionAssets = {
+  __typename?: 'HauteCoutureDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type HauteCoutureFormDescription = {
+  __typename?: 'HauteCoutureFormDescription';
+  json: Scalars['JSON'];
+  links: HauteCoutureFormDescriptionLinks;
+};
+
+export type HauteCoutureFormDescriptionLinks = {
+  __typename?: 'HauteCoutureFormDescriptionLinks';
+  entries: HauteCoutureFormDescriptionEntries;
+  assets: HauteCoutureFormDescriptionAssets;
+};
+
+export type HauteCoutureFormDescriptionEntries = {
+  __typename?: 'HauteCoutureFormDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type HauteCoutureFormDescriptionAssets = {
+  __typename?: 'HauteCoutureFormDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
 
 export type HomeProductHomeDescription = {
   __typename?: 'HomeProductHomeDescription';
@@ -2188,125 +2315,58 @@ export type CustomOrderDescriptionAssets = {
   block: Array<Maybe<Asset>>;
 };
 
-export type HauteCoutureCollection = {
-  __typename?: 'HauteCoutureCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<HauteCouture>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCouture = Entry & {
-  __typename?: 'HauteCouture';
-  sys: Sys;
-  contentfulMetadata: ContentfulMetadata;
-  linkedFrom?: Maybe<HauteCoutureLinkingCollections>;
+export type HauteCoutureFilter = {
+  sys?: Maybe<SysFilter>;
+  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
+  title_exists?: Maybe<Scalars['Boolean']>;
   title?: Maybe<Scalars['String']>;
+  title_not?: Maybe<Scalars['String']>;
+  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains?: Maybe<Scalars['String']>;
+  title_not_contains?: Maybe<Scalars['String']>;
+  slug_exists?: Maybe<Scalars['Boolean']>;
   slug?: Maybe<Scalars['String']>;
-  description?: Maybe<HauteCoutureDescription>;
-  image?: Maybe<Asset>;
+  slug_not?: Maybe<Scalars['String']>;
+  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains?: Maybe<Scalars['String']>;
+  slug_not_contains?: Maybe<Scalars['String']>;
+  description_exists?: Maybe<Scalars['Boolean']>;
+  description_contains?: Maybe<Scalars['String']>;
+  description_not_contains?: Maybe<Scalars['String']>;
+  image_exists?: Maybe<Scalars['Boolean']>;
+  formTitle_exists?: Maybe<Scalars['Boolean']>;
   formTitle?: Maybe<Scalars['String']>;
-  formDescription?: Maybe<HauteCoutureFormDescription>;
+  formTitle_not?: Maybe<Scalars['String']>;
+  formTitle_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  formTitle_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  formTitle_contains?: Maybe<Scalars['String']>;
+  formTitle_not_contains?: Maybe<Scalars['String']>;
+  formDescription_exists?: Maybe<Scalars['Boolean']>;
+  formDescription_contains?: Maybe<Scalars['String']>;
+  formDescription_not_contains?: Maybe<Scalars['String']>;
+  orderSheet_exists?: Maybe<Scalars['Boolean']>;
+  OR?: Maybe<Array<Maybe<HauteCoutureFilter>>>;
+  AND?: Maybe<Array<Maybe<HauteCoutureFilter>>>;
 };
 
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureLinkedFromArgs = {
-  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureTitleArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureSlugArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureDescriptionArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureImageArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureFormTitleArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureFormDescriptionArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type HauteCoutureLinkingCollections = {
-  __typename?: 'HauteCoutureLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-};
-
-export type HauteCoutureLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type HauteCoutureDescription = {
-  __typename?: 'HauteCoutureDescription';
-  json: Scalars['JSON'];
-  links: HauteCoutureDescriptionLinks;
-};
-
-export type HauteCoutureDescriptionLinks = {
-  __typename?: 'HauteCoutureDescriptionLinks';
-  entries: HauteCoutureDescriptionEntries;
-  assets: HauteCoutureDescriptionAssets;
-};
-
-export type HauteCoutureDescriptionEntries = {
-  __typename?: 'HauteCoutureDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type HauteCoutureDescriptionAssets = {
-  __typename?: 'HauteCoutureDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type HauteCoutureFormDescription = {
-  __typename?: 'HauteCoutureFormDescription';
-  json: Scalars['JSON'];
-  links: HauteCoutureFormDescriptionLinks;
-};
-
-export type HauteCoutureFormDescriptionLinks = {
-  __typename?: 'HauteCoutureFormDescriptionLinks';
-  entries: HauteCoutureFormDescriptionEntries;
-  assets: HauteCoutureFormDescriptionAssets;
-};
-
-export type HauteCoutureFormDescriptionEntries = {
-  __typename?: 'HauteCoutureFormDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type HauteCoutureFormDescriptionAssets = {
-  __typename?: 'HauteCoutureFormDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
+export enum HauteCoutureOrder {
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  FormTitleAsc = 'formTitle_ASC',
+  FormTitleDesc = 'formTitle_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
+}
 
 export type FooterFilter = {
   sys?: Maybe<SysFilter>;
@@ -2438,58 +2498,6 @@ export enum CustomOrderOrder {
   TitleDesc = 'title_DESC',
   SlugAsc = 'slug_ASC',
   SlugDesc = 'slug_DESC',
-  SysIdAsc = 'sys_id_ASC',
-  SysIdDesc = 'sys_id_DESC',
-  SysPublishedAtAsc = 'sys_publishedAt_ASC',
-  SysPublishedAtDesc = 'sys_publishedAt_DESC',
-  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
-  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
-  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
-  SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
-}
-
-export type HauteCoutureFilter = {
-  sys?: Maybe<SysFilter>;
-  contentfulMetadata?: Maybe<ContentfulMetadataFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  description_exists?: Maybe<Scalars['Boolean']>;
-  description_contains?: Maybe<Scalars['String']>;
-  description_not_contains?: Maybe<Scalars['String']>;
-  image_exists?: Maybe<Scalars['Boolean']>;
-  formTitle_exists?: Maybe<Scalars['Boolean']>;
-  formTitle?: Maybe<Scalars['String']>;
-  formTitle_not?: Maybe<Scalars['String']>;
-  formTitle_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  formTitle_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  formTitle_contains?: Maybe<Scalars['String']>;
-  formTitle_not_contains?: Maybe<Scalars['String']>;
-  formDescription_exists?: Maybe<Scalars['Boolean']>;
-  formDescription_contains?: Maybe<Scalars['String']>;
-  formDescription_not_contains?: Maybe<Scalars['String']>;
-  OR?: Maybe<Array<Maybe<HauteCoutureFilter>>>;
-  AND?: Maybe<Array<Maybe<HauteCoutureFilter>>>;
-};
-
-export enum HauteCoutureOrder {
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  SlugAsc = 'slug_ASC',
-  SlugDesc = 'slug_DESC',
-  FormTitleAsc = 'formTitle_ASC',
-  FormTitleDesc = 'formTitle_DESC',
   SysIdAsc = 'sys_id_ASC',
   SysIdDesc = 'sys_id_DESC',
   SysPublishedAtAsc = 'sys_publishedAt_ASC',
@@ -2891,15 +2899,15 @@ type RichTextEntryHyperlink_Category_Fragment = { __typename: 'Category' } & {
   sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
 };
 
-type RichTextEntryHyperlink_Navigation_Fragment = {
-  __typename: 'Navigation';
-} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
-
 type RichTextEntryHyperlink_Recruiting_Fragment = {
   __typename: 'Recruiting';
 } & Pick<Recruiting, 'slug'> & {
     sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
   };
+
+type RichTextEntryHyperlink_Navigation_Fragment = {
+  __typename: 'Navigation';
+} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
 
 type RichTextEntryHyperlink_News_Fragment = { __typename: 'News' } & {
   sys: { __typename?: 'Sys' } & Pick<Sys, 'id'>;
@@ -2907,6 +2915,10 @@ type RichTextEntryHyperlink_News_Fragment = { __typename: 'News' } & {
 
 type RichTextEntryHyperlink_NewsCategory_Fragment = {
   __typename: 'NewsCategory';
+} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
+
+type RichTextEntryHyperlink_HauteCouture_Fragment = {
+  __typename: 'HauteCouture';
 } & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
 
 type RichTextEntryHyperlink_Footer_Fragment = { __typename: 'Footer' } & {
@@ -2921,22 +2933,18 @@ type RichTextEntryHyperlink_CustomOrder_Fragment = {
   __typename: 'CustomOrder';
 } & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
 
-type RichTextEntryHyperlink_HauteCouture_Fragment = {
-  __typename: 'HauteCouture';
-} & { sys: { __typename?: 'Sys' } & Pick<Sys, 'id'> };
-
 export type RichTextEntryHyperlinkFragment =
   | RichTextEntryHyperlink_Home_Fragment
   | RichTextEntryHyperlink_StaffNote_Fragment
   | RichTextEntryHyperlink_Category_Fragment
-  | RichTextEntryHyperlink_Navigation_Fragment
   | RichTextEntryHyperlink_Recruiting_Fragment
+  | RichTextEntryHyperlink_Navigation_Fragment
   | RichTextEntryHyperlink_News_Fragment
   | RichTextEntryHyperlink_NewsCategory_Fragment
+  | RichTextEntryHyperlink_HauteCouture_Fragment
   | RichTextEntryHyperlink_Footer_Fragment
   | RichTextEntryHyperlink_Product_Fragment
-  | RichTextEntryHyperlink_CustomOrder_Fragment
-  | RichTextEntryHyperlink_HauteCouture_Fragment;
+  | RichTextEntryHyperlink_CustomOrder_Fragment;
 
 export type GetHauteCoutureQueryVariables = Exact<{
   locale: Scalars['String'];

@@ -120,7 +120,7 @@ const AboutUs: VFC<Props> = ({
         ))}
       </Grid>
       {/* dummy pickups end */}
-      <Grid layout={'col-3'}>
+      <Grid className={cn({ ['col-3']: menuList && menuList?.length > 6 })}>
         {menuList &&
           menuList.map((menu, index) => (
             <Block
