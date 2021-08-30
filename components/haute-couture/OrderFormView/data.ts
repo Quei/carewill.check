@@ -166,7 +166,7 @@ export const data: Data[] = [
       {
         name: 'hurt',
         description: {
-          ja: '該当箇所をクリック or タップしてください ※複数回答可',
+          ja: '該当箇所をクリック or タップしてください。※複数回答可',
           en:
             'Please click or tap the appropriate area. ※ Multiple answers are possible.',
         },
@@ -273,7 +273,7 @@ export const data: Data[] = [
     },
     description: {
       ja:
-        '“かぶって着る”上衣(Tシャツやセーターなどの前開きでない服)を着脱する際に、”ゆとり”ができる ことで着脱を容易にすると思われる服の部位をお選びください<br>該当箇所をクリック or タップしてください ※複数回答可',
+        '“かぶって着る”上衣(Tシャツやセーターなどの前開きでない服)を着脱する際に、”ゆとり”ができることで着脱を容易にすると思われる服の部位をお選びください。<br>該当箇所をクリック or タップしてください。※複数回答可',
       en:
         'When you put on or take off a "wear it over your head" jacket (non-front-opening clothes such as T-shirts, sweaters, etc.), please select the part of the clothes that you think would make it easier to put on or take off.<br>Please click or tap the appropriate area *Multiple answers are possible',
     },
@@ -299,7 +299,7 @@ export const data: Data[] = [
     },
     description: {
       ja:
-        '着用者様が“かぶって着る”タイプの上衣(Tシャツやセーターなどの前開きでない服)を着脱する際の不自由の度合いをお聞かせください',
+        '着用者様が“かぶって着る”タイプの上衣(Tシャツやセーターなどの前開きでない服)を着脱する際の不自由の度合いをお聞かせください。',
       en:
         'How inconvenient is it for the wearer to put on and take off a "wear it over your head" jacket upper garments (clothes that do not open in front, such as T-shirts and sweaters)?',
     },
@@ -346,7 +346,7 @@ export const data: Data[] = [
             en: 'Grab a hold of a clothesline',
           },
           {
-            ja: '服の袖口に通す',
+            ja: '服のそでぐちに通す',
             en: 'Thread the cuffs of your clothes',
           },
           {
@@ -374,7 +374,7 @@ export const data: Data[] = [
       {
         name: 'pullover_inconvenient_additional_explanation',
         description: {
-          ja: '補足の説明がございましたら記入ください',
+          ja: '補足の説明がございましたら記入ください。',
           en:
             'If you have any additional explanation, please fill in the form.',
         },
@@ -386,7 +386,7 @@ export const data: Data[] = [
         name: 'pullover_inconvenient_other',
         description: {
           ja:
-            'その他にも“かぶって着る”上衣の着脱における不自由な動作がありましたらお聞かせください<br>※自由回答。複数回答可。',
+            'その他にも“かぶって着る”上衣の着脱における不自由な動作がありましたらお聞かせください。<br>※自由回答。複数回答可。',
           en:
             'Please let us know if there are any other inconveniences in putting on and taking off a "wear it over your head" jacket. Multiple answers are acceptable.',
         },
@@ -443,7 +443,7 @@ export const data: Data[] = [
       en: 'How to wear clothes "from the bottom up"',
     },
     description: {
-      ja: 'この動画のように、服を“下から着る”ことがありますか?',
+      ja: 'この動画のように、上衣を“下から着る”ことがありますか?',
       en: 'Do you ever wear clothes "from the bottom up," as in this video?',
     },
     video: 'XWAKr5hSBe8',
@@ -462,7 +462,7 @@ export const data: Data[] = [
   {
     title: { ja: '身体採寸', en: 'Body measurements' },
     description: {
-      ja: '※32.4cm であれば 32.4 と入力ください。',
+      ja: '※32.4cm であれば半角数字で32.4と入力ください。',
       en: '※ If the size is 32.4cm, please enter 32.4.',
     },
     componentName: 'Measurement',
@@ -536,7 +536,10 @@ export const data: Data[] = [
     ],
   },
   {
-    title: { ja: 'お客様のご連絡先', en: 'Your contact information' },
+    title: {
+      ja: 'お客様のご連絡先、個人情報の取扱い',
+      en: 'Your contact information',
+    },
     inputs: [
       {
         name: 'email',

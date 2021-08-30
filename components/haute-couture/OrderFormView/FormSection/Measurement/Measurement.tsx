@@ -8,6 +8,7 @@ import { ErrorText } from '@components/ui';
 import { Input } from '@components/ui/react-hook-form';
 import { BodyPC, BodySP } from './svg';
 import type { VFC } from 'react';
+import type { FieldError } from 'react-hook-form';
 import type { Lang } from 'types/site';
 import type { InputType, TextInput } from '../../data';
 import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
@@ -40,15 +41,28 @@ const useRequired = ({ inputs }: Pick<Props, 'inputs'>) => {
   return { hasRequired };
 };
 
-const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
-  const text = inputs as TextInput[];
+const useErrorMessages = ({ inputs }: Pick<Props, 'inputs'>) => {
   const { errors } = useFormState<HauteCoutureInputs>();
   // NOTE:
   // hasErrorをuseMemoしても何故か更新されないので、
   // useMemoを使わずそのまま書く
-  const hasError = inputs
-    .map((input) => input.name)
-    .some((name) => name in errors);
+  const inputNames = inputs.map((input) => input.name);
+  const measurementErrorMessages = Object.entries(errors)
+    .filter(([key, value]) => {
+      return inputNames.includes(key as keyof HauteCoutureInputs);
+    })
+    .map(([key, value]) => {
+      const fieldErrorValue = value as FieldError | null;
+      return fieldErrorValue?.message;
+    });
+  // NOTE:
+  // 重複消す
+  return Array.from(new Set(measurementErrorMessages));
+};
+
+const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
+  const text = inputs as TextInput[];
+  const errorMessages = useErrorMessages({ inputs });
   const { hasRequired } = useRequired({ inputs });
   const isScreenMd = useIsScreenMd();
   const f = useIntlMessage();
@@ -87,11 +101,14 @@ const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
           {!isScreenMd && <BodySP />}
         </div>
       </div>
-      {hasError && hasRequired && (
-        <ErrorText className="mt-3">
-          {/*　共通なので、ErrorMessageは使用しない */}
-          {f('form.error.required')}
-        </ErrorText>
+      {errorMessages && (
+        <>
+          {errorMessages.map((message, index) => (
+            <ErrorText key={`measurement-error-${index}`} className="mt-3">
+              {message}
+            </ErrorText>
+          ))}
+        </>
       )}
     </div>
   );

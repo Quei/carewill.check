@@ -18,17 +18,33 @@ const Input: VFC<Props> = ({
   name,
   required = false,
   type,
+  min,
+  max,
   onChange,
   ...rest
 }) => {
   const f = useIntlMessage();
   const { register } = useFormContext<HauteCoutureInputs>();
+  const isEmail = type === 'email';
   const registerd = register(name, {
     required:
       required &&
-      (type === 'email'
-        ? f('form.error.required.email')
-        : f('form.error.required')),
+      (isEmail ? f('form.error.required.email') : f('form.error.required')),
+    // NOTE:
+    // email pattern
+    // https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/email
+    pattern: isEmail
+      ? {
+          value: /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+          message: f('form.error.pattern.email'),
+        }
+      : undefined,
+    min: min
+      ? { value: min, message: f('form.error.minmax', { min, max }) }
+      : undefined,
+    max: max
+      ? { value: max, message: f('form.error.minmax', { min, max }) }
+      : undefined,
   });
   const handleOnChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (event) => {

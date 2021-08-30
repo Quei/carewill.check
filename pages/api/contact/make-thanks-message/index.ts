@@ -6,8 +6,8 @@ export const makeThanksMessage = ({ type, locale }: Props) => {
     const hauteCoutureAddress = process.env.MAIL_ADDRESS_HAUTE_COUTURE;
     if (locale === 'ja') {
       return `<ul>
-<li>ご入力ありがとうございました!いただいたe-mail宛に、当社よりメールを自動配信いたします。</li>
-<li>自動配信メールはお手元に届かない場合は${hauteCoutureAddress}までご連絡下さい。</li>
+<li>ご入力ありがとうございました！いただいたe-mail宛に、当社よりメールを自動配信いたします。</li>
+<li>自動配信メールがお手元に届かない場合は${hauteCoutureAddress}までご連絡下さい。</li>
 <li>その後、ヒアリングを経てデザインや金額は確定されます。</li>
 <li>ご希望の服をより正確に知るために、ご希望の服に近い【参考写真】がございましたら${hauteCoutureAddress}宛に送付いただければ助かります。現在着ているもの、インターネット上にあるものなど何でも構いません。</li>
 </ul>`;

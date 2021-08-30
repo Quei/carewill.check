@@ -26,7 +26,12 @@ const ErrorTitles: VFC<Props> = ({ className, titles, localeLang }) => {
         {titles.map((item) => (
           <li key={`error-title-${item?.index}`}>
             <Link
-              className="cursor-pointer underline hover:no-underline"
+              className={cn(
+                'cursor-pointer',
+                'underline',
+                'hover:no-underline',
+                'no-skip-ink'
+              )}
               to={`section-${item?.index}`}
               smooth={true}
               offset={offset}

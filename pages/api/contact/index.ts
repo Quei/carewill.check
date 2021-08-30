@@ -55,18 +55,18 @@ const contact = async (req: NextApiRequest, res: NextApiResponse) => {
       body: req.body,
     });
 
-    // await send({
-    //   transporter,
-    //   to: mailOptions?.admin?.to,
-    //   subject: mailOptions?.admin?.subject,
-    //   text: mailOptions?.admin?.text,
-    // });
-    // await send({
-    //   transporter,
-    //   to: mailOptions?.reply?.to,
-    //   subject: mailOptions?.reply?.subject,
-    //   text: mailOptions?.reply?.text,
-    // });
+    await send({
+      transporter,
+      to: mailOptions?.admin?.to,
+      subject: mailOptions?.admin?.subject,
+      text: mailOptions?.admin?.text,
+    });
+    await send({
+      transporter,
+      to: mailOptions?.reply?.to,
+      subject: mailOptions?.reply?.subject,
+      text: mailOptions?.reply?.text,
+    });
 
     const thanksMessage = makeThanksMessage({
       type: req.body?.type,

@@ -47,7 +47,7 @@ const PulloverOfExtraSpace: VFC<Props> = ({
       )}
       <Body
         wrapper={BodyWrapper}
-        className={cn(s.body)}
+        className={cn('mx-auto', 'mt-5', 'md:mt-10', s.body)}
         bodyCircles={bodyCircles}
         localeLang={localeLang}
         name={checkboxes.name}

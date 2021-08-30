@@ -11,7 +11,7 @@ import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
-import { Block, Container, Button } from '@components/ui';
+import { Block, Container, Link } from '@components/ui';
 import { FormSection } from './FormSection';
 import { ErrorTitles } from './ErrorTitles';
 import type { VFC } from 'react';
@@ -180,7 +180,11 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
         </Container>
       </Block>
       <FormProvider {...formMethod}>
-        <form className={cn(s.form)} onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={cn(s.form)}
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+        >
           {data.map((item, index) => {
             return (
               <FormSection
@@ -224,10 +228,17 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
                     <ErrorTitles titles={errorTitles} localeLang={localeLang} />
                   )}
                   {isSubmitSuccessful && message && (
-                    <div
-                      className={cn(s.message)}
-                      dangerouslySetInnerHTML={{ __html: message }}
-                    />
+                    <>
+                      <div
+                        className={cn(s.message)}
+                        dangerouslySetInnerHTML={{ __html: message }}
+                      />
+                      <p className={cn('text-center', 'mt-10', 'text-base')}>
+                        <Link href="/" className={cn('hover:underline')}>
+                          {f('form.topLink')}
+                        </Link>
+                      </p>
+                    </>
                   )}
                 </div>
               )}

@@ -44,6 +44,7 @@ const customStyles: NamedProps<OptionTypeBase>['styles'] = {
   control: (provided, state) => ({
     ...provided,
     fontSize: '16px',
+    fontWeight: 'bold',
     border: '1px solid currentColor',
     minHeight: 'initial',
     height: '28px',
