@@ -17,8 +17,7 @@ type Props = {
 const makeAdminOptions = ({ data }: Required<Pick<Props, 'data'>>) => {
   const message = data.map((item, index) => {
     const answersText = item.answers.map(({ name, question, answer }) => {
-      return `
-    name: ${name}
+      return ` 
     question: ${question}
     answer: ${answer}
     `;

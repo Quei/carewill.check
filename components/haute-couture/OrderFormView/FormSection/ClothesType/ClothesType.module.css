@@ -3,14 +3,13 @@
 }
 
 .checkbox {
-  height: 100px;
+  min-height: 120px;
   & svg {
-    height: 70px;
+    min-height: 90px;
+    max-height: 110px;
+
   }
   @screen md {
-    height: 140px;
-    & svg {
-      height: 105px;
-    }
+    min-height: 140px;
   }
 }

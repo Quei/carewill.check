@@ -1,5 +1,4 @@
 .description {
-  @apply pt-24 pb-10;
   & b {
     @apply text-red;
   }
@@ -13,17 +12,14 @@
 }
 
 .submit {
-  @apply block leading-none text-2xl mx-auto border border-green h-14 w-52 hover:text-white hover:bg-green;
   &[disabled] {
-    @apply text-white bg-green border-green;
+    @apply text-white bg-green border-green cursor-auto;
     filter: none;
   }
 }
 
-.messageBlock {
-  @apply text-sm mt-10 md:mt-16;
-}
-
-.thanks {
-  @apply list-disc list-inside;
+.message {
+  & ul {
+    @apply list-disc list-inside;
+  }
 }

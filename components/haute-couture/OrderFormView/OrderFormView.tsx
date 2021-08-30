@@ -18,7 +18,7 @@ import type { VFC } from 'react';
 import type { DeepMap, FieldError } from 'react-hook-form';
 import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
 import type { HauteCoutureOrderFormViewFragment } from 'types/schema';
-import { data, thanks } from './data';
+import { data } from './data';
 import { useEffect } from 'react';
 
 type Props = HauteCoutureOrderFormViewFragment & {
@@ -91,10 +91,11 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
 
   const { locale } = useRouter();
   const localeLang = locale ? (locale as 'ja' | 'en') : 'ja';
+  const [message, setMessage] = useState<string>();
 
   const onSubmit: SubmitHandler<HauteCoutureInputs> = useCallback(
     async (submitData) => {
-      const messageData = data.map((section) => {
+      const contactData = data.map((section) => {
         const title = section.title[localeLang];
         const answers = section.inputs
           .filter((input) => input.name !== 'acceptance')
@@ -132,16 +133,17 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          data: messageData,
+          data: contactData,
           type: 'haute-couture',
           locale: localeLang,
         }),
       });
       if (res.status === 200) {
         const json = await res.json();
-        console.log(json);
+        console.log(json.message);
+        setMessage(json.message);
       } else {
-        console.log('Send mail error');
+        console.log('Send mail error: ', res);
       }
     },
     [localeLang]
@@ -173,7 +175,7 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
         }}
       />
       <Block title={titleText} titleTag="h1" hasNoPaddingMobile={true}>
-        <Container className={cn(s.description)}>
+        <Container className={cn('pt-24', 'pb-10', s.description)}>
           {renderRichTextReact(formDescription)}
         </Container>
       </Block>
@@ -197,7 +199,19 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
               <button
                 aria-label="Submit"
                 type="submit"
-                className={s.submit}
+                className={cn(
+                  'block',
+                  'leading-none',
+                  'text-2xl',
+                  'border',
+                  'border-green',
+                  'h-14',
+                  'w-52',
+                  'mx-auto',
+                  'hover:text-white',
+                  'hover:bg-green',
+                  s.submit
+                )}
                 disabled={isSubmitting || isSubmitSuccessful}
               >
                 {!isSubmitSuccessful && !isSubmitting && f('form.submit')}
@@ -205,21 +219,15 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
                 {isSubmitting && f('form.submit.ing')}
               </button>
               {(isSubmitSuccessful || (isSubmitted && !isValid)) && (
-                <div className={cn(s.messageBlock)}>
+                <div className={cn('text-sm', 'mt-10', 'md:mt-16')}>
                   {isSubmitted && !isValid && (
                     <ErrorTitles titles={errorTitles} localeLang={localeLang} />
                   )}
-                  {isSubmitSuccessful && (
-                    <ul className={cn(s.thanks)}>
-                      {thanks.map((message, index) => (
-                        <li
-                          key={`thanks-${index}`}
-                          dangerouslySetInnerHTML={{
-                            __html: message[localeLang],
-                          }}
-                        />
-                      ))}
-                    </ul>
+                  {isSubmitSuccessful && message && (
+                    <div
+                      className={cn(s.message)}
+                      dangerouslySetInnerHTML={{ __html: message }}
+                    />
                   )}
                 </div>
               )}

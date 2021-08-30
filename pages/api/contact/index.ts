@@ -1,6 +1,7 @@
 import { createTransport, getTestMessageUrl } from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { hauteCoutureOptions } from './options';
+import { makeThanksMessage } from './make-thanks-message';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { Transporter } from 'nodemailer';
 
@@ -54,21 +55,25 @@ const contact = async (req: NextApiRequest, res: NextApiResponse) => {
       body: req.body,
     });
 
-    await send({
-      transporter,
-      to: mailOptions?.admin?.to,
-      subject: mailOptions?.admin?.subject,
-      text: mailOptions?.admin?.text,
-    });
-    await send({
-      transporter,
-      to: mailOptions?.reply?.to,
-      subject: mailOptions?.reply?.subject,
-      text: mailOptions?.reply?.text,
-    });
+    // await send({
+    //   transporter,
+    //   to: mailOptions?.admin?.to,
+    //   subject: mailOptions?.admin?.subject,
+    //   text: mailOptions?.admin?.text,
+    // });
+    // await send({
+    //   transporter,
+    //   to: mailOptions?.reply?.to,
+    //   subject: mailOptions?.reply?.subject,
+    //   text: mailOptions?.reply?.text,
+    // });
 
+    const thanksMessage = makeThanksMessage({
+      type: req.body?.type,
+      locale: req.body?.locale,
+    });
     res.status(200).json({
-      success: true,
+      message: thanksMessage,
     });
   } catch (error) {
     console.log('/api/contact Error. ', error);
