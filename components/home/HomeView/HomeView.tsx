@@ -24,7 +24,7 @@ const HomeView: VFC<Props> = ({ store, labo, about, aboutNavigation }) => {
       何故か、next-seoのdefaultTitleの仕組みが上手く機能しないので、
       homeはここでtitleとtitleTemplateを設定する（両方指定しないと、上手く動作しない）。
        */}
-      <Seo title={f('store.siteTitle')} />
+      <Seo title={f('store.siteTitle')} titleTemplate={'carewill'} />
       {store && <Store {...store} />}
       {labo && <Labo {...labo} />}
       {about && (
