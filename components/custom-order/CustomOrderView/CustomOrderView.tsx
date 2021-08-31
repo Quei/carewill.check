@@ -125,7 +125,9 @@ const CustomOrderView: FC<Props> = ({
           />
         </div>
       )}
-      <OnelineLink href="https://google.com">{f('makuakeLink')}</OnelineLink>
+      <OnelineLink href="https://www.makuake.com/project/carewill/">
+        {f('makuakeLink')}
+      </OnelineLink>
     </>
   );
 };

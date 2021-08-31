@@ -78,7 +78,12 @@ const Labo: VFC<Props> = ({
             >
               {renderRichTextReact(interviewHomeDescription)}
               <p className={cn('text-center', 'mt-5', 'text-xl')}>
-                <a className={cn('underline', 'hover:no-underline')} href="https://google.com" target="_blank" rel="noreferrer">
+                <a
+                  className={cn('underline', 'hover:no-underline')}
+                  href="https://www.makuake.com/project/carewill/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {f('makuakeLink')}
                 </a>
               </p>
