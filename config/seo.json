@@ -1,8 +1,8 @@
 {
   "title": "carewill",
-  "titleTemplate": "%s - carewill",
+  "titleTemplate": "%s | carewill",
   "defaultTitle": "carewill",
-  "description": "carewill",
+  "description": "なくしたいのは、服の不自由",
   "openGraph": {
     "title": "carewill",
     "description": "carewill",
@@ -15,7 +15,7 @@
         "url": "/ogp.jpg",
         "width": 1200,
         "height": 630,
-        "alt": "Carewill"
+        "alt": "carewill"
       }
     ]
   },

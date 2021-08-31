@@ -43,6 +43,16 @@ const Seo: VFC<Props> = ({ title, titleTemplate, description, image }) => {
       description={description}
       openGraph={openGraph}
       languageAlternates={languageAlternates ?? undefined}
+      additionalMetaTags={
+        openGraph?.images?.[0]?.url
+          ? [
+              {
+                name: 'twitter:image',
+                content: openGraph.images[0].url,
+              },
+            ]
+          : undefined
+      }
     />
   );
 };

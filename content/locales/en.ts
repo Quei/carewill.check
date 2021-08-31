@@ -12,6 +12,7 @@ export const en: Record<string, any> = {
   index: 'Index',
   makuakeLink: 'Makuake',
   // store
+  ['store.siteTitle']: 'carewill',
   ['store.product']: 'Product',
   ['store.customOrder']: 'Custom order',
   ['store.collaboration']: 'Collaboration',

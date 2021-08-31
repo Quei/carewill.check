@@ -11,6 +11,7 @@ export const ja: Record<string, any> = {
   index: '一覧',
   makuakeLink: 'Makuakeへ',
   // store
+  ['store.siteTitle']: 'なくしたいのは、服の不自由',
   ['store.product']: 'プロダクト',
   ['store.customOrder']: 'カスタムオーダー',
   ['store.collaboration']: 'コラボレーション',
