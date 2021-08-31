@@ -65,7 +65,7 @@ const contact = async (req: NextApiRequest, res: NextApiResponse) => {
     // NOTE:
     // とりあえず、自動返信側にも入力データを入れるため、
     // adminのテキストをそのまま追加する。
-    // 独自のテキストにする際は、make-thanks-messageで作成するように変更すること。
+    // 独自のテキストにする際は調整すること。
     let replyText = '';
     if (mailOptions?.reply?.text && mailOptions?.admin?.text) {
       replyText = mailOptions.reply.text + mailOptions.admin.text;

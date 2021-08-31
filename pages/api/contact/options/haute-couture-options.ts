@@ -51,6 +51,10 @@ ${email}様
 
 入力内容やその他ご不明点などございましたら
 ${hauteCoutureAddress}までご連絡ください。
+
+
+入力内容
+
 `,
     en: `This is an automatic email. No reply will be sent.
 Dear ${email}
@@ -60,6 +64,10 @@ We have received the following information.
 Please wait a moment as we will contact you after we confirm the contents.
 
 If you have any questions or concerns, please contact us at ${hauteCoutureAddress}.
+
+
+Input contents
+
 `,
   };
 
