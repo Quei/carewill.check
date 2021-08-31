@@ -55,6 +55,7 @@ const Link: React.FC<Props> = ({
   hasBorderEffect = false,
   href,
   children,
+  target,
   ...props
 }) => {
   const customHref = useCustomHref({ site, href });
@@ -72,7 +73,7 @@ const Link: React.FC<Props> = ({
           },
           className
         )}
-        target={isTargetBlank ? '_blank' : undefined}
+        target={isTargetBlank ? '_blank' : target ?? undefined}
       >
         {children}
       </a>
