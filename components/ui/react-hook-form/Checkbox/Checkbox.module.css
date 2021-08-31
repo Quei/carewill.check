@@ -1,0 +1,33 @@
+.root {
+  &.hasImage {
+    @apply border-1 border-green border-dashed;
+  }
+}
+
+.input {
+  &:checked + * {
+    @apply bg-green text-white;
+    & svg *{
+      stroke: white;
+    }
+  }
+}
+
+.dummyCheckbox {
+  width: 14px;
+  height: 14px;
+  border: 1px solid theme('colors.green');
+  margin-right: 0.5em;
+
+  & + span {
+    @apply align-bottom;
+  }
+}
+
+.imageWrapper {
+  & img,
+  & svg {
+    @apply mx-auto;
+    height: 100%;
+  }
+}

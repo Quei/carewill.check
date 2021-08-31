@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { nonNullableFilter } from '@lib/non-nullable-filter';
-import { Checkbox } from '@components/ui';
+// import { Checkbox } from '@components/ui';
 import type { VFC, ChangeEventHandler, ChangeEvent } from 'react';
 import type { Maybe, CheckboxesWithImagesImageFragment } from 'types/schema';
 import type { UseFormRegister } from 'react-hook-form';
@@ -73,7 +73,7 @@ const CheckboxesWithImages: VFC<Props> = ({
           </div>
         ))}
       </div>
-      <div>
+      {/* <div>
         {nonNullableOptions.map((option, index) => (
           <Checkbox
             key={`checkbox-${ids[index]}`}
@@ -88,7 +88,7 @@ const CheckboxesWithImages: VFC<Props> = ({
             {option}
           </Checkbox>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

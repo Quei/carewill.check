@@ -1,0 +1,26 @@
+.root {
+  &:hover {
+    & .itemName,
+    & .toggleButton {
+      @apply opacity-100;
+    }
+  }
+}
+
+.itemName {
+  transform: translate(-50%, -100%);
+}
+
+.toggleButton {
+  transform: translate(-50%, 100%);
+  width: 52px;
+  height: 46px;
+  &.centering {
+    transform: translate(-50%, -50%);
+  }
+  &:hover {
+    & svg > * {
+      stroke: white;
+    }
+  }
+}

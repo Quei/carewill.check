@@ -1,24 +1,29 @@
 import cn from 'classnames';
 import s from './Labo.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
+import {
+  renderRichText,
+  renderRichTextReact,
+} from '@lib/contentful/utils/rich-text';
 import {
   Grid,
   Block,
   BlockContent,
-  BlockContentPickup,
   BlockContentPickupLarge,
-  Container,
 } from '@components/ui';
 import { Section } from '../Section';
-import { Project } from './Project';
+import { Pickup } from './Pickup';
 import type { VFC } from 'react';
-import type { HomeLaboViewFragment } from 'types/schema';
+import type {
+  HomeLaboViewFragment,
+  HomeLaboLatestStaffNoteFragment,
+} from 'types/schema';
 
 const SITE = 'labo';
 
-type Props = HomeLaboViewFragment & {
+export type Props = HomeLaboViewFragment & {
   className?: string;
+  latestStaffNote?: HomeLaboLatestStaffNoteFragment | null;
 };
 
 export const homeLaboViewFragment = /* GraphQL */ `
@@ -26,45 +31,103 @@ export const homeLaboViewFragment = /* GraphQL */ `
     description {
       json
     }
+    interviewImage {
+      url
+    }
+    interviewHomeDescription {
+      json
+    }
+    staffNoteHomeDescription {
+      json
+    }
+    recruitingImage {
+      url
+    }
+    recruitingHomeDescription {
+      json
+    }
   }
 `;
 
-const Labo: VFC<Props> = ({ className, description }) => {
+export const homeLaboLatestStaffNoteFragment = /* GraphQL */ `
+  fragment homeLaboLatestStaffNote on StaffNote {
+    content {
+      json
+    }
+  }
+`;
+
+const Labo: VFC<Props> = ({
+  className,
+  description,
+  interviewImage,
+  interviewHomeDescription,
+  staffNoteHomeDescription,
+  recruitingImage,
+  recruitingHomeDescription,
+  latestStaffNote,
+}) => {
   const f = useIntlMessage();
   return (
-    <Section
-      className={cn(s.root)}
-      title={'Labo'}
-      description={renderRichTextReact(description)}
-    >
+    <Section title={'Labo'} description={renderRichTextReact(description)}>
       <Grid>
-        <Block title={'取材記事'} titleTag="h3" href="/" site={SITE}>
-          <BlockContent>
-            carewill に寄せられた声から生まれたプロジェ
-            クトや、パートナーシップから生まれた挑戦を 連載しています。carewill
-            に寄せられた声から 生まれたプロジェクトや、パートナーシップか
-          </BlockContent>
-        </Block>
+        {interviewImage && interviewHomeDescription && (
+          <Block
+            title={f('labo.interviews')}
+            titleTag="h3"
+            href="https://www.makuake.com/project/carewill/"
+          >
+            <BlockContent
+              image={{ src: interviewImage.url, alt: f('store.product') }}
+            >
+              {renderRichTextReact(interviewHomeDescription)}
+              <p>
+                <span className={cn('underline')}>{f('makuakeLink')}</span>
+              </p>
+            </BlockContent>
+          </Block>
+        )}
         <Block
-          title={'スタッフノート'}
+          title={f('labo.staffNotes')}
           titleTag="h3"
-          href="/staff-note"
+          href="/staff-notes"
           site={SITE}
         >
-          <BlockContent>
-            carewill の笈沼やスタッフによる日記。carewill
-            の笈沼やスタッフによる日記。carewill の笈沼
-            やスタッフによる日記。carewill の笈沼やスタッ フによる日記。carewill
-            の笈沼やスタッフによ
+          <BlockContent
+            image={{
+              node: (
+                <div
+                  className={cn(
+                    'bg-light-gray',
+                    'text-2xl',
+                    'overflow-hidden',
+                    s.staffNoteImageTexts
+                  )}
+                >
+                  <p>{renderRichText(latestStaffNote?.content)}</p>
+                </div>
+              ),
+            }}
+          >
+            {renderRichTextReact(staffNoteHomeDescription)}
           </BlockContent>
         </Block>
       </Grid>
-      <Project title={'プロジェクトピックアップ'} site={SITE} />
+      {/* <Pickup title={f('labo.interviewsPickup')} site={SITE} /> */}
       <section>
-        <Block title={'募集'} titleTag="h3" href="/" site={SITE}>
-          <BlockContentPickupLarge isImageLayoutCenter={true}>
-            CF会員のリターン提供期間終了後（11月末）にCF会員をメンバーシップへ誘導するという話をしましたので、8/1
-            BSリリース時は存在しませんから、となると募集の中身は「パートナーシップ」のみとなり、であれば、「パートナーシップ」で良いと思いました。
+        <Block
+          title={f('labo.recruiting')}
+          titleTag="h3"
+          href="/recruiting/partnership"
+          site={SITE}
+        >
+          <BlockContentPickupLarge
+            imageSrc={recruitingImage?.url}
+            imageAlt={f('labo.recruiting')}
+            isImageLayoutCenter={true}
+            disableLineClamp={true}
+          >
+            {renderRichTextReact(recruitingHomeDescription)}
           </BlockContentPickupLarge>
         </Block>
       </section>

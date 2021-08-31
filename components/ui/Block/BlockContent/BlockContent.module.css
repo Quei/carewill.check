@@ -7,10 +7,8 @@
   }
 }
 
-.imageWrapper {
-  @apply relative;
-
+.imageWrapper  {
   & + .description {
-    margin-top: 15px;
+    @apply mt-4;
   }
 }

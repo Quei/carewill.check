@@ -18,28 +18,15 @@
     }
   }
   & + * {
-    margin-top: 10px;
-    @screen md {
-      margin-top: 20px;
-    }
+    @apply mt-2.5 md:mt-5;
   }
 }
 
-.header {
-  @apply md:flex md:justify-center md:text-2xl;
+.header { 
   & > * + * {
-    margin-top: 1em;
+    @apply mt-4 md:mt-0;
     @screen md {
-      margin-top: 0;
       margin-left: 2em;
     }
-  }
-}
-
-.description {
-  @apply line-clamp-4;
-  margin-top: 1em;
-  @screen md {
-    margin-top: 5px;
   }
 }

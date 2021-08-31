@@ -21,7 +21,8 @@ const FullImage: VFC<Props> = ({
   }
 
   const rootClassName = cn(
-    s.root,
+    'relative',
+    'w-full',
     'md:aspect-w-16',
     'md:aspect-h-9',
     {

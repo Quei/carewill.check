@@ -1,21 +1,34 @@
 .root {
-  @apply relative;
   &.hasNoChildren {
     min-height: 88px;
+    & > a {
+      /* NOTE:
+      safari bug fix
+      ここは本来要らないが、
+      safariだと何故か高さがなくなるので（height: 100%を指定しても）、
+      無理矢理設定する。
+       */
+      min-height: 88px;
+    }
     @screen md {
       min-height: 106px;
+      & > a {
+        /* NOTE:
+        safari bug fix
+        ここは本来要らないが、
+        safariだと何故か高さがなくなるので（height: 100%を指定しても）、
+        無理矢理設定する。
+        */
+        min-height: 106px;
+      }
     }
   }
 
 }
 
-.link {
-  @apply block h-full hover:bg-green hover:text-white;
-}
-
 .content {
   &.isCentering {
-    @apply flex justify-center items-center;
+    @apply flex justify-center items-center h-full;
     min-height: 117px;
     @screen md {
       min-height: 210px;
@@ -24,7 +37,7 @@
   &.hasNoPaddingMobile {
     @apply px-site-vertical;
   }
-  &:not(.isCentering):not(.hasNoPaddingMobile) {
+  &:not(.hasNoPaddingMobile) {
     padding-left: 60px;
     padding-right: 60px;
     @screen md {

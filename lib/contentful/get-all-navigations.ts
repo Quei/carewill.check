@@ -6,6 +6,12 @@ import type {
   GetNavigationAboutQuery,
 } from 'types/schema';
 
+const navigationStore = /* GraphQL */ `
+  fragment NavigationStore on Navigation {
+    menu
+    sns
+  }
+`;
 const getNavigationStoreQuery = /* GraphQL */ `
   query GetNavigationStore(
     $locale: String!
@@ -19,13 +25,19 @@ const getNavigationStoreQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        menu
-        sns
+        ...NavigationStore
       }
     }
   }
+
+  ${navigationStore}
 `;
 
+const navigationLabo = /* GraphQL */ `
+  fragment NavigationLabo on Navigation {
+    menu
+  }
+`;
 const getNavigationLaboQuery = /* GraphQL */ `
   query GetNavigationLabo(
     $locale: String!
@@ -39,12 +51,19 @@ const getNavigationLaboQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        menu
+        ...NavigationLabo
       }
     }
   }
+
+  ${navigationLabo}
 `;
 
+const navigationAbout = /* GraphQL */ `
+  fragment NavigationAbout on Navigation {
+    menu
+  }
+`;
 const getNavigationAboutQuery = /* GraphQL */ `
   query GetNavigationAbout(
     $locale: String!
@@ -58,10 +77,12 @@ const getNavigationAboutQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        menu
+        ...NavigationAbout
       }
     }
   }
+
+  ${navigationAbout}
 `;
 
 type GetAllNavigations = Pick<GetStaticPropsContext, 'locale' | 'preview'>;

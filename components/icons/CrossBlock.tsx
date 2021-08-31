@@ -1,11 +1,11 @@
-const CrossBlock = ({ ...props }) => {
+const CrossBlock = ({ strokeWidth = 3, ...props }) => {
   return (
     <svg
       viewBox="0 0 100 100"
       width="100%"
       height="100%"
       stroke="currentColor"
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
       fill="none"

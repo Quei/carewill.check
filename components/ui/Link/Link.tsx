@@ -3,20 +3,16 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import s from './Link.module.css';
+import { URLS } from '@config/domains';
 import type { LinkProps as NextLinkProps } from 'next/link';
 import type { Site } from 'types/site';
 
-const URLS = {
-  store: 'https://carewill.co.jp',
-  labo: 'https://labo.carewill.co.jp',
-  about: 'https://about.carewill.co.jp',
-};
-
-type Props = NextLinkProps & {
-  className?: string;
-  site?: Site;
-  hasBorderEffect?: boolean;
-};
+type Props = NextLinkProps &
+  JSX.IntrinsicElements['a'] & {
+    className?: string;
+    site?: Site;
+    hasBorderEffect?: boolean;
+  };
 
 type UseCustomHrefArgs = Pick<Props, 'site' | 'href'>;
 const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
@@ -37,9 +33,20 @@ const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
   }, [site, href]);
 };
 
-const useIsCurrent = (href: Props['href']) => {
-  const router = useRouter();
-  return router.pathname === href;
+const useIsCurrent = (href: string) => {
+  const { asPath } = useRouter();
+  return asPath === href;
+};
+
+const useIsTargetBlank = (href: string) => {
+  return useMemo(() => {
+    if (href.startsWith('/')) {
+      return false;
+    } else {
+      const url = new URL(href);
+      return !/carewill\.co\.jp/.test(url.hostname);
+    }
+  }, [href]);
 };
 
 const Link: React.FC<Props> = ({
@@ -48,10 +55,12 @@ const Link: React.FC<Props> = ({
   hasBorderEffect = false,
   href,
   children,
+  target,
   ...props
 }) => {
   const customHref = useCustomHref({ site, href });
   const isCurrent = useIsCurrent(customHref);
+  const isTargetBlank = useIsTargetBlank(customHref);
   return (
     <NextLink href={customHref}>
       <a
@@ -64,6 +73,7 @@ const Link: React.FC<Props> = ({
           },
           className
         )}
+        target={isTargetBlank ? '_blank' : target ?? undefined}
       >
         {children}
       </a>

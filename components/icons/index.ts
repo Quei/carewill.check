@@ -21,3 +21,6 @@ export { default as Twitter } from './Twitter';
 export { default as Facebook } from './Facebook';
 export { default as Youtube } from './Youtube';
 export { default as Note } from './Note';
+export { default as Play } from './Play';
+export { default as Pause } from './Pause';
+export { default as ArrowLink } from './ArrowLink';

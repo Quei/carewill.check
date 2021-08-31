@@ -1,0 +1,20 @@
+.root {
+  &.header {
+    @apply md:flex md:justify-between;
+    & > li + li {
+      @apply mt-8 md:mt-0;
+    }
+  }
+  &.footer {
+    @apply md:grid md:grid-cols-3;
+    & > li + li {
+      @apply mt-3 md:mt-0;
+    }
+  }
+}
+
+.contact { 
+  & a {
+    @apply text-3xl leading-none;
+  }
+}

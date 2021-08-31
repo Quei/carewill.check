@@ -1,11 +1,11 @@
 import commerce from '@lib/api/commerce';
-import { fetcher } from '@lib/contentful';
-import { getAllNavigations } from '@lib/contentful/get-all-navigations';
+import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
   HomeView,
   homeStoreViewFragment,
   homeLaboViewFragment,
+  homeLaboLatestStaffNoteFragment,
   homeAboutViewFragment,
 } from '@components/home';
 // import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
@@ -53,9 +53,20 @@ const getHomeLaboQuery = /* GraphQL */ `
         ...homeLaboView
       }
     }
+    staffNoteCollection(
+      locale: $locale
+      preview: $preview
+      order: date_DESC
+      limit: 1
+    ) {
+      items {
+        ...homeLaboLatestStaffNote
+      }
+    }
   }
 
   ${homeLaboViewFragment}
+  ${homeLaboLatestStaffNoteFragment}
 `;
 
 const getHomeAboutQuery = /* GraphQL */ `
@@ -126,14 +137,24 @@ export async function getStaticProps({
 
   const allNavigationsPromise = getAllNavigations({ locale, preview });
 
-  const [storeData, laboData, aboutData, allNavigations] = await Promise.all([
+  const footerPromise = getFooter({ locale, preview });
+
+  const [
+    storeData,
+    laboData,
+    aboutData,
+    allNavigations,
+    footerData,
+  ] = await Promise.all([
     storePromise,
     laboPromise,
     aboutPromise,
     allNavigationsPromise,
+    footerPromise,
   ]);
   const store = storeData?.homeCollection?.items?.[0];
   const labo = laboData?.homeCollection?.items?.[0];
+  const latestStaffNote = laboData?.staffNoteCollection?.items?.[0];
   const about = aboutData?.homeCollection?.items?.[0];
 
   return {
@@ -142,9 +163,10 @@ export async function getStaticProps({
       brands,
       pages,
       store,
-      labo,
+      labo: { ...labo, latestStaffNote },
       about,
       allNavigations,
+      footer: footerData.footer,
       isSiteRoot: true,
     },
     // revalidate: 14400,
@@ -159,6 +181,7 @@ export default function Home({
   store,
   labo,
   about,
+  allNavigations,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -166,6 +189,7 @@ export default function Home({
         store={store ?? undefined}
         labo={labo ?? undefined}
         about={about ?? undefined}
+        aboutNavigation={allNavigations.about}
       />
       {/* <HomeAllProductsGrid
         newestProducts={products}

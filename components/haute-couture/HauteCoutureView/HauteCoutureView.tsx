@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { NextSeo } from 'next-seo';
+import Image from 'next/image';
 import cn from 'classnames';
 import s from './HauteCoutureView.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
@@ -7,19 +7,15 @@ import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
-import { getOpenGraph } from '@lib/get-open-graph';
-import {
-  PageHeader,
-  OnelineLink,
-  PickupSection,
-  FullImage,
-} from '@components/ui';
-import type { FC } from 'react';
+import { Seo, LaboRelatedPosts } from '@components/common';
+import { PageHeader, OnelineLink, FullImage, Container } from '@components/ui';
+import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
+import type { VFC } from 'react';
 import type { HauteCoutureViewFragment } from 'types/schema';
 
 type Props = HauteCoutureViewFragment & {
   className?: string;
-  children?: any;
+  relatedPosts?: RelatedPosts;
 };
 
 export const hauteCoutureViewFragment = /* GraphQL */ `
@@ -29,9 +25,20 @@ export const hauteCoutureViewFragment = /* GraphQL */ `
       json
     }
     image {
-      sys {
-        id
-      }
+      url
+      width
+      height
+    }
+    orderSheet {
+      url
+    }
+    orderStepsImage {
+      url
+      title
+      width
+      height
+    }
+    orderStepsMobileImage {
       url
       title
       width
@@ -40,62 +47,62 @@ export const hauteCoutureViewFragment = /* GraphQL */ `
   }
 `;
 
-const DummyItems = [
-  {
-    sys: { id: 'test-01' },
-    title: 'テスト',
-    slug: 'test',
-    date: '2022.07.01',
-    content: 'test',
-  },
-  {
-    sys: { id: 'test-02' },
-    title: 'テスト2',
-    slug: 'test2',
-    date: '2022.07.02',
-    content: 'test',
-  },
-  {
-    sys: { id: 'test-03' },
-    title: 'テスト3',
-    slug: 'test3',
-    date: '2022.07.03',
-    content: 'test',
-  },
-];
-
-const HauteCoutureView: FC<Props> = ({ title, description, image }) => {
+const HauteCoutureView: VFC<Props> = ({
+  title,
+  description,
+  image,
+  orderSheet,
+  orderStepsImage,
+  orderStepsMobileImage,
+  relatedPosts,
+}) => {
   const titleText = title ?? '';
   const descriptionText = renderRichText(description);
   const f = useIntlMessage();
-  const openGraph = getOpenGraph({
-    title: titleText,
-    description: descriptionText,
-    image,
-  });
   return (
     <>
-      <NextSeo
+      <Seo
         title={titleText}
         description={descriptionText}
-        openGraph={openGraph}
+        image={image}
       />
       <PageHeader title={titleText}>
         {renderRichTextReact(description)}
       </PageHeader>
-      {image?.url && (
-        <FullImage src={image?.url ?? ''} alt={image?.title ?? ''} />
-      )}
+      {image?.url && <FullImage src={image?.url ?? ''} alt={titleText ?? ''} />}
       <OnelineLink href="/haute-couture/order-form">
         {f('formLink')}
       </OnelineLink>
-      <OnelineLink href="/">{f('pdfLink')}</OnelineLink>
-      <PickupSection
-        title={f('pickup')}
-        titleTag="h2"
-        items={DummyItems}
-        site={'labo'}
-      />
+      {orderSheet?.url && (
+        <OnelineLink href={orderSheet.url}>{f('pdfLink')}</OnelineLink>
+      )}
+      {orderStepsImage?.url && orderStepsMobileImage?.url && (
+        <div
+          className={cn('px-site-vertical', 'py-12', 'sm:pt-24', 'sm:pb-20')}
+        >
+          <Container>
+            <div className={cn('hidden', 'sm:block')}>
+              <Image
+                src={orderStepsImage.url}
+                alt={orderStepsImage.title ?? ''}
+                width={orderStepsImage.width ?? ''}
+                height={orderStepsImage.height ?? ''}
+                layout="responsive"
+              />
+            </div>
+            <div className={cn('sm:hidden')}>
+              <Image
+                src={orderStepsMobileImage.url}
+                alt={orderStepsMobileImage.title ?? ''}
+                width={orderStepsMobileImage.width ?? ''}
+                height={orderStepsMobileImage.height ?? ''}
+                layout="responsive"
+              />
+            </div>
+          </Container>
+        </div>
+      )}
+      <LaboRelatedPosts relatedPosts={relatedPosts} />
     </>
   );
 };

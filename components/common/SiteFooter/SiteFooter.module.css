@@ -1,10 +1,17 @@
-.root {
-  border-top: theme('borderWidth.DEFAULT') solid theme('colors.green');
+.texts {
+  & > * + *:not(.copyRight) {
+    @apply mt-4;
+  }
 }
 
-.navigation {
-  & > ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.logoList {
+  & > li + li {
+    @apply ml-3;
+  }
+}
+
+.legalPageList {
+  & > li + li {
+    @apply ml-3;
   }
 }

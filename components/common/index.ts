@@ -8,3 +8,7 @@ export { default as UserNav } from './UserNav';
 export { default as Head } from './Head';
 export { default as I18nWidget } from './I18nWidget';
 export { default as SiteHeaderLogo } from './SiteHeaderLogo';
+export { default as SiteHeaderNavigation } from './SiteHeaderNavigation';
+export { default as SiteMenuList } from './SiteMenuList';
+export { default as LaboRelatedPosts } from './LaboRelatedPosts';
+export { default as Seo } from './Seo';

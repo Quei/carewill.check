@@ -1,3 +1,6 @@
-.root {
-
+.staffNoteImageTexts {
+  line-height: 1.57;
+  /* @screen md {
+    font-size: 1.99vw;
+  } */
 }

@@ -1,26 +1,27 @@
 {
-  "title": "ACME Storefront | Powered by Next.js Commerce",
-  "titleTemplate": "%s - ACME Storefront",
-  "description": "Next.js Commerce - https://www.nextjs.org/commerce",
+  "title": "Carewill",
+  "titleTemplate": "%s - Carewill",
+  "defaultTitle": "Carewill",
+  "description": "Carewill",
   "openGraph": {
-    "title": "ACME Storefront | Powered by Next.js Commerce",
-    "description": "Next.js Commerce - https://www.nextjs.org/commerce",
+    "title": "Carewill",
+    "description": "Carewill",
     "type": "website",
-    "locale": "en_IE",
-    "url": "https://nextjs.org/commerce",
-    "site_name": "Next.js Commerce",
+    "locale": "ja",
+    "url": "https://www.carewill.co.jp",
+    "site_name": "Carewill",
     "images": [
       {
-        "url": "/card.png",
-        "width": 800,
-        "height": 600,
-        "alt": "Next.js Commerce"
+        "url": "/ogp.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Carewill"
       }
     ]
   },
   "twitter": {
-    "handle": "@nextjs",
-    "site": "@nextjs",
+    "handle": "@carewill_pr",
+    "site": "@carewill_pr",
     "cardType": "summary_large_image"
   }
 }

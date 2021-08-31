@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import cn from 'classnames';
@@ -12,9 +12,9 @@ import { Sidebar, Button, Modal, LoadingDots } from '@components/ui';
 import CartSidebarView from '@components/cart/CartSidebarView';
 import LoginView from '@components/auth/LoginView';
 import { ja as localeContentJa, en as localeContentEn } from '@content/locales';
-import type { Page } from '@commerce/types/page';
-import type { Category } from '@commerce/types/site';
+import type { FC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
+import type { FooterFragment } from 'types/schema';
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -44,15 +44,15 @@ const FeatureBar = dynamic(
 
 interface Props {
   pageProps: {
-    pages?: Page[];
     allNavigations: AllNavigations;
+    footer?: FooterFragment;
     isSiteRoot?: boolean;
   };
 }
 
 const Layout: FC<Props> = ({
   children,
-  pageProps: { allNavigations, isSiteRoot, ...pageProps },
+  pageProps: { allNavigations, footer, isSiteRoot, ...pageProps },
 }) => {
   const {
     displaySidebar,
@@ -84,8 +84,8 @@ const Layout: FC<Props> = ({
           <main className={cn(s.main, 'fit')}>{children}</main>
           <SiteFooter
             className={cn(s.footer)}
-            pages={pageProps.pages}
             allNavigations={allNavigations}
+            {...footer}
           />
 
           <Modal open={displayModal} onClose={closeModal}>

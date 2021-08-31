@@ -1,4 +1,8 @@
-import type { Navigation, Maybe } from 'types/schema';
+import type {
+  NavigationStoreFragment,
+  NavigationLaboFragment,
+  NavigationAboutFragment,
+} from 'types/schema';
 
 export type Repeater = {
   id: string;
@@ -7,25 +11,7 @@ export type Repeater = {
 };
 
 export type AllNavigations = {
-  store:
-    | Maybe<
-        {
-          __typename?: 'Navigation' | undefined;
-        } & Pick<Navigation, 'menu' | 'sns'>
-      >
-    | undefined;
-  labo:
-    | Maybe<
-        {
-          __typename?: 'Navigation' | undefined;
-        } & Pick<Navigation, 'menu'>
-      >
-    | undefined;
-  about:
-    | Maybe<
-        {
-          __typename?: 'Navigation' | undefined;
-        } & Pick<Navigation, 'menu'>
-      >
-    | undefined;
+  store: NavigationStoreFragment;
+  labo: NavigationLaboFragment;
+  about: NavigationAboutFragment;
 };

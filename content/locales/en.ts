@@ -1,10 +1,5 @@
 export const en: Record<string, any> = {
-  product: 'Product',
-  customOrder: 'Custom order',
-  collaboration: 'Collaboration',
-  hauteCouture: 'Haute couture',
-  form: 'Form',
-  formLink: 'Enter form',
+  carewill: 'Carewill',
   pdfLink: 'PDF',
   relatedPosts: 'Related posts',
   addToCart: 'Add to cart',
@@ -12,9 +7,47 @@ export const en: Record<string, any> = {
   placeholderTextArea: 'Text here',
   pickup: 'Pickup',
   submit: 'Submit',
-  // about
-  newsPickup: 'News pickup',
+  all: 'All',
+  morePosts: 'More',
+  index: 'Index',
+  makuakeLink: 'Makuake',
+  // store
+  ['store.product']: 'Product',
+  ['store.customOrder']: 'Custom order',
+  ['store.collaboration']: 'Collaboration',
+  ['store.hauteCouture']: 'Haute couture',
+  // form
   // haute-couture
-  ['hauteCouture.open']: 'Open',
-  ['hauteCouture.close']: 'Close',
+  form: 'Form',
+  formLink: 'Form',
+  ['form.change']: 'Change',
+  ['form.empty']: 'Empty',
+  ['form.submit']: 'Submit',
+  ['form.submit.success']: 'Completed',
+  ['form.submit.ing']: 'Submiting',
+  ['form.select']: 'Select',
+  ['form.error.messageBlock']:
+    '*The following required fields have not been selected/entered.',
+  ['form.error.required']: 'Required',
+  ['form.error.required.acceptance']: 'Please check.',
+  ['form.error.required.email']:
+    'Please enter alphanumeric characters and symbols.',
+  ['form.error.pattern.email']:
+    'Please enter a correct e-mail address using only letters, numbers, and symbols.',
+  ['form.error.minmax']: 'Enter a number from {min} to {max}.',
+  ['form.measurement.attention']:
+    'The length of the "clothes" you want to wear.',
+  ['form.other']: 'Other',
+  ['form.other.placeholder']: 'Enter any other answers.',
+  ['form.topLink']: 'Back to the top page',
+  // labo
+  ['labo.interviews']: 'Project',
+  ['labo.interviewsPickup']: 'Project pickup',
+  ['labo.staffNotes']: 'Staff notes',
+  ['labo.recruiting']: 'Recruiting',
+  ['labo.selectCategory']: 'Category',
+  // about-us
+  ['about.newsPickup']: 'News pickup',
+  ['about.tokushoho']: 'Specified commercial transaction act',
+  ['about.privacyPolicy']: 'Privacy policy',
 };

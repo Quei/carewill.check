@@ -1,0 +1,7 @@
+.checkbox {
+  min-height: 120px;
+  & svg {
+    min-height: 90px;
+    max-height: 110px;
+  } 
+}

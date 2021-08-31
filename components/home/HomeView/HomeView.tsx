@@ -1,34 +1,33 @@
-import Link from 'next/link';
-import cn from 'classnames';
-import s from './HomeView.module.css';
-import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import { Grid, Block } from '@components/ui';
+import { Seo } from '@components/common';
 import { Store } from './Store';
 import { Labo } from './Labo';
 import { AboutUs } from './AboutUs';
-import { Section } from './Section';
 import type { VFC } from 'react';
-import type {
-  HomeStoreViewFragment,
-  HomeLaboViewFragment,
-  HomeAboutViewFragment,
-} from 'types/schema';
+import type { Props as StoreProps } from './Store';
+import type { Props as LaboProps } from './Labo';
+import type { Props as AboutProps } from './AboutUs';
+import type { Maybe, NavigationAboutFragment } from 'types/schema';
 
 type Props = {
-  className?: string;
-  store?: HomeStoreViewFragment;
-  labo?: HomeLaboViewFragment;
-  about?: HomeAboutViewFragment;
+  store?: StoreProps;
+  labo?: LaboProps;
+  about?: AboutProps;
+  aboutNavigation?: Maybe<NavigationAboutFragment>;
 };
 
-const HomeView: VFC<Props> = ({ className, store, labo, about }) => {
-  const f = useIntlMessage();
+const HomeView: VFC<Props> = ({ store, labo, about, aboutNavigation }) => {
   return (
     <>
-      <div className="h-60">slide-show</div>
+      {/* NOTE:
+      何故か、next-seoのdefaultTitleの仕組みが上手く機能しないので、
+      homeはここでtitleとtitleTemplateを設定する（両方指定しないと、上手く動作しない）。
+       */}
+      <Seo title={'Carewill'} titleTemplate={'Carewill'} />
       {store && <Store {...store} />}
       {labo && <Labo {...labo} />}
-      {about && <AboutUs {...about} />}
+      {about && (
+        <AboutUs {...about} navigation={aboutNavigation ?? undefined} />
+      )}
     </>
   );
 };

@@ -49,6 +49,7 @@ module.exports = {
         blue: 'var(--blue)',
         green: 'var(--green)',
         red: 'var(--red)',
+        'light-gray': 'var(--light-gray)',
       },
       textColor: {
         base: 'var(--text-base)',
@@ -84,6 +85,7 @@ module.exports = {
         green: `var(--green)`,
       },
       borderWidth: {
+        1: '1px',
         DEFAULT: 'var(--border-width)',
       },
       boxShadow: {

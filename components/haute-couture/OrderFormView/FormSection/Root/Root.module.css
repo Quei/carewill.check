@@ -1,0 +1,51 @@
+.counter {
+  &::before {
+    counter-increment: sectionCount;
+    content: "(" counters(sectionCount, '') ")";
+  }
+}
+
+@keyframes openButtonShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.openButton {
+  @apply cursor-pointer text-left leading-10 mt-1.5 focus:outline-none md:mt-2.5;
+  /* margin-top: 10px; */
+  animation-name: openButtonShow;
+  animation-duration: 0.5s;
+  &.isOpen {
+    @apply hidden;
+  }
+  &.hasError {
+    @apply text-red;
+  }
+}
+
+.dummyTitle {
+  @apply line-clamp-1 px-2 md:px-0;
+  &.required {
+    &::after {
+      @apply text-red;
+      content : '＊';
+    }
+  }
+}
+
+.status {
+  @apply absolute z-10;
+  top: 0;
+  right: 17px;
+}
+
+.children {
+  @apply transition-opacity;
+  &.isHide {
+    @apply opacity-0;
+  }
+}

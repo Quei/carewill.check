@@ -1,48 +1,82 @@
+import Image from 'next/image';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
-import Link from 'next/link';
-import { INLINES } from '@contentful/rich-text-types';
+import { INLINES, BLOCKS } from '@contentful/rich-text-types';
+import { LinkResolver } from '@config/link-resolver';
+import type { Document } from '@contentful/rich-text-types';
+import type { Options } from '@contentful/rich-text-react-renderer';
 import type {
-  Options,
-  NodeRenderer,
-} from '@contentful/rich-text-react-renderer';
-import type { Maybe } from 'types/schema';
+  Maybe,
+  RichTextAssetFragment,
+  RichTextEntryHyperlinkFragment,
+} from 'types/schema';
 
-type linkEntry = { sys: { id: string } } & {
-  __typename: 'CustomOrder' | 'HauteCouture' | 'Home';
-} & {
-  slug?: string | null;
+export const richTextAssetFragment = /* GraphQL */ `
+  fragment richTextAsset on Asset {
+    sys {
+      id
+    }
+    url
+    description
+    width
+    height
+  }
+`;
+
+export const richTextEntryHyperlinkFragment = /* GraphQL */ `
+  fragment richTextEntryHyperlink on Entry {
+    __typename
+    sys {
+      id
+    }
+    ... on StaffNote {
+      slug
+    }
+    ... on Recruiting {
+      slug
+    }
+  }
+`;
+
+type Entry = RichTextEntryHyperlinkFragment & {
+  slug?: Maybe<string>;
 };
 
-type RenderRichTextReactArgs = {
-  json?: Parameters<typeof documentToReactComponents>[0];
-  links?: {
-    entries: {
-      hyperlink: Array<Maybe<linkEntry>>;
-    };
-  };
+type Asset = RichTextAssetFragment;
+
+type Entries = {
+  inline?: Array<Maybe<Entry>>;
+  hyperlink?: Array<Maybe<Entry>>;
+  block?: Array<Maybe<Entry>>;
 };
 
-// export const hyperlinkEntry = /* GraphQL */ `
-//   fragment hyperlinkEntry on Entry {
-//     __typename
-//   }
-// `;
+type Assets = {
+  hyperlink?: Array<Maybe<Asset>>;
+  block?: Array<Maybe<Asset>>;
+};
 
-const renderOptions = (links: RenderRichTextReactArgs['links']): Options => {
+type Links = {
+  entries?: Entries;
+  assets?: Assets;
+};
+
+type RenderRichTextArgs = {
+  json?: Document;
+  links?: Links;
+};
+
+const renderOptions = (links?: Links): Options => {
   // create an asset map
-  // const assetMap = new Map();
-  // if (links?.assets) {
-  //   if ('block' in links?.assets) {
-  //     for (const asset of links?.assets.block) {
-  //       assetMap.set(asset.sys.id, asset);
-  //     }
-  //   }
-  // }
+  const assetMap = new Map();
+  if (links?.assets?.block) {
+    for (const asset of links?.assets?.block) {
+      assetMap.set(asset?.sys.id, asset);
+    }
+  }
 
   // create an entry map
-  const entryMap = new Map<string, linkEntry>();
-  if (links?.entries) {
+  const entryMap = new Map<string, Entry>();
+  if (links?.entries?.hyperlink) {
     // if ('block' in links?.entries) {
     //   for (const entry of links?.entries.block) {
     //     entryMap.set(entry.sys.id, entry);
@@ -55,7 +89,7 @@ const renderOptions = (links: RenderRichTextReactArgs['links']): Options => {
     //   }
     // }
 
-    for (const entry of links?.entries.hyperlink) {
+    for (const entry of links.entries.hyperlink) {
       if (entry?.sys) {
         entryMap.set(entry.sys.id, entry);
       }
@@ -65,29 +99,35 @@ const renderOptions = (links: RenderRichTextReactArgs['links']): Options => {
   return {
     renderNode: {
       // eslint-disable-next-line react/display-name
+      [BLOCKS.EMBEDDED_ASSET]: (node, children) => {
+        const asset = assetMap.get(node.data.target.sys.id);
+        if (!asset) {
+          return children;
+        }
+        return (
+          <div className="image-wrapper">
+            <Image
+              src={asset.url}
+              alt={asset.description}
+              width={asset.width}
+              height={asset.height}
+            />
+          </div>
+        );
+      },
+
+      // eslint-disable-next-line react/display-name
       [INLINES.ENTRY_HYPERLINK]: (node, children) => {
         const entry = entryMap.get(node.data.target.sys.id);
-        if (!entry) {
+        if (!entry?.slug) {
           return children;
         }
 
-        if (entry.__typename === 'HauteCouture') {
-          return (
-            <Link href={`/${entry.slug}`}>
-              <a>{children}</a>
-            </Link>
-          );
-        } else if (entry.__typename === 'CustomOrder') {
-          return (
-            <Link href={`/${entry.slug}`}>
-              <a>{children}</a>
-            </Link>
-          );
-        } else {
-          <Link href={`/${entry.slug}`}>
-            <a>{children}</a>
-          </Link>;
-        }
+        return (
+          <LinkResolver __typename={entry.__typename} slug={entry.slug}>
+            {children}
+          </LinkResolver>
+        );
       },
       // eslint-disable-next-line react/display-name
       [INLINES.HYPERLINK]: (node, children) => {
@@ -105,21 +145,25 @@ const renderOptions = (links: RenderRichTextReactArgs['links']): Options => {
   };
 };
 
-export const renderRichTextReact = (args?: RenderRichTextReactArgs | null) => {
+export const renderRichTextReact = (args?: RenderRichTextArgs | null) => {
   if (!args?.json) {
     return null;
   }
   return documentToReactComponents(args.json, renderOptions(args.links));
 };
 
-type RenderRichTextArgs = {
-  json?: Parameters<typeof documentToPlainTextString>[0];
-};
-export const renderRichText = (args?: RenderRichTextArgs | null) => {
+export const renderRichText = (
+  args?: RenderRichTextArgs | null,
+  length?: number
+) => {
   if (!args?.json) {
     return '';
   }
-  return documentToPlainTextString(args.json);
+  const text = documentToPlainTextString(args.json);
+  if (length) {
+    return text.substr(0, length);
+  }
+  return text;
 };
 
 export const renderTextToDom = (text?: string | null) => {

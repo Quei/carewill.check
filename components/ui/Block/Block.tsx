@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import s from './Block.module.css';
 import { Link } from '@components/ui';
+import { CrossBlock } from '@components/icons';
 import type { FC, ReactNode, PointerEventHandler } from 'react';
 import type { Site } from 'types/site';
 
@@ -23,7 +24,11 @@ const LinkWrapper: FC<LinkWrapperProps> = ({ href, site, children }) => {
     return <>{children}</>;
   } else {
     return (
-      <Link href={href} site={site} className={s.link}>
+      <Link
+        href={href}
+        site={site}
+        className={cn('block', 'h-full', 'hover:bg-green', 'hover:text-white')}
+      >
         {children}
       </Link>
     );
@@ -44,7 +49,12 @@ const Block: FC<Props> = ({
 }) => {
   return (
     <div
-      className={cn(s.root, { [s.hasNoChildren]: !children }, className)}
+      className={cn(
+        'relative',
+        s.root,
+        { [s.hasNoChildren]: !children },
+        className
+      )}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
     >

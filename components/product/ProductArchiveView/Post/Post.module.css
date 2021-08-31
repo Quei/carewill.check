@@ -1,0 +1,17 @@
+.root {
+  @apply lg:grid lg:grid-cols-2;
+  & > * + * {
+    @screen less-than-md {
+      border-top: theme('borderWidth.DEFAULT') solid currentColor;
+    }
+    @screen md {
+      border-left: theme('borderWidth.DEFAULT') solid currentColor;
+    }
+  }
+}
+
+.textBlock {
+  @screen lg {
+    min-height: 580px;
+  }
+}

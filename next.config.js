@@ -11,6 +11,7 @@ const isSwell = provider === 'swell';
 const isVendure = provider === 'vendure';
 
 module.exports = withCommerceConfig({
+  reactStrictMode: true,
   commerce,
   i18n: {
     locales: ['ja', 'en'],
@@ -19,6 +20,7 @@ module.exports = withCommerceConfig({
   images: {
     domains: ['images.ctfassets.net'],
   },
+  trailingSlash: true,
   rewrites() {
     return [
       (isBC || isShopify || isSwell || isVendure) && {

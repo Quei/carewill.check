@@ -6,7 +6,7 @@ import type { FC, ReactNode } from 'react';
 type Props = {
   className?: string;
   title: string;
-  titleTag?: 'h1' | 'h2' | 'h3';
+  titleTag?: 'h1' | 'h2' | 'h3' | 'p';
   children?: ReactNode;
 };
 
@@ -17,8 +17,17 @@ const PageHeader: FC<Props> = ({
   children,
 }) => {
   return (
-    <div className={cn(s.root, className)}>
-      <TitleTag className={cn(s.title)}>{title}</TitleTag>
+    <div
+      className={cn(
+        'px-site-vertical',
+        'md:px-site-vertical-md',
+        s.root,
+        className
+      )}
+    >
+      <TitleTag className={cn('text-center', 'text-3xl', 'leading-none')}>
+        {title}
+      </TitleTag>
       {children && (
         <Container className={cn(s.description)}>{children}</Container>
       )}

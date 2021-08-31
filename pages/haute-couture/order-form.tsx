@@ -1,6 +1,4 @@
-import { useRouter } from 'next/router';
-import { fetcher } from '@lib/contentful';
-import { getAllNavigations } from '@lib/contentful/get-all-navigations';
+import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
   OrderFormView,
@@ -48,9 +46,12 @@ export async function getStaticProps({
 
   const allNavigationsPromise = getAllNavigations({ locale, preview });
 
-  const [data, allNavigations] = await Promise.all([
+  const footerPromise = getFooter({ locale, preview });
+
+  const [data, allNavigations, footerData] = await Promise.all([
     dataPromise,
     allNavigationsPromise,
+    footerPromise,
   ]);
 
   const entry = data?.hauteCoutureCollection?.items?.[0];
@@ -63,6 +64,7 @@ export async function getStaticProps({
     props: {
       entry,
       allNavigations,
+      footer: footerData.footer,
     },
     revalidate: 60 * 60,
   };
@@ -71,13 +73,7 @@ export async function getStaticProps({
 export default function OrderForm({
   entry,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
-
-  return router.isFallback ? (
-    <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
-  ) : (
-    <OrderFormView {...entry} />
-  );
+  return <OrderFormView {...entry} />;
 }
 
 OrderForm.Layout = Layout;

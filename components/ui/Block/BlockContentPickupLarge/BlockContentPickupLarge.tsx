@@ -14,6 +14,7 @@ type Props = {
   title?: string;
   titleTag?: 'h2' | 'h3' | 'h4';
   date?: string;
+  disableLineClamp?: boolean;
   children?: ReactNode;
 };
 
@@ -25,6 +26,7 @@ const BlockContentPickupLarge: FC<Props> = ({
   title,
   titleTag: TitleTag = 'h2',
   date,
+  disableLineClamp,
   children,
 }) => {
   const imageAspectClassNames = cn({
@@ -49,7 +51,14 @@ const BlockContentPickupLarge: FC<Props> = ({
       </div>
       <Container>
         {title && (
-          <div className={cn(s.header)}>
+          <div
+            className={cn(
+              'md:flex',
+              'md:justify-center',
+              'md:text-2xl',
+              s.header
+            )}
+          >
             {date && (
               <time dateTime={dayjs(date).format('YYYY.MM.DD')}>
                 {dayjs(date).format('YYYY.MM.DD')}
@@ -58,7 +67,15 @@ const BlockContentPickupLarge: FC<Props> = ({
             <TitleTag>{title}</TitleTag>
           </div>
         )}
-        {children && <div className={cn(s.description)}>{children}</div>}
+        {children && (
+          <div
+            className={cn('mt-4', 'md:mt-1', {
+              ['line-clamp-4']: !disableLineClamp,
+            })}
+          >
+            {children}
+          </div>
+        )}
       </Container>
     </div>
   );

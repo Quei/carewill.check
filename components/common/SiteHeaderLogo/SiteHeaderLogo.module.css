@@ -1,5 +1,5 @@
 .root {
-  @apply text-center hidden;
+  @apply text-center hidden relative;
   @screen md {
     padding-top: 40px;
     padding-bottom: 20px;
@@ -18,4 +18,8 @@
   @screen lg {
     width: 630px;
   }
+}
+
+.i18n {
+  @apply hidden md:flex md:text-2xl md:absolute md:top-2 md:right-site-vertical-md;
 }

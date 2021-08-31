@@ -12,12 +12,12 @@ import {
   renderRichTextReact,
   // hyperlinkEntry,
 } from '@lib/contentful/utils/rich-text';
-import { Button, Checkbox, TextArea, ErrorText } from '@components/ui';
+// import { Button, Checkbox, TextArea, ErrorText } from '@components/ui';
 import { FormSection } from './FormSection';
-import {
-  CheckboxesWithImages,
-  checkboxesWithImagesImageFragment,
-} from './CheckboxesWithImages';
+// import {
+//   CheckboxesWithImages,
+//   checkboxesWithImagesImageFragment,
+// } from './CheckboxesWithImages';
 import type { VFC } from 'react';
 import type { Product } from '@commerce/types/product';
 import type { CustomOrderOptions } from 'types/custom-order-options';

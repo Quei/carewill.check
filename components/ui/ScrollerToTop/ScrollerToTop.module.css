@@ -1,0 +1,20 @@
+.root {
+  @apply opacity-0;
+  transform: translateY(10px);
+  transition: opacity .2s, transform .2s ease-in-out;
+  &.hasShown {
+    @apply opacity-100;
+    transform: translateY(0);
+  }
+  &::after {
+    --size: 30px;
+    @apply block;
+    content: "";
+    width: var(--size);
+    height: var(--size);
+    border: theme('borderWidth.DEFAULT') solid currentColor;
+    border-bottom: none;
+    border-right: none;
+    transform: rotate(45deg);
+  }
+}
