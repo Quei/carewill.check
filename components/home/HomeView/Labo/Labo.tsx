@@ -72,20 +72,17 @@ const Labo: VFC<Props> = ({
     <Section title={'Labo'} description={renderRichTextReact(description)}>
       <Grid>
         {interviewImage && interviewHomeDescription && (
-          <Block title={f('labo.interviews')} titleTag="h3">
+          <Block
+            title={f('labo.interviews')}
+            titleTag="h3"
+            href="https://www.makuake.com/project/carewill/"
+          >
             <BlockContent
               image={{ src: interviewImage.url, alt: f('store.product') }}
             >
               {renderRichTextReact(interviewHomeDescription)}
-              <p className={cn('text-center', 'mt-5', 'text-xl')}>
-                <a
-                  className={cn('underline', 'hover:no-underline')}
-                  href="https://www.makuake.com/project/carewill/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {f('makuakeLink')}
-                </a>
+              <p>
+                <span className={cn('underline')}>{f('makuakeLink')}</span>
               </p>
             </BlockContent>
           </Block>
@@ -128,6 +125,7 @@ const Labo: VFC<Props> = ({
             imageSrc={recruitingImage?.url}
             imageAlt={f('labo.recruiting')}
             isImageLayoutCenter={true}
+            disableLineClamp={true}
           >
             {renderRichTextReact(recruitingHomeDescription)}
           </BlockContentPickupLarge>

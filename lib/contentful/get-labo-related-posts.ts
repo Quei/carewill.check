@@ -137,6 +137,6 @@ export const getLaboRelatedPosts = async ({ locale, preview, slug }: Props) => {
   });
 
   return {
-    staffNotes: staffNotes.slice(0, 2),
+    staffNotes: staffNotes.slice(0, 3),
   };
 };

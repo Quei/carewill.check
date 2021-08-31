@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import cn from 'classnames';
 import s from './PickupSection.module.css';
-import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
+import { renderRichText } from '@lib/contentful/utils/rich-text';
 import { Grid, Block, BlockContentPickup } from '@components/ui';
 import type { VFC } from 'react';
 import type { Maybe, Asset } from 'types/schema';
@@ -92,7 +92,7 @@ const PickupSection: VFC<Props> = ({
                 item?.image?.description ?? item?.image?.title ?? item.title
               }
             >
-              {renderRichTextReact(item?.content)}
+              {renderRichText(item?.content)}
             </BlockContentPickup>
           </Block>
         ))}

@@ -52,7 +52,19 @@ const SiteFooter: FC<Props> = ({
     return logoCollection?.items?.filter(nonNullableFilter);
   }, [logoCollection]);
   return (
-    <footer className={cn(s.root, className)}>
+    <footer
+      className={cn(
+        'px-site-vertical',
+        'pt-24',
+        'pb-16',
+        'border-t',
+        'border-green',
+        'md:px-0',
+        'md:pt-32',
+        s.root,
+        className
+      )}
+    >
       <Container>
         {/* <div className="bg-red">breadcrumbs</div> */}
         {allNavigations && (
@@ -60,10 +72,11 @@ const SiteFooter: FC<Props> = ({
             <SiteMenuList allNavigations={allNavigations} type="footer" />
           </nav>
         )}
-        <div className={cn(s.texts)}>
+        <I18nWidget type="footer" className={cn('text-2xl', 'mt-10')} />
+        <div className={cn('text-2xs', 'mt-6', s.texts)}>
           {content && <p>{renderTextToDom(content)}</p>}
           {nonNullableLogoItems && (
-            <ul className={cn(s.logoList)}>
+            <ul className={cn('flex', s.logoList)}>
               {nonNullableLogoItems.map((logo) => (
                 <li key={logo.sys.id}>
                   <Image
@@ -77,7 +90,7 @@ const SiteFooter: FC<Props> = ({
             </ul>
           )}
           {LEGAL_PAGES.length > 0 && (
-            <ul className={cn(s.legalPageList)}>
+            <ul className={cn('flex', s.legalPageList)}>
               {LEGAL_PAGES.map((page) => (
                 <li key={`legal-page-${page.name}`}>
                   <Link href={page.url} site="about">
@@ -87,10 +100,9 @@ const SiteFooter: FC<Props> = ({
               ))}
             </ul>
           )}
-          <I18nWidget type="footer" />
-          <p className={cn(s.copyRight)}>
-            copyright&copy; {f('carewill')} , {dayjs().format('YYYY')} All
-            Rights Reserved.
+          <p className={cn('mt-1')}>
+            copyright&copy;{f('carewill')} , {dayjs().format('YYYY')} All Rights
+            Reserved.
             {locale === 'ja' && (
               <>
                 <br />

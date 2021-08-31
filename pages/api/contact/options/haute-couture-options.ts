@@ -25,7 +25,7 @@ const makeAdminOptions = ({ data }: Required<Pick<Props, 'data'>>) => {
 
     return `number: ${index + 1}
 title: ${item.title}
-answer: ${answersText}`;
+answers ${answersText}`;
   });
   return {
     subject: 'オートクチュールの入力を受け付けました',

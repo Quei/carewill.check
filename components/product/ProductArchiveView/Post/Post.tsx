@@ -60,10 +60,8 @@ const Post: VFC<Props> = ({
       >
         <TextBlockChildElement>
           {description}
-          <p className={cn('text-center', 'mt-5', 'text-xl')}>
-            <span className={cn('underline', 'hover:no-underline')}>
-              {f('makuakeLink')}
-            </span>
+          <p>
+            <span className={cn('underline')}>{f('makuakeLink')}</span>
           </p>
         </TextBlockChildElement>
       </Block>
