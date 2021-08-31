@@ -20,6 +20,7 @@ module.exports = withCommerceConfig({
   images: {
     domains: ['images.ctfassets.net'],
   },
+  trailingSlash: true,
   rewrites() {
     return [
       (isBC || isShopify || isSwell || isVendure) && {

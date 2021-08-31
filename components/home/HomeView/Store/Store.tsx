@@ -110,23 +110,6 @@ const Store: VFC<Props> = ({
               </BlockContent>
             </Block>
           )}
-          {customOrderImage && customOrderHomeDescription && (
-            <Block
-              title={f('store.customOrder')}
-              titleTag="h3"
-              // href="/custom-order"
-              // site={SITE}
-            >
-              <BlockContent
-                image={{
-                  src: customOrderImage.url,
-                  alt: f('store.customOrder'),
-                }}
-              >
-                {renderRichTextReact(customOrderHomeDescription)}
-              </BlockContent>
-            </Block>
-          )}
           {hauteCoutureImage && hauteCoutureHomeDescription && (
             <Block
               title={f('store.hauteCouture')}
@@ -141,6 +124,23 @@ const Store: VFC<Props> = ({
                 }}
               >
                 {renderRichTextReact(hauteCoutureHomeDescription)}
+              </BlockContent>
+            </Block>
+          )}
+          {customOrderImage && customOrderHomeDescription && (
+            <Block
+              title={f('store.customOrder')}
+              titleTag="h3"
+              // href="/custom-order"
+              // site={SITE}
+            >
+              <BlockContent
+                image={{
+                  src: customOrderImage.url,
+                  alt: f('store.customOrder'),
+                }}
+              >
+                {renderRichTextReact(customOrderHomeDescription)}
               </BlockContent>
             </Block>
           )}

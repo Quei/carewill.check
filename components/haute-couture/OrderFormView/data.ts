@@ -430,7 +430,7 @@ export const data: Data[] = [
         type: 'select',
         hasOtherText: true,
         values: [
-          { ja: 'チャック', en: 'Chuck' },
+          { ja: 'チャック／チャック', en: 'Chuck' },
           { ja: 'マジックテープ', en: 'Velcro' },
           { ja: 'マグネット', en: 'Magnets' },
         ],
