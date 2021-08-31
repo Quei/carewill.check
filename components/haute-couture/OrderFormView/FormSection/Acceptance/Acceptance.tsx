@@ -22,6 +22,7 @@ const Acceptance: VFC<Props> = ({ className }) => {
             className="underline hover:no-underline"
             href="/privacy-policy"
             site="about"
+            target="_blank"
           >
             個人情報の取扱い
           </Link>

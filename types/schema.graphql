@@ -1459,9 +1459,11 @@ type HauteCouture implements Entry {
   slug(locale: String): String
   description(locale: String): HauteCoutureDescription
   image(preview: Boolean, locale: String): Asset
+  orderSheet(preview: Boolean, locale: String): Asset
+  orderStepsImage(preview: Boolean, locale: String): Asset
+  orderStepsMobileImage(preview: Boolean, locale: String): Asset
   formTitle(locale: String): String
   formDescription(locale: String): HauteCoutureFormDescription
-  orderSheet(preview: Boolean, locale: String): Asset
 }
 
 type HauteCoutureLinkingCollections {
@@ -1771,6 +1773,9 @@ input HauteCoutureFilter {
   description_contains: String
   description_not_contains: String
   image_exists: Boolean
+  orderSheet_exists: Boolean
+  orderStepsImage_exists: Boolean
+  orderStepsMobileImage_exists: Boolean
   formTitle_exists: Boolean
   formTitle: String
   formTitle_not: String
@@ -1781,7 +1786,6 @@ input HauteCoutureFilter {
   formDescription_exists: Boolean
   formDescription_contains: String
   formDescription_not_contains: String
-  orderSheet_exists: Boolean
   OR: [HauteCoutureFilter]
   AND: [HauteCoutureFilter]
 }

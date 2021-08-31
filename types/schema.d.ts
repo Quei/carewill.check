@@ -1861,9 +1861,11 @@ export type HauteCouture = Entry & {
   slug?: Maybe<Scalars['String']>;
   description?: Maybe<HauteCoutureDescription>;
   image?: Maybe<Asset>;
+  orderSheet?: Maybe<Asset>;
+  orderStepsImage?: Maybe<Asset>;
+  orderStepsMobileImage?: Maybe<Asset>;
   formTitle?: Maybe<Scalars['String']>;
   formDescription?: Maybe<HauteCoutureFormDescription>;
-  orderSheet?: Maybe<Asset>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
@@ -1893,18 +1895,30 @@ export type HauteCoutureImageArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureOrderSheetArgs = {
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureOrderStepsImageArgs = {
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
+export type HauteCoutureOrderStepsMobileImageArgs = {
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
 export type HauteCoutureFormTitleArgs = {
   locale?: Maybe<Scalars['String']>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
 export type HauteCoutureFormDescriptionArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/hauteCouture) */
-export type HauteCoutureOrderSheetArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
   locale?: Maybe<Scalars['String']>;
 };
 
@@ -2336,6 +2350,9 @@ export type HauteCoutureFilter = {
   description_contains?: Maybe<Scalars['String']>;
   description_not_contains?: Maybe<Scalars['String']>;
   image_exists?: Maybe<Scalars['Boolean']>;
+  orderSheet_exists?: Maybe<Scalars['Boolean']>;
+  orderStepsImage_exists?: Maybe<Scalars['Boolean']>;
+  orderStepsMobileImage_exists?: Maybe<Scalars['Boolean']>;
   formTitle_exists?: Maybe<Scalars['Boolean']>;
   formTitle?: Maybe<Scalars['String']>;
   formTitle_not?: Maybe<Scalars['String']>;
@@ -2346,7 +2363,6 @@ export type HauteCoutureFilter = {
   formDescription_exists?: Maybe<Scalars['Boolean']>;
   formDescription_contains?: Maybe<Scalars['String']>;
   formDescription_not_contains?: Maybe<Scalars['String']>;
-  orderSheet_exists?: Maybe<Scalars['Boolean']>;
   OR?: Maybe<Array<Maybe<HauteCoutureFilter>>>;
   AND?: Maybe<Array<Maybe<HauteCoutureFilter>>>;
 };
@@ -2597,6 +2613,19 @@ export type HauteCoutureViewFragment = { __typename?: 'HauteCouture' } & Pick<
       >
     >;
     image?: Maybe<{ __typename?: 'Asset' } & Pick<Asset, 'url'>>;
+    orderSheet?: Maybe<{ __typename?: 'Asset' } & Pick<Asset, 'url'>>;
+    orderStepsImage?: Maybe<
+      { __typename?: 'Asset' } & Pick<
+        Asset,
+        'url' | 'title' | 'width' | 'height'
+      >
+    >;
+    orderStepsMobileImage?: Maybe<
+      { __typename?: 'Asset' } & Pick<
+        Asset,
+        'url' | 'title' | 'width' | 'height'
+      >
+    >;
   };
 
 export type HauteCoutureOrderFormViewFragment = {

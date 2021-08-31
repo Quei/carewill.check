@@ -1,4 +1,5 @@
 import { NextSeo } from 'next-seo';
+import Image from 'next/image';
 import cn from 'classnames';
 import s from './HauteCoutureView.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
@@ -8,19 +9,10 @@ import {
 } from '@lib/contentful/utils/rich-text';
 import { getOpenGraph } from '@lib/get-open-graph';
 import { LaboRelatedPosts } from '@components/common';
-import {
-  PageHeader,
-  OnelineLink,
-  PickupSection,
-  FullImage,
-} from '@components/ui';
+import { PageHeader, OnelineLink, FullImage, Container } from '@components/ui';
 import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
 import type { VFC } from 'react';
-import type {
-  Maybe,
-  HauteCoutureViewFragment,
-  RelatedStaffNoteFragment,
-} from 'types/schema';
+import type { HauteCoutureViewFragment } from 'types/schema';
 
 type Props = HauteCoutureViewFragment & {
   className?: string;
@@ -36,37 +28,31 @@ export const hauteCoutureViewFragment = /* GraphQL */ `
     image {
       url
     }
+    orderSheet {
+      url
+    }
+    orderStepsImage {
+      url
+      title
+      width
+      height
+    }
+    orderStepsMobileImage {
+      url
+      title
+      width
+      height
+    }
   }
 `;
-
-const DummyItems = [
-  {
-    sys: { id: 'test-01' },
-    title: 'テスト',
-    slug: 'test',
-    date: '2022.07.01',
-    content: 'test',
-  },
-  {
-    sys: { id: 'test-02' },
-    title: 'テスト2',
-    slug: 'test2',
-    date: '2022.07.02',
-    content: 'test',
-  },
-  {
-    sys: { id: 'test-03' },
-    title: 'テスト3',
-    slug: 'test3',
-    date: '2022.07.03',
-    content: 'test',
-  },
-];
 
 const HauteCoutureView: VFC<Props> = ({
   title,
   description,
   image,
+  orderSheet,
+  orderStepsImage,
+  orderStepsMobileImage,
   relatedPosts,
 }) => {
   const titleText = title ?? '';
@@ -91,14 +77,36 @@ const HauteCoutureView: VFC<Props> = ({
       <OnelineLink href="/haute-couture/order-form">
         {f('formLink')}
       </OnelineLink>
-      <OnelineLink href="/">{f('pdfLink')}</OnelineLink>
+      {orderSheet?.url && (
+        <OnelineLink href={orderSheet.url}>{f('pdfLink')}</OnelineLink>
+      )}
+      {orderStepsImage?.url && orderStepsMobileImage?.url && (
+        <div
+          className={cn('px-site-vertical', 'py-12', 'sm:pt-24', 'sm:pb-20')}
+        >
+          <Container>
+            <div className={cn('hidden', 'sm:block')}>
+              <Image
+                src={orderStepsImage.url}
+                alt={orderStepsImage.title ?? ''}
+                width={orderStepsImage.width ?? ''}
+                height={orderStepsImage.height ?? ''}
+                layout="responsive"
+              />
+            </div>
+            <div className={cn('sm:hidden')}>
+              <Image
+                src={orderStepsMobileImage.url}
+                alt={orderStepsMobileImage.title ?? ''}
+                width={orderStepsMobileImage.width ?? ''}
+                height={orderStepsMobileImage.height ?? ''}
+                layout="responsive"
+              />
+            </div>
+          </Container>
+        </div>
+      )}
       <LaboRelatedPosts relatedPosts={relatedPosts} />
-      {/* <PickupSection
-        title={f('pickup')}
-        titleTag="h2"
-        items={DummyItems}
-        site={'labo'}
-      /> */}
     </>
   );
 };
