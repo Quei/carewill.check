@@ -101,7 +101,7 @@ const SiteFooter: FC<Props> = ({
             </ul>
           )}
           <p className={cn('mt-1')}>
-            copyright&copy;{f('carewill')} , {dayjs().format('YYYY')} All Rights
+            copyright&copy; {f('carewill')}, {dayjs().format('YYYY')} All Rights
             Reserved.
             {locale === 'ja' && (
               <>
