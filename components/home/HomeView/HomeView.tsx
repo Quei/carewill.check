@@ -1,3 +1,4 @@
+import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { Seo } from '@components/common';
 import { Store } from './Store';
 import { Labo } from './Labo';
@@ -16,13 +17,14 @@ type Props = {
 };
 
 const HomeView: VFC<Props> = ({ store, labo, about, aboutNavigation }) => {
+  const f = useIntlMessage();
   return (
     <>
       {/* NOTE:
       何故か、next-seoのdefaultTitleの仕組みが上手く機能しないので、
       homeはここでtitleとtitleTemplateを設定する（両方指定しないと、上手く動作しない）。
        */}
-      <Seo title={'carewill'} titleTemplate={'carewill'} />
+      <Seo title={f('store.siteTitle')} />
       {store && <Store {...store} />}
       {labo && <Labo {...labo} />}
       {about && (
