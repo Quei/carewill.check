@@ -29,9 +29,10 @@
 .content {
   &.isCentering {
     @apply flex justify-center items-center h-full;
-    min-height: 117px;
     @screen md {
-      min-height: 210px;
+      & > div {
+        @apply py-20;
+      }
     }
   }
   &.hasNoPaddingMobile {

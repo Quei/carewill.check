@@ -1441,6 +1441,41 @@ enum NewsCategoryOrder {
   sys_publishedVersion_DESC
 }
 
+type ProductCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Product]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product)
+"""
+type Product implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): ProductLinkingCollections
+  title(locale: String): String
+  slug(locale: String): String
+  date(locale: String): DateTime
+  description(locale: String): String
+  imageCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): AssetCollection
+}
+
+type ProductLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
 type HauteCoutureCollection {
   total: Int!
   skip: Int!
@@ -1656,41 +1691,6 @@ type FooterLinkingCollections {
   ): EntryCollection
 }
 
-type ProductCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Product]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product)
-"""
-type Product implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): ProductLinkingCollections
-  title(locale: String): String
-  slug(locale: String): String
-  date(locale: String): DateTime
-  description(locale: String): String
-  imageCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): AssetCollection
-}
-
-type ProductLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-}
-
 type CustomOrderCollection {
   total: Int!
   skip: Int!
@@ -1750,6 +1750,61 @@ type CustomOrderDescriptionEntries {
 type CustomOrderDescriptionAssets {
   hyperlink: [Asset]!
   block: [Asset]!
+}
+
+input ProductFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  imageCollection_exists: Boolean
+  OR: [ProductFilter]
+  AND: [ProductFilter]
+}
+
+enum ProductOrder {
+  title_ASC
+  title_DESC
+  slug_ASC
+  slug_DESC
+  date_ASC
+  date_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
 }
 
 input HauteCoutureFilter {
@@ -1841,61 +1896,6 @@ enum FooterOrder {
   slug_DESC
   title_ASC
   title_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-input ProductFilter {
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  slug_exists: Boolean
-  slug: String
-  slug_not: String
-  slug_in: [String]
-  slug_not_in: [String]
-  slug_contains: String
-  slug_not_contains: String
-  date_exists: Boolean
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime]
-  date_not_in: [DateTime]
-  date_gt: DateTime
-  date_gte: DateTime
-  date_lt: DateTime
-  date_lte: DateTime
-  description_exists: Boolean
-  description: String
-  description_not: String
-  description_in: [String]
-  description_not_in: [String]
-  description_contains: String
-  description_not_contains: String
-  imageCollection_exists: Boolean
-  OR: [ProductFilter]
-  AND: [ProductFilter]
-}
-
-enum ProductOrder {
-  title_ASC
-  title_DESC
-  slug_ASC
-  slug_DESC
-  date_ASC
-  date_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC
