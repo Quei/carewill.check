@@ -2,7 +2,7 @@
   flex: 0 1 12em;
   counter-reset: measurementInputCount;
   @screen md {
-    flex: 0 1 240px;
+    flex: 0 0 240px;
   }
 }
 
@@ -39,15 +39,10 @@
 .svg {
   width: 100%;
   margin-left: 30px;
-  max-width: 160px;
+  margin-right: -60px;
+  max-width: 250px;
   @screen md {
-    margin-left: 100px;
     max-width: 340px;
-  }
-  & svg {
-    margin-right: -50px;
-    @screen md {
-      margin-right: 0;
-    }
+    margin-right: 0;
   }
 }

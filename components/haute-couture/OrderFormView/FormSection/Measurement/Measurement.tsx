@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useFormState, useFormContext } from 'react-hook-form';
+import { debounce } from 'lodash';
 import cn from 'classnames';
 import s from './Measurement.module.css';
 import { useMounted } from '@lib/hooks/useMounted';
@@ -28,9 +29,9 @@ const useIsScreenMd = () => {
 
 const useRequired = ({ inputs }: Pick<Props, 'inputs'>) => {
   const [hasRequired, setHasRequired] = useState(true);
-  const { watch } = useFormContext<HauteCoutureInputs>();
-  const names = inputs.map((input) => input.name);
-  const values = watch(names);
+  const { watch, trigger } = useFormContext<HauteCoutureInputs>();
+  const inputNames = inputs.map((input) => input.name);
+  const values = watch(inputNames);
   useEffect(() => {
     if (values.some((value) => value)) {
       setHasRequired(false);
@@ -38,7 +39,10 @@ const useRequired = ({ inputs }: Pick<Props, 'inputs'>) => {
       setHasRequired(true);
     }
   }, [values, setHasRequired]);
-  return { hasRequired };
+  const onChange = useCallback(() => {
+    debounce(() => trigger(inputNames), 2000);
+  }, [trigger, inputNames]);
+  return { hasRequired, onChange };
 };
 
 const useErrorMessages = ({ inputs }: Pick<Props, 'inputs'>) => {
@@ -63,12 +67,12 @@ const useErrorMessages = ({ inputs }: Pick<Props, 'inputs'>) => {
 const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
   const text = inputs as TextInput[];
   const errorMessages = useErrorMessages({ inputs });
-  const { hasRequired } = useRequired({ inputs });
+  const { hasRequired, onChange } = useRequired({ inputs });
   const isScreenMd = useIsScreenMd();
   const f = useIntlMessage();
   return (
     <div>
-      <div className="flex items-end">
+      <div className="flex items-center md:items-end md:justify-between">
         <div className={cn(s.inputs)}>
           {text.map((input) => (
             <div key={input.name} className={cn(s.row)}>
@@ -90,7 +94,7 @@ const Measurement: VFC<Props> = ({ localeLang, inputs, onFocus }) => {
                 min="0"
                 max="200"
                 onFocus={onFocus}
-                // onChange={onChange}
+                onChange={onChange}
               />
             </div>
           ))}
