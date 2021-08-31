@@ -29,6 +29,20 @@ const Acceptance: VFC<Props> = ({ className }) => {
           に同意します
         </span>
       )}
+      {locale !== 'ja' && (
+        <span>
+          Agree (please check the privacy policy regarding the handling of
+          <Link
+            className="underline hover:no-underline"
+            href="/privacy-policy"
+            site="about"
+            target="_blank"
+          >
+            personal information
+          </Link>
+          )
+        </span>
+      )}
     </Checkbox>
   );
 };
