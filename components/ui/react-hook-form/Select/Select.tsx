@@ -59,7 +59,6 @@ const customStyles: NamedProps<OptionTypeBase>['styles'] = {
   singleValue: (provided, state) => ({
     ...provided,
     color: 'currentcolor',
-    fontWeight: 'bold',
   }),
   input: (provided, state) => ({
     ...provided,
@@ -90,6 +89,7 @@ const customStyles: NamedProps<OptionTypeBase>['styles'] = {
     paddingTop: 0,
     paddingBottom: 0,
     lineHeight: 1,
+    fontWeight: 'bold',
   }),
 };
 
