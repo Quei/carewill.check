@@ -1,15 +1,15 @@
 {
-  "title": "Carewill",
-  "titleTemplate": "%s - Carewill",
-  "defaultTitle": "Carewill",
-  "description": "Carewill",
+  "title": "carewill",
+  "titleTemplate": "%s - carewill",
+  "defaultTitle": "carewill",
+  "description": "carewill",
   "openGraph": {
-    "title": "Carewill",
-    "description": "Carewill",
+    "title": "carewill",
+    "description": "carewill",
     "type": "website",
     "locale": "ja",
     "url": "https://www.carewill.co.jp",
-    "site_name": "Carewill",
+    "site_name": "carewill",
     "images": [
       {
         "url": "/ogp.jpg",
