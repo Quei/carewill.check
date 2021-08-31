@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
@@ -74,13 +73,7 @@ export async function getStaticProps({
 export default function OrderForm({
   entry,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
-
-  return router.isFallback ? (
-    <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
-  ) : (
-    <OrderFormView {...entry} />
-  );
+  return <OrderFormView {...entry} />;
 }
 
 OrderForm.Layout = Layout;

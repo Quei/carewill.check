@@ -7,8 +7,7 @@ import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
-import { getOpenGraph } from '@lib/get-open-graph';
-import { LaboRelatedPosts } from '@components/common';
+import { Seo, LaboRelatedPosts } from '@components/common';
 import { PageHeader, OnelineLink, FullImage, Container } from '@components/ui';
 import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
 import type { VFC } from 'react';
@@ -60,17 +59,12 @@ const HauteCoutureView: VFC<Props> = ({
   const titleText = title ?? '';
   const descriptionText = renderRichText(description);
   const f = useIntlMessage();
-  const openGraph = getOpenGraph({
-    title: titleText,
-    description: descriptionText,
-    image,
-  });
   return (
     <>
-      <NextSeo
+      <Seo
         title={titleText}
         description={descriptionText}
-        openGraph={openGraph}
+        image={image}
       />
       <PageHeader title={titleText}>
         {renderRichTextReact(description)}

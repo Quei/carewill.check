@@ -81,7 +81,6 @@ const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
             'text-2xl',
             'md:hidden'
           )}
-          type="header"
         />
       </div>
     </nav>

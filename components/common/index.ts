@@ -11,3 +11,4 @@ export { default as SiteHeaderLogo } from './SiteHeaderLogo';
 export { default as SiteHeaderNavigation } from './SiteHeaderNavigation';
 export { default as SiteMenuList } from './SiteMenuList';
 export { default as LaboRelatedPosts } from './LaboRelatedPosts';
+export { default as Seo } from './Seo';

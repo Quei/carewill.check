@@ -1,6 +1,7 @@
 {
   "title": "Carewill",
   "titleTemplate": "%s - Carewill",
+  "defaultTitle": "Carewill",
   "description": "Carewill",
   "openGraph": {
     "title": "Carewill",

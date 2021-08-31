@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   fetcher,
   getAllNavigations,
@@ -86,17 +85,10 @@ export default function HauteCouture({
   entry,
   relatedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
-
   if (!entry) {
     return null;
   }
-
-  return router.isFallback ? (
-    <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
-  ) : (
-    <HauteCoutureView {...entry} relatedPosts={relatedPosts} />
-  );
+  return <HauteCoutureView {...entry} relatedPosts={relatedPosts} />;
 }
 
 HauteCouture.Layout = Layout;

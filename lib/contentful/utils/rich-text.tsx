@@ -152,11 +152,18 @@ export const renderRichTextReact = (args?: RenderRichTextArgs | null) => {
   return documentToReactComponents(args.json, renderOptions(args.links));
 };
 
-export const renderRichText = (args?: RenderRichTextArgs | null) => {
+export const renderRichText = (
+  args?: RenderRichTextArgs | null,
+  length?: number
+) => {
   if (!args?.json) {
     return '';
   }
-  return documentToPlainTextString(args.json);
+  const text = documentToPlainTextString(args.json);
+  if (length) {
+    return text.substr(0, length);
+  }
+  return text;
 };
 
 export const renderTextToDom = (text?: string | null) => {

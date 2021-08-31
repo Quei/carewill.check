@@ -8,7 +8,6 @@ import type { Lang } from 'types/site';
 
 type Props = {
   className?: string;
-  type: 'header' | 'footer';
 };
 
 type Locale = {
@@ -26,7 +25,7 @@ const LOCALES_MAP: Record<Lang, Locale> = {
   },
 };
 
-const I18nWidget: VFC<Props> = ({ className, type }) => {
+const I18nWidget: VFC<Props> = ({ className }) => {
   const { locales, locale: currentLocale, asPath: currentPath } = useRouter();
 
   return (
@@ -40,15 +39,9 @@ const I18nWidget: VFC<Props> = ({ className, type }) => {
           )}
           <Link href={currentPath} locale={locale}>
             <a
-              className={cn(
-                'cursor-pointer',
-                'hover:underline',
-                s.item,
-                s[type],
-                {
-                  [s.isCurrent]: locale === currentLocale,
-                }
-              )}
+              className={cn('cursor-pointer', 'hover:line-through', {
+                ['line-through']: locale === currentLocale,
+              })}
               aria-label={LOCALES_MAP[locale as Lang].name}
             >
               {LOCALES_MAP[locale as Lang].label}

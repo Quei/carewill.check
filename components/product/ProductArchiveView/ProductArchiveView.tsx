@@ -8,7 +8,7 @@ import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
-import { getOpenGraph } from '@lib/get-open-graph';
+import { Seo } from '@components/common';
 import { PageHeader, MorePostsButton, useUI } from '@components/ui';
 import { Post, productArchiveViewPostFragment } from './Post';
 import type { VFC } from 'react';
@@ -84,22 +84,12 @@ const ProductArchiveView: VFC<Props> = ({ home, posts }) => {
   const f = useIntlMessage();
   const { currentPosts, hasMorePosts } = useCurrentPosts({ posts });
   const handleOnClickMorePosts = useHandleOnClickMorePosts(posts?.length);
-
   const titleText = f('store.product');
   const descriptionText = renderRichText(home?.productDescription);
-  const openGraph = getOpenGraph({
-    title: titleText,
-    description: descriptionText,
-    // image,
-  });
 
   return (
     <>
-      <NextSeo
-        title={titleText}
-        description={descriptionText}
-        openGraph={openGraph}
-      />
+      <Seo title={titleText} description={descriptionText} />
       <PageHeader title={titleText}>{descriptionText}</PageHeader>
       {currentPosts.map((post) => (
         <Post key={post?.sys.id} {...post} />

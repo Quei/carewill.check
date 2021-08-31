@@ -8,7 +8,7 @@ import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
-import { getOpenGraph } from '@lib/get-open-graph';
+import { Seo } from '@components/common';
 import { PageHeader, OnelineLink, Slide } from '@components/ui';
 import { slideItemFragment } from '@components/ui/Slide';
 import type { FC } from 'react';
@@ -91,11 +91,6 @@ const CustomOrderView: FC<Props> = ({
   const descriptionText = renderRichText(description);
   const f = useIntlMessage();
   const firstImage = imageCollection?.items?.[0];
-  const openGraph = getOpenGraph({
-    title: titleText,
-    description: descriptionText,
-    image: firstImage,
-  });
   const image = useImage({
     imageCollection,
     imageCollectionEnglish,
@@ -105,11 +100,7 @@ const CustomOrderView: FC<Props> = ({
 
   return (
     <>
-      <NextSeo
-        title={titleText}
-        description={descriptionText}
-        openGraph={openGraph}
-      />
+      <Seo title={titleText} description={descriptionText} image={firstImage} />
       <PageHeader title={f('store.customOrder')}>
         {renderRichTextReact(description)}
       </PageHeader>

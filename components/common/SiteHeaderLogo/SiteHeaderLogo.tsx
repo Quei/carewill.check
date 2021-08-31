@@ -15,7 +15,7 @@ const SiteHeaderLogo: VFC<Props> = ({ className, isSiteRoot }) => {
       <Link className={cn(s.link)} href="/" site="store" aria-label="Logo">
         <Logo />
       </Link>
-      <I18nWidget className={cn(s.i18n)} type="header" />
+      <I18nWidget className={cn(s.i18n)} />
     </div>
   );
 };

@@ -72,7 +72,7 @@ const SiteFooter: FC<Props> = ({
             <SiteMenuList allNavigations={allNavigations} type="footer" />
           </nav>
         )}
-        <I18nWidget type="footer" className={cn('text-2xl', 'mt-10')} />
+        <I18nWidget className={cn('text-2xl', 'mt-10')} />
         <div className={cn('text-2xs', 'mt-6', s.texts)}>
           {content && <p>{renderTextToDom(content)}</p>}
           {nonNullableLogoItems && (

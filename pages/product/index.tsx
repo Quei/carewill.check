@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   fetcher,
   getAllNavigations,
@@ -79,13 +78,7 @@ export default function ProductArchive({
   home,
   posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
-
-  return router.isFallback ? (
-    <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
-  ) : (
-    <ProductArchiveView home={home} posts={posts} />
-  );
+  return <ProductArchiveView home={home} posts={posts} />;
 }
 
 ProductArchive.Layout = Layout;

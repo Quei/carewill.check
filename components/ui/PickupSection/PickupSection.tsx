@@ -92,7 +92,7 @@ const PickupSection: VFC<Props> = ({
                 item?.image?.description ?? item?.image?.title ?? item.title
               }
             >
-              {renderRichText(item?.content)}
+              {renderRichText(item?.content, 300)}
             </BlockContentPickup>
           </Block>
         ))}
