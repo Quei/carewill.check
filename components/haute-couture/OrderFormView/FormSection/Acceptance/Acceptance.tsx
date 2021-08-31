@@ -38,6 +38,7 @@ const Acceptance: VFC<Props> = ({ className }) => {
             site="about"
             target="_blank"
           >
+            {' '}
             personal information
           </Link>
           )
