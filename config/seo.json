@@ -7,20 +7,20 @@
     "description": "Carewill",
     "type": "website",
     "locale": "ja",
-    "url": "https://carewill.co.jp",
+    "url": "https://www.carewill.co.jp",
     "site_name": "Carewill",
     "images": [
       {
-        "url": "/card.png",
-        "width": 800,
-        "height": 600,
+        "url": "/ogp.jpg",
+        "width": 1200,
+        "height": 630,
         "alt": "Carewill"
       }
     ]
   },
   "twitter": {
-    "handle": "@carewill",
-    "site": "@carewill",
+    "handle": "@carewill_pr",
+    "site": "@carewill_pr",
     "cardType": "summary_large_image"
   }
 }

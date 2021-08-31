@@ -1,8 +1,26 @@
 .root {
   &.hasNoChildren {
     min-height: 88px;
+    & > a {
+      /* NOTE:
+      safari bug fix
+      ここは本来要らないが、
+      safariだと何故か高さがなくなるので（height: 100%を指定しても）、
+      無理矢理設定する。
+       */
+      min-height: 88px;
+    }
     @screen md {
       min-height: 106px;
+      & > a {
+        /* NOTE:
+        safari bug fix
+        ここは本来要らないが、
+        safariだと何故か高さがなくなるので（height: 100%を指定しても）、
+        無理矢理設定する。
+        */
+        min-height: 106px;
+      }
     }
   }
 

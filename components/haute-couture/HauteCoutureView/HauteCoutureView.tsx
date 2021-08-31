@@ -27,6 +27,8 @@ export const hauteCoutureViewFragment = /* GraphQL */ `
     }
     image {
       url
+      width
+      height
     }
     orderSheet {
       url

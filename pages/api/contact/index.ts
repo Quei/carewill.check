@@ -61,11 +61,20 @@ const contact = async (req: NextApiRequest, res: NextApiResponse) => {
       subject: mailOptions?.admin?.subject,
       text: mailOptions?.admin?.text,
     });
+
+    // NOTE:
+    // とりあえず、自動返信側にも入力データを入れるため、
+    // adminのテキストをそのまま追加する。
+    // 独自のテキストにする際は、make-thanks-messageで作成するように変更すること。
+    let replyText = '';
+    if (mailOptions?.reply?.text && mailOptions?.admin?.text) {
+      replyText = mailOptions.reply.text + mailOptions.admin.text;
+    }
     await send({
       transporter,
       to: mailOptions?.reply?.to,
       subject: mailOptions?.reply?.subject,
-      text: mailOptions?.reply?.text,
+      text: replyText,
     });
 
     const thanksMessage = makeThanksMessage({

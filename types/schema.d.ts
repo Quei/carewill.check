@@ -2612,7 +2612,9 @@ export type HauteCoutureViewFragment = { __typename?: 'HauteCouture' } & Pick<
         'json'
       >
     >;
-    image?: Maybe<{ __typename?: 'Asset' } & Pick<Asset, 'url'>>;
+    image?: Maybe<
+      { __typename?: 'Asset' } & Pick<Asset, 'url' | 'width' | 'height'>
+    >;
     orderSheet?: Maybe<{ __typename?: 'Asset' } & Pick<Asset, 'url'>>;
     orderStepsImage?: Maybe<
       { __typename?: 'Asset' } & Pick<

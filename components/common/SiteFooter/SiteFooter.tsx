@@ -93,7 +93,11 @@ const SiteFooter: FC<Props> = ({
             <ul className={cn('flex', s.legalPageList)}>
               {LEGAL_PAGES.map((page) => (
                 <li key={`legal-page-${page.name}`}>
-                  <Link href={page.url} site="about">
+                  <Link
+                    className={cn('hover:underline')}
+                    href={page.url}
+                    site="about"
+                  >
                     {f(`about.${page.name}`)}
                   </Link>
                 </li>
