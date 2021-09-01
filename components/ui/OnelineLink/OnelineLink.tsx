@@ -12,7 +12,7 @@ type Props = Pick<BlockProps, 'href' | 'site'> & {
 const OnelineLink: FC<Props> = ({ className, href, site, children }) => {
   return (
     <Block
-      className={cn(s.root, className)}
+      className={cn('text-2xl', s.root, className)}
       href={href}
       site={site}
       isCentering={true}
