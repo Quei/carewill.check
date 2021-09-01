@@ -1,7 +1,7 @@
 {
   "name": "carewill",
   "short_name": "carewill",
-  "description": "なくしたいのは、服の不自由",
+  "description": "なくしたい、服の不自由",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#fff",
