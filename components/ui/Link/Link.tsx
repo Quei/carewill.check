@@ -16,6 +16,7 @@ type Props = NextLinkProps &
 
 type UseCustomHrefArgs = Pick<Props, 'site' | 'href'>;
 const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
+  const { locale } = useRouter();
   return useMemo(() => {
     if (typeof href === 'string') {
       if (!site || !href.startsWith('/')) {
@@ -24,13 +25,17 @@ const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
         if (process.env.NEXT_PUBLIC_CURRENT_SITE === site) {
           return href;
         } else {
-          return `${URLS[site]}${href}`;
+          if (locale === 'ja') {
+            return `${URLS[site]}${href}`;
+          } else {
+            return `${URLS[site]}/${locale}${href}`;
+          }
         }
       }
     } else {
       return href;
     }
-  }, [site, href]);
+  }, [site, href, locale]);
 };
 
 const useIsCurrent = (href: string) => {
