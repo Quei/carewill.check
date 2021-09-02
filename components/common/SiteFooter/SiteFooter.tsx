@@ -107,12 +107,6 @@ const SiteFooter: FC<Props> = ({
           <p className={cn('mt-1')}>
             copyright&copy; {f('carewill')}, {dayjs().format('YYYY')} All Rights
             Reserved.
-            {locale === 'ja' && (
-              <>
-                <br />
-                「令和2年度補正 ものづくり補助金により作成」
-              </>
-            )}
           </p>
         </div>
         {allNavigations?.store?.sns && (
