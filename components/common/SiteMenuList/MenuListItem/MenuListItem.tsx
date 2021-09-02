@@ -45,7 +45,13 @@ const MenuListItem: React.VFC<Props> = ({
         className
       )}
     >
-      <Link className={cn(s.title)} href="/" site={site} hasBorderEffect={true}>
+      <Link
+        className={cn(s.title)}
+        href="/"
+        site={site}
+        hasBorderEffect={true}
+        isPartiallyCurrent={true}
+      >
         {title}
       </Link>
       <PlusButton

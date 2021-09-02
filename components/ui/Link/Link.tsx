@@ -12,10 +12,10 @@ type Props = NextLinkProps &
     className?: string;
     site?: Site;
     hasBorderEffect?: boolean;
+    isPartiallyCurrent?: boolean;
   };
 
-type UseCustomHrefArgs = Pick<Props, 'site' | 'href'>;
-const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
+const useCustomHref = ({ site, href }: Pick<Props, 'site' | 'href'>) => {
   const { locale } = useRouter();
   return useMemo(() => {
     if (typeof href === 'string') {
@@ -38,9 +38,18 @@ const useCustomHref = ({ site, href }: UseCustomHrefArgs) => {
   }, [site, href, locale]);
 };
 
-const useIsCurrent = (href: string) => {
+const useIsCurrent = ({
+  href,
+  isPartiallyCurrent,
+}: Pick<Props, 'href' | 'isPartiallyCurrent'>) => {
   const { asPath } = useRouter();
-  return asPath === href;
+  if (isPartiallyCurrent) {
+    const regex = RegExp(`^${href}`);
+    return regex.test(asPath);
+  } else {
+    const regex = RegExp(`^${href}\/?$`);
+    return regex.test(asPath);
+  }
 };
 
 const useIsTargetBlank = (href: string) => {
@@ -58,13 +67,14 @@ const Link: React.FC<Props> = ({
   className,
   site,
   hasBorderEffect = false,
+  isPartiallyCurrent = false,
   href,
   children,
   target,
   ...props
 }) => {
   const customHref = useCustomHref({ site, href });
-  const isCurrent = useIsCurrent(customHref);
+  const isCurrent = useIsCurrent({ href: customHref, isPartiallyCurrent });
   const isTargetBlank = useIsTargetBlank(customHref);
   return (
     <NextLink href={customHref}>
