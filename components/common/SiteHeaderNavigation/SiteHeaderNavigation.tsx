@@ -30,8 +30,7 @@ const useMenu = () => {
       if (hasShownMenu) {
         disableBodyScroll(menuListWrapperRef.current, {
           allowTouchMove: (element) => {
-            console.log(element);
-            element.id === 'menu-list-wrapper';
+            element.id === 'site-menu-list';
           },
         });
       } else {
@@ -67,7 +66,6 @@ const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
         onClick={toggleMenu}
       />
       <div
-        id="menu-list-wrapper"
         className={cn('hidden', 'md:block', s.menuListWrapper, {
           [s.hasShownMenuForMobile]: hasShownMenu,
         })}
