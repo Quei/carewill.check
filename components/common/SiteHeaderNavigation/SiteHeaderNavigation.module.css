@@ -5,16 +5,11 @@
 .menuListWrapper {
   @screen less-than-md {
     &.hasShownMenuForMobile {
-      --header-height: 60px;
-      --footer-height: 70px;
-      @apply fixed z-10 top-0 bottom-0 left-0 right-0 bg-white flex flex-col px-site-vertical;
-      border: theme('borderWidth.DEFAULT') solid currentColor;
+      --header-height: calc(60px - theme('borderWidth.DEFAULT') * 2);
+      @apply fixed z-10 top-0 bottom-0 left-0 right-0 bg-white flex flex-col border border-green;
       padding-top: var(--header-height);
-      padding-bottom: var(--footer-height);
       & .menuList {
         overflow: auto;
-        padding-top: 30px;
-        padding-bottom: var(--footer-height);
       }
     }
   }

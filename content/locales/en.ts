@@ -12,6 +12,7 @@ export const en: Record<string, any> = {
   index: 'Index',
   makuakeLink: 'Makuake',
   // store
+  ['store.topLink']: 'Store top',
   ['store.siteTitle']: 'carewill',
   ['store.product']: 'Product',
   ['store.customOrder']: 'Custom order',
@@ -42,12 +43,14 @@ export const en: Record<string, any> = {
   ['form.other.placeholder']: 'Enter any other answers.',
   ['form.topLink']: 'Back to the top page',
   // labo
+  ['labo.topLink']: 'Labo top',
   ['labo.interviews']: 'Interview',
   ['labo.interviewsPickup']: 'Interview pickup',
   ['labo.staffNotes']: 'Staff notes',
   ['labo.recruiting']: 'Recruiting',
   ['labo.selectCategory']: 'Category',
   // about-us
+  ['about.topLink']: 'About us top',
   ['about.newsPickup']: 'News pickup',
   ['about.tokushoho']: 'Specified commercial transaction act',
   ['about.privacyPolicy']: 'Privacy policy',

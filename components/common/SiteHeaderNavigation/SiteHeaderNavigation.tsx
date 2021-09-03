@@ -7,7 +7,7 @@ import {
 } from 'body-scroll-lock';
 import cn from 'classnames';
 import s from './SiteHeaderNavigation.module.css';
-import { I18nWidget, SiteMenuList } from '@components/common';
+import { SiteMenuList } from '@components/common';
 import { MenuButton } from './MenuButton';
 import type { VFC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
@@ -38,10 +38,10 @@ const useMenu = () => {
     };
   }, [hasShownMenu]);
 
-  const { asPath } = useRouter();
+  const { asPath, locale } = useRouter();
   useEffect(() => {
     setHasShowMenu(false);
-  }, [asPath]);
+  }, [asPath, locale]);
   return { hasShownMenu, toggleMenu, menuListWrapperRef };
 };
 
@@ -72,15 +72,6 @@ const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
           id="site-menu-list"
           allNavigations={allNavigations}
           type="header"
-        />
-        <I18nWidget
-          className={cn(
-            'absolute',
-            'bottom-4',
-            'left-site-vertical',
-            'text-2xl',
-            'md:hidden'
-          )}
         />
       </div>
     </nav>

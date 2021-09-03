@@ -1,17 +1,11 @@
 .plus { 
+  width: 0.85em;
+  height: 0.85em;
   &::before,
   &::after {
-    @apply absolute top-1/2 left-0 w-full;
+    @apply absolute top-1/2 left-0 w-full border-t border-green;
     content: '';
-    border: 2px solid currentColor;
     transition: transform .1s ease-in-out;
-  }
-  &.isThin {
-    @apply w-5 h-5;
-    &::before,
-    &::after {
-      border-width: 1px;
-    }
   }
   &::after {
     transform: rotate(90deg);
