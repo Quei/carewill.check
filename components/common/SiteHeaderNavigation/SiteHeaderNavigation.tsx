@@ -23,14 +23,14 @@ const useMenu = () => {
     setHasShowMenu((value) => !value);
   }, []);
 
-  const menuListWrapperRef = useRef<HTMLDivElement>(null);
+  const menuListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (menuListWrapperRef.current) {
+    if (menuListRef.current) {
       if (hasShownMenu) {
-        disableBodyScroll(menuListWrapperRef.current);
+        disableBodyScroll(menuListRef.current);
       } else {
-        enableBodyScroll(menuListWrapperRef.current);
+        enableBodyScroll(menuListRef.current);
       }
     }
     return () => {
@@ -42,11 +42,11 @@ const useMenu = () => {
   useEffect(() => {
     setHasShowMenu(false);
   }, [asPath, locale]);
-  return { hasShownMenu, toggleMenu, menuListWrapperRef };
+  return { hasShownMenu, toggleMenu, menuListRef };
 };
 
 const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
-  const { hasShownMenu, toggleMenu, menuListWrapperRef } = useMenu();
+  const { hasShownMenu, toggleMenu, menuListRef } = useMenu();
   return (
     <nav className={cn('w-full', className)}>
       <MenuButton
@@ -65,14 +65,23 @@ const SiteHeaderNavigation: VFC<Props> = ({ className, allNavigations }) => {
         className={cn('hidden', 'md:block', s.menuListWrapper, {
           [s.hasShownMenuForMobile]: hasShownMenu,
         })}
-        ref={menuListWrapperRef}
       >
-        <SiteMenuList
-          className={cn(s.menuList)}
-          id="site-menu-list"
-          allNavigations={allNavigations}
-          type="header"
-        />
+        <div
+          ref={menuListRef}
+          className={cn(
+            'h-full',
+            'overflow-auto',
+            'md:h-auto',
+            'md:overflow-visible'
+          )}
+        >
+          <SiteMenuList
+            className={cn(s.menuList)}
+            id="site-menu-list"
+            allNavigations={allNavigations}
+            type="header"
+          />
+        </div>
       </div>
     </nav>
   );
