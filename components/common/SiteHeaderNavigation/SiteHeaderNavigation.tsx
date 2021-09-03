@@ -29,7 +29,10 @@ const useMenu = () => {
     if (menuListWrapperRef.current) {
       if (hasShownMenu) {
         disableBodyScroll(menuListWrapperRef.current, {
-          allowTouchMove: (element) => element.id === 'menu-list-wrapper',
+          allowTouchMove: (element) => {
+            console.log(element);
+            element.id === 'menu-list-wrapper';
+          },
         });
       } else {
         enableBodyScroll(menuListWrapperRef.current);
