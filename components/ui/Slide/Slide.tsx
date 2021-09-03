@@ -33,6 +33,7 @@ type Props = {
   items: Array<Maybe<SlideItemFragment>>;
   itemsEnglish: Array<Maybe<SlideItemFragment>>;
   disableLink?: boolean;
+  hasGoogleAnalyticsEventTracking?: boolean;
 };
 
 const SLIDE_DURATION = 1000;
@@ -65,6 +66,7 @@ const useSlider = () => {
       clearInterval(timerId);
     };
   }, [pause, slider]);
+
   const toggle = useCallback(() => {
     setPause((value) => !value);
   }, []);
@@ -94,14 +96,56 @@ const useSlideItems = ({
   }, [items, itemsEnglish, locale]);
 };
 
+const useGoogleAnalyticsEventTracking = ({
+  hasGoogleAnalyticsEventTracking,
+  toggle,
+  currentIndex,
+}: Pick<Props, 'hasGoogleAnalyticsEventTracking'> & {
+  toggle: () => void;
+  currentIndex: number;
+}) => {
+  const slideNumber = (currentIndex + 1).toString().padStart(2, '0');
+  const onClickLink = useCallback(() => {
+    if (hasGoogleAnalyticsEventTracking) {
+      gtag('event', 'click', {
+        event_category: 'mainvisual',
+        event_label: `itemname_${slideNumber}`,
+      });
+    }
+  }, [hasGoogleAnalyticsEventTracking, slideNumber]);
+
+  const onClickController = useCallback(() => {
+    if (hasGoogleAnalyticsEventTracking) {
+      gtag('event', 'click', {
+        event_category: 'mainvisual',
+        event_label: `control_${slideNumber}`,
+      });
+    }
+    if (toggle) {
+      toggle();
+    }
+  }, [hasGoogleAnalyticsEventTracking, toggle, slideNumber]);
+
+  return {
+    onClickLink,
+    onClickController,
+  };
+};
+
 const Slide: VFC<Props> = ({
   className,
   items,
   itemsEnglish,
   disableLink = false,
+  hasGoogleAnalyticsEventTracking = false,
 }) => {
   const { sliderRef, pause, toggle, currentIndex } = useSlider();
   const slideItems = useSlideItems({ items, itemsEnglish });
+  const { onClickLink, onClickController } = useGoogleAnalyticsEventTracking({
+    hasGoogleAnalyticsEventTracking,
+    toggle,
+    currentIndex,
+  });
   return (
     <div className={cn('relative', s.root, className)}>
       <div ref={sliderRef} className={cn('keen-slider', 'h-full')}>
@@ -141,6 +185,7 @@ const Slide: VFC<Props> = ({
                     }
                   )}
                   description={item.description}
+                  onClick={onClickLink}
                 >
                   {item.title}
                 </ItemName>
@@ -163,7 +208,7 @@ const Slide: VFC<Props> = ({
           s.toggleButton,
           { [s.centering]: disableLink }
         )}
-        onClick={toggle}
+        onClick={onClickController}
         aria-pressed={pause}
       >
         {pause && <Play />}

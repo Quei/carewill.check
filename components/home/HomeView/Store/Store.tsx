@@ -92,6 +92,7 @@ const Store: VFC<Props> = ({
           className={cn('h-screen')}
           items={topSlideCollection.items}
           itemsEnglish={topSlideCollectionEnglish.items}
+          hasGoogleAnalyticsEventTracking={true}
         />
       )}
       <Section title={'Store'} description={renderRichTextReact(description)}>
