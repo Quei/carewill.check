@@ -28,11 +28,7 @@ const useMenu = () => {
   useEffect(() => {
     if (menuListWrapperRef.current) {
       if (hasShownMenu) {
-        disableBodyScroll(menuListWrapperRef.current, {
-          allowTouchMove: (element) => {
-            element.id === 'site-menu-list';
-          },
-        });
+        disableBodyScroll(menuListWrapperRef.current);
       } else {
         enableBodyScroll(menuListWrapperRef.current);
       }
