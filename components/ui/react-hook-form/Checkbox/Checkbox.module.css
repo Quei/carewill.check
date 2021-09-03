@@ -1,6 +1,12 @@
 .root {
   &.hasImage {
-    @apply border-1 border-green border-dashed;
+    @apply relative;
+    /* @apply border-1 border-green border-dashed; */
+    &::after {
+      @apply absolute top-0 left-0 w-full h-full pointer-events-none;
+      content: "";
+      background-image: url("data:image/svg+xml,<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='none' stroke='%23165436' stroke-width='2.5' stroke-dasharray='4.24 4.24' vector-effect='non-scaling-stroke'/><rect width='100%' height='100%' fill='none' stroke='white' stroke-width='2.5' stroke-dasharray='4.24 4.24' stroke-dashoffset='4.24' vector-effect='non-scaling-stroke'/></svg>");
+    }
   }
 }
 

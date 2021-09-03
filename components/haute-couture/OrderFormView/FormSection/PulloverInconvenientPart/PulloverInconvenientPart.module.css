@@ -1,39 +1,56 @@
 .checkboxes {
   @apply grid grid-cols-2 mt-5 md:grid-cols-4 md:mt-16;
 
+  --left-top: url("data:image/svg+xml,<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><polyline points='0 100 0 0 100 0' fill='none' stroke='%23165436' stroke-width='2.5' stroke-dasharray='4.24 4.24' vector-effect='non-scaling-stroke'/><polyline points='0 100 0 0 100 0' fill='none' stroke='white' stroke-width='2.5' stroke-dasharray='4.24 4.24' stroke-dashoffset='4.24'  vector-effect='non-scaling-stroke'/></svg>");
+
+  --left-right-top: url("data:image/svg+xml,<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><polyline points='0 100 0 0 100 0 100 100' fill='none' stroke='%23165436' stroke-width='2.5' stroke-dasharray='4.24 4.24' vector-effect='non-scaling-stroke'/><polyline points='0 100 0 0 100 0 100 100' fill='none' stroke='white' stroke-width='2.5' stroke-dasharray='4.24 4.24' stroke-dashoffset='4.24'  vector-effect='non-scaling-stroke'/></svg>");
+
+  --left-top-bottom: url("data:image/svg+xml,<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><polyline points='100 100 0 100 0 0 100 0' fill='none' stroke='%23165436' stroke-width='2.5' stroke-dasharray='4.24 4.24' vector-effect='non-scaling-stroke'/><polyline points='100 100 0 100 0 0 100 0' fill='none' stroke='white' stroke-width='2.5' stroke-dasharray='4.24 4.24' stroke-dashoffset='4.24'  vector-effect='non-scaling-stroke'/></svg>");
+
   & > *:nth-of-type(1) {
-    border-right: none;
-    border-bottom: none;
+    &::after {
+      background-image: var(--left-top);
+    }
   }
     
   @screen less-than-md {
     & > *:nth-of-type(3),
     & > *:nth-of-type(5) {
-      border-right: none;
-      border-bottom: none;
+      &::after {
+        background-image: var(--left-top);
+      }
     }
     & > *:nth-of-type(2),
     & > *:nth-of-type(4),
     & > *:nth-of-type(6)  {
-      border-bottom: none;
+      &::after {
+        background-image: var(--left-right-top);
+      }
     }
     & > *:nth-of-type(7) {
-      border-right: none;
+      &::after {
+        background-image: var(--left-top-bottom);
+      }
     }
   }
   @screen md {
     & > *:nth-of-type(2),
     & > *:nth-of-type(3) {
-      border-right: none;
-      border-bottom: none;
+      &::after {
+        background-image: var(--left-top);
+      }
     }
     & > *:nth-of-type(4) {
-      border-bottom: none;
+      &::after {
+        background-image: var(--left-right-top);
+      }
     }
     & > *:nth-of-type(5),
     & > *:nth-of-type(6),
     & > *:nth-of-type(7) {
-      border-right: none;
+      &::after {
+        background-image: var(--left-top-bottom);
+      }
     }
   }
 }
