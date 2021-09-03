@@ -1,6 +1,6 @@
 .root {
   &.header {
-    @apply border-t border-green md:flex md:justify-between md:border-none;
+    @apply md:flex md:justify-between md:border-none;
     @screen less-than-md {
       padding-bottom: 100px;
     }
