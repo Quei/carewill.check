@@ -8,9 +8,10 @@ type Props = {
   className?: string;
   description?: string | null;
   children?: ReactNode;
+  onClick?: () => void;
 };
 
-const ItemName: FC<Props> = ({ className, description, children }) => {
+const ItemName: FC<Props> = ({ className, description, children, onClick }) => {
   const hasLink =
     description?.startsWith('/') || description?.startsWith('http');
   return (
@@ -26,7 +27,11 @@ const ItemName: FC<Props> = ({ className, description, children }) => {
       )}
     >
       {description && hasLink && (
-        <Link href={description} className={cn(s.text, s.link)}>
+        <Link
+          href={description}
+          className={cn(s.text, s.link)}
+          onClick={onClick}
+        >
           <ArrowLink className={cn(s.arrowLink)} />
           <span>{children}</span>
         </Link>

@@ -79,6 +79,7 @@
     "@types/body-scroll-lock": "^2.6.1",
     "@types/classnames": "^2.2.10",
     "@types/cookie": "^0.4.0",
+    "@types/gtag.js": "^0.0.7",
     "@types/js-cookie": "^2.2.6",
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.random": "^3.2.6",
