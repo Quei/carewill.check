@@ -11,7 +11,7 @@ const PlusMark: VFC<Props> = ({ className, hasPressed }) => {
   return (
     <div className={cn(className)}>
       <div
-        className={cn('relative', 'w-7', 'h-7', s.plus, {
+        className={cn('relative', s.plus, {
           [s.hasPressed]: hasPressed,
         })}
       />
