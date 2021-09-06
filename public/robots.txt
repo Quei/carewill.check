@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.carewill.co.jp
+
+# Sitemaps
+Sitemap: https://www.carewill.co.jp/sitemap.xml
