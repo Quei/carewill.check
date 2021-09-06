@@ -1,3 +1,4 @@
+import { sleep } from '@lib/sleep';
 import { fetcher } from '@lib/contentful';
 import { productArchiveViewPostWithIdFragment } from '@components/product';
 import type { GetStaticPropsContext } from 'next';
@@ -56,6 +57,8 @@ export const getAllProducts = async ({
     } else {
       shouldQueryMorePosts = false;
     }
+
+    sleep(300);
 
     page++;
   }

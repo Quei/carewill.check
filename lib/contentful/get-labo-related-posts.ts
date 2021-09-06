@@ -1,3 +1,4 @@
+import { sleep } from '@lib/sleep';
 import { fetcher } from '@lib/contentful';
 import { relatedStaffNoteFragment } from '@components/common/LaboRelatedPosts';
 import type { GetStaticPropsContext } from 'next';
@@ -113,6 +114,8 @@ const fetchAll = async <T extends GetAllStaffNotesByCategoryQuery>({
     } else {
       shouldQueryMorePosts = false;
     }
+
+    sleep(300);
 
     page++;
   }
