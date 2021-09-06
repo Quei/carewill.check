@@ -24,7 +24,7 @@ const getAllStaffNotesByCategoryQuery = /* GraphQL */ `
     ) {
       items {
         title
-        linkedFrom {
+        linkedFrom(allowedLocales: ["ja", "en"]) {
           staffNoteCollection(
             locale: $locale
             preview: $preview
