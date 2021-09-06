@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
-import { useMounted } from '@lib/hooks/useMounted';
+import { URLS } from '@config/domains';
 import type { VFC } from 'react';
 import type { NextSeoProps } from 'next-seo';
+import type { Site } from 'types/site';
 
 type Props = Pick<NextSeoProps, 'title' | 'titleTemplate' | 'description'> & {
   image?: {
@@ -14,15 +15,16 @@ type Props = Pick<NextSeoProps, 'title' | 'titleTemplate' | 'description'> & {
 
 const useLanguageAlternates = () => {
   const { locales, asPath } = useRouter();
-  const isMounted = useMounted();
-  if (locales && isMounted) {
+  const site = process.env.NEXT_PUBLIC_CURRENT_SITE as Site;
+  if (locales && site) {
+    const baseUrl = URLS[site];
     return locales.map((locale) => {
       return {
         hrefLang: locale === 'ja' ? 'x-default' : locale,
         href:
           locale === 'ja'
-            ? `${location.origin}${asPath}`
-            : `${location.origin}/${locale}${asPath}`,
+            ? `${baseUrl}${asPath}`
+            : `${baseUrl}/${locale}${asPath}`,
       };
     });
   }
