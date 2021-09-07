@@ -1,12 +1,33 @@
 import { sleep } from '@lib/sleep';
 import { fetcher } from '@lib/contentful';
+import { fetchAll } from '@lib/contentful/utils/fetch-all';
 import { relatedStaffNoteFragment } from '@components/common/LaboRelatedPosts';
 import type { GetStaticPropsContext } from 'next';
-import type { GetAllStaffNotesByCategoryQuery } from 'types/schema';
+import type {
+  GetAllStaffNotesByCategoryQuery,
+  RelatedStaffNotesFragment,
+} from 'types/schema';
 
 type Props = Pick<GetStaticPropsContext, 'locale' | 'preview'> & {
   slug: string;
 };
+
+const RelatedStaffNotes = /* GraphQL */ `
+  fragment RelatedStaffNotes on CategoryLinkingCollections {
+    staffNoteCollection(
+      locale: $locale
+      preview: $preview
+      limit: $limit
+      skip: $skip
+    ) {
+      total
+      items {
+        ...relatedStaffNote
+      }
+    }
+  }
+  ${relatedStaffNoteFragment}
+`;
 
 const getAllStaffNotesByCategoryQuery = /* GraphQL */ `
   query GetAllStaffNotesByCategory(
@@ -25,23 +46,13 @@ const getAllStaffNotesByCategoryQuery = /* GraphQL */ `
       items {
         title
         linkedFrom(allowedLocales: ["ja", "en"]) {
-          staffNoteCollection(
-            locale: $locale
-            preview: $preview
-            limit: $limit
-            skip: $skip
-          ) {
-            total
-            items {
-              ...relatedStaffNote
-            }
-          }
+          ...RelatedStaffNotes
         }
       }
     }
   }
 
-  ${relatedStaffNoteFragment}
+  ${RelatedStaffNotes}
 `;
 
 // const getAllInterviewsByCategoryQuery = /* GraphQL */ `
@@ -80,55 +91,24 @@ const getAllStaffNotesByCategoryQuery = /* GraphQL */ `
 //   ${relatedInterviewFragment}
 // `;
 
-const fetchAll = async <T extends GetAllStaffNotesByCategoryQuery>({
-  locale,
-  preview,
-  slug,
-  query,
-  collectionName,
-}: Props & { query: string; collectionName: 'staffNoteCollection' }) => {
-  const limit = 100;
-  let page = 0;
-  let shouldQueryMorePosts = true;
-  const posts = [];
-
-  while (shouldQueryMorePosts) {
-    const response = await fetcher<T>({
-      query,
-      variables: {
-        locale,
-        preview,
-        slug,
-        limit,
-        skip: page * limit,
-      },
-      site: 'labo',
-    });
-
-    const category = response?.categoryCollection?.items?.[0];
-    const collection = category?.linkedFrom?.[collectionName];
-
-    if (collection?.items?.length) {
-      posts.push(...collection.items);
-      shouldQueryMorePosts = posts.length < collection.total;
-    } else {
-      shouldQueryMorePosts = false;
-    }
-
-    sleep(300);
-
-    page++;
-  }
-  return posts;
+const pickCollectionStaffNotes = <C>(
+  response: GetAllStaffNotesByCategoryQuery
+) => {
+  return response.categoryCollection?.items?.[0]?.linkedFrom
+    ?.staffNoteCollection as C | undefined;
 };
 
 export const getLaboRelatedPosts = async ({ locale, preview, slug }: Props) => {
-  const staffNotes = await fetchAll<GetAllStaffNotesByCategoryQuery>({
+  const staffNotes = await fetchAll<
+    GetAllStaffNotesByCategoryQuery,
+    NonNullable<RelatedStaffNotesFragment['staffNoteCollection']>
+  >({
+    site: 'labo',
     locale,
     preview,
     slug,
     query: getAllStaffNotesByCategoryQuery,
-    collectionName: 'staffNoteCollection',
+    pickCollection: pickCollectionStaffNotes,
   });
 
   // NOTE:

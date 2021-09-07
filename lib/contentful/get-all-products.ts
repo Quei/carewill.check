@@ -1,5 +1,4 @@
-import { sleep } from '@lib/sleep';
-import { fetcher } from '@lib/contentful';
+import { fetchAll } from '@lib/contentful/utils/fetch-all';
 import { productArchiveViewPostWithIdFragment } from '@components/product';
 import type { GetStaticPropsContext } from 'next';
 import type { GetAllProductsQuery } from 'types/schema';
@@ -28,40 +27,27 @@ const getAllProductsQuery = /* GraphQL */ `
   ${productArchiveViewPostWithIdFragment}
 `;
 
+const pickCollection = <C>(response: GetAllProductsQuery) => {
+  if ('productCollection' in response) {
+    return response.productCollection as C | undefined;
+  }
+  return null;
+};
+
 export const getAllProducts = async ({
   locale,
   preview,
 }: Pick<GetStaticPropsContext, 'locale' | 'preview'>) => {
-  const limit = 100;
-  let page = 0;
-  let shouldQueryMorePosts = true;
-  const posts = [];
-
-  while (shouldQueryMorePosts) {
-    const response = await fetcher<GetAllProductsQuery>({
-      query: getAllProductsQuery,
-      variables: {
-        locale,
-        preview,
-        limit,
-        skip: page * limit,
-      },
-      site: 'store',
-    });
-
-    const productCollection = response?.productCollection;
-
-    if (productCollection?.items?.length) {
-      posts.push(...productCollection.items);
-      shouldQueryMorePosts = posts.length < productCollection.total;
-    } else {
-      shouldQueryMorePosts = false;
-    }
-
-    sleep(300);
-
-    page++;
-  }
+  const posts = await fetchAll<
+    GetAllProductsQuery,
+    NonNullable<GetAllProductsQuery['productCollection']>
+  >({
+    site: 'store',
+    query: getAllProductsQuery,
+    locale,
+    preview,
+    pickCollection,
+  });
 
   return {
     posts,
