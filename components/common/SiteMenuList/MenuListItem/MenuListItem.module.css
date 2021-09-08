@@ -18,17 +18,17 @@
       @apply sr-only bg-white text-sm md:text-base md:border md:border-green md:transform md:translate-y-full;
       @screen less-than-md {
         &.hasShownChildrenForMobile {
-          @apply not-sr-only mx-site-vertical;
+          @apply not-sr-only mx-site-vertical mt-4;
         }
       }
     }
     & .child {
-      @apply leading-snug border-b border-green md:border-none;
+      @apply leading-snug;
       & + .child {
         @apply md:mt-2;
       }
       & a {
-        @apply py-4 md:py-0;
+        @apply py-3 md:py-0;
       }
     }
   }
