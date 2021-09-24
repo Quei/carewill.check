@@ -7,6 +7,7 @@ import {
 } from 'body-scroll-lock';
 import cn from 'classnames';
 import s from './SiteHeaderNavigation.module.css';
+import { useScreen } from '@lib/hooks/useScreen';
 import { SiteMenuList } from '@components/common';
 import { MenuButton } from './MenuButton';
 import type { VFC } from 'react';
@@ -42,6 +43,14 @@ const useMenu = () => {
   useEffect(() => {
     setHasShowMenu(false);
   }, [asPath, locale]);
+
+  const { isScreenMd } = useScreen();
+  useEffect(() => {
+    setHasShowMenu(false);
+    if (menuListRef.current && isScreenMd) {
+      enableBodyScroll(menuListRef.current);
+    }
+  }, [isScreenMd]);
   return { hasShownMenu, toggleMenu, menuListRef };
 };
 

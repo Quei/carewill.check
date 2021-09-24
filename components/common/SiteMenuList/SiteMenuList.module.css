@@ -16,8 +16,15 @@
   }
 }
 
-.headerOtherListItem {
+.mobileHeaderI18n {
+  @apply text-3xl px-site-vertical leading-tight;
+  & a {
+    @apply inline-block;
+  }
+}
+
+/* .headerOtherListItem {
   & a {
     @apply text-3xl md:leading-none px-site-vertical md:px-site-vertical-md;
   }
-}
+} */

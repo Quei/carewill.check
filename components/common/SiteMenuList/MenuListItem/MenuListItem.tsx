@@ -56,7 +56,14 @@ const MenuListItem: React.VFC<Props> = ({
     >
       {isScreenMd && (
         <Link
-          className={cn(s.title)}
+          className={cn(
+            {
+              ['header-menu-title']: type === 'header',
+            },
+            {
+              ['footer-menu-title']: type === 'footer',
+            }
+          )}
           href="/"
           site={site}
           hasBorderEffect={true}
@@ -67,7 +74,18 @@ const MenuListItem: React.VFC<Props> = ({
       )}
       {!isScreenMd && (
         <button
-          className={cn('relative', 'block', 'text-left', 'w-full', s.title)}
+          className={cn(
+            'relative',
+            'block',
+            'text-left',
+            'w-full',
+            {
+              ['header-menu-title']: type === 'header',
+            },
+            {
+              ['footer-menu-title']: type === 'footer',
+            }
+          )}
           onClick={handleOnClickTitleForMobile}
         >
           {title}

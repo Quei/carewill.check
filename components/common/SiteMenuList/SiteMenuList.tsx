@@ -59,7 +59,7 @@ const SiteMenuList: VFC<Props> = ({ className, id, allNavigations, type }) => {
             )}
           >
             <Link
-              className={cn('block', 'md:inline-block')}
+              className={cn('header-menu-title')}
               href="/company/contact"
               site="about"
               hasBorderEffect={true}
@@ -67,8 +67,8 @@ const SiteMenuList: VFC<Props> = ({ className, id, allNavigations, type }) => {
               Contact
             </Link>
           </li>
-          <li className={cn(s.headerOtherListItem)}>
-            <I18nWidget className={cn('md:hidden')} />
+          <li>
+            <I18nWidget className={cn('md:hidden', s.mobileHeaderI18n)} />
           </li>
         </>
       )}

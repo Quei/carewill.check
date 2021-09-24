@@ -1,24 +1,18 @@
 .root {
   &.header {
-    @apply md:pl-site-vertical-md md:w-full;
+    @apply border-green border-b md:border-none md:w-full;
     @screen md {
-      padding-bottom: 15px;
       &:hover {
         & .children {
           @apply md:not-sr-only md:absolute md:left-0 md:bottom-0 md:w-full md:px-site-vertical-md md:py-5;
         }
       }
     }
-
-    & .title {
-      @apply border-b border-green px-site-vertical text-3xl md:leading-none md:border-none md:px-0;
-    }
-
     & .children {
       @apply sr-only bg-white text-sm md:text-base md:border md:border-green md:transform md:translate-y-full;
       @screen less-than-md {
         &.hasShownChildrenForMobile {
-          @apply not-sr-only mx-site-vertical mt-4;
+          @apply not-sr-only mx-site-vertical pb-3;
         }
       }
     }
@@ -28,16 +22,12 @@
         @apply md:mt-2;
       }
       & a {
-        @apply py-3 md:py-0;
+        @apply py-2 md:py-0;
       }
     }
   }
 
   &.footer {
-    & .title {
-      @apply text-xl md:text-2xl md:leading-none;
-    }
-
     & .children {
       @apply text-sm;
       @screen less-than-md {
@@ -47,7 +37,6 @@
         }
       }
     }
-
     & .child + .child {
       @apply mt-1.5 md:mt-0;
     }
