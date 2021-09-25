@@ -12,7 +12,7 @@ import type {
 } from 'types/schema';
 
 export const richTextAssetFragment = /* GraphQL */ `
-  fragment richTextAsset on Asset {
+  fragment RichTextAsset on Asset {
     sys {
       id
     }
@@ -24,7 +24,7 @@ export const richTextAssetFragment = /* GraphQL */ `
 `;
 
 export const richTextEntryHyperlinkFragment = /* GraphQL */ `
-  fragment richTextEntryHyperlink on Entry {
+  fragment RichTextEntryHyperlink on Entry {
     __typename
     sys {
       id

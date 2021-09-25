@@ -27,7 +27,7 @@ export type Props = HomeLaboViewFragment & {
 };
 
 export const homeLaboViewFragment = /* GraphQL */ `
-  fragment homeLaboView on Home {
+  fragment HomeLaboView on Home {
     description {
       json
     }
@@ -50,7 +50,7 @@ export const homeLaboViewFragment = /* GraphQL */ `
 `;
 
 export const homeLaboLatestStaffNoteFragment = /* GraphQL */ `
-  fragment homeLaboLatestStaffNote on StaffNote {
+  fragment HomeLaboLatestStaffNote on StaffNote {
     content {
       json
     }

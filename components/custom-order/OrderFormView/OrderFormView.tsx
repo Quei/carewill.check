@@ -29,7 +29,7 @@ type Props = CustomOrderOrderFormViewFragment & {
 };
 
 export const customOrderOrderFormViewFragment = /* GraphQL */ `
-  fragment customOrderOrderFormView on CustomOrder {
+  fragment CustomOrderOrderFormView on CustomOrder {
     title
     description {
       json
@@ -39,7 +39,7 @@ export const customOrderOrderFormViewFragment = /* GraphQL */ `
 `;
 
 // export const customOrderOrderFormViewFragment = /* GraphQL */ `
-//   fragment customOrderOrderFormView on CustomOrder {
+//   fragment CustomOrderOrderFormView on CustomOrder {
 //     title
 //     description {
 //       json
@@ -56,7 +56,7 @@ export const customOrderOrderFormViewFragment = /* GraphQL */ `
 //     }
 //     customizedPartImagesCollection {
 //       items {
-//         ...checkboxesWithImagesImage
+//         ...CheckboxesWithImagesImage
 //       }
 //     }
 //     customizedPartOptions
@@ -82,7 +82,7 @@ export const customOrderOrderFormViewFragment = /* GraphQL */ `
 //     colorOptions
 //     colorPickupImagesCollection {
 //       items {
-//         ...checkboxesWithImagesImage
+//         ...CheckboxesWithImagesImage
 //       }
 //     }
 //     sizeTitle

@@ -17,7 +17,7 @@ type Props = {
 };
 
 export const relatedStaffNoteFragment = /* GraphQL */ `
-  fragment relatedStaffNote on StaffNote {
+  fragment RelatedStaffNote on StaffNote {
     __typename
     sys {
       id
@@ -37,7 +37,7 @@ export const relatedStaffNoteFragment = /* GraphQL */ `
 `;
 
 // export const relatedInterviewFragment = /* GraphQL */ `
-//   fragment relatedInterview on StaffNote {
+//   fragment RelatedInterview on StaffNote {
 //     __typename
 //     sys {
 //       id

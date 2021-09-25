@@ -12,7 +12,7 @@ const getFooterQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...footer
+        ...FooterItem
       }
     }
   }

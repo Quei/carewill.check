@@ -1,5 +1,5 @@
 export const productConnectionFragment = /* GraphQL */ `
-  fragment productConnection on ProductConnection {
+  fragment ProductConnection on ProductConnection {
     pageInfo {
       hasNextPage
       hasPreviousPage
@@ -33,10 +33,10 @@ export const productConnectionFragment = /* GraphQL */ `
       }
     }
   }
-`
+`;
 
 const getAllProductsQuery = /* GraphQL */ `
-  query getAllProducts(
+  query GetAllProducts(
     $first: Int = 250
     $query: String = ""
     $sortKey: ProductSortKeys = RELEVANCE
@@ -48,10 +48,10 @@ const getAllProductsQuery = /* GraphQL */ `
       reverse: $reverse
       query: $query
     ) {
-      ...productConnection
+      ...ProductConnection
     }
   }
 
   ${productConnectionFragment}
-`
-export default getAllProductsQuery
+`;
+export default getAllProductsQuery;

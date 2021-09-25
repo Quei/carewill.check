@@ -21,7 +21,7 @@ const getCustomOrderQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...customOrderView
+        ...CustomOrderView
       }
     }
   }

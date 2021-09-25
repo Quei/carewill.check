@@ -13,7 +13,7 @@ type Props = ProductArchiveViewPostFragment & {
 };
 
 export const productArchiveViewPostFragment = /* GraphQL */ `
-  fragment productArchiveViewPost on Product {
+  fragment ProductArchiveViewPost on Product {
     title
     slug
     description

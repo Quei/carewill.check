@@ -19,7 +19,7 @@ type Props = HauteCoutureViewFragment & {
 };
 
 export const hauteCoutureViewFragment = /* GraphQL */ `
-  fragment hauteCoutureView on HauteCouture {
+  fragment HauteCoutureView on HauteCouture {
     title
     description {
       json
@@ -61,11 +61,7 @@ const HauteCoutureView: VFC<Props> = ({
   const f = useIntlMessage();
   return (
     <>
-      <Seo
-        title={titleText}
-        description={descriptionText}
-        image={image}
-      />
+      <Seo title={titleText} description={descriptionText} image={image} />
       <PageHeader title={titleText}>
         {renderRichTextReact(description)}
       </PageHeader>

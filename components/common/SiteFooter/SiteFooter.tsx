@@ -21,7 +21,7 @@ type Props = FooterFragment & {
 };
 
 export const footerFragment = /* GraphQL */ `
-  fragment footer on Footer {
+  fragment FooterItem on Footer {
     content
     logoCollection {
       items {

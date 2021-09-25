@@ -19,7 +19,7 @@ const getAllProductsQuery = /* GraphQL */ `
     ) {
       total
       items {
-        ...productArchiveViewPostWithId
+        ...ProductArchiveViewPostWithId
       }
     }
   }

@@ -20,7 +20,7 @@ export type Props = HomeAboutViewFragment & {
 };
 
 export const homeAboutViewFragment = /* GraphQL */ `
-  fragment homeAboutView on Home {
+  fragment HomeAboutView on Home {
     description {
       json
     }
