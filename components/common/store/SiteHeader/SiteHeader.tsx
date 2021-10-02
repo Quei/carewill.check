@@ -3,7 +3,6 @@ import cn from 'classnames';
 import s from './SiteHeader.module.css';
 import { SiteHeaderNavigation } from '@components/common';
 import { Logo, Link } from '@components/ui';
-import { SiteHeaderRoot } from './SiteHeaderRoot';
 import type { VFC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
 
@@ -18,7 +17,16 @@ const SiteHeader: VFC<Props> = ({ isSiteRoot, allNavigations }) => {
   const SmallLogo = isSiteRoot ? 'p' : 'h1';
 
   return (
-    <SiteHeaderRoot>
+    <header
+      className={cn(
+        'sticky',
+        'top-0',
+        'bg-white',
+        'z-40',
+        'border-b',
+        'border-green'
+      )}
+    >
       <div className={cn(s.innerRoot)}>
         <div ref={ref} className={cn(s.stickySentinel)} />
         <SmallLogo
@@ -38,7 +46,7 @@ const SiteHeader: VFC<Props> = ({ isSiteRoot, allNavigations }) => {
 
       {/* <UserNav /> */}
       {/* </div> */}
-    </SiteHeaderRoot>
+    </header>
   );
 };
 

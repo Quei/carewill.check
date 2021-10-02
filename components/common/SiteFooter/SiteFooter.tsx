@@ -12,9 +12,9 @@ import { Container, Link, ScrollerToTop } from '@components/ui';
 import { Sns } from './Sns';
 import type { FC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
-import type { FooterFragment } from 'types/schema';
+import type { FooterItemFragment } from 'types/schema';
 
-type Props = FooterFragment & {
+type Props = FooterItemFragment & {
   className?: string;
   children?: any;
   allNavigations?: AllNavigations;
@@ -46,7 +46,6 @@ const SiteFooter: FC<Props> = ({
   content,
   logoCollection,
 }) => {
-  const { locale } = useRouter();
   const f = useIntlMessage();
   const nonNullableLogoItems = useMemo(() => {
     return logoCollection?.items?.filter(nonNullableFilter);

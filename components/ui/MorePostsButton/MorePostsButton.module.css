@@ -1,5 +1,4 @@
 .root {
-  @apply text-center text-2xl w-full py-5 hover:bg-green hover:text-white;
   &::before {
     content: '+';
     margin-right: 0.5em;

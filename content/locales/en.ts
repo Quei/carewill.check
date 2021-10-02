@@ -46,9 +46,11 @@ export const en: Record<string, any> = {
   ['labo.topLink']: 'Labo top',
   ['labo.interviews']: 'Interview',
   ['labo.interviewsPickup']: 'Interview pickup',
+  ['labo.interviews.backToIndex']: 'Back to index',
   ['labo.staffNotes']: 'Staff notes',
   ['labo.recruiting']: 'Recruiting',
   ['labo.selectCategory']: 'Category',
+  ['labo.wrongPassword']: 'Incorrect password.',
   // about-us
   ['about.topLink']: 'About us top',
   ['about.newsPickup']: 'News pickup',

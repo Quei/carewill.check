@@ -14,7 +14,7 @@ import LoginView from '@components/auth/LoginView';
 import { ja as localeContentJa, en as localeContentEn } from '@content/locales';
 import type { FC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
-import type { FooterFragment } from 'types/schema';
+import type { FooterItemFragment } from 'types/schema';
 
 const Loading = () => (
   <div className="w-80 h-80 flex items-center text-center justify-center p-3">
@@ -45,7 +45,7 @@ const FeatureBar = dynamic(
 interface Props {
   pageProps: {
     allNavigations: AllNavigations;
-    footer?: FooterFragment;
+    footer?: FooterItemFragment;
     isSiteRoot?: boolean;
   };
 }
