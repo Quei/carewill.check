@@ -67,7 +67,7 @@ const BlockContentPickup: FC<Props> = ({
             'inline-block',
             'text-sm',
             'border-1',
-            'border-green',
+            'border-current',
             'leading-none',
             'px-1',
             'py-0.5',
