@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { NextSeo } from 'next-seo';
+import { useMemo } from 'react';
 import cn from 'classnames';
 import s from './CustomOrderView.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
@@ -8,16 +7,16 @@ import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
-import { Seo } from '@components/common';
+import { Seo, LaboRelatedPosts } from '@components/common';
 import { PageHeader, OnelineLink, Slide } from '@components/ui';
 import { slideItemFragment } from '@components/ui/Slide';
-import type { FC } from 'react';
+import type { VFC } from 'react';
+import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
 import type { CustomOrderViewFragment } from 'types/schema';
-import { useMemo } from 'react';
 
 type Props = CustomOrderViewFragment & {
   className?: string;
-  children?: any;
+  relatedPosts?: RelatedPosts;
 };
 
 export const customOrderViewFragment = /* GraphQL */ `
@@ -79,13 +78,14 @@ const useImage = ({
   ]);
 };
 
-const CustomOrderView: FC<Props> = ({
+const CustomOrderView: VFC<Props> = ({
   title,
   description,
   imageCollection,
   imageCollectionEnglish,
   mobileImageCollection,
   mobileImageCollectionEnglish,
+  relatedPosts,
 }) => {
   const titleText = title ?? '';
   const descriptionText = renderRichText(description);
@@ -97,7 +97,7 @@ const CustomOrderView: FC<Props> = ({
     mobileImageCollection,
     mobileImageCollectionEnglish,
   });
-
+  console.log(relatedPosts);
   return (
     <>
       <Seo title={titleText} description={descriptionText} image={firstImage} />
@@ -117,8 +117,9 @@ const CustomOrderView: FC<Props> = ({
         </div>
       )}
       <OnelineLink href="https://www.makuake.com/project/carewill/">
-        {f('makuakeLink')}
+        {f('formLink')}
       </OnelineLink>
+      <LaboRelatedPosts relatedPosts={relatedPosts} />
     </>
   );
 };

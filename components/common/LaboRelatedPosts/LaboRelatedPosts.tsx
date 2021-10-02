@@ -5,11 +5,15 @@ import { nonNullableFilter } from '@lib/non-nullable-filter';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { PickupSection } from '@components/ui';
 import type { VFC } from 'react';
-import type { Maybe, RelatedStaffNoteFragment } from 'types/schema';
+import type {
+  Maybe,
+  RelatedStaffNoteFragment,
+  RelatedInterviewFragment,
+} from 'types/schema';
 
-export type RelatedPosts = {
-  staffNotes: Maybe<RelatedStaffNoteFragment>[];
-};
+export type RelatedPosts = Maybe<
+  RelatedStaffNoteFragment | RelatedInterviewFragment
+>[];
 
 type Props = {
   className?: string;
@@ -36,33 +40,32 @@ export const relatedStaffNoteFragment = /* GraphQL */ `
   }
 `;
 
-// export const relatedInterviewFragment = /* GraphQL */ `
-//   fragment RelatedInterview on StaffNote {
-//     __typename
-//     sys {
-//       id
-//     }
-//     title
-//     slug
-//     date
-//     content {
-//       json
-//     }
-//     image {
-//       url
-//       title
-//       description
-//     }
-//   }
-// `;
+export const relatedInterviewFragment = /* GraphQL */ `
+  fragment RelatedInterview on Interview {
+    __typename
+    sys {
+      id
+    }
+    title
+    slug
+    date
+    content {
+      json
+    }
+    image {
+      url
+      title
+      description
+    }
+  }
+`;
 
 const useRelatedPosts = ({ relatedPosts }: Pick<Props, 'relatedPosts'>) => {
   // NOTE:
   // interviewが追加されたり、手動処理が入った場合、
   // ここで制御する
-
   return useMemo(() => {
-    return relatedPosts?.staffNotes.filter(nonNullableFilter);
+    return relatedPosts?.filter(nonNullableFilter);
   }, [relatedPosts]);
 };
 

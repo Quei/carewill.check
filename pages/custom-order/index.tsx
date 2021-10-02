@@ -1,5 +1,9 @@
-import { useRouter } from 'next/router';
-import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
+import {
+  fetcher,
+  getAllNavigations,
+  getFooter,
+  getLaboRelatedPosts,
+} from '@lib/contentful';
 import { Layout } from '@components/common';
 import {
   CustomOrderView,
@@ -47,12 +51,19 @@ export async function getStaticProps({
     site: 'store',
   });
 
+  const relatedPostsPromise = getLaboRelatedPosts({
+    locale,
+    preview,
+    slug: SLUG,
+  });
+
   const allNavigationsPromise = getAllNavigations({ locale, preview });
 
   const footerPromise = getFooter({ locale, preview });
 
-  const [data, allNavigations, footerData] = await Promise.all([
+  const [data, relatedPosts, allNavigations, footerData] = await Promise.all([
     dataPromise,
+    relatedPostsPromise,
     allNavigationsPromise,
     footerPromise,
   ]);
@@ -66,6 +77,7 @@ export async function getStaticProps({
   return {
     props: {
       entry,
+      relatedPosts,
       allNavigations,
       footer: footerData.footer,
     },
@@ -75,17 +87,15 @@ export async function getStaticProps({
 
 export default function CustomOrder({
   entry,
+  relatedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const router = useRouter();
-
   if (!entry) {
     return null;
   }
-
-  return router.isFallback ? (
-    <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
-  ) : (
-    <CustomOrderView {...entry} />
+  return (
+    <>
+      <CustomOrderView {...entry} relatedPosts={relatedPosts} />
+    </>
   );
 }
 

@@ -1,2 +1,6 @@
-export { default, relatedStaffNoteFragment } from './LaboRelatedPosts';
+export {
+  default,
+  relatedStaffNoteFragment,
+  relatedInterviewFragment,
+} from './LaboRelatedPosts';
 export type { RelatedPosts } from './LaboRelatedPosts';
