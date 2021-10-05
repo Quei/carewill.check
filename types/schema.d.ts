@@ -3509,6 +3509,22 @@ export type GetCustomOrderQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export type GetCustomOrderOrderQueryVariables = Exact<{
+  locale: Scalars['String'];
+  slug: Scalars['String'];
+  preview?: Maybe<Scalars['Boolean']>;
+}>;
+
+export type GetCustomOrderOrderQuery = { __typename?: 'Query' } & {
+  customOrderCollection?: Maybe<
+    { __typename?: 'CustomOrderCollection' } & {
+      items: Array<
+        Maybe<{ __typename?: 'CustomOrder' } & CustomOrderOrderFormViewFragment>
+      >;
+    }
+  >;
+};
+
 export type GetHauteCoutureQueryVariables = Exact<{
   locale: Scalars['String'];
   slug: Scalars['String'];

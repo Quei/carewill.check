@@ -1,11 +1,5 @@
-type TextType = string | null;
-
-type CheckboxType = string | string[] | null;
-
-type SelectType = {
-  value: string;
-  label: string;
-} | null;
+import type { TypeFilter } from 'types/type-filter';
+import type { TextType, CheckboxType, SelectType } from 'types/form';
 
 export type HauteCoutureInputs = {
   clothes_type_radio?: CheckboxType;
@@ -43,10 +37,6 @@ export type HauteCoutureInputs = {
   request_about_length?: TextType;
   request_about_extra_space?: TextType;
   request_about_delivery?: TextType;
-};
-
-type TypeFilter<T, U> = {
-  [P in keyof T]: P extends U ? U : never;
 };
 
 export type SelectInputs = TypeFilter<HauteCoutureInputs, SelectType>;

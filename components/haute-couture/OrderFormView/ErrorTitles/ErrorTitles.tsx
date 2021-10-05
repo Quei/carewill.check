@@ -4,7 +4,7 @@ import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { useScreen } from '@lib/hooks/useScreen';
 import type { VFC } from 'react';
 import type { Lang } from 'types/site';
-import type { LanguageContent } from '../data';
+import type { LanguageContent } from 'types/form';
 
 type Props = {
   className?: string;

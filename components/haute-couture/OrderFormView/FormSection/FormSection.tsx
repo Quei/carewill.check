@@ -17,7 +17,10 @@ import { Measurement } from './Measurement';
 import type { VFC } from 'react';
 import type { Lang } from 'types/site';
 import type { Data } from '../data';
-import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
+import type {
+  HauteCoutureInputs,
+  SelectInputs,
+} from 'types/haute-couture-inputs';
 
 type InputNames = Array<keyof HauteCoutureInputs>;
 
@@ -249,7 +252,7 @@ const FormSection: VFC<Props> = ({
                   {input.type === 'select' && (
                     <Select
                       required={input.required}
-                      name={input.name}
+                      name={input.name as keyof SelectInputs}
                       id={input.name}
                       hasOtherText={input.hasOtherText}
                       options={input.values.map((value) => {

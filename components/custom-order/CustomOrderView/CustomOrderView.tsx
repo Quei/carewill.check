@@ -97,7 +97,6 @@ const CustomOrderView: VFC<Props> = ({
     mobileImageCollection,
     mobileImageCollectionEnglish,
   });
-  console.log(relatedPosts);
   return (
     <>
       <Seo title={titleText} description={descriptionText} image={firstImage} />
@@ -116,9 +115,7 @@ const CustomOrderView: VFC<Props> = ({
           />
         </div>
       )}
-      <OnelineLink href="https://www.makuake.com/project/carewill/">
-        {f('formLink')}
-      </OnelineLink>
+      <OnelineLink href="/custom-order/order-form">{f('formLink')}</OnelineLink>
       <LaboRelatedPosts relatedPosts={relatedPosts} />
     </>
   );
