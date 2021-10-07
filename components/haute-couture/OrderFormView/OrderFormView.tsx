@@ -26,7 +26,7 @@ type Props = HauteCoutureOrderFormViewFragment & {
 };
 
 export const hauteCoutureOrderFormViewFragment = /* GraphQL */ `
-  fragment hauteCoutureOrderFormView on HauteCouture {
+  fragment HauteCoutureOrderFormView on HauteCouture {
     formTitle
     formDescription {
       json

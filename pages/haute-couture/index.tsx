@@ -25,7 +25,7 @@ const getHauteCoutureQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...hauteCoutureView
+        ...HauteCoutureView
       }
     }
   }

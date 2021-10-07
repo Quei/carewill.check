@@ -21,7 +21,7 @@ type Props = CustomOrderViewFragment & {
 };
 
 export const customOrderViewFragment = /* GraphQL */ `
-  fragment customOrderView on CustomOrder {
+  fragment CustomOrderView on CustomOrder {
     title
     description {
       json

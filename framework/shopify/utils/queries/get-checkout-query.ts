@@ -1,5 +1,5 @@
 export const checkoutDetailsFragment = /* GraphQL */ `
-  fragment checkoutDetails on Checkout {
+  fragment CheckoutDetails on Checkout {
     id
     webUrl
     subtotalPriceV2 {
@@ -57,14 +57,14 @@ export const checkoutDetailsFragment = /* GraphQL */ `
       }
     }
   }
-`
+`;
 
 const getCheckoutQuery = /* GraphQL */ `
-  query getCheckout($checkoutId: ID!) {
+  query GetCheckout($checkoutId: ID!) {
     node(id: $checkoutId) {
-      ...checkoutDetails
+      ...CheckoutDetails
     }
   }
   ${checkoutDetailsFragment}
-`
-export default getCheckoutQuery
+`;
+export default getCheckoutQuery;

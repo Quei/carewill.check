@@ -1,4 +1,4 @@
-import { checkoutDetailsFragment } from '../queries/get-checkout-query'
+import { checkoutDetailsFragment } from '../queries/get-checkout-query';
 
 const checkoutLineItemUpdateMutation = /* GraphQL */ `
   mutation checkoutLineItemUpdate(
@@ -12,11 +12,11 @@ const checkoutLineItemUpdateMutation = /* GraphQL */ `
         message
       }
       checkout {
-        ...checkoutDetails
+        ...CheckoutDetails
       }
     }
   }
 
   ${checkoutDetailsFragment}
-`
-export default checkoutLineItemUpdateMutation
+`;
+export default checkoutLineItemUpdateMutation;

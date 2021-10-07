@@ -12,6 +12,7 @@ export const ja: Record<string, any> = {
   makuakeLink: 'Makuakeへ',
   // store
   ['store.siteTitle']: 'なくしたい、服の不自由 | carewill',
+  ['store.topLink']: 'Store トップ',
   ['store.product']: 'プロダクト',
   ['store.customOrder']: 'カスタムオーダー',
   ['store.collaboration']: 'コラボレーション',
@@ -38,12 +39,16 @@ export const ja: Record<string, any> = {
   ['form.other.placeholder']: 'その他の回答を入力',
   ['form.topLink']: 'トップページに戻る',
   // labo
+  ['labo.topLink']: 'Labo トップ',
   ['labo.interviews']: '取材記事',
   ['labo.interviewsPickup']: '取材記事ピックアップ',
+  ['labo.interviews.backToIndex']: '取材記事一覧へ戻る',
   ['labo.staffNotes']: 'スタッフノート',
   ['labo.recruiting']: '募集',
   ['labo.selectCategory']: 'カテゴリー',
+  ['labo.wrongPassword']: 'パスワードが間違っています',
   // about
+  ['about.topLink']: 'About us トップ',
   ['about.newsPickup']: 'ニュースピックアップ',
   ['about.tokushoho']: '特定商取引',
   ['about.privacyPolicy']: 'プライバシーポリシー',

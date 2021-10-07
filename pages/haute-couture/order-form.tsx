@@ -20,7 +20,7 @@ const getHauteCoutureOrderQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...hauteCoutureOrderFormView
+        ...HauteCoutureOrderFormView
       }
     }
   }

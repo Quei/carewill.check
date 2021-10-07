@@ -5,16 +5,3 @@
 @import './components.css';
 
 @tailwind utilities;
-
-@layer components {
-  .block-title {
-    @apply text-2xl leading-none z-10 absolute left-site-vertical md:left-site-vertical-md;
-    top: 10px;
-    @screen md {
-      top: 13px;
-    }
-  }
-  .no-skip-ink {
-    text-decoration-skip-ink: none;
-  }
-}

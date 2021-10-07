@@ -22,7 +22,7 @@ const RelatedStaffNotes = /* GraphQL */ `
     ) {
       total
       items {
-        ...relatedStaffNote
+        ...RelatedStaffNote
       }
     }
   }

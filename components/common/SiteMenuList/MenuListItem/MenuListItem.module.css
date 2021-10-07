@@ -1,41 +1,33 @@
 .root {
   &.header {
-    @apply md:pl-site-vertical-md md:w-full;
-    &:hover {
-      & .children {
-        @apply md:not-sr-only md:absolute md:left-0 md:bottom-0 md:w-full md:px-site-vertical-md md:py-5;
-      }
-    }
+    @apply border-green border-b md:border-none md:w-full;
     @screen md {
-      padding-bottom: 15px;
-    }
-
-    & .title {
-      @apply text-3xl leading-none;
-    }
-
-    & .children {
-      @apply sr-only bg-white text-base;
-      @screen md {
-        border: theme('borderWidth.DEFAULT') solid currentColor;
-        transform: translateY(100%);
-      }
-      @screen less-than-md {
-        &.hasShownChildrenForMobile {
-          @apply not-sr-only mt-6;
+      &:hover {
+        & .children {
+          @apply md:not-sr-only md:absolute md:left-0 md:bottom-0 md:w-full md:px-site-vertical-md md:py-5;
         }
       }
     }
-    & .child + .child {
-      @apply mt-1.5 md:mt-0.5;
+    & .children {
+      @apply sr-only bg-white text-sm md:text-base md:border md:border-green md:transform md:translate-y-full;
+      @screen less-than-md {
+        &.hasShownChildrenForMobile {
+          @apply not-sr-only mx-site-vertical pb-3;
+        }
+      }
+    }
+    & .child {
+      @apply leading-snug;
+      & + .child {
+        @apply md:mt-2;
+      }
+      & a {
+        @apply py-2 md:py-0;
+      }
     }
   }
 
   &.footer {
-    & .title {
-      @apply text-xl md:text-2xl leading-none;
-    }
-
     & .children {
       @apply text-sm;
       @screen less-than-md {
@@ -45,7 +37,6 @@
         }
       }
     }
-
     & .child + .child {
       @apply mt-1.5 md:mt-0;
     }

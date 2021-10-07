@@ -24,7 +24,7 @@ type Props = {
 };
 
 export const productArchiveViewDescriptionFragment = /* GraphQL */ `
-  fragment productArchiveViewDescription on Home {
+  fragment ProductArchiveViewDescription on Home {
     productDescription {
       json
     }
@@ -32,11 +32,11 @@ export const productArchiveViewDescriptionFragment = /* GraphQL */ `
 `;
 
 export const productArchiveViewPostWithIdFragment = /* GraphQL */ `
-  fragment productArchiveViewPostWithId on Product {
+  fragment ProductArchiveViewPostWithId on Product {
     sys {
       id
     }
-    ...productArchiveViewPost
+    ...ProductArchiveViewPost
   }
 
   ${productArchiveViewPostFragment}

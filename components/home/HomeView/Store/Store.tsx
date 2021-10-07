@@ -15,7 +15,7 @@ export type Props = HomeStoreViewFragment & {
 };
 
 export const homeStoreViewFragment = /* GraphQL */ `
-  fragment homeStoreView on Home {
+  fragment HomeStoreView on Home {
     topSlideCollection(locale: "ja") {
       items {
         ...SlideItem

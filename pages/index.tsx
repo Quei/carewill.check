@@ -29,7 +29,7 @@ const getHomeStoreQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...homeStoreView
+        ...HomeStoreView
       }
     }
   }
@@ -50,7 +50,7 @@ const getHomeLaboQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...homeLaboView
+        ...HomeLaboView
       }
     }
     staffNoteCollection(
@@ -60,7 +60,7 @@ const getHomeLaboQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...homeLaboLatestStaffNote
+        ...HomeLaboLatestStaffNote
       }
     }
   }
@@ -82,7 +82,7 @@ const getHomeAboutQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...homeAboutView
+        ...HomeAboutView
       }
     }
   }

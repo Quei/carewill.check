@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const checkboxesWithImagesImageFragment = /* GraphQL */ `
-  fragment checkboxesWithImagesImage on Asset {
+  fragment CheckboxesWithImagesImage on Asset {
     sys {
       id
     }

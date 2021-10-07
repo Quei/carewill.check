@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import s from './SiteMenuList.module.css';
+import { I18nWidget } from '@components/common';
 import { Link } from '@components/ui';
 import { MenuListItem } from './MenuListItem';
 import type { VFC } from 'react';
@@ -48,11 +49,28 @@ const SiteMenuList: VFC<Props> = ({ className, id, allNavigations, type }) => {
         />
       )}
       {type === 'header' && (
-        <li className={cn('md:px-site-vertical-md', s.contact)}>
-          <Link href="/company/contact" site="about" hasBorderEffect={true}>
-            Contact
-          </Link>
-        </li>
+        <>
+          <li
+            className={cn(
+              'border-b',
+              'border-green',
+              'md:border-none',
+              s.headerOtherListItem
+            )}
+          >
+            <Link
+              className={cn('header-menu-title')}
+              href="/company/contact"
+              site="about"
+              hasBorderEffect={true}
+            >
+              Contact
+            </Link>
+          </li>
+          <li>
+            <I18nWidget className={cn('md:hidden', s.mobileHeaderI18n)} />
+          </li>
+        </>
       )}
     </ul>
   );

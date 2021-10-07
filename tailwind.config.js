@@ -52,7 +52,6 @@ module.exports = {
         'light-gray': 'var(--light-gray)',
       },
       textColor: {
-        base: 'var(--text-base)',
         primary: 'var(--text-primary)',
         secondary: 'var(--text-secondary)',
       },
@@ -104,8 +103,10 @@ module.exports = {
         '3xl': '1536px',
         'less-than-sm': { max: '639px' },
         'less-than-md': { max: '767px' },
+        'less-than-lg': { max: '1023px' },
       },
       spacing: {
+        18: '4.5rem',
         'site-vertical': '10px',
         'site-vertical-md': '25px',
       },

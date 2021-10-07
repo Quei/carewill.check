@@ -1,7 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import cn from 'classnames';
 import s from './MenuListItem.module.css';
-import { Link, PlusButton } from '@components/ui';
+import { useScreen } from '@lib/hooks/useScreen';
+import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { Link, PlusMark } from '@components/ui';
 import type { Repeater } from 'types/all-navigations';
 import type { Site } from 'types/site';
 
@@ -17,10 +20,14 @@ const useHasShownChildrenForMobile = () => {
   const [hasShownChildrenForMobile, setHasShownChildrenForMobile] = useState(
     false
   );
-  const handleOnClickPlusButton = useCallback(() => {
+  const handleOnClickTitleForMobile = useCallback(() => {
     setHasShownChildrenForMobile((value) => !value);
   }, []);
-  return { hasShownChildrenForMobile, handleOnClickPlusButton };
+  const { asPath, locale } = useRouter();
+  useEffect(() => {
+    setHasShownChildrenForMobile(false);
+  }, [asPath, locale]);
+  return { hasShownChildrenForMobile, handleOnClickTitleForMobile };
 };
 
 const MenuListItem: React.VFC<Props> = ({
@@ -33,8 +40,10 @@ const MenuListItem: React.VFC<Props> = ({
   const childrenTargetId = `${title}-children`;
   const {
     hasShownChildrenForMobile,
-    handleOnClickPlusButton,
+    handleOnClickTitleForMobile,
   } = useHasShownChildrenForMobile();
+  const { isScreenMd } = useScreen();
+  const f = useIntlMessage();
   return (
     <li
       className={cn(
@@ -45,41 +54,82 @@ const MenuListItem: React.VFC<Props> = ({
         className
       )}
     >
-      <Link
-        className={cn(s.title)}
-        href="/"
-        site={site}
-        hasBorderEffect={true}
-        isPartiallyCurrent={true}
-      >
-        {title}
-      </Link>
-      <PlusButton
-        className={cn(
-          'absolute',
-          'top-2',
-          'right-4',
-          'focus:outline-none',
-          'md:hidden'
-        )}
-        targetId={childrenTargetId}
-        hasPressed={hasShownChildrenForMobile}
-        onClick={handleOnClickPlusButton}
-        isThin={type === 'footer'}
-      />
+      {isScreenMd && (
+        <Link
+          className={cn(
+            {
+              ['header-menu-title']: type === 'header',
+            },
+            {
+              ['footer-menu-title']: type === 'footer',
+            }
+          )}
+          href="/"
+          site={site}
+          hasBorderEffect={true}
+          isPartiallyCurrent={true}
+        >
+          {title}
+        </Link>
+      )}
+      {!isScreenMd && (
+        <button
+          className={cn(
+            'relative',
+            'block',
+            'text-left',
+            'w-full',
+            {
+              ['header-menu-title']: type === 'header',
+            },
+            {
+              ['footer-menu-title']: type === 'footer',
+            }
+          )}
+          onClick={handleOnClickTitleForMobile}
+        >
+          {title}
+          <PlusMark
+            className={cn(
+              'absolute',
+              'top-1/2',
+              'right-2',
+              'transform',
+              '-translate-y-1/2',
+              'md:hidden'
+            )}
+            hasPressed={hasShownChildrenForMobile}
+          />
+        </button>
+      )}
       <ul
         id={childrenTargetId}
         className={cn(s.children, {
           [s.hasShownChildrenForMobile]: hasShownChildrenForMobile,
         })}
       >
+        <li className={cn('md:hidden', s.child)}>
+          <Link
+            className={cn('block')}
+            href={'/'}
+            site={site}
+            hasBorderEffect={true}
+          >
+            {f(`${site}.topLink`)}
+          </Link>
+        </li>
         {menu.map(({ id, key, value }) => {
           if (!key || !value) {
             return null;
           }
           return (
             <li key={id} className={cn(s.child)}>
-              <Link href={value} site={site} hasBorderEffect={true}>
+              <Link
+                className={cn('block', 'md:inline-block')}
+                href={value}
+                site={site}
+                hasBorderEffect={true}
+              >
                 {key}
               </Link>
             </li>

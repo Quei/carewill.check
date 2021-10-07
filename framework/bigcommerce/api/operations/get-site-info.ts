@@ -1,24 +1,24 @@
 import type {
   OperationContext,
   OperationOptions,
-} from '@commerce/api/operations'
-import type { GetSiteInfoOperation } from '../../types/site'
-import type { GetSiteInfoQuery } from '../../schema'
-import filterEdges from '../utils/filter-edges'
-import type { BigcommerceConfig, Provider } from '..'
-import { categoryTreeItemFragment } from '../fragments/category-tree'
-import { normalizeCategory } from '../../lib/normalize'
+} from '@commerce/api/operations';
+import type { GetSiteInfoOperation } from '../../types/site';
+import type { GetSiteInfoQuery } from '../../schema';
+import filterEdges from '../utils/filter-edges';
+import type { BigcommerceConfig, Provider } from '..';
+import { categoryTreeItemFragment } from '../fragments/category-tree';
+import { normalizeCategory } from '../../lib/normalize';
 
 // Get 3 levels of categories
 export const getSiteInfoQuery = /* GraphQL */ `
   query getSiteInfo {
     site {
       categoryTree {
-        ...categoryTreeItem
+        ...CategoryTreeItem
         children {
-          ...categoryTreeItem
+          ...CategoryTreeItem
           children {
-            ...categoryTreeItem
+            ...CategoryTreeItem
           }
         }
       }
@@ -47,41 +47,41 @@ export const getSiteInfoQuery = /* GraphQL */ `
     }
   }
   ${categoryTreeItemFragment}
-`
+`;
 
 export default function getSiteInfoOperation({
   commerce,
 }: OperationContext<Provider>) {
   async function getSiteInfo<T extends GetSiteInfoOperation>(opts?: {
-    config?: Partial<BigcommerceConfig>
-    preview?: boolean
-  }): Promise<T['data']>
+    config?: Partial<BigcommerceConfig>;
+    preview?: boolean;
+  }): Promise<T['data']>;
 
   async function getSiteInfo<T extends GetSiteInfoOperation>(
     opts: {
-      config?: Partial<BigcommerceConfig>
-      preview?: boolean
+      config?: Partial<BigcommerceConfig>;
+      preview?: boolean;
     } & OperationOptions
-  ): Promise<T['data']>
+  ): Promise<T['data']>;
 
   async function getSiteInfo<T extends GetSiteInfoOperation>({
     query = getSiteInfoQuery,
     config,
   }: {
-    query?: string
-    config?: Partial<BigcommerceConfig>
-    preview?: boolean
+    query?: string;
+    config?: Partial<BigcommerceConfig>;
+    preview?: boolean;
   } = {}): Promise<T['data']> {
-    const cfg = commerce.getConfig(config)
-    const { data } = await cfg.fetch<GetSiteInfoQuery>(query)
-    const categories = data.site.categoryTree.map(normalizeCategory)
-    const brands = data.site?.brands?.edges
+    const cfg = commerce.getConfig(config);
+    const { data } = await cfg.fetch<GetSiteInfoQuery>(query);
+    const categories = data.site.categoryTree.map(normalizeCategory);
+    const brands = data.site?.brands?.edges;
 
     return {
       categories: categories ?? [],
       brands: filterEdges(brands),
-    }
+    };
   }
 
-  return getSiteInfo
+  return getSiteInfo;
 }

@@ -12,16 +12,17 @@
 }
 
 .smallLogo {
-  @apply absolute z-20 flex justify-center w-full leading-none md:relative;
+  @apply absolute z-20 flex justify-center w-full leading-none border-b border-green md:relative md:border-none;
   padding-top: 12px;
+  padding-bottom: 15px;
   & a {
     @apply block;
     width: 150px;
   }
   @screen md {
-    @apply block w-0 overflow-hidden flex-none md:py-0;
+    @apply block w-0 overflow-hidden flex-none py-0;
     &.hasShownSmallLogo {
-      @apply duration-100 md:pl-site-vertical-md;
+      @apply duration-100 pl-site-vertical-md;
       width: 25%;
     }
     & a {

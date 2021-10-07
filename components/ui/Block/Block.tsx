@@ -1,7 +1,6 @@
 import cn from 'classnames';
 import s from './Block.module.css';
 import { Link } from '@components/ui';
-import { CrossBlock } from '@components/icons';
 import type { FC, ReactNode, PointerEventHandler } from 'react';
 import type { Site } from 'types/site';
 

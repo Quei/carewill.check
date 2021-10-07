@@ -9,7 +9,7 @@ const checkoutLineItemCustomOrderRemoveDiscountCodeMutation = /* GraphQL */ `
         message
       }
       checkout {
-        ...checkoutDetails
+        ...CheckoutDetails
       }
     }
   }

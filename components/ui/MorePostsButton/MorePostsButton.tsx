@@ -11,7 +11,20 @@ type Props = {
 const MorePostsButton: VFC<Props> = ({ className, onClick }) => {
   const f = useIntlMessage();
   return (
-    <button className={cn(s.root, className)} onClick={onClick}>
+    <button
+      className={cn(
+        'text-center',
+        'text-2xl',
+        'w-full',
+        'py-5',
+        'md:py-8',
+        'hover:bg-green',
+        'hover:text-white',
+        s.root,
+        className
+      )}
+      onClick={onClick}
+    >
       {f('morePosts')}
     </button>
   );

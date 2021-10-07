@@ -1,7 +1,7 @@
-import { productConnectionFragment } from './get-all-products-query'
+import { productConnectionFragment } from './get-all-products-query';
 
 const getCollectionProductsQuery = /* GraphQL */ `
-  query getProductsFromCollection(
+  query GetProductsFromCollection(
     $categoryId: ID!
     $first: Int = 250
     $sortKey: ProductCollectionSortKeys = RELEVANCE
@@ -11,11 +11,11 @@ const getCollectionProductsQuery = /* GraphQL */ `
       id
       ... on Collection {
         products(first: $first, sortKey: $sortKey, reverse: $reverse) {
-          ...productConnection
+          ...ProductConnection
         }
       }
     }
   }
   ${productConnectionFragment}
-`
-export default getCollectionProductsQuery
+`;
+export default getCollectionProductsQuery;

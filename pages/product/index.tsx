@@ -21,7 +21,7 @@ const getProductArchiveQuery = /* GraphQL */ `
       limit: 1
     ) {
       items {
-        ...productArchiveViewDescription
+        ...ProductArchiveViewDescription
       }
     }
   }
