@@ -56,6 +56,30 @@ module.exports = withCommerceConfig({
       },
     ].filter(Boolean);
   },
+  async redirects() {
+    return [
+      {
+        source: '/custom-order',
+        destination: '/',
+        permanent: false,
+      },
+      {
+        source: '/custom-order/',
+        destination: '/',
+        permanent: false,
+      },
+      {
+        source: '/custom-order/order-form',
+        destination: '/',
+        permanent: false,
+      },
+      {
+        source: '/custom-order/order-form/',
+        destination: '/',
+        permanent: false,
+      },
+    ];
+  },
 });
 
 // Don't delete this console log, useful to see the commerce config in Vercel deployments
