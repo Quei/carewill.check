@@ -102,7 +102,7 @@ export async function getStaticProps({
       allNavigations,
       footer: footerData.footer,
     },
-    revalidate: 200,
+    revalidate: 60,
   };
 }
 
