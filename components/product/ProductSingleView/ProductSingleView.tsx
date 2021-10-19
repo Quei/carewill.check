@@ -131,12 +131,13 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
                 {f('store.taxIncluded')}
               </span>
             </div>
-            <div className={cn('text-sm')}>
+            <div className={cn('text-sm', 'mt-3')}>
               <div>
                 {product.options?.map((option) => {
                   return (
                     <Option
                       key={option.displayName}
+                      className={s.option}
                       choices={choices}
                       setChoices={setChoices}
                       {...option}
@@ -147,7 +148,7 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
               {/* <div>{f('store.quantity')} :</div> */}
             </div>
 
-            <div className={cn('flex', 'justify-center')}>
+            <div className={cn('flex', 'justify-center', 'mt-8')}>
               <Button
                 aria-label={f('store.addToCart')}
                 type="button"

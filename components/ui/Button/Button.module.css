@@ -24,7 +24,7 @@
 
 .disabled,
 .disabled:hover {
-  @apply text-accents-5 border-accents-5 bg-accents-1 cursor-not-allowed;
+  @apply text-accents-5 border-accents-1 bg-accents-1 cursor-not-allowed;
   filter: grayscale(1);
   -webkit-transform: translateZ(0);
   -webkit-perspective: 1000;
