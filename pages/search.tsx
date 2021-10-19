@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Layout } from '@components/common';
-import { ProductCard } from '@components/product';
+// import { ProductCard } from '@components/product';
 import type { Product } from '@commerce/types/product';
 import { Container, Grid, Skeleton } from '@components/ui';
 
@@ -342,7 +342,7 @@ export default function Search({
 
           {data ? (
             <Grid layout="normal">
-              {data.products.map((product: Product) => (
+              {/* {data.products.map((product: Product) => (
                 <ProductCard
                   variant="simple"
                   key={product.path}
@@ -353,7 +353,7 @@ export default function Search({
                     height: 480,
                   }}
                 />
-              ))}
+              ))} */}
             </Grid>
           ) : (
             <Grid layout="normal">

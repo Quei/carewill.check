@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { useAddItem } from '@framework/cart';
 import { useUI } from '@components/ui';
-import type { Product } from '@commerce/types/product';
+import type { Product, ProductVariant } from '@commerce/types/product';
 
-type SelectedOptions = Record<string, string | null>;
+export type SelectedOptions = Record<string, string | null>;
 
-function getVariant(product: Product, opts: SelectedOptions) {
+type ShopifyProductVariant = ProductVariant & {
+  price: number;
+};
+
+export const getVariant = (product: Product, opts: SelectedOptions) => {
   const variant = product.variants.find((variant) => {
     return Object.entries(opts).every(([key, value]) =>
       variant.options.find((option) => {
@@ -18,8 +22,8 @@ function getVariant(product: Product, opts: SelectedOptions) {
       })
     );
   });
-  return variant;
-}
+  return variant as ShopifyProductVariant;
+};
 
 export const useAddToCart = () => {
   const addItem = useAddItem();

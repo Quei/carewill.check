@@ -1,1 +1,1 @@
-export { default } from './ProductSingleView';
+export { default, productSingleViewFragment } from './ProductSingleView';

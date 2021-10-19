@@ -1,7 +1,7 @@
 import { useInView } from 'react-intersection-observer';
 import cn from 'classnames';
 import s from './SiteHeader.module.css';
-import { SiteHeaderNavigation } from '@components/common';
+import { SiteHeaderNavigation, UserNav } from '@components/common';
 import { Logo, Link } from '@components/ui';
 import type { VFC } from 'react';
 import type { AllNavigations } from 'types/all-navigations';
@@ -40,12 +40,8 @@ const SiteHeader: VFC<Props> = ({ isSiteRoot, allNavigations }) => {
           <SiteHeaderNavigation allNavigations={allNavigations} />
         )}
         {/* {shownSmallLogo && <div>search</div>} */}
+        <UserNav className={s.userNav} />
       </div>
-
-      {/* <div className="flex justify-end flex-1 space-x-8"> */}
-
-      {/* <UserNav /> */}
-      {/* </div> */}
     </header>
   );
 };

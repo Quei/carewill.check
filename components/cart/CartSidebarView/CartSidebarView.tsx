@@ -29,7 +29,11 @@ const useCustomOrderDiscountCode = (data: UseCartReturnType['data']) => {
     } else {
       customOrderRemoveDiscountCode();
     }
-  }, [customOrdersQuantity]);
+  }, [
+    customOrdersQuantity,
+    customOrderAddDiscountCode,
+    customOrderRemoveDiscountCode,
+  ]);
 };
 
 const CartSidebarView: FC = () => {

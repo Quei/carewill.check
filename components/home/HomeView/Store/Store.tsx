@@ -162,16 +162,6 @@ const Store: VFC<Props> = ({
               </BlockContent>
             </Block>
           )}
-          {/* {products.slice(0, 3).map((product, i) => (
-      <ProductCard
-        key={product.id}
-        product={product}
-        imgProps={{
-          width: i === 0 ? 1080 : 540,
-          height: i === 0 ? 1080 : 540,
-        }}
-      />
-    ))} */}
         </Grid>
         {endSlideCollection?.items && endSlideCollectionEnglish?.items && (
           <Slide

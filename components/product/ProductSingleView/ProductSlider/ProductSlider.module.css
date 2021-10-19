@@ -1,0 +1,28 @@
+.sliderContainer {
+  &:hover .control {
+    @apply md:opacity-100;
+  }
+}
+
+.control {
+  @apply transition duration-150 md:opacity-0;
+}
+
+.imageContainer {
+  & > div {
+    @apply h-full;
+    & > div {
+      @apply h-full;
+    }
+  }
+}
+
+.positionIndicator {
+  &.positionIndicatorActive {
+    position: relative;
+    &::after {
+      @apply absolute top-0 left-0 z-20 w-full h-full border-l border-t border-r border-green;
+      content: '';
+    }
+  }
+}

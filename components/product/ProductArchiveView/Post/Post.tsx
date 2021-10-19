@@ -45,8 +45,7 @@ const Post: VFC<Props> = ({
 }) => {
   const f = useIntlMessage();
   const image = imageCollection?.items?.[0];
-  // const href = `/product/${slug}`;
-  const href = 'https://www.makuake.com/project/carewill/';
+  const href = `/product/${slug}`;
   const TextBlockChildElement = useTextBlockChildElement();
 
   return (

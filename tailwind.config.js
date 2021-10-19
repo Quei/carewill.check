@@ -99,10 +99,11 @@ module.exports = {
         120: '1.2',
       },
       screens: {
+        md: '769px',
         '2xl': '1440px',
         '3xl': '1536px',
         'less-than-sm': { max: '639px' },
-        'less-than-md': { max: '767px' },
+        'less-than-md': { max: '768px' },
         'less-than-lg': { max: '1023px' },
       },
       spacing: {

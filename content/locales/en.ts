@@ -18,6 +18,17 @@ export const en: Record<string, any> = {
   ['store.customOrder']: 'Custom order',
   ['store.collaboration']: 'Collaboration',
   ['store.hauteCouture']: 'Haute couture',
+  ['store.addToCart']: 'Add to cart',
+  ['store.notAvailable']: 'Not available',
+  ['store.taxIncluded']: '(tax included)',
+  ['store.quantity']: 'Quantity',
+  ['store.subtotal']: 'Subtotal',
+  ['store.taxes']: 'Taxes',
+  ['store.calculatedAtCheckout']: 'Calculated at checkout',
+  ['store.estimatedShipping']: 'Estimated Shipping',
+  ['store.total']: 'Total',
+  ['store.proceedToCheckout']: 'Proceed to checkout',
+  ['store.product.details']: 'Details',
   // form
   // haute-couture
   form: 'Form',

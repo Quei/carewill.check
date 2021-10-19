@@ -1,33 +1,68 @@
-import cn from 'classnames';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { NextSeo } from 'next-seo';
-import { FC, useEffect, useState } from 'react';
+import cn from 'classnames';
 import s from './ProductSingleView.module.css';
-import { Swatch, ProductSlider } from '@components/product';
-import { Button, Container, Text, useUI } from '@components/ui';
-import type { Product } from '@commerce/types/product';
+import {
+  renderRichTextReact,
+  richTextAssetFragment,
+} from '@lib/contentful/utils/rich-text';
+import { richTextEntryHyperlinkFragment } from '@lib/contentful/utils/store/rich-text-fragment';
+import { Seo } from '@components/common';
+import { Grid, Block, Button, YouTube, Container } from '@components/ui';
 import usePrice from '@framework/product/use-price';
-import { useAddItem } from '@framework/cart';
-import { getVariant, SelectedOptions } from '../helpers';
-import WishlistButton from '@components/wishlist/WishlistButton';
+import { useAddToCart, getVariant } from '@lib/hooks/useAddToCart';
+import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { Option } from './Option';
+import { ProductSlider } from './ProductSlider';
+import type { VFC } from 'react';
+import type { Product } from '@commerce/types/product';
+import type { SelectedOptions } from '@lib/hooks/useAddToCart';
+import type { ProductSingleViewFragment } from 'types/schema';
 
-interface Props {
+type Props = {
   children?: any;
   product: Product;
+  productContent: ProductSingleViewFragment;
   className?: string;
-}
+};
 
-const ProductView: FC<Props> = ({ product }) => {
-  // TODO: fix this missing argument issue
-  /* @ts-ignore */
-  const addItem = useAddItem();
-  const { price } = usePrice({
-    amount: product.price.value,
-    baseAmount: product.price.retailPrice,
-    currencyCode: product.price.currencyCode!,
-  });
-  const { openSidebar } = useUI();
-  const [loading, setLoading] = useState(false);
+export const productSingleViewFragment = /* GraphQL */ `
+  fragment ProductSingleView on Product {
+    title
+    videoId
+    color
+    size {
+      json
+      links {
+        assets {
+          block {
+            ...RichTextAsset
+          }
+        }
+      }
+    }
+    details {
+      json
+      links {
+        assets {
+          block {
+            ...RichTextAsset
+          }
+        }
+        entries {
+          hyperlink {
+            ...RichTextEntryHyperlink
+          }
+        }
+      }
+    }
+  }
+  ${richTextAssetFragment}
+  ${richTextEntryHyperlinkFragment}
+`;
+
+const useChoices = (product: Props['product']) => {
   const [choices, setChoices] = useState<SelectedOptions>({});
 
   useEffect(() => {
@@ -38,133 +73,125 @@ const ProductView: FC<Props> = ({ product }) => {
         [v.displayName.toLowerCase()]: v.values[0].label.toLowerCase(),
       }));
     });
-  }, []);
+  }, [product.variants]);
 
-  const variant = getVariant(product, choices);
+  return { choices, setChoices };
+};
 
-  const addToCart = async () => {
-    setLoading(true);
-    try {
-      await addItem({
-        productId: String(product.id),
-        variantId: String(variant ? variant.id : product.variants[0].id),
-      });
-      openSidebar();
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-    }
+const ProductView: VFC<Props> = ({ product, productContent }) => {
+  const { locale } = useRouter();
+  const { choices, setChoices } = useChoices(product);
+  const { addToCart, loading } = useAddToCart();
+  const handleOnClickAddToCart = () => {
+    addToCart({
+      product,
+      choices,
+    });
   };
 
+  const variant = getVariant(product, choices);
+  const { price } = usePrice({
+    amount: variant ? variant.price : product.price.value,
+    baseAmount: product.price.retailPrice,
+    currencyCode: product.price.currencyCode!,
+  });
+  const priceText = locale === 'ja' ? `${price.replace('￥', '')}円` : price;
+
+  const f = useIntlMessage();
+  const titleText = productContent.title ?? '';
+  const descriptionText = '';
+
   return (
-    <Container className="max-w-none w-full">
-      <NextSeo
-        title={product.name}
-        description={product.description}
-        openGraph={{
-          type: 'website',
-          title: product.name,
-          description: product.description,
-          images: [
-            {
-              url: product.images[0]?.url!,
-              width: 800,
-              height: 600,
-              alt: product.name,
-            },
-          ],
-        }}
+    <>
+      <Seo
+        title={titleText}
+        description={descriptionText}
+        image={product.images?.[0]}
       />
-      <div className={cn(s.root, 'fit')}>
-        <div className={cn(s.productDisplay, 'fit')}>
-          <div className={s.nameBox}>
-            <h1 className={s.name}>{product.name}</h1>
-            <div className={s.price}>
-              {price}
-              {` `}
-              {product.price?.currencyCode}
+      <Grid>
+        <ProductSlider key={product.id} images={product.images}>
+          {product.images.map((image, i) => (
+            <div key={image.url} className={s.imageContainer}>
+              <Image
+                className={cn('w-full', 'h-auto', 'max-h-full', 'object-cover')}
+                src={image.url!}
+                alt={image.alt || 'Product Image'}
+                width={1050}
+                height={1050}
+                priority={i === 0}
+                quality="85"
+              />
             </div>
-          </div>
-
-          <div className={s.sliderContainer}>
-            <ProductSlider key={product.id}>
-              {product.images.map((image, i) => (
-                <div key={image.url} className={s.imageContainer}>
-                  <Image
-                    className={s.img}
-                    src={image.url!}
-                    alt={image.alt || 'Product Image'}
-                    width={1050}
-                    height={1050}
-                    priority={i === 0}
-                    quality="85"
-                  />
-                </div>
-              ))}
-            </ProductSlider>
-          </div>
-        </div>
-        <div className={s.sidebar}>
-          <section>
-            {product.options?.map((opt) => (
-              <div className="pb-4" key={opt.displayName}>
-                <h2 className="uppercase font-medium">{opt.displayName}</h2>
-                <div className="flex flex-row py-4">
-                  {opt.values.map((v, i: number) => {
-                    const active = (choices as any)[
-                      opt.displayName.toLowerCase()
-                    ];
-
-                    return (
-                      <Swatch
-                        key={`${opt.id}-${i}`}
-                        active={v.label.toLowerCase() === active}
-                        variant={opt.displayName}
-                        color={v.hexColors ? v.hexColors[0] : ''}
-                        label={v.label}
-                        onClick={() => {
-                          setChoices((choices) => {
-                            return {
-                              ...choices,
-                              [opt.displayName.toLowerCase()]: v.label.toLowerCase(),
-                            };
-                          });
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-
-            <div className="pb-14 break-words w-full max-w-xl">
-              <Text html={product.descriptionHtml || product.description} />
-            </div>
-          </section>
+          ))}
+        </ProductSlider>
+        <Block title={titleText} isCentering={true}>
           <div>
-            <Button
-              aria-label="Add to Cart"
-              type="button"
-              className={s.button}
-              onClick={addToCart}
-              loading={loading}
-              disabled={variant?.availableForSale === false}
-            >
-              {variant?.availableForSale === false
-                ? 'Not Available'
-                : 'Add To Cart'}
-            </Button>
+            <div className={cn('text-2xl')}>
+              <span className={cn('align-middle')}>{priceText}</span>
+              <span className={cn('text-sm', 'align-middle')}>
+                {f('store.taxIncluded')}
+              </span>
+            </div>
+            <div className={cn('text-sm')}>
+              <div>
+                {product.options?.map((option) => {
+                  return (
+                    <Option
+                      key={option.displayName}
+                      choices={choices}
+                      setChoices={setChoices}
+                      {...option}
+                    />
+                  );
+                })}
+              </div>
+              {/* <div>{f('store.quantity')} :</div> */}
+            </div>
+
+            <div className={cn('flex', 'justify-center')}>
+              <Button
+                aria-label={f('store.addToCart')}
+                type="button"
+                className={cn('text-center', 'bg-green', s.cartButton)}
+                onClick={handleOnClickAddToCart}
+                loading={loading}
+                disabled={variant?.availableForSale === false}
+              >
+                {variant?.availableForSale === false
+                  ? f('store.notAvailable')
+                  : f('store.addToCart')}
+              </Button>
+            </div>
           </div>
-        </div>
-        {process.env.COMMERCE_WISHLIST_ENABLED && (
+        </Block>
+        {/* {process.env.COMMERCE_WISHLIST_ENABLED && (
           <WishlistButton
             className={s.wishlistButton}
             productId={product.id}
             variant={product.variants[0]! as any}
           />
-        )}
-      </div>
-    </Container>
+        )} */}
+      </Grid>
+      {productContent?.videoId && (
+        <div className={cn('h-screen')}>
+          <YouTube
+            className={cn('pointer-events-none')}
+            videoId={productContent.videoId}
+            isFit={true}
+            isAuto={true}
+            isLoop={true}
+          />
+        </div>
+      )}
+      {productContent?.details && (
+        <section className={cn('relative')}>
+          <h2 className={cn('block-title')}>{f('store.product.details')}</h2>
+          <Container className={cn('pt-24', 'pb-20', s.details)}>
+            {renderRichTextReact(productContent.details)}
+          </Container>
+        </section>
+      )}
+    </>
   );
 };
 

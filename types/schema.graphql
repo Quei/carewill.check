@@ -438,6 +438,49 @@ interface Entry {
   sys: Sys!
 }
 
+type InterviewCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Interview]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/interview)
+"""
+type Interview implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): InterviewLinkingCollections
+  slug(locale: String): String
+  date(locale: String): DateTime
+  title(locale: String): String
+  series(preview: Boolean, locale: String): InterviewSeries
+  image(preview: Boolean, locale: String): Asset
+  content(locale: String): InterviewContent
+  categoryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): InterviewCategoryCollection
+}
+
+type InterviewLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  homeCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): HomeCollection
+}
+
 type HomeCollection {
   items: [Home]!
   limit: Int!
@@ -538,203 +581,6 @@ type HomeInterviewPickupCollection {
   skip: Int!
   limit: Int!
   items: [Interview]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/interview)
-"""
-type Interview implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): InterviewLinkingCollections
-  slug(locale: String): String
-  date(locale: String): DateTime
-  title(locale: String): String
-  series(preview: Boolean, locale: String): InterviewSeries
-  image(preview: Boolean, locale: String): Asset
-  content(locale: String): InterviewContent
-  categoryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): InterviewCategoryCollection
-}
-
-type InterviewLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-  homeCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): HomeCollection
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/interviewSeries)
-"""
-type InterviewSeries implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): InterviewSeriesLinkingCollections
-  slug(locale: String): String
-  title(locale: String): String
-  date(locale: String): DateTime
-  image(preview: Boolean, locale: String): Asset
-  description(locale: String): String
-}
-
-type InterviewSeriesLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-  interviewCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): InterviewCollection
-}
-
-type InterviewCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Interview]!
-}
-
-type InterviewContent {
-  json: JSON!
-  links: InterviewContentLinks!
-}
-
-type InterviewContentLinks {
-  entries: InterviewContentEntries!
-  assets: InterviewContentAssets!
-}
-
-type InterviewContentEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type InterviewContentAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type InterviewCategoryCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Category]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/category)
-"""
-type Category implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): CategoryLinkingCollections
-  slug(locale: String): String
-  title(locale: String): String
-  date(locale: String): DateTime
-}
-
-type CategoryLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-  interviewCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): InterviewCollection
-  staffNoteCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): StaffNoteCollection
-}
-
-type StaffNoteCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [StaffNote]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/staffNote)
-"""
-type StaffNote implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): StaffNoteLinkingCollections
-  slug(locale: String): String
-  date(locale: String): DateTime
-  title(locale: String): String
-  image(preview: Boolean, locale: String): Asset
-  content(locale: String): StaffNoteContent
-  categoryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): StaffNoteCategoryCollection
-}
-
-type StaffNoteLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-}
-
-type StaffNoteContent {
-  json: JSON!
-  links: StaffNoteContentLinks!
-}
-
-type StaffNoteContentLinks {
-  entries: StaffNoteContentEntries!
-  assets: StaffNoteContentAssets!
-}
-
-type StaffNoteContentEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type StaffNoteContentAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type StaffNoteCategoryCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Category]!
 }
 
 type HomeInterviewHomeDescription {
@@ -861,6 +707,160 @@ type HomeRecruitingDescriptionEntries {
 type HomeRecruitingDescriptionAssets {
   hyperlink: [Asset]!
   block: [Asset]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/interviewSeries)
+"""
+type InterviewSeries implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): InterviewSeriesLinkingCollections
+  slug(locale: String): String
+  title(locale: String): String
+  date(locale: String): DateTime
+  image(preview: Boolean, locale: String): Asset
+  description(locale: String): String
+}
+
+type InterviewSeriesLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  interviewCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): InterviewCollection
+}
+
+type InterviewContent {
+  json: JSON!
+  links: InterviewContentLinks!
+}
+
+type InterviewContentLinks {
+  entries: InterviewContentEntries!
+  assets: InterviewContentAssets!
+}
+
+type InterviewContentEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type InterviewContentAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type InterviewCategoryCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Category]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/category)
+"""
+type Category implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): CategoryLinkingCollections
+  slug(locale: String): String
+  title(locale: String): String
+  date(locale: String): DateTime
+}
+
+type CategoryLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+  interviewCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): InterviewCollection
+  staffNoteCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): StaffNoteCollection
+}
+
+type StaffNoteCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [StaffNote]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/8z7mw5knx30w/content_types/staffNote)
+"""
+type StaffNote implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): StaffNoteLinkingCollections
+  slug(locale: String): String
+  date(locale: String): DateTime
+  title(locale: String): String
+  image(preview: Boolean, locale: String): Asset
+  content(locale: String): StaffNoteContent
+  categoryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): StaffNoteCategoryCollection
+}
+
+type StaffNoteLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type StaffNoteContent {
+  json: JSON!
+  links: StaffNoteContentLinks!
+}
+
+type StaffNoteContentLinks {
+  entries: StaffNoteContentEntries!
+  assets: StaffNoteContentAssets!
+}
+
+type StaffNoteContentEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type StaffNoteContentAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type StaffNoteCategoryCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Category]!
 }
 
 type InterviewSeriesCollection {
@@ -1017,6 +1017,150 @@ enum AssetOrder {
   width_DESC
 }
 
+input InterviewFilter {
+  series: cfInterviewSeriesNestedFilter
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  series_exists: Boolean
+  image_exists: Boolean
+  content_exists: Boolean
+  content_contains: String
+  content_not_contains: String
+  categoryCollection_exists: Boolean
+  OR: [InterviewFilter]
+  AND: [InterviewFilter]
+}
+
+input cfInterviewSeriesNestedFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  image_exists: Boolean
+  description_exists: Boolean
+  description: String
+  description_not: String
+  description_in: [String]
+  description_not_in: [String]
+  description_contains: String
+  description_not_contains: String
+  OR: [cfInterviewSeriesNestedFilter]
+  AND: [cfInterviewSeriesNestedFilter]
+}
+
+enum InterviewOrder {
+  slug_ASC
+  slug_DESC
+  date_ASC
+  date_DESC
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input StaffNoteFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  date_exists: Boolean
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime]
+  date_not_in: [DateTime]
+  date_gt: DateTime
+  date_gte: DateTime
+  date_lt: DateTime
+  date_lte: DateTime
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  image_exists: Boolean
+  content_exists: Boolean
+  content_contains: String
+  content_not_contains: String
+  categoryCollection_exists: Boolean
+  OR: [StaffNoteFilter]
+  AND: [StaffNoteFilter]
+}
+
+enum StaffNoteOrder {
+  slug_ASC
+  slug_DESC
+  date_ASC
+  date_DESC
+  title_ASC
+  title_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
 input HomeFilter {
   AND: [HomeFilter]
   OR: [HomeFilter]
@@ -1154,98 +1298,6 @@ enum InterviewSeriesOrder {
   sys_publishedVersion_DESC
 }
 
-input InterviewFilter {
-  series: cfInterviewSeriesNestedFilter
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  slug_exists: Boolean
-  slug: String
-  slug_not: String
-  slug_in: [String]
-  slug_not_in: [String]
-  slug_contains: String
-  slug_not_contains: String
-  date_exists: Boolean
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime]
-  date_not_in: [DateTime]
-  date_gt: DateTime
-  date_gte: DateTime
-  date_lt: DateTime
-  date_lte: DateTime
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  series_exists: Boolean
-  image_exists: Boolean
-  content_exists: Boolean
-  content_contains: String
-  content_not_contains: String
-  categoryCollection_exists: Boolean
-  OR: [InterviewFilter]
-  AND: [InterviewFilter]
-}
-
-input cfInterviewSeriesNestedFilter {
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  slug_exists: Boolean
-  slug: String
-  slug_not: String
-  slug_in: [String]
-  slug_not_in: [String]
-  slug_contains: String
-  slug_not_contains: String
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  date_exists: Boolean
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime]
-  date_not_in: [DateTime]
-  date_gt: DateTime
-  date_gte: DateTime
-  date_lt: DateTime
-  date_lte: DateTime
-  image_exists: Boolean
-  description_exists: Boolean
-  description: String
-  description_not: String
-  description_in: [String]
-  description_not_in: [String]
-  description_contains: String
-  description_not_contains: String
-  OR: [cfInterviewSeriesNestedFilter]
-  AND: [cfInterviewSeriesNestedFilter]
-}
-
-enum InterviewOrder {
-  slug_ASC
-  slug_DESC
-  date_ASC
-  date_DESC
-  title_ASC
-  title_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
 type CategoryCollection {
   total: Int!
   skip: Int!
@@ -1290,58 +1342,6 @@ enum CategoryOrder {
   title_DESC
   date_ASC
   date_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
-input StaffNoteFilter {
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  slug_exists: Boolean
-  slug: String
-  slug_not: String
-  slug_in: [String]
-  slug_not_in: [String]
-  slug_contains: String
-  slug_not_contains: String
-  date_exists: Boolean
-  date: DateTime
-  date_not: DateTime
-  date_in: [DateTime]
-  date_not_in: [DateTime]
-  date_gt: DateTime
-  date_gte: DateTime
-  date_lt: DateTime
-  date_lte: DateTime
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  image_exists: Boolean
-  content_exists: Boolean
-  content_contains: String
-  content_not_contains: String
-  categoryCollection_exists: Boolean
-  OR: [StaffNoteFilter]
-  AND: [StaffNoteFilter]
-}
-
-enum StaffNoteOrder {
-  slug_ASC
-  slug_DESC
-  date_ASC
-  date_DESC
-  title_ASC
-  title_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC
@@ -1774,6 +1774,87 @@ enum NewsCategoryOrder {
   sys_publishedVersion_DESC
 }
 
+type ProductCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Product]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product)
+"""
+type Product implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): ProductLinkingCollections
+  title(locale: String): String
+  slug(locale: String): String
+  date(locale: String): DateTime
+  description(locale: String): String
+  imageCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): AssetCollection
+  videoId(locale: String): String
+  color(locale: String): JSON
+  size(locale: String): ProductSize
+  details(locale: String): ProductDetails
+}
+
+type ProductLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type ProductSize {
+  json: JSON!
+  links: ProductSizeLinks!
+}
+
+type ProductSizeLinks {
+  entries: ProductSizeEntries!
+  assets: ProductSizeAssets!
+}
+
+type ProductSizeEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type ProductSizeAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type ProductDetails {
+  json: JSON!
+  links: ProductDetailsLinks!
+}
+
+type ProductDetailsLinks {
+  entries: ProductDetailsEntries!
+  assets: ProductDetailsAssets!
+}
+
+type ProductDetailsEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type ProductDetailsAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
 type CustomOrderCollection {
   total: Int!
   skip: Int!
@@ -1833,41 +1914,6 @@ type CustomOrderDescriptionEntries {
 type CustomOrderDescriptionAssets {
   hyperlink: [Asset]!
   block: [Asset]!
-}
-
-type ProductCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Product]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product)
-"""
-type Product implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): ProductLinkingCollections
-  title(locale: String): String
-  slug(locale: String): String
-  date(locale: String): DateTime
-  description(locale: String): String
-  imageCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): AssetCollection
-}
-
-type ProductLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
 }
 
 type HauteCoutureCollection {
@@ -2085,47 +2131,6 @@ type FooterLinkingCollections {
   ): EntryCollection
 }
 
-input CustomOrderFilter {
-  sys: SysFilter
-  contentfulMetadata: ContentfulMetadataFilter
-  title_exists: Boolean
-  title: String
-  title_not: String
-  title_in: [String]
-  title_not_in: [String]
-  title_contains: String
-  title_not_contains: String
-  slug_exists: Boolean
-  slug: String
-  slug_not: String
-  slug_in: [String]
-  slug_not_in: [String]
-  slug_contains: String
-  slug_not_contains: String
-  description_exists: Boolean
-  description_contains: String
-  description_not_contains: String
-  imageCollection_exists: Boolean
-  mobileImageCollection_exists: Boolean
-  OR: [CustomOrderFilter]
-  AND: [CustomOrderFilter]
-}
-
-enum CustomOrderOrder {
-  title_ASC
-  title_DESC
-  slug_ASC
-  slug_DESC
-  sys_id_ASC
-  sys_id_DESC
-  sys_publishedAt_ASC
-  sys_publishedAt_DESC
-  sys_firstPublishedAt_ASC
-  sys_firstPublishedAt_DESC
-  sys_publishedVersion_ASC
-  sys_publishedVersion_DESC
-}
-
 input ProductFilter {
   sys: SysFilter
   contentfulMetadata: ContentfulMetadataFilter
@@ -2160,6 +2165,19 @@ input ProductFilter {
   description_contains: String
   description_not_contains: String
   imageCollection_exists: Boolean
+  videoId_exists: Boolean
+  videoId: String
+  videoId_not: String
+  videoId_in: [String]
+  videoId_not_in: [String]
+  videoId_contains: String
+  videoId_not_contains: String
+  size_exists: Boolean
+  size_contains: String
+  size_not_contains: String
+  details_exists: Boolean
+  details_contains: String
+  details_not_contains: String
   OR: [ProductFilter]
   AND: [ProductFilter]
 }
@@ -2171,6 +2189,49 @@ enum ProductOrder {
   slug_DESC
   date_ASC
   date_DESC
+  videoId_ASC
+  videoId_DESC
+  sys_id_ASC
+  sys_id_DESC
+  sys_publishedAt_ASC
+  sys_publishedAt_DESC
+  sys_firstPublishedAt_ASC
+  sys_firstPublishedAt_DESC
+  sys_publishedVersion_ASC
+  sys_publishedVersion_DESC
+}
+
+input CustomOrderFilter {
+  sys: SysFilter
+  contentfulMetadata: ContentfulMetadataFilter
+  title_exists: Boolean
+  title: String
+  title_not: String
+  title_in: [String]
+  title_not_in: [String]
+  title_contains: String
+  title_not_contains: String
+  slug_exists: Boolean
+  slug: String
+  slug_not: String
+  slug_in: [String]
+  slug_not_in: [String]
+  slug_contains: String
+  slug_not_contains: String
+  description_exists: Boolean
+  description_contains: String
+  description_not_contains: String
+  imageCollection_exists: Boolean
+  mobileImageCollection_exists: Boolean
+  OR: [CustomOrderFilter]
+  AND: [CustomOrderFilter]
+}
+
+enum CustomOrderOrder {
+  title_ASC
+  title_DESC
+  slug_ASC
+  slug_DESC
   sys_id_ASC
   sys_id_DESC
   sys_publishedAt_ASC

@@ -48,6 +48,9 @@ const getProductQuery = /* GraphQL */ `
               amount
               currencyCode
             }
+            image {
+              id
+            }
           }
         }
       }
@@ -58,6 +61,7 @@ const getProductQuery = /* GraphQL */ `
         }
         edges {
           node {
+            id
             originalSrc
             altText
             width
@@ -67,6 +71,6 @@ const getProductQuery = /* GraphQL */ `
       }
     }
   }
-`
+`;
 
-export default getProductQuery
+export default getProductQuery;

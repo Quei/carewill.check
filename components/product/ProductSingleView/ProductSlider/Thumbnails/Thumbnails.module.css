@@ -1,0 +1,18 @@
+.sliderContainer {
+  &:hover .control {
+    @apply md:opacity-100;
+  }
+}
+
+.control {
+  @apply transition duration-150 md:opacity-0;
+}
+
+.slider {
+  &:not(.enableSlide) {
+    @apply flex justify-center;
+    & > * {
+      width: calc(100% / 6);
+    }
+  }
+}
