@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import cn from 'classnames';
 import s from './ProductSingleView.module.css';
@@ -13,6 +12,7 @@ import { Grid, Block, Button, YouTube, Container } from '@components/ui';
 import usePrice from '@framework/product/use-price';
 import { useAddToCart, getVariant } from '@lib/hooks/useAddToCart';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { useCustomPriceText } from '@lib/hooks/useCustomPriceText';
 import { Option } from './Option';
 import { ProductSlider } from './ProductSlider';
 import type { VFC } from 'react';
@@ -79,7 +79,6 @@ const useChoices = (product: Props['product']) => {
 };
 
 const ProductView: VFC<Props> = ({ product, productContent }) => {
-  const { locale } = useRouter();
   const { choices, setChoices } = useChoices(product);
   const { addToCart, loading } = useAddToCart();
   const handleOnClickAddToCart = () => {
@@ -95,7 +94,7 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
     baseAmount: product.price.retailPrice,
     currencyCode: product.price.currencyCode!,
   });
-  const priceText = locale === 'ja' ? `${price.replace('￥', '')}円` : price;
+  const customPriceText = useCustomPriceText(price);
 
   const f = useIntlMessage();
   const titleText = productContent.title ?? '';
@@ -127,7 +126,7 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
         <Block title={titleText} isCentering={true}>
           <div>
             <div className={cn('text-2xl')}>
-              <span className={cn('align-middle')}>{priceText}</span>
+              <span className={cn('align-middle')}>{customPriceText}</span>
               <span className={cn('text-sm', 'align-middle')}>
                 {f('store.taxIncluded')}
               </span>
