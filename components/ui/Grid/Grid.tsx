@@ -20,9 +20,9 @@ const Grid: FC<Props> = ({
   const rootClassName = cn(
     'relative',
     'w-full',
-    'overflow-x-auto',
     s.root,
     { [s.isSlide]: isSlide },
+    { 'overflow-x-auto': isSlide },
     className
   );
   const gridClassName = cn(s.gridWrapper, {
