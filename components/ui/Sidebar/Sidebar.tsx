@@ -5,7 +5,6 @@ import {
   enableBodyScroll,
   clearAllBodyScrollLocks,
 } from 'body-scroll-lock';
-import Div100vh from 'react-div-100vh';
 import s from './Sidebar.module.css';
 import cn from 'classnames';
 import type { FC } from 'react';
