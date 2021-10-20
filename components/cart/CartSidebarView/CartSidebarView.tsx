@@ -115,14 +115,14 @@ const CartSidebarView: FC = () => {
       ) : (
         <>
           <div className="px-4 sm:px-6 flex-1">
-            <Link href="/cart">
-              <h2
-                className="pt-1 pb-4 text-2xl leading-7 font-bold text-base tracking-wide cursor-pointer inline-block"
-                onClick={handleClose}
-              >
-                My Cart
-              </h2>
-            </Link>
+            {/* <Link href="/cart"> */}
+            <h2
+              className="pt-1 pb-4 text-2xl leading-7 font-bold text-base tracking-wide cursor-pointer inline-block"
+              onClick={handleClose}
+            >
+              My Cart
+            </h2>
+            {/* </Link> */}
             <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accents-3 border-t border-accents-3">
               {data!.lineItems.map((item: any) => (
                 <CartItem
@@ -134,7 +134,7 @@ const CartSidebarView: FC = () => {
             </ul>
           </div>
 
-          <div className="flex-shrink-0 px-4  py-5 sm:px-6">
+          <div className="flex-shrink-0 px-4 pt-5 pb-20 sm:px-6 md:py-5">
             <div className="border-t border-accents-3">
               <ul className="py-3">
                 <li className="flex justify-between py-1">
