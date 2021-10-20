@@ -1,7 +1,3 @@
-.root {
-  @apply relative;
-}
-
 .list {
   @apply flex flex-row items-center justify-items-end h-full;
 }
@@ -20,6 +16,15 @@
   &:focus,
   &:active {
     @apply outline-none;
+  }
+}
+
+.bag {
+  width: 30px;
+  height: 30px;
+  @screen md {
+    width: 25px;
+    height: 25px;
   }
 }
 

@@ -23,10 +23,10 @@ const UserNav: FC<Props> = ({ className }) => {
   const itemsCount = data?.lineItems.reduce(countItem, 0) ?? 0;
 
   return (
-    <div className={cn(s.root, className)}>
-      <ul className={s.list}>
-        <li className={s.item} onClick={toggleSidebar}>
-          <Bag />
+    <div className={cn('relative', className)}>
+      <ul className={cn(s.list)}>
+        <li className={cn(s.item)} onClick={toggleSidebar}>
+          <Bag className={cn(s.bag)} />
           {itemsCount > 0 && <span className={s.bagCount}>{itemsCount}</span>}
         </li>
         {/* {process.env.COMMERCE_WISHLIST_ENABLED && (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Image from 'next/image';
 import cn from 'classnames';
 import s from './ProductSingleView.module.css';
@@ -8,11 +8,19 @@ import {
 } from '@lib/contentful/utils/rich-text';
 import { richTextEntryHyperlinkFragment } from '@lib/contentful/utils/store/rich-text-fragment';
 import { Seo } from '@components/common';
-import { Grid, Block, Button, YouTube, Container } from '@components/ui';
+import {
+  Grid,
+  Block,
+  BlockContent,
+  Button,
+  YouTube,
+  Container,
+} from '@components/ui';
 import usePrice from '@framework/product/use-price';
 import { useAddToCart, getVariant } from '@lib/hooks/useAddToCart';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { useCustomPriceText } from '@lib/hooks/useCustomPriceText';
+import { useScreen } from '@lib/hooks/useScreen';
 import { Option } from './Option';
 import { ProductSlider } from './ProductSlider';
 import type { VFC } from 'react';
@@ -78,6 +86,17 @@ const useChoices = (product: Props['product']) => {
   return { choices, setChoices };
 };
 
+const useTextBlockChildElement = () => {
+  const { isScreenLg } = useScreen();
+  return useMemo(() => {
+    if (isScreenLg) {
+      return 'div';
+    } else {
+      return BlockContent;
+    }
+  }, [isScreenLg]);
+};
+
 const ProductView: VFC<Props> = ({ product, productContent }) => {
   const { choices, setChoices } = useChoices(product);
   const { addToCart, loading } = useAddToCart();
@@ -99,6 +118,8 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
   const f = useIntlMessage();
   const titleText = productContent.title ?? '';
   const descriptionText = '';
+
+  const TextBlockChildElement = useTextBlockChildElement();
 
   return (
     <>
@@ -124,7 +145,7 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
           ))}
         </ProductSlider>
         <Block title={titleText} isCentering={true}>
-          <div>
+          <TextBlockChildElement>
             <div className={cn('text-2xl')}>
               <span className={cn('align-middle')}>{customPriceText}</span>
               <span className={cn('text-sm', 'align-middle')}>
@@ -162,7 +183,7 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
                   : f('store.addToCart')}
               </Button>
             </div>
-          </div>
+          </TextBlockChildElement>
         </Block>
         {/* {process.env.COMMERCE_WISHLIST_ENABLED && (
           <WishlistButton
