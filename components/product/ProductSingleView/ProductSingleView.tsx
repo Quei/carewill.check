@@ -120,6 +120,7 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
   const descriptionText = '';
 
   const TextBlockChildElement = useTextBlockChildElement();
+  console.log(TextBlockChildElement);
 
   return (
     <>
@@ -146,8 +147,10 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
         </ProductSlider>
         <Block title={titleText} isCentering={true}>
           <TextBlockChildElement>
-            <div className={cn('text-2xl')}>
-              <span className={cn('align-middle')}>{customPriceText}</span>
+            <div>
+              <span className={cn('text-2xl', 'align-middle')}>
+                {customPriceText}
+              </span>
               <span className={cn('text-sm', 'align-middle')}>
                 {f('store.taxIncluded')}
               </span>
@@ -161,6 +164,7 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
                       className={s.option}
                       choices={choices}
                       setChoices={setChoices}
+                      color={productContent.color}
                       {...option}
                     />
                   );

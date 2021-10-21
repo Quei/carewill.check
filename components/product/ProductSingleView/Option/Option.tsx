@@ -1,18 +1,21 @@
 import { useCallback } from 'react';
 import cn from 'classnames';
 import s from './ProductOption.module.css';
-import { Swatch } from '../Swatch';
+import { Color } from './Color';
+import { Size } from './Size';
 import type { VFC, Dispatch, SetStateAction } from 'react';
 import type { SelectedOptions } from '@lib/hooks/useAddToCart';
 import type {
   ProductOption,
   ProductOptionValues,
 } from '@framework/types/product';
+import type { Repeater } from 'types/site';
 
 type Props = ProductOption & {
   className?: string;
   choices: SelectedOptions;
   setChoices: Dispatch<SetStateAction<SelectedOptions>>;
+  color?: Repeater[];
 };
 
 const Option: VFC<Props> = ({
@@ -22,39 +25,57 @@ const Option: VFC<Props> = ({
   values,
   choices,
   setChoices,
+  color,
 }) => {
-  console.log(setChoices);
+  const displayNameLowerCase = displayName.toLowerCase();
   const onClick = useCallback(
     (value: ProductOptionValues) => {
       setChoices((choices) => {
         return {
           ...choices,
-          [displayName.toLowerCase()]: value.label.toLowerCase(),
+          [displayNameLowerCase]: value.label.toLowerCase(),
         };
       });
     },
-    [displayName, setChoices]
+    [displayNameLowerCase, setChoices]
   );
   return (
     <div className={cn(className)}>
       <div key={displayName}>
         <h2 className={cn('capitalize', 'font-medium')}>
-          {displayName} : {choices[displayName]}
+          {displayName} : {choices[displayNameLowerCase]}
         </h2>
-        <div className={cn('flex', 'flex-row', 'mt-1')}>
-          {values.map((value, i: number) => {
-            const active = (choices as any)[displayName.toLowerCase()];
+        <div className={cn('mt-1')}>
+          {displayNameLowerCase === 'color' && (
+            <Color
+              id={id}
+              values={values}
+              active={choices[displayNameLowerCase]}
+              onClick={onClick}
+              color={color}
+            />
+          )}
+          {displayNameLowerCase === 'size' && (
+            <Size
+              id={id}
+              values={values}
+              active={choices[displayNameLowerCase]}
+              onClick={onClick}
+            />
+          )}
+          {/* {values.map((value, i: number) => {
+            const active = choices[displayNameLowerCase];
             return (
               <Swatch
                 key={`${id}-${i}`}
                 active={value.label.toLowerCase() === active}
-                variant={displayName}
+                variant={displayNameLowerCase}
                 color={value.hexColors ? value.hexColors[0] : ''}
                 label={value.label}
                 onClick={() => onClick(value)}
               />
             );
-          })}
+          })} */}
         </div>
       </div>
     </div>

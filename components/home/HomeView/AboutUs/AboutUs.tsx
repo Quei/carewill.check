@@ -10,7 +10,7 @@ import type {
   HomeAboutViewFragment,
   NavigationAboutFragment,
 } from 'types/schema';
-import type { Repeater } from 'types/all-navigations';
+import type { Repeater } from 'types/site';
 
 const SITE = 'about';
 

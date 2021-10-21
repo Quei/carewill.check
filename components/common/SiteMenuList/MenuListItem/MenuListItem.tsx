@@ -5,7 +5,7 @@ import s from './MenuListItem.module.css';
 import { useScreen } from '@lib/hooks/useScreen';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { Link, PlusMark } from '@components/ui';
-import type { Repeater } from 'types/all-navigations';
+import type { Repeater } from 'types/site';
 import type { Site } from 'types/site';
 
 type Props = {
