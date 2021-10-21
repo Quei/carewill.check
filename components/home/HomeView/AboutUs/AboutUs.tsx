@@ -44,6 +44,17 @@ export const homeAboutViewFragment = /* GraphQL */ `
 const dummyNewsPickupItems = [
   {
     sys: {
+      id: 'dymmy-news-5',
+    },
+    title:
+      'ケア衣料ブランドケアウィルの「アームスリングケープ」が 「2021年度グッドデザイン賞」を受賞 ',
+    slug: '211021_news',
+    date: '2021-10-21',
+    content:
+      '当社の「アームスリングケープ」が、このたび2021年度グッドデザイン賞(主催：公益財団法人日本デザイン振興会)を受賞しました。本件についてプレスリリースを配信しましたのでご覧ください。',
+  },
+  {
+    sys: {
       id: 'dymmy-news-4',
     },
     title:
@@ -63,17 +74,6 @@ const dummyNewsPickupItems = [
     date: '2021-07-30',
     content:
       '当社は、ブランドサイトとクラウドファンディングを8月末にローンチ予定です。これに伴い、今回のクラウドファンディングで販売予定の3型のケア衣料新製品を本日発表致しました。本件についてプレスリリースを配信しましたのでご覧ください。',
-  },
-  {
-    sys: {
-      id: 'dummy-news-2',
-    },
-    title:
-      '“carewill”, care-clothing brand to launch crowdfunding, brand site end of August, provide 3 new products',
-    slug: '210730_01_news',
-    date: '2021-07-30',
-    content:
-      'carewill will launch a brand site and cloud funding at the same time end of August and start to provide three new products of care-clothing by crowdfunding. >Show details',
   },
 ];
 
