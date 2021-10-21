@@ -1,35 +1,53 @@
 import cn from 'classnames';
 import s from './FormSection.module.css';
-import type { FC, ReactNode } from 'react';
+import { Select } from '@components/ui/react-hook-form';
+import type { VFC, Dispatch, SetStateAction } from 'react';
+import type { Data } from '../data';
+import type { SelectedOptions } from '../helper';
+import type { Lang } from 'types/site';
 
 type Props = {
   className?: string;
-  title?: string;
-  titleTagName?: 'h2' | 'h3';
-  description?: string;
-  children: ReactNode;
+  localeLang: Lang;
+  data: Data;
+  setVariationChoices: Dispatch<SetStateAction<SelectedOptions>>;
 };
 
-const FormSection: FC<Props> = ({
+const FormSection: VFC<Props> = ({
   className,
-  title,
-  titleTagName = 'h2',
-  description,
-  children,
+  localeLang,
+  data,
+  setVariationChoices,
 }) => {
-  const WrapperTag = title ? 'section' : 'div';
-  const TitleTag = titleTagName;
-
   return (
-    <WrapperTag className={cn(s.root, className)}>
-      {(title || description) && (
-        <header className={cn(s.header)}>
-          {title && <TitleTag className={cn(s.title)}>{title}</TitleTag>}
-          {description && <p className={cn(s.description)}>{description}</p>}
-        </header>
-      )}
-      <div className={cn(s.content)}>{children}</div>
-    </WrapperTag>
+    <section className={cn(s.root, className)}>
+      <h2>{data.title[localeLang]}</h2>
+      {data.inputs.map((input) => (
+        <div key={input.name}>
+          <Select
+            required={true}
+            name={input.name}
+            id={input.name}
+            options={input.values.map((value) => {
+              return {
+                value: value[localeLang],
+                label: value[localeLang],
+              };
+            })}
+            // onFocus={onFocus}
+            // onChange={delayClose}
+          />
+          {input.notes && (
+            <div>
+              {input.notes.map((note, index) => (
+                <p key={`note-${input.name}-${index}`}>{note[localeLang]}</p>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+      <div></div>
+    </section>
   );
 };
 

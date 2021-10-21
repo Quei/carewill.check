@@ -1,5 +1,17 @@
 .root {}
 
+.formWrapper {
+  @screen md {
+    flex: 0 0 440px;
+  }
+}
+
+.form {
+  & > * + * {
+    @apply border-t border-current;
+  }
+}
+
 .button {
   text-align: center;
   width: 100%;

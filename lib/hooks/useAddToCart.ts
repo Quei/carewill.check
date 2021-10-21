@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useAddItem } from '@framework/cart';
 import { useUI } from '@components/ui';
 import type { Product } from '@commerce/types/product';
-import type { CustomOrderOptions } from 'types/custom-order-options';
 
 type SelectedOptions = Record<string, string | null>;
 
@@ -22,12 +21,6 @@ function getVariant(product: Product, opts: SelectedOptions) {
   return variant;
 }
 
-function getCustomAttributes(options: CustomOrderOptions) {
-  return Object.entries(options).map(([key, value]) => {
-    return { key, value };
-  });
-}
-
 export const useAddToCart = () => {
   const addItem = useAddItem();
   const { openSidebar } = useUI();
@@ -35,16 +28,13 @@ export const useAddToCart = () => {
   const addToCart = async ({
     product,
     choices,
-    customOrderOptions,
+    customAttributes,
   }: {
     product: Product;
     choices: SelectedOptions;
-    customOrderOptions?: CustomOrderOptions;
+    customAttributes?: { key: string; value?: string }[];
   }) => {
     const variant = getVariant(product, choices);
-    const customAttributes = customOrderOptions
-      ? getCustomAttributes(customOrderOptions)
-      : undefined;
     setLoading(true);
     try {
       await addItem({

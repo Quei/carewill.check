@@ -9,8 +9,8 @@ import {
 } from '@lib/contentful/utils/rich-text';
 import { Seo, LaboRelatedPosts } from '@components/common';
 import { PageHeader, OnelineLink, FullImage, Container } from '@components/ui';
-import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
 import type { VFC } from 'react';
+import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
 import type { HauteCoutureViewFragment } from 'types/schema';
 
 type Props = HauteCoutureViewFragment & {

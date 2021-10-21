@@ -5,10 +5,14 @@ import s from './Input.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import type { VFC, InputHTMLAttributes, ChangeEventHandler } from 'react';
 import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
+import type { CustomOrderInputs } from 'types/custom-order-inputs';
+
+type FormInputs = HauteCoutureInputs | CustomOrderInputs;
+type FormKeyInputs = keyof HauteCoutureInputs | keyof CustomOrderInputs;
 
 export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   className?: string;
-  name: keyof HauteCoutureInputs;
+  name: FormKeyInputs;
   errorMessage?: string;
   onChange?: (...args: any[]) => any;
 };
@@ -24,7 +28,7 @@ const Input: VFC<Props> = ({
   ...rest
 }) => {
   const f = useIntlMessage();
-  const { register } = useFormContext<HauteCoutureInputs>();
+  const { register } = useFormContext<FormInputs>();
   const isEmail = type === 'email';
   const registerd = register(name, {
     required:

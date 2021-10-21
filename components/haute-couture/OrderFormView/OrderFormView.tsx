@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { NextSeo } from 'next-seo';
 import { scroller } from 'react-scroll';
-import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
+import { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import cn from 'classnames';
 import s from './OrderFormView.module.css';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
@@ -11,15 +11,15 @@ import {
   renderRichText,
   renderRichTextReact,
 } from '@lib/contentful/utils/rich-text';
+import { Seo } from '@components/common';
 import { Block, Container, Link } from '@components/ui';
 import { FormSection } from './FormSection';
 import { ErrorTitles } from './ErrorTitles';
+import { data } from './data';
 import type { VFC } from 'react';
-import type { DeepMap, FieldError } from 'react-hook-form';
+import type { SubmitHandler, DeepMap, FieldError } from 'react-hook-form';
 import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
 import type { HauteCoutureOrderFormViewFragment } from 'types/schema';
-import { data } from './data';
-import { useEffect } from 'react';
 
 type Props = HauteCoutureOrderFormViewFragment & {
   className?: string;
@@ -74,6 +74,11 @@ const useCurrentFocusIndex = () => {
   return { currentFocusIndex, handleOnFocus };
 };
 
+const useLocaleLang = () => {
+  const { locale } = useRouter();
+  return locale ? (locale as 'ja' | 'en') : 'ja';
+};
+
 const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
   const formMethod = useForm<HauteCoutureInputs>({
     shouldFocusError: false,
@@ -89,8 +94,7 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
     },
   } = formMethod;
 
-  const { locale } = useRouter();
-  const localeLang = locale ? (locale as 'ja' | 'en') : 'ja';
+  const localeLang = useLocaleLang();
   const [message, setMessage] = useState<string>();
 
   const onSubmit: SubmitHandler<HauteCoutureInputs> = useCallback(
@@ -140,7 +144,6 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
       });
       if (res.status === 200) {
         const json = await res.json();
-        console.log(json.message);
         setMessage(json.message);
       } else {
         console.log('Send mail error: ', res);
@@ -157,23 +160,7 @@ const OrderFormView: VFC<Props> = ({ formTitle, formDescription, slug }) => {
 
   return (
     <>
-      <NextSeo
-        title={titleText}
-        description={descriptionText}
-        openGraph={{
-          type: 'website',
-          title: titleText,
-          description: descriptionText,
-          // images: [
-          //   {
-          //     url: product.images[0]?.url!,
-          //     width: 800,
-          //     height: 600,
-          //     alt: product.name,
-          //   },
-          // ],
-        }}
-      />
+      <Seo title={titleText} description={descriptionText} />
       <Block title={titleText} titleTag="h1" hasNoPaddingMobile={true}>
         <Container className={cn('pt-24', 'pb-10', s.description)}>
           {renderRichTextReact(formDescription)}

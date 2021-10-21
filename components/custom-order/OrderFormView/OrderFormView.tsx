@@ -1,26 +1,30 @@
-import React, { useEffect } from 'react';
-import { NextSeo } from 'next-seo';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import cn from 'classnames';
 import s from './OrderFormView.module.css';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import usePrice from '@framework/product/use-price';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import { useProductChoices } from '@lib/hooks/useProductChoices';
+// import { useProductChoices } from '@lib/hooks/useProductChoices';
 import { useAddToCart } from '@lib/hooks/useAddToCart';
 import {
   renderRichText,
   renderRichTextReact,
   // hyperlinkEntry,
 } from '@lib/contentful/utils/rich-text';
+import { Seo } from '@components/common';
 // import { Button, Checkbox, TextArea, ErrorText } from '@components/ui';
 import { FormSection } from './FormSection';
 // import {
 //   CheckboxesWithImages,
 //   checkboxesWithImagesImageFragment,
 // } from './CheckboxesWithImages';
+import { data } from './data';
 import type { VFC } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import type { SelectedOptions } from './helper';
 import type { Product } from '@commerce/types/product';
-import type { CustomOrderOptions } from 'types/custom-order-options';
+import type { CustomOrderInputs } from 'types/custom-order-inputs';
 import type { CustomOrderOrderFormViewFragment } from 'types/schema';
 
 type Props = CustomOrderOrderFormViewFragment & {
@@ -38,97 +42,73 @@ export const customOrderOrderFormViewFragment = /* GraphQL */ `
   }
 `;
 
-// export const customOrderOrderFormViewFragment = /* GraphQL */ `
-//   fragment CustomOrderOrderFormView on CustomOrder {
-//     title
-//     description {
-//       json
-//     }
-//     slug
-//     customizedPartTitle
-//     customizedPartDescription
-//     customizedPartPickupImagesCollection {
-//       items {
-//         sys {
-//           id
-//         }
-//       }
-//     }
-//     customizedPartImagesCollection {
-//       items {
-//         ...CheckboxesWithImagesImage
-//       }
-//     }
-//     customizedPartOptions
-//     customizedPartNotes {
-//       json
-//       links {
-//         entries {
-//           hyperlink {
-//             __typename
-//             sys {
-//               id
-//             }
-//             ... on HauteCouture {
-//               slug
-//             }
-//           }
-//         }
-//       }
-//     }
-//     specTitle
-//     colorTitle
-//     colorDescription
-//     colorOptions
-//     colorPickupImagesCollection {
-//       items {
-//         ...CheckboxesWithImagesImage
-//       }
-//     }
-//     sizeTitle
-//     sizeDescription
-//     sizeOptions
-//   }
-//   ${checkboxesWithImagesImageFragment}
-// `;
+function getCustomAttributes(inputs: CustomOrderInputs) {
+  return Object.entries(inputs).map(([key, value]) => {
+    if (value?.value) {
+      return { key, value: value.value };
+    } else if (typeof value === 'string') {
+      return { key, value };
+    }
+    return {
+      key,
+      value: '',
+    };
+  });
+}
 
-const OrderView: VFC<Props> = ({
-  product,
-  title,
-  description,
-  slug,
-  // customizedPartTitle,
-  // customizedPartDescription,
-  // customizedPartPickupImagesCollection,
-  // customizedPartImagesCollection,
-  // customizedPartOptions,
-  // customizedPartNotes,
-  // specTitle,
-  // colorTitle,
-  // colorDescription,
-  // colorOptions,
-  // colorPickupImagesCollection,
-  // sizeTitle,
-  // sizeDescription,
-  // sizeOptions,
-}) => {
+const useLocaleLang = () => {
+  const { locale } = useRouter();
+  return locale ? (locale as 'ja' | 'en') : 'ja';
+};
+
+const useCustomOrderVariationChoices = ({ product }: { product: Product }) => {
+  const [variationChoices, setVariationChoices] = useState<SelectedOptions>({});
+
+  useEffect(() => {
+    // Selects the default option
+    product.variants[0].options?.forEach((v) => {
+      setVariationChoices((choices) => ({
+        ...choices,
+        [v.displayName.toLowerCase()]: v.values[0].label.toLowerCase(),
+      }));
+    });
+  }, [product.variants]);
+
+  return { variationChoices, setVariationChoices };
+};
+
+const OrderFormView: VFC<Props> = ({ product, title, description, slug }) => {
+  const localeLang = useLocaleLang();
   const { price } = usePrice({
     amount: product.price.value,
     baseAmount: product.price.retailPrice,
     currencyCode: product.price.currencyCode!,
   });
-  const { productChoices, setProductChoices } = useProductChoices({ product });
+  const {
+    variationChoices,
+    setVariationChoices,
+  } = useCustomOrderVariationChoices({
+    product,
+  });
   const { addToCart, loading } = useAddToCart();
 
+  const formMethod = useForm<CustomOrderInputs>({
+    shouldFocusError: false,
+  });
+
   const {
-    register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitSuccessful },
-  } = useForm<CustomOrderOptions>();
+    formState: { isSubmitSuccessful },
+  } = formMethod;
 
-  const onSubmit: SubmitHandler<CustomOrderOptions> = (data) => {
-    addToCart({ product, choices: productChoices, customOrderOptions: data });
+  const onSubmit: SubmitHandler<CustomOrderInputs> = (data) => {
+    const attributes = getCustomAttributes(data);
+    addToCart({
+      product,
+      choices: variationChoices,
+      customAttributes: attributes,
+    });
   };
 
   useEffect(() => {
@@ -143,29 +123,35 @@ const OrderView: VFC<Props> = ({
 
   return (
     <div className={cn(s.root, 'fit')}>
-      <NextSeo
-        title={titleText}
-        description={descriptionText}
-        openGraph={{
-          type: 'website',
-          title: titleText,
-          description: descriptionText,
-          // images: [
-          //   {
-          //     url: product.images[0]?.url!,
-          //     width: 800,
-          //     height: 600,
-          //     alt: product.name,
-          //   },
-          // ],
-        }}
-      />
-      <div>
-        <h1>{titleText}</h1>
-        <div className={s.price}>
-          {price}
-          {` `}
-          {product.price?.currencyCode}
+      <Seo title={titleText} description={descriptionText} />
+      <div className={cn('md:flex')}>
+        <div className={cn('h-96', 'md:flex-grow', 'md:flex-shrink', 'sticky')}>
+          image area
+        </div>
+        <div className={cn('border-current', 'md:border-l', s.formWrapper)}>
+          <FormProvider {...formMethod}>
+            <form
+              className={cn(s.form)}
+              onSubmit={handleSubmit(onSubmit)}
+              noValidate
+            >
+              {data.map((item, index) => {
+                return (
+                  <FormSection
+                    key={`section-${index}`}
+                    localeLang={localeLang}
+                    data={item}
+                    setVariationChoices={setVariationChoices}
+                  />
+                );
+              })}
+            </form>
+          </FormProvider>
+          <div className={s.price}>
+            {price}
+            {` `}
+            {product.price?.currencyCode}
+          </div>
         </div>
       </div>
       {/* <form onSubmit={handleSubmit(onSubmit)}>
@@ -277,4 +263,4 @@ const OrderView: VFC<Props> = ({
   );
 };
 
-export default OrderView;
+export default OrderFormView;

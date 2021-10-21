@@ -1,8 +1,5 @@
 import type { HauteCoutureInputs } from 'types/haute-couture-inputs';
-export type LanguageContent = {
-  ja?: string;
-  en?: string;
-};
+import type { LanguageContent } from 'types/form';
 
 type InputBase = {
   name: keyof HauteCoutureInputs;

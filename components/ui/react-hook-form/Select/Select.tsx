@@ -11,13 +11,20 @@ import type { OptionsType, OptionTypeBase, NamedProps } from 'react-select';
 import type { Components } from 'react-select/src/components';
 import type {
   HauteCoutureInputs,
-  SelectInputs,
+  SelectInputs as HauteCoutureSelectInputs,
 } from 'types/haute-couture-inputs';
+import type { CustomOrderInputs } from 'types/custom-order-inputs';
+
+type FormInputs = HauteCoutureInputs | CustomOrderInputs;
+type FormSelectInputs = HauteCoutureSelectInputs | CustomOrderInputs;
+type FormSelectInputsKey =
+  | keyof HauteCoutureSelectInputs
+  | keyof CustomOrderInputs;
 
 export type Props = {
   className?: string;
   required?: boolean;
-  name: keyof HauteCoutureInputs;
+  name: FormSelectInputsKey;
   id: string;
   options: OptionsType<{ value?: string; label?: string }>;
   hasOtherText?: boolean;
@@ -118,7 +125,7 @@ const useHasShownOtherText = ({
 }: Pick<Props, 'name' | 'hasOtherText'>) => {
   const f = useIntlMessage();
   const [hasShownOtherText, setHasShownOtherText] = useState(false);
-  const { watch } = useFormContext<HauteCoutureInputs>();
+  const { watch } = useFormContext<FormInputs>();
   const watchValue = watch(name);
   useEffect(() => {
     if (hasOtherText && watchValue) {
@@ -152,7 +159,7 @@ const Select: FC<Props> = ({
   onFocus,
   onChange,
 }) => {
-  const { control } = useFormContext<HauteCoutureInputs>();
+  const { control } = useFormContext<FormInputs>();
   const f = useIntlMessage();
   const otherText = f('form.other');
   const customOptions = hasOtherText
@@ -166,7 +173,7 @@ const Select: FC<Props> = ({
     <>
       <label className={cn('block', s.select, className)}>
         <Controller
-          control={control as Control<SelectInputs>}
+          control={control as Control<FormSelectInputs>}
           name={name}
           rules={{
             required: required && f('form.error.required'),
