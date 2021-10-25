@@ -1774,6 +1774,111 @@ enum NewsCategoryOrder {
   sys_publishedVersion_DESC
 }
 
+type HomeProductHomeDescription {
+  json: JSON!
+  links: HomeProductHomeDescriptionLinks!
+}
+
+type HomeProductHomeDescriptionLinks {
+  entries: HomeProductHomeDescriptionEntries!
+  assets: HomeProductHomeDescriptionAssets!
+}
+
+type HomeProductHomeDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeProductHomeDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeProductDescription {
+  json: JSON!
+  links: HomeProductDescriptionLinks!
+}
+
+type HomeProductDescriptionLinks {
+  entries: HomeProductDescriptionEntries!
+  assets: HomeProductDescriptionAssets!
+}
+
+type HomeProductDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeProductDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeCustomOrderHomeDescription {
+  json: JSON!
+  links: HomeCustomOrderHomeDescriptionLinks!
+}
+
+type HomeCustomOrderHomeDescriptionLinks {
+  entries: HomeCustomOrderHomeDescriptionEntries!
+  assets: HomeCustomOrderHomeDescriptionAssets!
+}
+
+type HomeCustomOrderHomeDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeCustomOrderHomeDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeHauteCoutureHomeDescription {
+  json: JSON!
+  links: HomeHauteCoutureHomeDescriptionLinks!
+}
+
+type HomeHauteCoutureHomeDescriptionLinks {
+  entries: HomeHauteCoutureHomeDescriptionEntries!
+  assets: HomeHauteCoutureHomeDescriptionAssets!
+}
+
+type HomeHauteCoutureHomeDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeHauteCoutureHomeDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type HomeCollaborationHomeDescription {
+  json: JSON!
+  links: HomeCollaborationHomeDescriptionLinks!
+}
+
+type HomeCollaborationHomeDescriptionLinks {
+  entries: HomeCollaborationHomeDescriptionEntries!
+  assets: HomeCollaborationHomeDescriptionAssets!
+}
+
+type HomeCollaborationHomeDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type HomeCollaborationHomeDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
 type ProductCollection {
   total: Int!
   skip: Int!
@@ -1988,111 +2093,6 @@ type HauteCoutureFormDescriptionEntries {
 }
 
 type HauteCoutureFormDescriptionAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type HomeProductHomeDescription {
-  json: JSON!
-  links: HomeProductHomeDescriptionLinks!
-}
-
-type HomeProductHomeDescriptionLinks {
-  entries: HomeProductHomeDescriptionEntries!
-  assets: HomeProductHomeDescriptionAssets!
-}
-
-type HomeProductHomeDescriptionEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type HomeProductHomeDescriptionAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type HomeProductDescription {
-  json: JSON!
-  links: HomeProductDescriptionLinks!
-}
-
-type HomeProductDescriptionLinks {
-  entries: HomeProductDescriptionEntries!
-  assets: HomeProductDescriptionAssets!
-}
-
-type HomeProductDescriptionEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type HomeProductDescriptionAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type HomeCustomOrderHomeDescription {
-  json: JSON!
-  links: HomeCustomOrderHomeDescriptionLinks!
-}
-
-type HomeCustomOrderHomeDescriptionLinks {
-  entries: HomeCustomOrderHomeDescriptionEntries!
-  assets: HomeCustomOrderHomeDescriptionAssets!
-}
-
-type HomeCustomOrderHomeDescriptionEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type HomeCustomOrderHomeDescriptionAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type HomeHauteCoutureHomeDescription {
-  json: JSON!
-  links: HomeHauteCoutureHomeDescriptionLinks!
-}
-
-type HomeHauteCoutureHomeDescriptionLinks {
-  entries: HomeHauteCoutureHomeDescriptionEntries!
-  assets: HomeHauteCoutureHomeDescriptionAssets!
-}
-
-type HomeHauteCoutureHomeDescriptionEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type HomeHauteCoutureHomeDescriptionAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type HomeCollaborationHomeDescription {
-  json: JSON!
-  links: HomeCollaborationHomeDescriptionLinks!
-}
-
-type HomeCollaborationHomeDescriptionLinks {
-  entries: HomeCollaborationHomeDescriptionEntries!
-  assets: HomeCollaborationHomeDescriptionAssets!
-}
-
-type HomeCollaborationHomeDescriptionEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type HomeCollaborationHomeDescriptionAssets {
   hyperlink: [Asset]!
   block: [Asset]!
 }

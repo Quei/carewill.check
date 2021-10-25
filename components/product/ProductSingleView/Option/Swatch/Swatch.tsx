@@ -52,7 +52,7 @@ const Swatch: FC<Omit<ButtonProps, 'variant'> & SwatchProps> = ({
           <Check />
         </span>
       )}
-      {!color ? label : null}
+      {!color ? <span>{label}</span> : null}
     </Button>
   );
 };

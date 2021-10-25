@@ -2293,6 +2293,131 @@ export enum NewsCategoryOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
 
+export type HomeProductHomeDescription = {
+  __typename?: 'HomeProductHomeDescription';
+  json: Scalars['JSON'];
+  links: HomeProductHomeDescriptionLinks;
+};
+
+export type HomeProductHomeDescriptionLinks = {
+  __typename?: 'HomeProductHomeDescriptionLinks';
+  entries: HomeProductHomeDescriptionEntries;
+  assets: HomeProductHomeDescriptionAssets;
+};
+
+export type HomeProductHomeDescriptionEntries = {
+  __typename?: 'HomeProductHomeDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type HomeProductHomeDescriptionAssets = {
+  __typename?: 'HomeProductHomeDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type HomeProductDescription = {
+  __typename?: 'HomeProductDescription';
+  json: Scalars['JSON'];
+  links: HomeProductDescriptionLinks;
+};
+
+export type HomeProductDescriptionLinks = {
+  __typename?: 'HomeProductDescriptionLinks';
+  entries: HomeProductDescriptionEntries;
+  assets: HomeProductDescriptionAssets;
+};
+
+export type HomeProductDescriptionEntries = {
+  __typename?: 'HomeProductDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type HomeProductDescriptionAssets = {
+  __typename?: 'HomeProductDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type HomeCustomOrderHomeDescription = {
+  __typename?: 'HomeCustomOrderHomeDescription';
+  json: Scalars['JSON'];
+  links: HomeCustomOrderHomeDescriptionLinks;
+};
+
+export type HomeCustomOrderHomeDescriptionLinks = {
+  __typename?: 'HomeCustomOrderHomeDescriptionLinks';
+  entries: HomeCustomOrderHomeDescriptionEntries;
+  assets: HomeCustomOrderHomeDescriptionAssets;
+};
+
+export type HomeCustomOrderHomeDescriptionEntries = {
+  __typename?: 'HomeCustomOrderHomeDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type HomeCustomOrderHomeDescriptionAssets = {
+  __typename?: 'HomeCustomOrderHomeDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type HomeHauteCoutureHomeDescription = {
+  __typename?: 'HomeHauteCoutureHomeDescription';
+  json: Scalars['JSON'];
+  links: HomeHauteCoutureHomeDescriptionLinks;
+};
+
+export type HomeHauteCoutureHomeDescriptionLinks = {
+  __typename?: 'HomeHauteCoutureHomeDescriptionLinks';
+  entries: HomeHauteCoutureHomeDescriptionEntries;
+  assets: HomeHauteCoutureHomeDescriptionAssets;
+};
+
+export type HomeHauteCoutureHomeDescriptionEntries = {
+  __typename?: 'HomeHauteCoutureHomeDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type HomeHauteCoutureHomeDescriptionAssets = {
+  __typename?: 'HomeHauteCoutureHomeDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type HomeCollaborationHomeDescription = {
+  __typename?: 'HomeCollaborationHomeDescription';
+  json: Scalars['JSON'];
+  links: HomeCollaborationHomeDescriptionLinks;
+};
+
+export type HomeCollaborationHomeDescriptionLinks = {
+  __typename?: 'HomeCollaborationHomeDescriptionLinks';
+  entries: HomeCollaborationHomeDescriptionEntries;
+  assets: HomeCollaborationHomeDescriptionAssets;
+};
+
+export type HomeCollaborationHomeDescriptionEntries = {
+  __typename?: 'HomeCollaborationHomeDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type HomeCollaborationHomeDescriptionAssets = {
+  __typename?: 'HomeCollaborationHomeDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
 export type ProductCollection = {
   __typename?: 'ProductCollection';
   total: Scalars['Int'];
@@ -2664,131 +2789,6 @@ export type HauteCoutureFormDescriptionEntries = {
 
 export type HauteCoutureFormDescriptionAssets = {
   __typename?: 'HauteCoutureFormDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type HomeProductHomeDescription = {
-  __typename?: 'HomeProductHomeDescription';
-  json: Scalars['JSON'];
-  links: HomeProductHomeDescriptionLinks;
-};
-
-export type HomeProductHomeDescriptionLinks = {
-  __typename?: 'HomeProductHomeDescriptionLinks';
-  entries: HomeProductHomeDescriptionEntries;
-  assets: HomeProductHomeDescriptionAssets;
-};
-
-export type HomeProductHomeDescriptionEntries = {
-  __typename?: 'HomeProductHomeDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type HomeProductHomeDescriptionAssets = {
-  __typename?: 'HomeProductHomeDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type HomeProductDescription = {
-  __typename?: 'HomeProductDescription';
-  json: Scalars['JSON'];
-  links: HomeProductDescriptionLinks;
-};
-
-export type HomeProductDescriptionLinks = {
-  __typename?: 'HomeProductDescriptionLinks';
-  entries: HomeProductDescriptionEntries;
-  assets: HomeProductDescriptionAssets;
-};
-
-export type HomeProductDescriptionEntries = {
-  __typename?: 'HomeProductDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type HomeProductDescriptionAssets = {
-  __typename?: 'HomeProductDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type HomeCustomOrderHomeDescription = {
-  __typename?: 'HomeCustomOrderHomeDescription';
-  json: Scalars['JSON'];
-  links: HomeCustomOrderHomeDescriptionLinks;
-};
-
-export type HomeCustomOrderHomeDescriptionLinks = {
-  __typename?: 'HomeCustomOrderHomeDescriptionLinks';
-  entries: HomeCustomOrderHomeDescriptionEntries;
-  assets: HomeCustomOrderHomeDescriptionAssets;
-};
-
-export type HomeCustomOrderHomeDescriptionEntries = {
-  __typename?: 'HomeCustomOrderHomeDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type HomeCustomOrderHomeDescriptionAssets = {
-  __typename?: 'HomeCustomOrderHomeDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type HomeHauteCoutureHomeDescription = {
-  __typename?: 'HomeHauteCoutureHomeDescription';
-  json: Scalars['JSON'];
-  links: HomeHauteCoutureHomeDescriptionLinks;
-};
-
-export type HomeHauteCoutureHomeDescriptionLinks = {
-  __typename?: 'HomeHauteCoutureHomeDescriptionLinks';
-  entries: HomeHauteCoutureHomeDescriptionEntries;
-  assets: HomeHauteCoutureHomeDescriptionAssets;
-};
-
-export type HomeHauteCoutureHomeDescriptionEntries = {
-  __typename?: 'HomeHauteCoutureHomeDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type HomeHauteCoutureHomeDescriptionAssets = {
-  __typename?: 'HomeHauteCoutureHomeDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type HomeCollaborationHomeDescription = {
-  __typename?: 'HomeCollaborationHomeDescription';
-  json: Scalars['JSON'];
-  links: HomeCollaborationHomeDescriptionLinks;
-};
-
-export type HomeCollaborationHomeDescriptionLinks = {
-  __typename?: 'HomeCollaborationHomeDescriptionLinks';
-  entries: HomeCollaborationHomeDescriptionEntries;
-  assets: HomeCollaborationHomeDescriptionAssets;
-};
-
-export type HomeCollaborationHomeDescriptionEntries = {
-  __typename?: 'HomeCollaborationHomeDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type HomeCollaborationHomeDescriptionAssets = {
-  __typename?: 'HomeCollaborationHomeDescriptionAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
 };

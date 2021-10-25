@@ -21,13 +21,14 @@ export const ja: Record<string, any> = {
   ['store.notAvailable']: '在庫切れ',
   ['store.taxIncluded']: '（税込）',
   ['store.quantity']: '数量',
-  ['store.subtotal']: '小計',
+  ['store.subTotal']: '小計',
   ['store.taxes']: '税',
   ['store.calculatedAtCheckout']: '会計時に計算',
   ['store.estimatedShipping']: '送料',
-  ['store.total']: '合計',
+  ['store.total']: '合計（税・送料込）',
   ['store.proceedToCheckout']: '会計に進む',
   ['store.product.details']: '詳細情報',
+  ['store.product.aboutSize']: 'サイズについて',
   // form
   // haute-couture
   form: '入力フォーム',

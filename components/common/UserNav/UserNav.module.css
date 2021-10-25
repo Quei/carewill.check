@@ -4,6 +4,7 @@
 
 .item {
   @apply mr-6 cursor-pointer relative transition ease-in-out duration-100 flex items-center outline-none text-primary;
+  margin-top: -5px;
 
   &:hover {
     @apply text-accents-6 transition scale-110 duration-100;
@@ -22,14 +23,10 @@
 .bag {
   width: 30px;
   height: 30px;
-  @screen md {
-    width: 25px;
-    height: 25px;
-  }
 }
 
 .bagCount {
-  @apply border border-accents-1 bg-secondary text-secondary absolute rounded-full right-3 top-3 flex items-center justify-center font-bold;
+  @apply border border-accents-1 bg-green text-secondary absolute rounded-full -left-1 -bottom-1 flex items-center justify-center font-bold;
   font-size: 11px;
   line-height: 1.1;
   padding-left: 2.5px;

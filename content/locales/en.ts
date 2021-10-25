@@ -22,13 +22,14 @@ export const en: Record<string, any> = {
   ['store.notAvailable']: 'Not available',
   ['store.taxIncluded']: '(tax included)',
   ['store.quantity']: 'Quantity',
-  ['store.subtotal']: 'Subtotal',
+  ['store.subTotal']: 'Subtotal',
   ['store.taxes']: 'Taxes',
   ['store.calculatedAtCheckout']: 'Calculated at checkout',
   ['store.estimatedShipping']: 'Estimated Shipping',
-  ['store.total']: 'Total',
+  ['store.total']: 'Total (tax and shipping included)',
   ['store.proceedToCheckout']: 'Proceed to checkout',
   ['store.product.details']: 'Details',
+  ['store.product.aboutSize']: 'About size',
   // form
   // haute-couture
   form: 'Form',

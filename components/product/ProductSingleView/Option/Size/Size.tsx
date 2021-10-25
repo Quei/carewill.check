@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import s from './Size.module.css';
-import { Swatch } from '@components/product/ProductSingleView/Swatch';
+import { Swatch } from '../Swatch';
 import type { VFC } from 'react';
 import type { ProductOptionValues } from '@framework/types/product';
 

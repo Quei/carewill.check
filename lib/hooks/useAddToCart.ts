@@ -7,6 +7,9 @@ export type SelectedOptions = Record<string, string | null>;
 
 type ShopifyProductVariant = ProductVariant & {
   price: number;
+  image?: {
+    id: string;
+  };
 };
 
 export const getVariant = (product: Product, opts: SelectedOptions) => {
@@ -32,10 +35,12 @@ export const useAddToCart = () => {
   const addToCart = async ({
     product,
     choices,
+    quantity,
     customAttributes,
   }: {
     product: Product;
     choices: SelectedOptions;
+    quantity?: number;
     customAttributes?: { key: string; value?: string }[];
   }) => {
     const variant = getVariant(product, choices);
@@ -46,6 +51,7 @@ export const useAddToCart = () => {
         variantId: String(variant ? variant.id : product.variants[0].id),
         // NOTE:
         // customAttributesを追加
+        quantity,
         customAttributes,
       });
       openSidebar();

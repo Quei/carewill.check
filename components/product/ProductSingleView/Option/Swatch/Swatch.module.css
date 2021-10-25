@@ -1,11 +1,11 @@
 .swatch {
-  @apply relative bg-primary text-primary rounded-full inline-flex
+  @apply relative bg-primary text-primary inline-flex
   items-center justify-center cursor-pointer
   p-0 shadow-none border-green border-1 box-border;
   overflow: hidden;
 
   &:not(.size) {
-    @apply h-12 w-12;
+    @apply h-12 w-12 rounded-full;
     &.active,
     &:hover,
     &:focus {
@@ -28,18 +28,21 @@
 }
 
 .color {
+  &.active,
   &:hover {
     @apply text-green;
   }
   
-  &.dark,
-  &.dark:hover {
-    color: white !important;
+  &.dark {
+    &.active,
+    &:hover {
+      color: white !important;
+    }
   }
 }
 
 .size {
-  @apply rounded-none bg-white flex-grow h-12;
+  @apply rounded-none bg-white flex-grow flex-shrink h-12;
   &::after {
     @apply absolute z-10 w-full h-full pointer-events-none;
     content: '';
@@ -53,6 +56,10 @@
     }
   }
   & + .size {
-    border-left: none;
+    @apply border-l-0;
+  }
+
+  & > span {
+    @apply relative leading-none;
   }
 }

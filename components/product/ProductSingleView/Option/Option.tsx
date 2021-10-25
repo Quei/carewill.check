@@ -3,6 +3,7 @@ import cn from 'classnames';
 import s from './ProductOption.module.css';
 import { Color } from './Color';
 import { Size } from './Size';
+import { Select } from './Select';
 import type { VFC, Dispatch, SetStateAction } from 'react';
 import type { SelectedOptions } from '@lib/hooks/useAddToCart';
 import type {
@@ -16,6 +17,7 @@ type Props = ProductOption & {
   choices: SelectedOptions;
   setChoices: Dispatch<SetStateAction<SelectedOptions>>;
   color?: Repeater[];
+  setDirty?: () => void;
 };
 
 const Option: VFC<Props> = ({
@@ -26,6 +28,7 @@ const Option: VFC<Props> = ({
   choices,
   setChoices,
   color,
+  setDirty,
 }) => {
   const displayNameLowerCase = displayName.toLowerCase();
   const onClick = useCallback(
@@ -36,8 +39,9 @@ const Option: VFC<Props> = ({
           [displayNameLowerCase]: value.label.toLowerCase(),
         };
       });
+      setDirty && setDirty();
     },
-    [displayNameLowerCase, setChoices]
+    [displayNameLowerCase, setChoices, setDirty]
   );
   return (
     <div className={cn(className)}>
@@ -63,19 +67,10 @@ const Option: VFC<Props> = ({
               onClick={onClick}
             />
           )}
-          {/* {values.map((value, i: number) => {
-            const active = choices[displayNameLowerCase];
-            return (
-              <Swatch
-                key={`${id}-${i}`}
-                active={value.label.toLowerCase() === active}
-                variant={displayNameLowerCase}
-                color={value.hexColors ? value.hexColors[0] : ''}
-                label={value.label}
-                onClick={() => onClick(value)}
-              />
-            );
-          })} */}
+          {displayNameLowerCase !== 'color' &&
+            displayNameLowerCase !== 'size' && (
+              <Select values={values} onClick={onClick} />
+            )}
         </div>
       </div>
     </div>

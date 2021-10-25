@@ -11,6 +11,7 @@ import usePrice from '@framework/product/use-price';
 import useCart from '@framework/cart/use-cart';
 import useCustomOrderAddDiscountCode from '@framework/cart/use-custom-order-add-discount-code';
 import useCustomOrderRemoveDiscountCode from '@framework/cart/use-custom-order-remove-discount-code';
+import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 
 type UseCartReturnType = ReturnType<typeof useCart>;
 const useCustomOrderDiscountCode = (data: UseCartReturnType['data']) => {
@@ -52,8 +53,11 @@ const CartSidebarView: FC = () => {
       currencyCode: data.currency.code,
     }
   );
+
   const handleClose = () => closeSidebar();
   useCustomOrderDiscountCode(data);
+
+  const f = useIntlMessage();
 
   const error = null;
   const success = null;
@@ -65,39 +69,23 @@ const CartSidebarView: FC = () => {
       })}
     >
       <header className="px-4 pt-6 pb-4 sm:px-6">
-        <div className="flex items-start justify-between space-x-3">
-          <div className="h-7 flex items-center">
-            <button
-              onClick={handleClose}
-              aria-label="Close panel"
-              className="hover:text-gray-500 transition ease-in-out duration-150"
-            >
-              <Cross className="h-6 w-6" />
-            </button>
-          </div>
-          <div className="space-y-1">
-            <UserNav />
-          </div>
-        </div>
+        <button
+          onClick={handleClose}
+          aria-label="Close panel"
+          className="absolute z-10 top-2 right-2"
+        >
+          <Cross className="h-12 w-12" />
+        </button>
       </header>
 
       {isLoading || isEmpty ? (
         <div className="flex-1 px-4 flex flex-col justify-center items-center">
-          <span className="border border-dashed border-primary rounded-full flex items-center justify-center w-16 h-16 p-12 bg-secondary text-secondary">
-            <Bag className="absolute" />
-          </span>
           <h2 className="pt-6 text-2xl font-bold tracking-wide text-center">
             Your cart is empty
           </h2>
-          <p className="text-accents-3 px-10 text-center pt-2">
-            Biscuit oat cake wafer icing ice cream tiramisu pudding cupcake.
-          </p>
         </div>
       ) : error ? (
         <div className="flex-1 px-4 flex flex-col justify-center items-center">
-          <span className="border border-white rounded-full flex items-center justify-center w-16 h-16">
-            <Cross width={24} height={24} />
-          </span>
           <h2 className="pt-6 text-xl font-light text-center">
             We couldn’t process the purchase. Please check your card information
             and try again.
@@ -105,25 +93,22 @@ const CartSidebarView: FC = () => {
         </div>
       ) : success ? (
         <div className="flex-1 px-4 flex flex-col justify-center items-center">
-          <span className="border border-white rounded-full flex items-center justify-center w-16 h-16">
-            <Check />
-          </span>
           <h2 className="pt-6 text-xl font-light text-center">
             Thank you for your order.
           </h2>
         </div>
       ) : (
         <>
-          <div className="px-4 sm:px-6 flex-1">
+          <div className="flex-1">
             {/* <Link href="/cart"> */}
             <h2
-              className="pt-1 pb-4 text-2xl leading-7 font-bold text-base tracking-wide cursor-pointer inline-block"
+              className="pt-1 pb-4 px-4 sm:px-6 text-2xl leading-7 font-bold tracking-wide cursor-pointer inline-block"
               onClick={handleClose}
             >
               My Cart
             </h2>
             {/* </Link> */}
-            <ul className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accents-3 border-t border-accents-3">
+            <ul className="py-6 px-4 sm:px-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-accents-3 border-t border-current">
               {data!.lineItems.map((item: any) => (
                 <CartItem
                   key={item.id}
@@ -134,30 +119,24 @@ const CartSidebarView: FC = () => {
             </ul>
           </div>
 
-          <div className="flex-shrink-0 px-4 pt-5 pb-20 sm:px-6 md:py-5">
-            <div className="border-t border-accents-3">
+          <div className="flex-shrink-0 pt-5 pb-20 md:py-5">
+            <div className="border-t border-current px-4 sm:px-6">
               <ul className="py-3">
                 <li className="flex justify-between py-1">
-                  <span>Subtotal</span>
+                  <span>{f('store.subTotal')}</span>
                   <span>{subTotal}</span>
                 </li>
                 <li className="flex justify-between py-1">
-                  <span>Taxes</span>
-                  <span>Calculated at checkout</span>
-                </li>
-                <li className="flex justify-between py-1">
-                  <span>Estimated Shipping</span>
-                  <span className="font-bold tracking-wide">FREE</span>
+                  <span>{f('store.total')}</span>
+                  <span>{total}</span>
                 </li>
               </ul>
-              <div className="flex justify-between border-t border-accents-3 py-3 font-bold mb-10">
-                <span>Total</span>
-                <span>{total}</span>
-              </div>
             </div>
-            <Button href="/checkout" Component="a" width="100%">
-              Proceed to Checkout
-            </Button>
+            <div className="flex justify-center my-6">
+              <Button className={cn(s.button)} href="/checkout" Component="a">
+                {f('store.proceedToCheckout')}
+              </Button>
+            </div>
           </div>
         </>
       )}

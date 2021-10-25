@@ -1,5 +1,6 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback, Fragment } from 'react';
 import Image from 'next/image';
+import { animateScroll } from 'react-scroll';
 import cn from 'classnames';
 import s from './ProductSingleView.module.css';
 import {
@@ -7,7 +8,12 @@ import {
   richTextAssetFragment,
 } from '@lib/contentful/utils/rich-text';
 import { richTextEntryHyperlinkFragment } from '@lib/contentful/utils/store/rich-text-fragment';
-import { Seo } from '@components/common';
+import usePrice from '@framework/product/use-price';
+import { useAddToCart, getVariant } from '@lib/hooks/useAddToCart';
+import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { useCustomPriceText } from '@lib/hooks/useCustomPriceText';
+import { useScreen } from '@lib/hooks/useScreen';
+import { Seo, LaboRelatedPosts } from '@components/common';
 import {
   Grid,
   Block,
@@ -16,23 +22,21 @@ import {
   YouTube,
   Container,
 } from '@components/ui';
-import usePrice from '@framework/product/use-price';
-import { useAddToCart, getVariant } from '@lib/hooks/useAddToCart';
-import { useIntlMessage } from '@lib/hooks/useIntlMessage';
-import { useCustomPriceText } from '@lib/hooks/useCustomPriceText';
-import { useScreen } from '@lib/hooks/useScreen';
-import { Option } from './Option';
 import { ProductSlider } from './ProductSlider';
+import { Option } from './Option';
+import { SizeContent } from './SizeContent';
+import { Quantity } from './Quantity';
+import { AboutSizeButton } from './AboutSizeButton';
 import type { VFC } from 'react';
-import type { Product } from '@commerce/types/product';
+import type { Product } from '@commerce/../shopify/types/product';
 import type { SelectedOptions } from '@lib/hooks/useAddToCart';
+import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
 import type { ProductSingleViewFragment } from 'types/schema';
 
 type Props = {
-  children?: any;
   product: Product;
   productContent: ProductSingleViewFragment;
-  className?: string;
+  relatedPosts?: RelatedPosts;
 };
 
 export const productSingleViewFragment = /* GraphQL */ `
@@ -71,19 +75,49 @@ export const productSingleViewFragment = /* GraphQL */ `
 `;
 
 const useChoices = (product: Props['product']) => {
-  const [choices, setChoices] = useState<SelectedOptions>({});
-
-  useEffect(() => {
+  const [choices, setChoices] = useState<SelectedOptions>(() => {
     // Selects the default option
-    product.variants[0].options?.forEach((v) => {
-      setChoices((choices) => ({
-        ...choices,
-        [v.displayName.toLowerCase()]: v.values[0].label.toLowerCase(),
-      }));
-    });
-  }, [product.variants]);
+    return product.variants[0].options?.reduce((prev, current) => {
+      return {
+        ...prev,
+        [current.displayName.toLowerCase()]: current.values[0].label.toLowerCase(),
+      };
+    }, {});
+  });
+
+  // const [choices, setChoices] = useState<SelectedOptions>({});
+  // useEffect(() => {
+  //   // Selects the default option
+  //   product.variants[0].options?.forEach((option, index) => {
+  //     setChoices((choices) => ({
+  //       ...choices,
+  //       [option.displayName.toLowerCase()]: option.values[0].label.toLowerCase(),
+  //     }));
+  //   });
+  // }, [product.variants]);
 
   return { choices, setChoices };
+};
+
+const useIsDirtyChoices = () => {
+  const [isDirtyChoices, setIsDirtyChoices] = useState(false);
+  const setDirty = useCallback(() => {
+    setIsDirtyChoices(true);
+  }, []);
+  return { isDirtyChoices, setDirty };
+};
+
+const useQuantity = () => {
+  const [quantity, setQuantity] = useState(1);
+  const addQuantity = useCallback(() => {
+    setQuantity((value) => value + 1);
+  }, []);
+  const subtractQuantity = useCallback(() => {
+    setQuantity((value) => {
+      return value > 1 ? value - 1 : 1;
+    });
+  }, []);
+  return { quantity, addQuantity, subtractQuantity };
 };
 
 const useTextBlockChildElement = () => {
@@ -97,15 +131,30 @@ const useTextBlockChildElement = () => {
   }, [isScreenLg]);
 };
 
-const ProductView: VFC<Props> = ({ product, productContent }) => {
+const useShownAboutSize = () => {
+  const [hasShownAboutSize, setHasShownAboutSize] = useState(false);
+  const showSizeContent = useCallback(() => {
+    setHasShownAboutSize(true);
+    animateScroll.scrollToTop({ duration: 200 });
+  }, []);
+  const hideSizeContent = useCallback(() => {
+    setHasShownAboutSize(false);
+  }, []);
+  return { hasShownAboutSize, showSizeContent, hideSizeContent };
+};
+
+const ProductView: VFC<Props> = ({ product, productContent, relatedPosts }) => {
   const { choices, setChoices } = useChoices(product);
+  const { isDirtyChoices, setDirty } = useIsDirtyChoices();
+  const { quantity, addQuantity, subtractQuantity } = useQuantity();
   const { addToCart, loading } = useAddToCart();
-  const handleOnClickAddToCart = () => {
+  const handleOnClickAddToCart = useCallback(() => {
     addToCart({
       product,
       choices,
+      quantity,
     });
-  };
+  }, [addToCart, product, choices, quantity]);
 
   const variant = getVariant(product, choices);
   const { price } = usePrice({
@@ -115,12 +164,20 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
   });
   const customPriceText = useCustomPriceText(price);
 
+  const {
+    hasShownAboutSize,
+    showSizeContent,
+    hideSizeContent,
+  } = useShownAboutSize();
+
   const f = useIntlMessage();
   const titleText = productContent.title ?? '';
   const descriptionText = '';
 
   const TextBlockChildElement = useTextBlockChildElement();
-  console.log(TextBlockChildElement);
+  const hasSizeOption = product.options?.some((option) =>
+    /^size$/i.test(option.displayName)
+  );
 
   return (
     <>
@@ -130,21 +187,41 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
         image={product.images?.[0]}
       />
       <Grid>
-        <ProductSlider key={product.id} images={product.images}>
-          {product.images.map((image, i) => (
-            <div key={image.url} className={s.imageContainer}>
-              <Image
-                className={cn('w-full', 'h-auto', 'max-h-full', 'object-cover')}
-                src={image.url!}
-                alt={image.alt || 'Product Image'}
-                width={1050}
-                height={1050}
-                priority={i === 0}
-                quality="85"
-              />
-            </div>
-          ))}
-        </ProductSlider>
+        <div className={cn('relative')}>
+          <ProductSlider
+            key={product.id}
+            images={product.images}
+            currentSelectedVariantImageId={
+              isDirtyChoices ? variant.image?.id : undefined
+            }
+          >
+            {product.images.map((image, i) => (
+              <div key={image.url} className={s.imageContainer}>
+                <Image
+                  className={cn(
+                    'w-full',
+                    'h-auto',
+                    'max-h-full',
+                    'object-cover'
+                  )}
+                  src={image.url!}
+                  alt={image.alt || 'Product Image'}
+                  width={1050}
+                  height={1050}
+                  priority={i === 0}
+                  quality="85"
+                />
+              </div>
+            ))}
+          </ProductSlider>
+          {hasShownAboutSize && productContent.size && (
+            <SizeContent
+              className={cn('absolute', 'z-20', 'inset-0')}
+              content={productContent.size}
+              onClick={hideSizeContent}
+            />
+          )}
+        </div>
         <Block title={titleText} isCentering={true}>
           <TextBlockChildElement>
             <div>
@@ -155,29 +232,42 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
                 {f('store.taxIncluded')}
               </span>
             </div>
-            <div className={cn('text-sm', 'mt-3')}>
-              <div>
-                {product.options?.map((option) => {
-                  return (
+            <div className={cn('text-sm', 'mt-2')}>
+              {product.options?.map((option) => {
+                return (
+                  <Fragment key={option.displayName}>
                     <Option
-                      key={option.displayName}
                       className={s.option}
                       choices={choices}
                       setChoices={setChoices}
                       color={productContent.color}
+                      setDirty={setDirty}
                       {...option}
                     />
-                  );
-                })}
-              </div>
-              {/* <div>{f('store.quantity')} :</div> */}
+                    {hasSizeOption &&
+                      productContent.size &&
+                      option.displayName.toLowerCase() === 'size' && (
+                        <AboutSizeButton onClick={showSizeContent} />
+                      )}
+                  </Fragment>
+                );
+              })}
+              {!hasSizeOption && productContent.size && (
+                <AboutSizeButton onClick={showSizeContent} />
+              )}
+              <Quantity
+                className={cn('mt-4')}
+                quantity={quantity}
+                addQuantity={addQuantity}
+                subtractQuantity={subtractQuantity}
+              />
             </div>
 
-            <div className={cn('flex', 'justify-center', 'mt-8')}>
+            <div className={cn('flex', 'justify-center', 'mt-10')}>
               <Button
                 aria-label={f('store.addToCart')}
                 type="button"
-                className={cn('text-center', 'bg-green', s.cartButton)}
+                className={cn(s.cartButton)}
                 onClick={handleOnClickAddToCart}
                 loading={loading}
                 disabled={variant?.availableForSale === false}
@@ -209,12 +299,16 @@ const ProductView: VFC<Props> = ({ product, productContent }) => {
         </div>
       )}
       {productContent?.details && (
-        <section className={cn('relative')}>
-          <h2 className={cn('block-title')}>{f('store.product.details')}</h2>
-          <Container className={cn('pt-24', 'pb-20', s.details)}>
-            {renderRichTextReact(productContent.details)}
-          </Container>
-        </section>
+        <Block title={f('store.product.details')} titleTag="h2">
+          <BlockContent>
+            <Container className={cn(s.details)}>
+              {renderRichTextReact(productContent.details)}
+            </Container>
+          </BlockContent>
+        </Block>
+      )}
+      {relatedPosts && relatedPosts.length > 0 && (
+        <LaboRelatedPosts relatedPosts={relatedPosts} />
       )}
     </>
   );

@@ -6,17 +6,20 @@ import s from './ProductSlider.module.css';
 import { Control } from './Control';
 import { Thumbnails } from './Thumbnails';
 import type { FC } from 'react';
-import type { Product } from '@commerce/types/product';
+import type { ProductImage } from '@commerce/../shopify/types/product';
 
 type Props = {
-  images: Product['images'];
+  images: ProductImage[];
+  currentSelectedVariantImageId?: string;
 };
 
-const ProductSlider: FC<Props> = ({ images }) => {
+const ProductSlider: FC<Props> = ({
+  images,
+  currentSelectedVariantImageId,
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
   const sliderContainerRef = useRef<HTMLDivElement>(null);
-  const thumbsContainerRef = useRef<HTMLDivElement>(null);
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -56,6 +59,15 @@ const ProductSlider: FC<Props> = ({ images }) => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    const targetImageIndex = images.findIndex((image) => {
+      return image.id === currentSelectedVariantImageId;
+    });
+    if (targetImageIndex >= 0) {
+      slider?.moveToSlideRelative(targetImageIndex);
+    }
+  }, [images, currentSelectedVariantImageId, slider]);
 
   const onPrev = useCallback(() => slider.prev(), [slider]);
   const onNext = useCallback(() => slider.next(), [slider]);
@@ -112,15 +124,22 @@ const ProductSlider: FC<Props> = ({ images }) => {
               slider.moveToSlideRelative(i);
             }}
           >
-            <div className={cn('h-full', s.imageContainer)}>
-              <Image
-                className={cn('w-full', 'h-auto', 'max-h-full', 'object-cover')}
-                src={image.url!}
-                alt={image.alt || 'Product Image'}
-                width={200}
-                height={200}
-                quality="85"
-              />
+            <div className={cn('aspect-w-1', 'aspect-h-1', s.imageContainer)}>
+              <div>
+                <Image
+                  className={cn(
+                    'w-full',
+                    'h-auto',
+                    'max-h-full',
+                    'object-cover'
+                  )}
+                  src={image.url!}
+                  alt={image.alt || 'Product Image'}
+                  width={200}
+                  height={200}
+                  quality="85"
+                />
+              </div>
             </div>
           </button>
         ))}

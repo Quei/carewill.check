@@ -23,7 +23,8 @@
     @apply block w-0 overflow-hidden flex-none py-0;
     &.hasShownSmallLogo {
       @apply duration-100 pl-site-vertical-md;
-      width: 25%;
+      width: 18%;
+      min-width: 200px;
     }
     & a {
       @apply absolute;
@@ -39,5 +40,9 @@
     @apply relative top-0 right-0;
     min-width: 40px;
     height: 40px;
+    margin-right: 10px;
+  }
+  @screen lg {
+    margin-left: 10%;
   }
 }

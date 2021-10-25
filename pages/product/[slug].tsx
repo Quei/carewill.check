@@ -1,4 +1,9 @@
-import { fetcher, getAllNavigations, getFooter } from '@lib/contentful';
+import {
+  fetcher,
+  getAllNavigations,
+  getFooter,
+  getLaboRelatedPosts,
+} from '@lib/contentful';
 import commerce from '@lib/api/commerce';
 import { Layout } from '@components/common';
 import {
@@ -69,16 +74,27 @@ export async function getStaticProps({
     },
     site: 'store',
   });
+
+  const relatedPostsPromise = getLaboRelatedPosts({
+    locale,
+    preview,
+    slug,
+  });
+
   const allNavigationsPromise = getAllNavigations({ locale, preview });
+
   const footerPromise = getFooter({ locale, preview });
+
   const [
     productData,
     productContentData,
+    relatedPosts,
     allNavigations,
     footerData,
   ] = await Promise.all([
     productPromise,
     productContentfulPromise,
+    relatedPostsPromise,
     allNavigationsPromise,
     footerPromise,
   ]);
@@ -99,6 +115,7 @@ export async function getStaticProps({
     props: {
       product,
       productContent,
+      relatedPosts,
       allNavigations,
       footer: footerData.footer,
     },
@@ -130,9 +147,14 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
 export default function Post({
   product,
   productContent,
+  relatedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <ProductSingleView product={product} productContent={productContent} />
+    <ProductSingleView
+      product={product}
+      productContent={productContent}
+      relatedPosts={relatedPosts}
+    />
   );
 }
 

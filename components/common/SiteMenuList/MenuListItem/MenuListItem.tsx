@@ -51,6 +51,7 @@ const MenuListItem: React.VFC<Props> = ({
         s.root,
         { [s.header]: type === 'header' },
         { [s.footer]: type === 'footer' },
+        { [s.longTitleItem]: title.length > 7 },
         className
       )}
     >
@@ -108,7 +109,7 @@ const MenuListItem: React.VFC<Props> = ({
           [s.hasShownChildrenForMobile]: hasShownChildrenForMobile,
         })}
       >
-        <li className={cn('md:hidden', s.child)}>
+        <li className={cn(s.child)}>
           <Link
             className={cn('block')}
             href={'/'}
