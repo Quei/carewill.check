@@ -225,12 +225,17 @@ const ProductView: VFC<Props> = ({ product, productContent, relatedPosts }) => {
         <Block title={titleText} isCentering={true}>
           <TextBlockChildElement>
             <div>
-              <span className={cn('text-2xl', 'align-middle')}>
-                {customPriceText}
-              </span>
-              <span className={cn('text-sm', 'align-middle')}>
-                {f('store.taxIncluded')}
-              </span>
+              <div>
+                <span
+                  className={cn('text-2xl', 'align-middle', 'leading-snug')}
+                >
+                  {customPriceText}
+                </span>
+                <span className={cn('text-sm', 'align-middle')}>
+                  {f('store.taxIncluded')}
+                </span>
+              </div>
+              <p className={cn('text-sm')}>{f('store.freeShipping')}</p>
             </div>
             <div className={cn('text-sm', 'mt-2')}>
               {product.options?.map((option) => {

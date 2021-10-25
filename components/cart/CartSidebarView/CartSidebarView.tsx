@@ -122,10 +122,10 @@ const CartSidebarView: FC = () => {
           <div className="flex-shrink-0 pt-5 pb-20 md:py-5">
             <div className="border-t border-current px-4 sm:px-6">
               <ul className="py-3">
-                <li className="flex justify-between py-1">
+                {/* <li className="flex justify-between py-1">
                   <span>{f('store.subTotal')}</span>
                   <span>{subTotal}</span>
-                </li>
+                </li> */}
                 <li className="flex justify-between py-1">
                   <span>{f('store.total')}</span>
                   <span>{total}</span>

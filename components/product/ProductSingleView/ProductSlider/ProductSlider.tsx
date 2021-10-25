@@ -32,33 +32,34 @@ const ProductSlider: FC<Props> = ({
   });
 
   // Stop the history navigation gesture on touch devices
-  useEffect(() => {
-    const preventNavigation = (event: TouchEvent) => {
-      // Center point of the touch area
-      const touchXPosition = event.touches[0].pageX;
-      // Size of the touch area
-      const touchXRadius = event.touches[0].radiusX || 0;
+  // useEffect(() => {
+  //   const preventNavigation = (event: TouchEvent) => {
+  //     // Center point of the touch area
+  //     const touchXPosition = event.touches[0].pageX;
+  //     // Size of the touch area
+  //     const touchXRadius = event.touches[0].radiusX || 0;
 
-      // We set a threshold (10px) on both sizes of the screen,
-      // if the touch area overlaps with the screen edges
-      // it's likely to trigger the navigation. We prevent the
-      // touchstart event in that case.
-      if (
-        touchXPosition - touchXRadius < 10 ||
-        touchXPosition + touchXRadius > window.innerWidth - 10
-      )
-        event.preventDefault();
-    };
+  //     // We set a threshold (10px) on both sizes of the screen,
+  //     // if the touch area overlaps with the screen edges
+  //     // it's likely to trigger the navigation. We prevent the
+  //     // touchstart event in that case.
+  //     if (
+  //       touchXPosition - touchXRadius < 10 ||
+  //       touchXPosition + touchXRadius > window.innerWidth - 10
+  //     ) {
+  //       event.preventDefault();
+  //     }
+  //   };
 
-    const slider = sliderContainerRef.current!;
-    slider.addEventListener('touchstart', preventNavigation);
+  //   const slider = sliderContainerRef.current!;
+  //   slider.addEventListener('touchstart', preventNavigation);
 
-    return () => {
-      if (slider) {
-        slider.removeEventListener('touchstart', preventNavigation);
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (slider) {
+  //       slider.removeEventListener('touchstart', preventNavigation);
+  //     }
+  //   };
+  // }, []);
 
   useEffect(() => {
     const targetImageIndex = images.findIndex((image) => {
