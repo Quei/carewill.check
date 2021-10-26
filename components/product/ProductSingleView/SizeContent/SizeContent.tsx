@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import cn from 'classnames';
 import s from './SizeContent.module.css';
 import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
@@ -25,6 +25,7 @@ const SizeContent: VFC<Props> = ({ className, content, onClick }) => {
     },
     []
   );
+
   return (
     <div
       className={cn('flex', 'justify-center', 'items-center', className)}
@@ -36,15 +37,9 @@ const SizeContent: VFC<Props> = ({ className, content, onClick }) => {
           'bg-white',
           'border',
           'border-current',
-          'px-5',
-          'pt-3',
-          'pb-5',
           s.contentContainer
         )}
       >
-        <div className={cn(s.content)} onClick={cancelClick}>
-          {renderRichTextReact(content)}
-        </div>
         <button
           className={cn('absolute', 'z-20', 'top-0', 'right-0')}
           aria-label="close"
@@ -52,6 +47,20 @@ const SizeContent: VFC<Props> = ({ className, content, onClick }) => {
         >
           <Cross className={cn('w-12', 'h-12')} />
         </button>
+        <div
+          className={cn(
+            'px-5',
+            'pt-3',
+            'pb-5',
+            'text-sm',
+            'h-full',
+            'overflow-y-auto',
+            s.content
+          )}
+          onClick={cancelClick}
+        >
+          {renderRichTextReact(content)}
+        </div>
       </div>
     </div>
   );

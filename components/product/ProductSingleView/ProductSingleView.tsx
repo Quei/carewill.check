@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo, useCallback, Fragment } from 'react';
 import Image from 'next/image';
-import { animateScroll } from 'react-scroll';
 import cn from 'classnames';
 import s from './ProductSingleView.module.css';
 import {
@@ -135,7 +134,6 @@ const useShownAboutSize = () => {
   const [hasShownAboutSize, setHasShownAboutSize] = useState(false);
   const showSizeContent = useCallback(() => {
     setHasShownAboutSize(true);
-    animateScroll.scrollToTop({ duration: 200 });
   }, []);
   const hideSizeContent = useCallback(() => {
     setHasShownAboutSize(false);
@@ -216,7 +214,7 @@ const ProductView: VFC<Props> = ({ product, productContent, relatedPosts }) => {
           </ProductSlider>
           {hasShownAboutSize && productContent.size && (
             <SizeContent
-              className={cn('absolute', 'z-20', 'inset-0')}
+              className={cn('fixed', 'md:absolute', 'z-20', 'inset-0')}
               content={productContent.size}
               onClick={hideSizeContent}
             />
@@ -231,7 +229,7 @@ const ProductView: VFC<Props> = ({ product, productContent, relatedPosts }) => {
                 >
                   {customPriceText}
                 </span>
-                <span className={cn('text-sm', 'align-middle')}>
+                <span className={cn('text-sm', 'align-middle', 'ml-1')}>
                   {f('store.taxIncluded')}
                 </span>
               </div>
@@ -293,11 +291,10 @@ const ProductView: VFC<Props> = ({ product, productContent, relatedPosts }) => {
         )} */}
       </Grid>
       {productContent?.videoId && (
-        <div className={cn('h-screen')}>
+        <div className={cn('aspect-w-16', 'aspect-h-9')}>
           <YouTube
             className={cn('pointer-events-none')}
             videoId={productContent.videoId}
-            isFit={true}
             isAuto={true}
             isLoop={true}
           />
