@@ -41,21 +41,25 @@ module.exports = withCommerceConfig({
           destination: `${process.env.NEXT_PUBLIC_VENDURE_SHOP_API_URL}/:path*`,
         },
       // Rewrites for /search
-      {
-        source: '/search/designers/:name/',
-        destination: '/search',
-      },
-      {
-        source: '/search/designers/:name/:category/',
-        destination: '/search',
-      },
-      {
-        // This rewrite will also handle `/search/designers`
-        source: '/search/:category/',
-        destination: '/search',
-      },
+      // {
+      //   source: '/search/designers/:name/',
+      //   destination: '/search',
+      // },
+      // {
+      //   source: '/search/designers/:name/:category/',
+      //   destination: '/search',
+      // },
+      // {
+      //   // This rewrite will also handle `/search/designers`
+      //   source: '/search/:category/',
+      //   destination: '/search',
+      // },
     ].filter(Boolean);
   },
+
+  // NOTE:
+  // custom-orderは開発が終わるまでリダイレクトをかけておく
+  // 実装後、リダイレクトを削除
   async redirects() {
     return [
       {
