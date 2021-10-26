@@ -31,6 +31,7 @@ export const en: Record<string, any> = {
   ['store.proceedToCheckout']: 'Proceed to checkout',
   ['store.product.details']: 'Details',
   ['store.product.aboutSize']: 'About size',
+  ['store.cartEmpty']: 'Your cart is empty',
   // form
   // haute-couture
   form: 'Form',

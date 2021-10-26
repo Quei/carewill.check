@@ -30,6 +30,7 @@ export const ja: Record<string, any> = {
   ['store.proceedToCheckout']: '会計に進む',
   ['store.product.details']: '詳細情報',
   ['store.product.aboutSize']: 'サイズについて',
+  ['store.cartEmpty']: 'カートは空です',
   // form
   // haute-couture
   form: '入力フォーム',
