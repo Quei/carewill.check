@@ -36,8 +36,8 @@ export const footerFragment = /* GraphQL */ `
 `;
 
 const LEGAL_PAGES = [
-  // { name: 'tokushoho', url: '/tokushoho' },
   { name: 'privacyPolicy', url: '/privacy-policy' },
+  { name: 'tokushoho', url: '/tokushoho' },
 ];
 
 const SiteFooter: FC<Props> = ({
@@ -89,7 +89,7 @@ const SiteFooter: FC<Props> = ({
             </ul>
           )}
           {LEGAL_PAGES.length > 0 && (
-            <ul className={cn('flex', s.legalPageList)}>
+            <ul>
               {LEGAL_PAGES.map((page) => (
                 <li key={`legal-page-${page.name}`}>
                   <Link

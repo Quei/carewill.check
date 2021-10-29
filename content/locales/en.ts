@@ -68,6 +68,6 @@ export const en: Record<string, any> = {
   // about-us
   ['about.topLink']: 'About us top',
   ['about.newsPickup']: 'News pickup',
-  ['about.tokushoho']: 'Specified commercial transaction act',
+  ['about.tokushoho']: 'Specified Commercial Transaction Act',
   ['about.privacyPolicy']: 'Privacy policy',
 };
