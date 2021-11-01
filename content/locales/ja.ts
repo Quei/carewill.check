@@ -64,6 +64,6 @@ export const ja: Record<string, any> = {
   // about
   ['about.topLink']: 'About us トップ',
   ['about.newsPickup']: 'ニュースピックアップ',
-  ['about.tokushoho']: '特定商取引',
+  ['about.tokushoho']: '特定商取引法に基づく表記',
   ['about.privacyPolicy']: 'プライバシーポリシー',
 };
