@@ -1,0 +1,16 @@
+.leftControl,
+.rightControl {
+  @apply absolute top-1/2 z-20 w-10 h-10 flex items-center justify-center;
+  transform: translateY(-50%);
+  & svg {
+    height: 30px;
+  }
+}
+
+.leftControl {
+  @apply left-1 md:left-2;
+}
+
+.rightControl {
+  @apply right-1 md:right-2;
+}

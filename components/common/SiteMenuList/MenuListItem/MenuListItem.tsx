@@ -5,7 +5,7 @@ import s from './MenuListItem.module.css';
 import { useScreen } from '@lib/hooks/useScreen';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { Link, PlusMark } from '@components/ui';
-import type { Repeater } from 'types/all-navigations';
+import type { Repeater } from 'types/site';
 import type { Site } from 'types/site';
 
 type Props = {
@@ -51,6 +51,7 @@ const MenuListItem: React.VFC<Props> = ({
         s.root,
         { [s.header]: type === 'header' },
         { [s.footer]: type === 'footer' },
+        { [s.longTitleItem]: title.length > 7 },
         className
       )}
     >
@@ -108,7 +109,7 @@ const MenuListItem: React.VFC<Props> = ({
           [s.hasShownChildrenForMobile]: hasShownChildrenForMobile,
         })}
       >
-        <li className={cn('md:hidden', s.child)}>
+        <li className={cn(s.child)}>
           <Link
             className={cn('block')}
             href={'/'}

@@ -5,17 +5,18 @@ const Cross = ({ ...props }) => {
       width="24"
       height="24"
       stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth="3"
+      // strokeLinecap="round"
+      // strokeLinejoin="round"
       fill="none"
       shapeRendering="geometricPrecision"
+      preserveAspectRatio="none"
       {...props}
     >
-      <path d="M18 6L6 18" />
-      <path d="M6 6l12 12" />
+      <path d="M18 6L6 18" vectorEffect="non-scaling-stroke" />
+      <path d="M6 6l12 12" vectorEffect="non-scaling-stroke" />
     </svg>
-  )
-}
+  );
+};
 
-export default Cross
+export default Cross;

@@ -13,7 +13,12 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** An ISO-8601 encoded UTC date time string. Example value: `"2019-07-03T20:47:55Z"`. */
+  /**
+   * Represents an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)-encoded date and time string.
+   * For example, 3:30 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is
+   * represented as `"2019-09-07T15:50:00Z`".
+   *
+   */
   DateTime: any;
   /** A signed decimal number, which supports arbitrary precision and is serialized as a string. Example value: `"29.99"`. */
   Decimal: any;
@@ -22,15 +27,20 @@ export type Scalars = {
   /** A monetary value string. Example value: `"100.57"`. */
   Money: any;
   /**
-   * An RFC 3986 and RFC 3987 compliant URI string.
+   * Represents an [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) and
+   * [RFC 3987](https://datatracker.ietf.org/doc/html/rfc3987)-compliant URI string.
    *
-   * Example value: `"https://johns-apparel.myshopify.com"`.
+   * For example, `"https://johns-apparel.myshopify.com"` is a valid URL. It includes a scheme (`https`) and a host
+   * (`johns-apparel.myshopify.com`).
    *
    */
   URL: any;
 };
 
-/** A version of the API. */
+/**
+ * A version of the API, as defined by [Shopify API versioning](https://shopify.dev/api/usage/versioning).
+ * Versions are commonly referred to by their handle (for example, `2021-10`).
+ */
 export type ApiVersion = {
   __typename?: 'ApiVersion';
   /** The human-readable name of the version. */
@@ -58,7 +68,7 @@ export type AppliedGiftCard = Node & {
   balance: Scalars['Money'];
   /** The amount left on the gift card. */
   balanceV2: MoneyV2;
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The last characters of the gift card. */
   lastCharacters: Scalars['String'];
@@ -90,7 +100,7 @@ export type Article = Node & {
   excerptHtml?: Maybe<Scalars['HTML']>;
   /** A human-friendly unique string for the Article automatically generated from its title. */
   handle: Scalars['String'];
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The image associated with the article. */
   image?: Maybe<Image>;
@@ -102,7 +112,10 @@ export type Article = Node & {
   tags: Array<Scalars['String']>;
   /** The article’s name. */
   title: Scalars['String'];
-  /** The url pointing to the article accessible from the web. */
+  /**
+   * The url pointing to the article accessible from the web.
+   * @deprecated Use `onlineStoreUrl` instead
+   */
   url: Scalars['URL'];
 };
 
@@ -244,13 +257,16 @@ export type Blog = Node & {
   authors: Array<ArticleAuthor>;
   /** A human-friendly unique string for the Blog automatically generated from its title. */
   handle: Scalars['String'];
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The blog's SEO information. */
   seo?: Maybe<Seo>;
   /** The blogs’s title. */
   title: Scalars['String'];
-  /** The url pointing to the blog accessible from the web. */
+  /**
+   * The url pointing to the blog accessible from the web.
+   * @deprecated Use `onlineStoreUrl` instead
+   */
   url: Scalars['URL'];
 };
 
@@ -348,7 +364,7 @@ export type Checkout = Node & {
   discountApplications: DiscountApplicationConnection;
   /** The email attached to this checkout. */
   email?: Maybe<Scalars['String']>;
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** A list of line item objects, each one containing information about an item in the checkout. */
   lineItems: CheckoutLineItemConnection;
@@ -440,7 +456,8 @@ export type CheckoutAttributesUpdateInput = {
   /**
    * Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
    * The required attributes are city, province, and country.
-   * Full validation of the addresses is still done at complete time.
+   * Full validation of the addresses is still done at completion time. Defaults to `false` with
+   * each operation.
    */
   allowPartialAddresses?: Maybe<Scalars['Boolean']>;
 };
@@ -450,10 +467,10 @@ export type CheckoutAttributesUpdatePayload = {
   __typename?: 'CheckoutAttributesUpdatePayload';
   /** The updated checkout object. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -468,7 +485,8 @@ export type CheckoutAttributesUpdateV2Input = {
   /**
    * Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
    * The required attributes are city, province, and country.
-   * Full validation of the addresses is still done at complete time.
+   * Full validation of the addresses is still done at completion time. Defaults to `false` with
+   * each operation.
    */
   allowPartialAddresses?: Maybe<Scalars['Boolean']>;
 };
@@ -478,10 +496,10 @@ export type CheckoutAttributesUpdateV2Payload = {
   __typename?: 'CheckoutAttributesUpdateV2Payload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -492,10 +510,10 @@ export type CheckoutCompleteFreePayload = {
   __typename?: 'CheckoutCompleteFreePayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -506,12 +524,12 @@ export type CheckoutCompleteWithCreditCardPayload = {
   __typename?: 'CheckoutCompleteWithCreditCardPayload';
   /** The checkout on which the payment was applied. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /** A representation of the attempted payment. */
   payment?: Maybe<Payment>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -522,12 +540,12 @@ export type CheckoutCompleteWithCreditCardV2Payload = {
   __typename?: 'CheckoutCompleteWithCreditCardV2Payload';
   /** The checkout on which the payment was applied. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /** A representation of the attempted payment. */
   payment?: Maybe<Payment>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -538,12 +556,12 @@ export type CheckoutCompleteWithTokenizedPaymentPayload = {
   __typename?: 'CheckoutCompleteWithTokenizedPaymentPayload';
   /** The checkout on which the payment was applied. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /** A representation of the attempted payment. */
   payment?: Maybe<Payment>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -554,12 +572,12 @@ export type CheckoutCompleteWithTokenizedPaymentV2Payload = {
   __typename?: 'CheckoutCompleteWithTokenizedPaymentV2Payload';
   /** The checkout on which the payment was applied. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /** A representation of the attempted payment. */
   payment?: Maybe<Payment>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -570,12 +588,12 @@ export type CheckoutCompleteWithTokenizedPaymentV3Payload = {
   __typename?: 'CheckoutCompleteWithTokenizedPaymentV3Payload';
   /** The checkout on which the payment was applied. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /** A representation of the attempted payment. */
   payment?: Maybe<Payment>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -596,13 +614,14 @@ export type CheckoutCreateInput = {
   /**
    * Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
    * The required attributes are city, province, and country.
-   * Full validation of addresses is still done at complete time.
+   * Full validation of addresses is still done at completion time. Defaults to `null`.
    */
   allowPartialAddresses?: Maybe<Scalars['Boolean']>;
   /**
    * The three-letter currency code of one of the shop's enabled presentment currencies.
    * Including this field creates a checkout in the specified currency. By default, new
    * checkouts are created in the shop's primary currency.
+   *  This argument is deprecated: Use `country` field instead.
    */
   presentmentCurrencyCode?: Maybe<CurrencyCode>;
 };
@@ -612,10 +631,10 @@ export type CheckoutCreatePayload = {
   __typename?: 'CheckoutCreatePayload';
   /** The new checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -628,7 +647,7 @@ export type CheckoutCustomerAssociatePayload = {
   checkout: Checkout;
   /** The associated customer object. */
   customer?: Maybe<Customer>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<UserError>;
 };
 
@@ -637,12 +656,12 @@ export type CheckoutCustomerAssociateV2Payload = {
   __typename?: 'CheckoutCustomerAssociateV2Payload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /** The associated customer object. */
   customer?: Maybe<Customer>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -653,10 +672,10 @@ export type CheckoutCustomerDisassociatePayload = {
   __typename?: 'CheckoutCustomerDisassociatePayload';
   /** The updated checkout object. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -667,10 +686,10 @@ export type CheckoutCustomerDisassociateV2Payload = {
   __typename?: 'CheckoutCustomerDisassociateV2Payload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -681,10 +700,10 @@ export type CheckoutDiscountCodeApplyPayload = {
   __typename?: 'CheckoutDiscountCodeApplyPayload';
   /** The updated checkout object. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -695,10 +714,10 @@ export type CheckoutDiscountCodeApplyV2Payload = {
   __typename?: 'CheckoutDiscountCodeApplyV2Payload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -709,10 +728,10 @@ export type CheckoutDiscountCodeRemovePayload = {
   __typename?: 'CheckoutDiscountCodeRemovePayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -723,10 +742,10 @@ export type CheckoutEmailUpdatePayload = {
   __typename?: 'CheckoutEmailUpdatePayload';
   /** The checkout object with the updated email. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -737,10 +756,10 @@ export type CheckoutEmailUpdateV2Payload = {
   __typename?: 'CheckoutEmailUpdateV2Payload';
   /** The checkout object with the updated email. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -748,19 +767,19 @@ export type CheckoutEmailUpdateV2Payload = {
 
 /** Possible error codes that could be returned by CheckoutUserError. */
 export enum CheckoutErrorCode {
-  /** Input value is blank. */
+  /** The input value is blank. */
   Blank = 'BLANK',
-  /** Input value is invalid. */
+  /** The input value is invalid. */
   Invalid = 'INVALID',
-  /** Input value is too long. */
+  /** The input value is too long. */
   TooLong = 'TOO_LONG',
-  /** Input value is not present. */
+  /** The input value needs to be blank. */
   Present = 'PRESENT',
-  /** Input value should be less than maximum allowed value. */
+  /** The input value should be less than the maximum value allowed. */
   LessThan = 'LESS_THAN',
-  /** Input value should be greater than or equal to minimum allowed value. */
+  /** The input value should be greater than or equal to the minimum value allowed. */
   GreaterThanOrEqualTo = 'GREATER_THAN_OR_EQUAL_TO',
-  /** Input value should be less or equal to maximum allowed value. */
+  /** The input value should be less than or equal to the maximum value allowed. */
   LessThanOrEqualTo = 'LESS_THAN_OR_EQUAL_TO',
   /** Checkout is already completed. */
   AlreadyCompleted = 'ALREADY_COMPLETED',
@@ -831,10 +850,10 @@ export type CheckoutGiftCardApplyPayload = {
   __typename?: 'CheckoutGiftCardApplyPayload';
   /** The updated checkout object. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -845,10 +864,10 @@ export type CheckoutGiftCardRemovePayload = {
   __typename?: 'CheckoutGiftCardRemovePayload';
   /** The updated checkout object. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -859,10 +878,10 @@ export type CheckoutGiftCardRemoveV2Payload = {
   __typename?: 'CheckoutGiftCardRemoveV2Payload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -873,10 +892,10 @@ export type CheckoutGiftCardsAppendPayload = {
   __typename?: 'CheckoutGiftCardsAppendPayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -889,7 +908,7 @@ export type CheckoutLineItem = Node & {
   customAttributes: Array<Attribute>;
   /** The discounts that have been allocated onto the checkout line item by discount applications. */
   discountAllocations: Array<DiscountAllocation>;
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The quantity of the line item. */
   quantity: Scalars['Int'];
@@ -946,10 +965,10 @@ export type CheckoutLineItemsAddPayload = {
   __typename?: 'CheckoutLineItemsAddPayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -960,10 +979,10 @@ export type CheckoutLineItemsRemovePayload = {
   __typename?: 'CheckoutLineItemsRemovePayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -974,7 +993,7 @@ export type CheckoutLineItemsReplacePayload = {
   __typename?: 'CheckoutLineItemsReplacePayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<CheckoutUserError>;
 };
 
@@ -983,10 +1002,10 @@ export type CheckoutLineItemsUpdatePayload = {
   __typename?: 'CheckoutLineItemsUpdatePayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -997,10 +1016,10 @@ export type CheckoutShippingAddressUpdatePayload = {
   __typename?: 'CheckoutShippingAddressUpdatePayload';
   /** The updated checkout object. */
   checkout: Checkout;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -1011,10 +1030,10 @@ export type CheckoutShippingAddressUpdateV2Payload = {
   __typename?: 'CheckoutShippingAddressUpdateV2Payload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -1025,10 +1044,10 @@ export type CheckoutShippingLineUpdatePayload = {
   __typename?: 'CheckoutShippingLineUpdatePayload';
   /** The updated checkout object. */
   checkout?: Maybe<Checkout>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   checkoutUserErrors: Array<CheckoutUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `checkoutUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -1037,9 +1056,9 @@ export type CheckoutShippingLineUpdatePayload = {
 /** Represents an error that happens during execution of a checkout mutation. */
 export type CheckoutUserError = DisplayableError & {
   __typename?: 'CheckoutUserError';
-  /** Error code to uniquely identify the error. */
+  /** The error code. */
   code?: Maybe<CheckoutErrorCode>;
-  /** Path to the input field which caused the error. */
+  /** The path to the input field that caused the error. */
   field?: Maybe<Array<Scalars['String']>>;
   /** The error message. */
   message: Scalars['String'];
@@ -1057,7 +1076,7 @@ export type Collection = Node & {
    * Limit of 255 characters.
    */
   handle: Scalars['String'];
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** Image associated with the collection. */
   image?: Maybe<Image>;
@@ -1135,7 +1154,7 @@ export type Comment = Node & {
   content: Scalars['String'];
   /** The content of the comment, complete with HTML formatting. */
   contentHtml: Scalars['HTML'];
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
 };
 
@@ -2130,10 +2149,10 @@ export type CustomerAccessTokenCreatePayload = {
   __typename?: 'CustomerAccessTokenCreatePayload';
   /** The newly created customer access token object. */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2144,7 +2163,7 @@ export type CustomerAccessTokenCreateWithMultipassPayload = {
   __typename?: 'CustomerAccessTokenCreateWithMultipassPayload';
   /** An access token object associated with the customer. */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
 };
 
@@ -2155,7 +2174,7 @@ export type CustomerAccessTokenDeletePayload = {
   deletedAccessToken?: Maybe<Scalars['String']>;
   /** ID of the destroyed customer access token. */
   deletedCustomerAccessTokenId?: Maybe<Scalars['String']>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<UserError>;
 };
 
@@ -2164,7 +2183,7 @@ export type CustomerAccessTokenRenewPayload = {
   __typename?: 'CustomerAccessTokenRenewPayload';
   /** The renewed customer access token object. */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<UserError>;
 };
 
@@ -2175,7 +2194,7 @@ export type CustomerActivateByUrlPayload = {
   customer?: Maybe<Customer>;
   /** A new customer access token for the customer. */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
 };
 
@@ -2194,10 +2213,10 @@ export type CustomerActivatePayload = {
   customer?: Maybe<Customer>;
   /** A newly created customer access token object for the customer. */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2208,10 +2227,10 @@ export type CustomerAddressCreatePayload = {
   __typename?: 'CustomerAddressCreatePayload';
   /** The new customer address object. */
   customerAddress?: Maybe<MailingAddress>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2220,12 +2239,12 @@ export type CustomerAddressCreatePayload = {
 /** Return type for `customerAddressDelete` mutation. */
 export type CustomerAddressDeletePayload = {
   __typename?: 'CustomerAddressDeletePayload';
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /** ID of the deleted customer address. */
   deletedCustomerAddressId?: Maybe<Scalars['String']>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2236,16 +2255,16 @@ export type CustomerAddressUpdatePayload = {
   __typename?: 'CustomerAddressUpdatePayload';
   /** The customer’s updated mailing address. */
   customerAddress?: Maybe<MailingAddress>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
 };
 
-/** Specifies the fields required to create a new customer. */
+/** The fields required to create a new customer. */
 export type CustomerCreateInput = {
   /** The customer’s first name. */
   firstName?: Maybe<Scalars['String']>;
@@ -2270,10 +2289,10 @@ export type CustomerCreatePayload = {
   __typename?: 'CustomerCreatePayload';
   /** The created customer object. */
   customer?: Maybe<Customer>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2284,10 +2303,10 @@ export type CustomerDefaultAddressUpdatePayload = {
   __typename?: 'CustomerDefaultAddressUpdatePayload';
   /** The updated customer object. */
   customer?: Maybe<Customer>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2295,15 +2314,15 @@ export type CustomerDefaultAddressUpdatePayload = {
 
 /** Possible error codes that could be returned by CustomerUserError. */
 export enum CustomerErrorCode {
-  /** Input value is blank. */
+  /** The input value is blank. */
   Blank = 'BLANK',
-  /** Input value is invalid. */
+  /** The input value is invalid. */
   Invalid = 'INVALID',
-  /** Input value is already taken. */
+  /** The input value is already taken. */
   Taken = 'TAKEN',
-  /** Input value is too long. */
+  /** The input value is too long. */
   TooLong = 'TOO_LONG',
-  /** Input value is too short. */
+  /** The input value is too short. */
   TooShort = 'TOO_SHORT',
   /** Unidentified customer. */
   UnidentifiedCustomer = 'UNIDENTIFIED_CUSTOMER',
@@ -2330,10 +2349,10 @@ export enum CustomerErrorCode {
 /** Return type for `customerRecover` mutation. */
 export type CustomerRecoverPayload = {
   __typename?: 'CustomerRecoverPayload';
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2346,10 +2365,10 @@ export type CustomerResetByUrlPayload = {
   customer?: Maybe<Customer>;
   /** A newly created customer access token object for the customer. */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2370,10 +2389,10 @@ export type CustomerResetPayload = {
   customer?: Maybe<Customer>;
   /** A newly created customer access token object for the customer. */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2409,10 +2428,10 @@ export type CustomerUpdatePayload = {
    * (including the one used to perform this mutation) become invalid, and a new token is generated.
    */
   customerAccessToken?: Maybe<CustomerAccessToken>;
-  /** List of errors that occurred executing the mutation. */
+  /** The list of errors that occurred from executing the mutation. */
   customerUserErrors: Array<CustomerUserError>;
   /**
-   * List of errors that occurred executing the mutation.
+   * The list of errors that occurred from executing the mutation.
    * @deprecated Use `customerUserErrors` instead
    */
   userErrors: Array<UserError>;
@@ -2421,9 +2440,9 @@ export type CustomerUpdatePayload = {
 /** Represents an error that happens during execution of a customer mutation. */
 export type CustomerUserError = DisplayableError & {
   __typename?: 'CustomerUserError';
-  /** Error code to uniquely identify the error. */
+  /** The error code. */
   code?: Maybe<CustomerErrorCode>;
-  /** Path to the input field which caused the error. */
+  /** The path to the input field that caused the error. */
   field?: Maybe<Array<Scalars['String']>>;
   /** The error message. */
   message: Scalars['String'];
@@ -2536,7 +2555,7 @@ export type DiscountCodeApplication = DiscountApplication & {
 
 /** Represents an error in the input of a mutation. */
 export type DisplayableError = {
-  /** Path to the input field which caused the error. */
+  /** The path to the input field that caused the error. */
   field?: Maybe<Array<Scalars['String']>>;
   /** The error message. */
   message: Scalars['String'];
@@ -2561,7 +2580,7 @@ export type ExternalVideo = Node &
     alt?: Maybe<Scalars['String']>;
     /** The URL. */
     embeddedUrl: Scalars['URL'];
-    /** Globally unique identifier. */
+    /** A globally-unique identifier. */
     id: Scalars['ID'];
     /** The media content type. */
     mediaContentType: MediaContentType;
@@ -2798,7 +2817,7 @@ export type MailingAddress = Node & {
   formatted: Array<Scalars['String']>;
   /** A comma-separated list of the values for city, province, and country. */
   formattedArea?: Maybe<Scalars['String']>;
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The last name of the customer. */
   lastName?: Maybe<Scalars['String']>;
@@ -2941,7 +2960,7 @@ export type MediaImage = Node &
     __typename?: 'MediaImage';
     /** A word or phrase to share the nature or contents of a media. */
     alt?: Maybe<Scalars['String']>;
-    /** Globally unique identifier. */
+    /** A globally-unique identifier. */
     id: Scalars['ID'];
     /** The image for the media. */
     image?: Maybe<Image>;
@@ -2961,7 +2980,7 @@ export type Metafield = Node & {
   createdAt: Scalars['DateTime'];
   /** The description of a metafield. */
   description?: Maybe<Scalars['String']>;
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The key name for a metafield. */
   key: Scalars['String'];
@@ -2973,7 +2992,10 @@ export type Metafield = Node & {
   updatedAt: Scalars['DateTime'];
   /** The value of a metafield. */
   value: Scalars['String'];
-  /** Represents the metafield value type. */
+  /**
+   * Represents the metafield value type.
+   * @deprecated `valueType` is deprecated and replaced by `type` in API version 2021-07.
+   */
   valueType: MetafieldValueType;
 };
 
@@ -3006,6 +3028,8 @@ export enum MetafieldValueType {
   Integer = 'INTEGER',
   /** A json string metafield. */
   JsonString = 'JSON_STRING',
+  /** A boolean metafield. */
+  Boolean = 'BOOLEAN',
 }
 
 /** Represents a Shopify hosted 3D model. */
@@ -3014,7 +3038,7 @@ export type Model3d = Node &
     __typename?: 'Model3d';
     /** A word or phrase to share the nature or contents of a media. */
     alt?: Maybe<Scalars['String']>;
-    /** Globally unique identifier. */
+    /** A globally-unique identifier. */
     id: Scalars['ID'];
     /** The media content type. */
     mediaContentType: MediaContentType;
@@ -3045,29 +3069,7 @@ export type MoneyInput = {
   currencyCode: CurrencyCode;
 };
 
-/**
- * A monetary value with currency.
- *
- * To format currencies, combine this type's amount and currencyCode fields with your client's locale.
- *
- * For example, in JavaScript you could use Intl.NumberFormat:
- *
- * ```js
- * new Intl.NumberFormat(locale, {
- *   style: 'currency',
- *   currency: currencyCode
- * }).format(amount);
- * ```
- *
- * Other formatting libraries include:
- *
- * * iOS - [NumberFormatter](https://developer.apple.com/documentation/foundation/numberformatter)
- * * Android - [NumberFormat](https://developer.android.com/reference/java/text/NumberFormat.html)
- * * PHP - [NumberFormatter](http://php.net/manual/en/class.numberformatter.php)
- *
- * For a more general solution, the [Unicode CLDR number formatting database] is available with many implementations
- * (such as [TwitterCldr](https://github.com/twitter/twitter-cldr-rb)).
- */
+/** A monetary value with currency. */
 export type MoneyV2 = {
   __typename?: 'MoneyV2';
   /** Decimal money amount. */
@@ -3098,11 +3100,11 @@ export type MoneyV2Edge = {
 export type Mutation = {
   __typename?: 'Mutation';
   /**
-   * Updates the attributes of a checkout.
+   * Updates the attributes of a checkout if `allowPartialAddresses` is `true`.
    * @deprecated Use `checkoutAttributesUpdateV2` instead
    */
   checkoutAttributesUpdate?: Maybe<CheckoutAttributesUpdatePayload>;
-  /** Updates the attributes of a checkout. */
+  /** Updates the attributes of a checkout if `allowPartialAddresses` is `true`. */
   checkoutAttributesUpdateV2?: Maybe<CheckoutAttributesUpdateV2Payload>;
   /** Completes a checkout without providing payment information. You can use this mutation for free items or items whose purchase price is covered by a gift card. */
   checkoutCompleteFree?: Maybe<CheckoutCompleteFreePayload>;
@@ -3486,9 +3488,14 @@ export type MutationCustomerUpdateArgs = {
   customer: CustomerUpdateInput;
 };
 
-/** An object with an ID to support global identification. */
+/**
+ * An object with an ID field to support global identification, in accordance with the
+ * [Relay specification](https://relay.dev/graphql/objectidentification.htm#sec-Node-Interface).
+ * This interface is used by the [node](https://shopify.dev/api/admin-graphql/unstable/queries/node)
+ * and [nodes](https://shopify.dev/api/admin-graphql/unstable/queries/nodes) queries.
+ */
 export type Node = {
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
 };
 
@@ -3521,7 +3528,7 @@ export type Order = Node & {
   financialStatus?: Maybe<OrderFinancialStatus>;
   /** The fulfillment status for the order. */
   fulfillmentStatus: OrderFulfillmentStatus;
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** List of the order’s line items. */
   lineItems: OrderLineItemConnection;
@@ -3746,7 +3753,7 @@ export type Page = Node & {
   createdAt: Scalars['DateTime'];
   /** A human-friendly unique string for the page automatically generated from its title. */
   handle: Scalars['String'];
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The page's SEO information. */
   seo?: Maybe<Seo>;
@@ -3754,7 +3761,10 @@ export type Page = Node & {
   title: Scalars['String'];
   /** The timestamp of the latest page update. */
   updatedAt: Scalars['DateTime'];
-  /** The url pointing to the page accessible from the web. */
+  /**
+   * The url pointing to the page accessible from the web.
+   * @deprecated Use `onlineStoreUrl` instead
+   */
   url: Scalars['URL'];
 };
 
@@ -3819,7 +3829,7 @@ export type Payment = Node & {
   creditCard?: Maybe<CreditCard>;
   /** A message describing a processing error during asynchronous processing. */
   errorMessage?: Maybe<Scalars['String']>;
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /**
    * A client-side generated token to identify a payment and perform idempotent operations.
@@ -3902,7 +3912,7 @@ export type Product = Node &
      * They are used by the Liquid templating language to refer to objects.
      */
     handle: Scalars['String'];
-    /** Globally unique identifier. */
+    /** A globally-unique identifier. */
     id: Scalars['ID'];
     /** List of images associated with the product. */
     images: ImageConnection;
@@ -3912,14 +3922,14 @@ export type Product = Node &
     metafield?: Maybe<Metafield>;
     /** A paginated list of metafields associated with the resource. */
     metafields: MetafieldConnection;
-    /**
-     * The online store URL for the product.
-     * A value of `null` indicates that the product is not published to the Online Store sales channel.
-     */
+    /** The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel. */
     onlineStoreUrl?: Maybe<Scalars['URL']>;
     /** List of product options. */
     options: Array<ProductOption>;
-    /** List of price ranges in the presentment currencies for this shop. */
+    /**
+     * List of price ranges in the presentment currencies for this shop.
+     * @deprecated Use `@inContext` instead.
+     */
     presentmentPriceRanges: ProductPriceRangeConnection;
     /** The price range. */
     priceRange: ProductPriceRange;
@@ -4150,7 +4160,7 @@ export enum ProductMediaSortKeys {
  */
 export type ProductOption = Node & {
   __typename?: 'ProductOption';
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** The product option’s name. */
   name: Scalars['String'];
@@ -4231,7 +4241,7 @@ export type ProductVariant = Node &
     compareAtPriceV2?: Maybe<MoneyV2>;
     /** Whether a product is out of stock but still available for purchase (used for backorders). */
     currentlyNotInStock: Scalars['Boolean'];
-    /** Globally unique identifier. */
+    /** A globally-unique identifier. */
     id: Scalars['ID'];
     /** Image associated with the product variant. This field falls back to the product image if no image is available. */
     image?: Maybe<Image>;
@@ -4239,9 +4249,15 @@ export type ProductVariant = Node &
     metafield?: Maybe<Metafield>;
     /** A paginated list of metafields associated with the resource. */
     metafields: MetafieldConnection;
-    /** List of prices and compare-at prices in the presentment currencies for this shop. */
+    /**
+     * List of prices and compare-at prices in the presentment currencies for this shop.
+     * @deprecated Use `@inContext` instead.
+     */
     presentmentPrices: ProductVariantPricePairConnection;
-    /** List of unit prices in the presentment currencies for this shop. */
+    /**
+     * List of unit prices in the presentment currencies for this shop.
+     * @deprecated Use `@inContext` instead.
+     */
     presentmentUnitPrices: MoneyV2Connection;
     /**
      * The product variant’s price.
@@ -4384,11 +4400,17 @@ export type QueryRoot = {
   __typename?: 'QueryRoot';
   /** List of the shop's articles. */
   articles: ArticleConnection;
-  /** Find a blog by its handle. */
+  /**
+   * Find a blog by its handle.
+   * @deprecated Use `blog` instead
+   */
   blogByHandle?: Maybe<Blog>;
   /** List of the shop's blogs. */
   blogs: BlogConnection;
-  /** Find a collection by its handle. */
+  /**
+   * Find a collection by its handle.
+   * @deprecated Use `collection` instead
+   */
   collectionByHandle?: Maybe<Collection>;
   /** List of the shop’s collections. */
   collections: CollectionConnection;
@@ -4398,11 +4420,17 @@ export type QueryRoot = {
   node?: Maybe<Node>;
   /** Returns the list of nodes with the given IDs. */
   nodes: Array<Maybe<Node>>;
-  /** Find a page by its handle. */
+  /**
+   * Find a page by its handle.
+   * @deprecated Use `page` instead
+   */
   pageByHandle?: Maybe<Page>;
   /** List of the shop's pages. */
   pages: PageConnection;
-  /** Find a product by its handle. */
+  /**
+   * Find a product by its handle.
+   * @deprecated Use `product` instead
+   */
   productByHandle?: Maybe<Product>;
   /**
    * Find recommended products related to a given `product_id`.
@@ -4745,7 +4773,7 @@ export type ShopPolicy = Node & {
   body: Scalars['String'];
   /** Policy’s handle. */
   handle: Scalars['String'];
-  /** Globally unique identifier. */
+  /** A globally-unique identifier. */
   id: Scalars['ID'];
   /** Policy’s title. */
   title: Scalars['String'];
@@ -4942,7 +4970,7 @@ export enum UnitPriceMeasurementMeasuredUnit {
 /** Represents an error in the input of a mutation. */
 export type UserError = DisplayableError & {
   __typename?: 'UserError';
-  /** Path to the input field which caused the error. */
+  /** The path to the input field that caused the error. */
   field?: Maybe<Array<Scalars['String']>>;
   /** The error message. */
   message: Scalars['String'];
@@ -4954,7 +4982,7 @@ export type Video = Node &
     __typename?: 'Video';
     /** A word or phrase to share the nature or contents of a media. */
     alt?: Maybe<Scalars['String']>;
-    /** Globally unique identifier. */
+    /** A globally-unique identifier. */
     id: Scalars['ID'];
     /** The media content type. */
     mediaContentType: MediaContentType;
@@ -5605,6 +5633,7 @@ export type GetProductBySlugQuery = { __typename?: 'QueryRoot' } & {
                       'amount' | 'currencyCode'
                     >
                   >;
+                  image?: Maybe<{ __typename?: 'Image' } & Pick<Image, 'id'>>;
                 };
             }
           >;
@@ -5618,7 +5647,7 @@ export type GetProductBySlugQuery = { __typename?: 'QueryRoot' } & {
             { __typename?: 'ImageEdge' } & {
               node: { __typename?: 'Image' } & Pick<
                 Image,
-                'originalSrc' | 'altText' | 'width' | 'height'
+                'id' | 'originalSrc' | 'altText' | 'width' | 'height'
               >;
             }
           >;

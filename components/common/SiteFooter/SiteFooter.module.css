@@ -9,9 +9,3 @@
     @apply ml-3;
   }
 }
-
-.legalPageList {
-  & > li + li {
-    @apply ml-3;
-  }
-}

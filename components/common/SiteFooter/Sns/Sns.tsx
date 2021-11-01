@@ -2,7 +2,7 @@ import cn from 'classnames';
 import s from './Sns.module.css';
 import { Twitter, Facebook, Youtube, Note } from '@components/icons';
 import type { VFC } from 'react';
-import type { Repeater } from 'types/all-navigations';
+import type { Repeater } from 'types/site';
 
 type Props = {
   className?: string;

@@ -18,6 +18,20 @@ export const en: Record<string, any> = {
   ['store.customOrder']: 'Custom order',
   ['store.collaboration']: 'Collaboration',
   ['store.hauteCouture']: 'Haute couture',
+  ['store.addToCart']: 'Add to cart',
+  ['store.notAvailable']: 'Not available',
+  ['store.taxIncluded']: '(tax included)',
+  ['store.quantity']: 'Quantity',
+  ['store.subTotal']: 'Subtotal',
+  ['store.taxes']: 'Taxes',
+  ['store.calculatedAtCheckout']: 'Calculated at checkout',
+  ['store.estimatedShipping']: 'Estimated shipping',
+  ['store.freeShipping']: 'Free shipping',
+  ['store.total']: 'Total (tax included)',
+  ['store.proceedToCheckout']: 'Proceed to checkout',
+  ['store.product.details']: 'Details',
+  ['store.product.aboutSize']: 'About size',
+  ['store.cartEmpty']: 'Your cart is empty',
   // form
   // haute-couture
   form: 'Form',
@@ -54,6 +68,6 @@ export const en: Record<string, any> = {
   // about-us
   ['about.topLink']: 'About us top',
   ['about.newsPickup']: 'News pickup',
-  ['about.tokushoho']: 'Specified commercial transaction act',
+  ['about.tokushoho']: 'Specified Commercial Transaction Act',
   ['about.privacyPolicy']: 'Privacy policy',
 };

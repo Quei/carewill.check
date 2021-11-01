@@ -14,7 +14,8 @@ directive @accessRestricted(
 ) on FIELD_DEFINITION | OBJECT
 
 """
-A version of the API.
+A version of the API, as defined by [Shopify API versioning](https://shopify.dev/api/usage/versioning).
+Versions are commonly referred to by their handle (for example, `2021-10`).
 """
 type ApiVersion {
   """
@@ -58,7 +59,7 @@ type AppliedGiftCard implements Node {
   balanceV2: MoneyV2!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -158,7 +159,7 @@ type Article implements Node {
   handle: String!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -210,7 +211,7 @@ type Article implements Node {
   """
   The url pointing to the article accessible from the web.
   """
-  url: URL!
+  url: URL! @deprecated(reason: "Use `onlineStoreUrl` instead")
 }
 
 """
@@ -465,7 +466,7 @@ type Blog implements Node {
   handle: String!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -482,7 +483,7 @@ type Blog implements Node {
   """
   The url pointing to the blog accessible from the web.
   """
-  url: URL!
+  url: URL! @deprecated(reason: "Use `onlineStoreUrl` instead")
 }
 
 """
@@ -657,7 +658,7 @@ type Checkout implements Node {
   email: String
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -817,7 +818,8 @@ input CheckoutAttributesUpdateInput {
   """
   Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
   The required attributes are city, province, and country.
-  Full validation of the addresses is still done at complete time.
+  Full validation of the addresses is still done at completion time. Defaults to `false` with
+  each operation.
   """
   allowPartialAddresses: Boolean
 }
@@ -832,12 +834,12 @@ type CheckoutAttributesUpdatePayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -860,7 +862,8 @@ input CheckoutAttributesUpdateV2Input {
   """
   Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
   The required attributes are city, province, and country.
-  Full validation of the addresses is still done at complete time.
+  Full validation of the addresses is still done at completion time. Defaults to `false` with
+  each operation.
   """
   allowPartialAddresses: Boolean
 }
@@ -875,12 +878,12 @@ type CheckoutAttributesUpdateV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -896,12 +899,12 @@ type CheckoutCompleteFreePayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -917,7 +920,7 @@ type CheckoutCompleteWithCreditCardPayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
@@ -927,7 +930,7 @@ type CheckoutCompleteWithCreditCardPayload {
   payment: Payment
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -943,7 +946,7 @@ type CheckoutCompleteWithCreditCardV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
@@ -953,7 +956,7 @@ type CheckoutCompleteWithCreditCardV2Payload {
   payment: Payment
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -969,7 +972,7 @@ type CheckoutCompleteWithTokenizedPaymentPayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
@@ -979,7 +982,7 @@ type CheckoutCompleteWithTokenizedPaymentPayload {
   payment: Payment
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -995,7 +998,7 @@ type CheckoutCompleteWithTokenizedPaymentV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
@@ -1005,7 +1008,7 @@ type CheckoutCompleteWithTokenizedPaymentV2Payload {
   payment: Payment
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1021,7 +1024,7 @@ type CheckoutCompleteWithTokenizedPaymentV3Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
@@ -1031,7 +1034,7 @@ type CheckoutCompleteWithTokenizedPaymentV3Payload {
   payment: Payment
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1069,7 +1072,7 @@ input CheckoutCreateInput {
   """
   Allows setting partial addresses on a Checkout, skipping the full validation of attributes.
   The required attributes are city, province, and country.
-  Full validation of addresses is still done at complete time.
+  Full validation of addresses is still done at completion time. Defaults to `null`.
   """
   allowPartialAddresses: Boolean
 
@@ -1077,6 +1080,7 @@ input CheckoutCreateInput {
   The three-letter currency code of one of the shop's enabled presentment currencies.
   Including this field creates a checkout in the specified currency. By default, new
   checkouts are created in the shop's primary currency.
+   This argument is deprecated: Use `country` field instead.
   """
   presentmentCurrencyCode: CurrencyCode
 }
@@ -1091,12 +1095,12 @@ type CheckoutCreatePayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1117,7 +1121,7 @@ type CheckoutCustomerAssociatePayload {
   customer: Customer
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
 }
@@ -1132,7 +1136,7 @@ type CheckoutCustomerAssociateV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
@@ -1142,7 +1146,7 @@ type CheckoutCustomerAssociateV2Payload {
   customer: Customer
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1158,12 +1162,12 @@ type CheckoutCustomerDisassociatePayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1179,12 +1183,12 @@ type CheckoutCustomerDisassociateV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1200,12 +1204,12 @@ type CheckoutDiscountCodeApplyPayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1221,12 +1225,12 @@ type CheckoutDiscountCodeApplyV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1242,12 +1246,12 @@ type CheckoutDiscountCodeRemovePayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1263,12 +1267,12 @@ type CheckoutEmailUpdatePayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1284,12 +1288,12 @@ type CheckoutEmailUpdateV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1300,37 +1304,37 @@ Possible error codes that could be returned by CheckoutUserError.
 """
 enum CheckoutErrorCode {
   """
-  Input value is blank.
+  The input value is blank.
   """
   BLANK
 
   """
-  Input value is invalid.
+  The input value is invalid.
   """
   INVALID
 
   """
-  Input value is too long.
+  The input value is too long.
   """
   TOO_LONG
 
   """
-  Input value is not present.
+  The input value needs to be blank.
   """
   PRESENT
 
   """
-  Input value should be less than maximum allowed value.
+  The input value should be less than the maximum value allowed.
   """
   LESS_THAN
 
   """
-  Input value should be greater than or equal to minimum allowed value.
+  The input value should be greater than or equal to the minimum value allowed.
   """
   GREATER_THAN_OR_EQUAL_TO
 
   """
-  Input value should be less or equal to maximum allowed value.
+  The input value should be less than or equal to the maximum value allowed.
   """
   LESS_THAN_OR_EQUAL_TO
 
@@ -1500,12 +1504,12 @@ type CheckoutGiftCardApplyPayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1521,12 +1525,12 @@ type CheckoutGiftCardRemovePayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1542,12 +1546,12 @@ type CheckoutGiftCardRemoveV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1563,12 +1567,12 @@ type CheckoutGiftCardsAppendPayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1589,7 +1593,7 @@ type CheckoutLineItem implements Node {
   discountAllocations: [DiscountAllocation!]!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -1699,12 +1703,12 @@ type CheckoutLineItemsAddPayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1720,12 +1724,12 @@ type CheckoutLineItemsRemovePayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1741,7 +1745,7 @@ type CheckoutLineItemsReplacePayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [CheckoutUserError!]!
 }
@@ -1756,12 +1760,12 @@ type CheckoutLineItemsUpdatePayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1777,12 +1781,12 @@ type CheckoutShippingAddressUpdatePayload {
   checkout: Checkout!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1798,12 +1802,12 @@ type CheckoutShippingAddressUpdateV2Payload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1819,12 +1823,12 @@ type CheckoutShippingLineUpdatePayload {
   checkout: Checkout
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   checkoutUserErrors: [CheckoutUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `checkoutUserErrors` instead")
@@ -1835,12 +1839,12 @@ Represents an error that happens during execution of a checkout mutation.
 """
 type CheckoutUserError implements DisplayableError {
   """
-  Error code to uniquely identify the error.
+  The error code.
   """
   code: CheckoutErrorCode
 
   """
-  Path to the input field which caused the error.
+  The path to the input field that caused the error.
   """
   field: [String!]
 
@@ -1876,7 +1880,7 @@ type Collection implements Node {
   handle: String!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -2033,7 +2037,7 @@ type Comment implements Node {
   contentHtml: HTML!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 }
@@ -4420,12 +4424,12 @@ type CustomerAccessTokenCreatePayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4441,7 +4445,7 @@ type CustomerAccessTokenCreateWithMultipassPayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 }
@@ -4461,7 +4465,7 @@ type CustomerAccessTokenDeletePayload {
   deletedCustomerAccessTokenId: String
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
 }
@@ -4476,7 +4480,7 @@ type CustomerAccessTokenRenewPayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
 }
@@ -4496,7 +4500,7 @@ type CustomerActivateByUrlPayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 }
@@ -4531,12 +4535,12 @@ type CustomerActivatePayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4552,12 +4556,12 @@ type CustomerAddressCreatePayload {
   customerAddress: MailingAddress
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4568,7 +4572,7 @@ Return type for `customerAddressDelete` mutation.
 """
 type CustomerAddressDeletePayload {
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
@@ -4578,7 +4582,7 @@ type CustomerAddressDeletePayload {
   deletedCustomerAddressId: String
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4594,19 +4598,19 @@ type CustomerAddressUpdatePayload {
   customerAddress: MailingAddress
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
 }
 
 """
-Specifies the fields required to create a new customer.
+The fields required to create a new customer.
 """
 input CustomerCreateInput {
   """
@@ -4652,12 +4656,12 @@ type CustomerCreatePayload {
   customer: Customer
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4673,12 +4677,12 @@ type CustomerDefaultAddressUpdatePayload {
   customer: Customer
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4689,27 +4693,27 @@ Possible error codes that could be returned by CustomerUserError.
 """
 enum CustomerErrorCode {
   """
-  Input value is blank.
+  The input value is blank.
   """
   BLANK
 
   """
-  Input value is invalid.
+  The input value is invalid.
   """
   INVALID
 
   """
-  Input value is already taken.
+  The input value is already taken.
   """
   TAKEN
 
   """
-  Input value is too long.
+  The input value is too long.
   """
   TOO_LONG
 
   """
-  Input value is too short.
+  The input value is too short.
   """
   TOO_SHORT
 
@@ -4769,12 +4773,12 @@ Return type for `customerRecover` mutation.
 """
 type CustomerRecoverPayload {
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4795,12 +4799,12 @@ type CustomerResetByUrlPayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4836,12 +4840,12 @@ type CustomerResetPayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4900,12 +4904,12 @@ type CustomerUpdatePayload {
   customerAccessToken: CustomerAccessToken
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   customerUserErrors: [CustomerUserError!]!
 
   """
-  List of errors that occurred executing the mutation.
+  The list of errors that occurred from executing the mutation.
   """
   userErrors: [UserError!]!
     @deprecated(reason: "Use `customerUserErrors` instead")
@@ -4916,12 +4920,12 @@ Represents an error that happens during execution of a customer mutation.
 """
 type CustomerUserError implements DisplayableError {
   """
-  Error code to uniquely identify the error.
+  The error code.
   """
   code: CustomerErrorCode
 
   """
-  Path to the input field which caused the error.
+  The path to the input field that caused the error.
   """
   field: [String!]
 
@@ -4932,7 +4936,9 @@ type CustomerUserError implements DisplayableError {
 }
 
 """
-An ISO-8601 encoded UTC date time string. Example value: `"2019-07-03T20:47:55Z"`.
+Represents an [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)-encoded date and time string.
+For example, 3:30 pm on September 7, 2019 in the time zone of UTC (Coordinated Universal Time) is
+represented as `"2019-09-07T15:50:00Z`".
 """
 scalar DateTime
 
@@ -5134,7 +5140,7 @@ Represents an error in the input of a mutation.
 """
 interface DisplayableError {
   """
-  Path to the input field which caused the error.
+  The path to the input field that caused the error.
   """
   field: [String!]
 
@@ -5179,7 +5185,7 @@ type ExternalVideo implements Node & Media {
   embeddedUrl: URL!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -5557,7 +5563,7 @@ type MailingAddress implements Node {
   formattedArea: String
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -5813,7 +5819,7 @@ type MediaImage implements Node & Media {
   alt: String
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -5849,7 +5855,7 @@ type Metafield implements Node {
   description: String
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -5882,6 +5888,9 @@ type Metafield implements Node {
   Represents the metafield value type.
   """
   valueType: MetafieldValueType!
+    @deprecated(
+      reason: "`valueType` is deprecated and replaced by `type` in API version 2021-07."
+    )
 }
 
 """
@@ -5937,6 +5946,11 @@ enum MetafieldValueType {
   A json string metafield.
   """
   JSON_STRING
+
+  """
+  A boolean metafield.
+  """
+  BOOLEAN
 }
 
 """
@@ -5949,7 +5963,7 @@ type Model3d implements Node & Media {
   alt: String
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -6016,26 +6030,6 @@ input MoneyInput {
 
 """
 A monetary value with currency.
-
-To format currencies, combine this type's amount and currencyCode fields with your client's locale.
-
-For example, in JavaScript you could use Intl.NumberFormat:
-
-```js
-new Intl.NumberFormat(locale, {
-  style: 'currency',
-  currency: currencyCode
-}).format(amount);
-```
-
-Other formatting libraries include:
-
-* iOS - [NumberFormatter](https://developer.apple.com/documentation/foundation/numberformatter)
-* Android - [NumberFormat](https://developer.android.com/reference/java/text/NumberFormat.html)
-* PHP - [NumberFormatter](http://php.net/manual/en/class.numberformatter.php)
-
-For a more general solution, the [Unicode CLDR number formatting database] is available with many implementations
-(such as [TwitterCldr](https://github.com/twitter/twitter-cldr-rb)).
 """
 type MoneyV2 {
   """
@@ -6084,7 +6078,7 @@ The schema’s entry-point for mutations. This acts as the public, top-level API
 """
 type Mutation {
   """
-  Updates the attributes of a checkout.
+  Updates the attributes of a checkout if `allowPartialAddresses` is `true`.
   """
   checkoutAttributesUpdate(
     """
@@ -6100,7 +6094,7 @@ type Mutation {
     @deprecated(reason: "Use `checkoutAttributesUpdateV2` instead")
 
   """
-  Updates the attributes of a checkout.
+  Updates the attributes of a checkout if `allowPartialAddresses` is `true`.
   """
   checkoutAttributesUpdateV2(
     """
@@ -6712,11 +6706,14 @@ type Mutation {
 }
 
 """
-An object with an ID to support global identification.
+An object with an ID field to support global identification, in accordance with the
+[Relay specification](https://relay.dev/graphql/objectidentification.htm#sec-Node-Interface).
+This interface is used by the [node](https://shopify.dev/api/admin-graphql/unstable/queries/node)
+and [nodes](https://shopify.dev/api/admin-graphql/unstable/queries/nodes) queries.
 """
 interface Node {
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 }
@@ -6816,7 +6813,7 @@ type Order implements Node {
   fulfillmentStatus: OrderFulfillmentStatus!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -7227,7 +7224,7 @@ type Page implements Node {
   handle: String!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -7249,7 +7246,7 @@ type Page implements Node {
   """
   The url pointing to the page accessible from the web.
   """
-  url: URL!
+  url: URL! @deprecated(reason: "Use `onlineStoreUrl` instead")
 }
 
 """
@@ -7359,7 +7356,7 @@ type Payment implements Node {
   errorMessage: String
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -7543,7 +7540,7 @@ type Product implements Node & HasMetafields {
   handle: String!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -7688,8 +7685,7 @@ type Product implements Node & HasMetafields {
   ): MetafieldConnection!
 
   """
-  The online store URL for the product.
-  A value of `null` indicates that the product is not published to the Online Store sales channel.
+  The URL used for viewing the resource on the shop's Online Store. Returns `null` if the resource is currently not published to the Online Store sales channel.
   """
   onlineStoreUrl: URL
 
@@ -7737,6 +7733,7 @@ type Product implements Node & HasMetafields {
     """
     reverse: Boolean = false
   ): ProductPriceRangeConnection!
+    @deprecated(reason: "Use `@inContext` instead.")
 
   """
   The price range.
@@ -7968,7 +7965,7 @@ Variants are selected based on permutations of these options.
 """
 type ProductOption implements Node {
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -8110,7 +8107,7 @@ type ProductVariant implements Node & HasMetafields {
   currentlyNotInStock: Boolean!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -8223,6 +8220,7 @@ type ProductVariant implements Node & HasMetafields {
     """
     reverse: Boolean = false
   ): ProductVariantPricePairConnection!
+    @deprecated(reason: "Use `@inContext` instead.")
 
   """
   List of unit prices in the presentment currencies for this shop.
@@ -8257,7 +8255,7 @@ type ProductVariant implements Node & HasMetafields {
     Reverse the order of the underlying list.
     """
     reverse: Boolean = false
-  ): MoneyV2Connection!
+  ): MoneyV2Connection! @deprecated(reason: "Use `@inContext` instead.")
 
   """
   The product variant’s price.
@@ -8487,7 +8485,7 @@ type QueryRoot {
     The handle of the blog.
     """
     handle: String!
-  ): Blog
+  ): Blog @deprecated(reason: "Use `blog` instead")
 
   """
   List of the shop's blogs.
@@ -8544,7 +8542,7 @@ type QueryRoot {
     The handle of the collection.
     """
     handle: String!
-  ): Collection
+  ): Collection @deprecated(reason: "Use `collection` instead")
 
   """
   List of the shop’s collections.
@@ -8630,7 +8628,7 @@ type QueryRoot {
     The handle of the page.
     """
     handle: String!
-  ): Page
+  ): Page @deprecated(reason: "Use `page` instead")
 
   """
   List of the shop's pages.
@@ -8687,7 +8685,7 @@ type QueryRoot {
     The handle of the product.
     """
     handle: String!
-  ): Product
+  ): Product @deprecated(reason: "Use `product` instead")
 
   """
   Find recommended products related to a given `product_id`.
@@ -9210,7 +9208,7 @@ type ShopPolicy implements Node {
   handle: String!
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 
@@ -9470,9 +9468,11 @@ enum TransactionStatus {
 }
 
 """
-An RFC 3986 and RFC 3987 compliant URI string.
+Represents an [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) and
+[RFC 3987](https://datatracker.ietf.org/doc/html/rfc3987)-compliant URI string.
 
-Example value: `"https://johns-apparel.myshopify.com"`.
+For example, `"https://johns-apparel.myshopify.com"` is a valid URL. It includes a scheme (`https`) and a host
+(`johns-apparel.myshopify.com`).
 """
 scalar URL
 
@@ -9596,7 +9596,7 @@ Represents an error in the input of a mutation.
 """
 type UserError implements DisplayableError {
   """
-  Path to the input field which caused the error.
+  The path to the input field that caused the error.
   """
   field: [String!]
 
@@ -9616,7 +9616,7 @@ type Video implements Node & Media {
   alt: String
 
   """
-  Globally unique identifier.
+  A globally-unique identifier.
   """
   id: ID!
 

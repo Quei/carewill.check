@@ -1,9 +1,8 @@
 .root {
-  @apply h-full flex flex-col;
+  @apply bg-white h-full flex flex-col;
 }
 
 .root.empty {
-  @apply bg-secondary text-secondary;
 }
 
 .root.success {
@@ -12,4 +11,8 @@
 
 .root.error {
   @apply bg-red text-white;
+}
+
+.button {
+  @apply text-center bg-green text-white py-2 px-4 text-sm hover:text-green hover:bg-white;
 }

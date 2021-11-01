@@ -89,15 +89,18 @@ const CartItem = ({
   // TODO: Add a type for this
   const options = (item as any).options;
 
+  const href =
+    item.path === 'custom-order' ? '/custom-order' : `/product/${item.path}`;
+
   return (
     <li
-      className={cn('flex flex-row space-x-8 py-8', {
+      className={cn('flex flex-row py-8', {
         'opacity-75 pointer-events-none': removing,
       })}
       {...rest}
     >
-      <div className="w-16 h-16 bg-violet relative overflow-hidden cursor-pointer">
-        <Link href={`/product/${item.path}`}>
+      <div className="w-20 h-20 relative overflow-hidden cursor-pointer">
+        <Link href={href}>
           <div>
             <Image
               onClick={() => closeSidebarIfPresent()}
@@ -111,8 +114,8 @@ const CartItem = ({
           </div>
         </Link>
       </div>
-      <div className="flex-1 flex flex-col text-base">
-        <Link href={`/product/${item.path}`}>
+      <div className="flex-1 flex flex-col text-sm ml-6">
+        <Link href={href}>
           <span
             className="font-bold text-lg cursor-pointer leading-6"
             onClick={() => closeSidebarIfPresent()}
@@ -123,17 +126,22 @@ const CartItem = ({
         {options && options.length > 0 ? (
           <div className="">
             {options.map((option: ItemOption, i: number) => (
-              <span
-                key={`${item.id}-${option.name}`}
-                className="text-sm font-semibold text-accents-7"
-              >
+              <span key={`${item.id}-${option.name}`} className="text-sm">
                 {option.value}
                 {i === options.length - 1 ? '' : ', '}
               </span>
             ))}
           </div>
         ) : null}
-        <div className="flex items-center mt-3">
+        <div
+          className={cn(
+            'flex',
+            'items-center',
+            'justify-between',
+            'mt-3',
+            s.quantityContainer
+          )}
+        >
           <button type="button" onClick={() => increaseQuantity(-1)}>
             <Minus width={18} height={18} />
           </button>
@@ -153,14 +161,13 @@ const CartItem = ({
           </button>
         </div>
       </div>
-      <div className="flex flex-col justify-between space-y-2 text-base">
+      <div className="flex flex-col justify-between space-y-2 text-base ml-2">
         <span>{price}</span>
-        <button
-          className="flex justify-end outline-none"
-          onClick={handleRemove}
-        >
-          <Trash />
-        </button>
+        <div className="flex justify-end ">
+          <button className="outline-none mb-3.5" onClick={handleRemove}>
+            <Trash />
+          </button>
+        </div>
       </div>
     </li>
   );

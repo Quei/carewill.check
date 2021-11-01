@@ -21,16 +21,16 @@ module.exports = withCommerceConfig({
     domains: ['images.ctfassets.net'],
   },
   trailingSlash: true,
-  rewrites() {
+  async rewrites() {
     return [
       (isBC || isShopify || isSwell || isVendure) && {
-        source: '/checkout',
+        source: '/checkout/',
         destination: '/api/checkout',
       },
       // The logout is also an action so this route is not required, but it's also another way
       // you can allow a logout!
       isBC && {
-        source: '/logout',
+        source: '/logout/',
         destination: '/api/logout?redirect_to=/',
       },
       // For Vendure, rewrite the local api url to the remote (external) api url. This is required
@@ -41,21 +41,25 @@ module.exports = withCommerceConfig({
           destination: `${process.env.NEXT_PUBLIC_VENDURE_SHOP_API_URL}/:path*`,
         },
       // Rewrites for /search
-      {
-        source: '/search/designers/:name',
-        destination: '/search',
-      },
-      {
-        source: '/search/designers/:name/:category',
-        destination: '/search',
-      },
-      {
-        // This rewrite will also handle `/search/designers`
-        source: '/search/:category',
-        destination: '/search',
-      },
+      // {
+      //   source: '/search/designers/:name/',
+      //   destination: '/search',
+      // },
+      // {
+      //   source: '/search/designers/:name/:category/',
+      //   destination: '/search',
+      // },
+      // {
+      //   // This rewrite will also handle `/search/designers`
+      //   source: '/search/:category/',
+      //   destination: '/search',
+      // },
     ].filter(Boolean);
   },
+
+  // NOTE:
+  // custom-orderは開発が終わるまでリダイレクトをかけておく
+  // 実装後、リダイレクトを削除
   async redirects() {
     return [
       {

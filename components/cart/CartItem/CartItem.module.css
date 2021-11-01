@@ -1,6 +1,28 @@
+.quantityContainer {
+  width: 169px;
+  & > * {
+    @apply relative flex-1 inline-flex items-center justify-center border-1 border-current h-12;
+    & + * {
+      @apply border-l-0;
+    }
+    &::after {
+      @apply absolute z-10 w-full h-full pointer-events-none;
+      content: '';
+    }
+    &.active,
+    &:hover,
+    &:focus {
+      @apply bg-white text-green;
+      &::after {
+        @apply border border-current;
+      }
+    }
+  }
+}
+
 .quantity {
   appearance: textfield;
-  @apply w-8 border-accents-2 border mx-3 rounded text-center text-sm text-black;
+  @apply w-full h-full text-center text-sm text-green focus:outline-none;
 }
 
 .quantity::-webkit-outer-spin-button,
@@ -10,9 +32,9 @@
 
 .productImage {
   position: absolute;
-  transform: scale(1.9);
   width: 100%;
   height: 100%;
-  left: 30% !important;
-  top: 30% !important;
+  top: 0;
+  left: 0;
+  object-fit: cover;
 }

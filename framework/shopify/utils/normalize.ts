@@ -1,7 +1,7 @@
-import type { Page } from '../types/page'
-import type { Product } from '../types/product'
-import type { Cart, LineItem } from '../types/cart'
-import type { Category } from '../types/site'
+import type { Page } from '../types/page';
+import type { Product } from '../types/product';
+import type { Cart, LineItem } from '../types/cart';
+import type { Category } from '../types/site';
 
 import {
   Product as ShopifyProduct,
@@ -15,15 +15,15 @@ import {
   Page as ShopifyPage,
   PageEdge,
   Collection,
-} from '../schema'
-import { colorMap } from '@lib/colors'
+} from '../schema';
+import { colorMap } from '@lib/colors';
 
 const money = ({ amount, currencyCode }: MoneyV2) => {
   return {
     value: +amount,
     currencyCode,
-  }
-}
+  };
+};
 
 const normalizeProductOption = ({
   id,
@@ -37,26 +37,26 @@ const normalizeProductOption = ({
     values: values.map((value) => {
       let output: any = {
         label: value,
-      }
+      };
       if (displayName.match(/colou?r/gi)) {
-        const mapedColor = colorMap[value.toLowerCase().replace(/ /g, '')]
+        const mapedColor = colorMap[value.toLowerCase().replace(/ /g, '')];
         if (mapedColor) {
           output = {
             ...output,
             hexColors: [mapedColor],
-          }
+          };
         }
       }
-      return output
+      return output;
     }),
-  }
-}
+  };
+};
 
 const normalizeProductImages = ({ edges }: ImageConnection) =>
   edges?.map(({ node: { originalSrc: url, ...rest } }) => ({
     url,
     ...rest,
-  }))
+  }));
 
 const normalizeProductVariants = ({ edges }: ProductVariantConnection) => {
   return edges?.map(
@@ -70,6 +70,7 @@ const normalizeProductVariants = ({ edges }: ProductVariantConnection) => {
         compareAtPriceV2,
         requiresShipping,
         availableForSale,
+        image,
       },
     }) => {
       return {
@@ -80,18 +81,19 @@ const normalizeProductVariants = ({ edges }: ProductVariantConnection) => {
         listPrice: +compareAtPriceV2?.amount,
         requiresShipping,
         availableForSale,
+        image,
         options: selectedOptions.map(({ name, value }: SelectedOption) => {
           const options = normalizeProductOption({
             id,
             name,
             values: [value],
-          })
-          return options
+          });
+          return options;
         }),
-      }
+      };
     }
-  )
-}
+  );
+};
 
 export function normalizeProduct({
   id,
@@ -124,7 +126,7 @@ export function normalizeProduct({
     ...(description && { description }),
     ...(descriptionHtml && { descriptionHtml }),
     ...rest,
-  }
+  };
 }
 
 export function normalizeCart(checkout: Checkout): Cart {
@@ -143,7 +145,7 @@ export function normalizeCart(checkout: Checkout): Cart {
     subtotalPrice: +checkout.subtotalPriceV2?.amount,
     totalPrice: checkout.totalPriceV2?.amount,
     discounts: [],
-  }
+  };
 }
 
 function normalizeLineItem({
@@ -169,7 +171,7 @@ function normalizeLineItem({
     path: String(variant?.product?.handle),
     discounts: [],
     options: variant?.title == 'Default Title' ? [] : variant?.selectedOptions,
-  }
+  };
 }
 
 export const normalizePage = (
@@ -179,10 +181,10 @@ export const normalizePage = (
   ...page,
   url: `/${locale}/${handle}`,
   name,
-})
+});
 
 export const normalizePages = (edges: PageEdge[], locale: string): Page[] =>
-  edges?.map((edge) => normalizePage(edge.node, locale))
+  edges?.map((edge) => normalizePage(edge.node, locale));
 
 export const normalizeCategory = ({
   title: name,
@@ -193,4 +195,4 @@ export const normalizeCategory = ({
   name,
   slug: handle,
   path: `/${handle}`,
-})
+});

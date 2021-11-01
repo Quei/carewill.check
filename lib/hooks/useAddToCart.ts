@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { useAddItem } from '@framework/cart';
 import { useUI } from '@components/ui';
-import type { Product } from '@commerce/types/product';
+import type { Product, ProductVariant } from '@commerce/types/product';
 
-type SelectedOptions = Record<string, string | null>;
+export type SelectedOptions = Record<string, string | null>;
 
-function getVariant(product: Product, opts: SelectedOptions) {
+type ShopifyProductVariant = ProductVariant & {
+  price: number;
+  image?: {
+    id: string;
+  };
+};
+
+export const getVariant = (product: Product, opts: SelectedOptions) => {
   const variant = product.variants.find((variant) => {
     return Object.entries(opts).every(([key, value]) =>
       variant.options.find((option) => {
@@ -18,8 +25,8 @@ function getVariant(product: Product, opts: SelectedOptions) {
       })
     );
   });
-  return variant;
-}
+  return variant as ShopifyProductVariant;
+};
 
 export const useAddToCart = () => {
   const addItem = useAddItem();
@@ -28,10 +35,12 @@ export const useAddToCart = () => {
   const addToCart = async ({
     product,
     choices,
+    quantity,
     customAttributes,
   }: {
     product: Product;
     choices: SelectedOptions;
+    quantity?: number;
     customAttributes?: { key: string; value?: string }[];
   }) => {
     const variant = getVariant(product, choices);
@@ -42,6 +51,7 @@ export const useAddToCart = () => {
         variantId: String(variant ? variant.id : product.variants[0].id),
         // NOTE:
         // customAttributesを追加
+        quantity,
         customAttributes,
       });
       openSidebar();

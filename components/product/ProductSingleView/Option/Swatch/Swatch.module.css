@@ -1,0 +1,65 @@
+.swatch {
+  @apply relative bg-primary text-primary inline-flex
+  items-center justify-center cursor-pointer
+  p-0 shadow-none border-green border-1 box-border;
+  overflow: hidden;
+
+  &:not(.size) {
+    @apply h-12 w-12 rounded-full;
+    &.active,
+    &:hover,
+    &:focus {
+      @apply border-green border;
+    }
+    &.textLabel {
+      @apply w-auto;
+      min-width: 3rem;
+    }
+  }
+
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
+
+  & > span {
+    @apply absolute;
+  }
+}
+
+.color {
+  &.active,
+  &:hover {
+    @apply text-green;
+  }
+  
+  &.dark {
+    &.active,
+    &:hover {
+      color: white !important;
+    }
+  }
+}
+
+.size {
+  @apply rounded-none bg-white flex-grow flex-shrink h-12;
+  &::after {
+    @apply absolute z-10 w-full h-full pointer-events-none;
+    content: '';
+  }
+  &.active,
+  &:hover,
+  &:focus {
+    @apply bg-white text-green;
+    &::after {
+      @apply border border-current;
+    }
+  }
+  & + .size {
+    @apply border-l-0;
+  }
+
+  & > span {
+    @apply relative leading-none;
+  }
+}
