@@ -1,6 +1,4 @@
 .root {
-  @apply bg-white cursor-pointer inline-flex px-10 rounded-sm leading-6 text-center justify-center uppercase py-1 border border-green items-center;
-  min-width: 200px;
   &:hover,
   &:focus {
     @apply bg-green text-white;
@@ -24,7 +22,7 @@
 
 .disabled,
 .disabled:hover {
-  @apply text-accents-5 border-accents-5 bg-accents-1 cursor-not-allowed;
+  @apply text-accents-5 border-accents-1 bg-accents-1 cursor-not-allowed;
   filter: grayscale(1);
   -webkit-transform: translateZ(0);
   -webkit-perspective: 1000;

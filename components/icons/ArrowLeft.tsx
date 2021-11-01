@@ -1,27 +1,16 @@
 const ArrowLeft = ({ ...props }) => {
   return (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="15"
+      height="30"
+      viewBox="0 0 15 30"
       fill="none"
       stroke="currentColor"
       {...props}
     >
-      <path
-        d="M19 12H5"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 19L5 12L12 5"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M13 28L2 15L13 2" strokeWidth="3" />
     </svg>
-  )
-}
+  );
+};
 
-export default ArrowLeft
+export default ArrowLeft;

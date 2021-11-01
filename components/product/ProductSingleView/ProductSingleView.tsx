@@ -1,170 +1,318 @@
-import cn from 'classnames';
+import { useEffect, useState, useMemo, useCallback, Fragment } from 'react';
 import Image from 'next/image';
-import { NextSeo } from 'next-seo';
-import { FC, useEffect, useState } from 'react';
+import cn from 'classnames';
 import s from './ProductSingleView.module.css';
-import { Swatch, ProductSlider } from '@components/product';
-import { Button, Container, Text, useUI } from '@components/ui';
-import type { Product } from '@commerce/types/product';
+import {
+  renderRichTextReact,
+  richTextAssetFragment,
+} from '@lib/contentful/utils/rich-text';
+import { richTextEntryHyperlinkFragment } from '@lib/contentful/utils/store/rich-text-fragment';
 import usePrice from '@framework/product/use-price';
-import { useAddItem } from '@framework/cart';
-import { getVariant, SelectedOptions } from '../helpers';
-import WishlistButton from '@components/wishlist/WishlistButton';
+import { useAddToCart, getVariant } from '@lib/hooks/useAddToCart';
+import { useIntlMessage } from '@lib/hooks/useIntlMessage';
+import { useCustomPriceText } from '@lib/hooks/useCustomPriceText';
+import { useScreen } from '@lib/hooks/useScreen';
+import { Seo, LaboRelatedPosts } from '@components/common';
+import {
+  Grid,
+  Block,
+  BlockContent,
+  Button,
+  YouTube,
+  Container,
+} from '@components/ui';
+import { ProductSlider } from './ProductSlider';
+import { Option } from './Option';
+import { SizeContent } from './SizeContent';
+import { Quantity } from './Quantity';
+import { AboutSizeButton } from './AboutSizeButton';
+import type { VFC } from 'react';
+import type { Product } from '@commerce/../shopify/types/product';
+import type { SelectedOptions } from '@lib/hooks/useAddToCart';
+import type { RelatedPosts } from '@components/common/LaboRelatedPosts';
+import type { ProductSingleViewFragment } from 'types/schema';
 
-interface Props {
-  children?: any;
+type Props = {
   product: Product;
-  className?: string;
-}
+  productContent: ProductSingleViewFragment;
+  relatedPosts?: RelatedPosts;
+};
 
-const ProductView: FC<Props> = ({ product }) => {
-  // TODO: fix this missing argument issue
-  /* @ts-ignore */
-  const addItem = useAddItem();
+export const productSingleViewFragment = /* GraphQL */ `
+  fragment ProductSingleView on Product {
+    title
+    videoId
+    color
+    size {
+      json
+      links {
+        assets {
+          block {
+            ...RichTextAsset
+          }
+        }
+      }
+    }
+    details {
+      json
+      links {
+        assets {
+          block {
+            ...RichTextAsset
+          }
+        }
+        entries {
+          hyperlink {
+            ...RichTextEntryHyperlink
+          }
+        }
+      }
+    }
+  }
+  ${richTextAssetFragment}
+  ${richTextEntryHyperlinkFragment}
+`;
+
+const useChoices = (product: Props['product']) => {
+  const [choices, setChoices] = useState<SelectedOptions>(() => {
+    // Selects the default option
+    return product.variants[0].options?.reduce((prev, current) => {
+      return {
+        ...prev,
+        [current.displayName.toLowerCase()]: current.values[0].label.toLowerCase(),
+      };
+    }, {});
+  });
+
+  // const [choices, setChoices] = useState<SelectedOptions>({});
+  // useEffect(() => {
+  //   // Selects the default option
+  //   product.variants[0].options?.forEach((option, index) => {
+  //     setChoices((choices) => ({
+  //       ...choices,
+  //       [option.displayName.toLowerCase()]: option.values[0].label.toLowerCase(),
+  //     }));
+  //   });
+  // }, [product.variants]);
+
+  return { choices, setChoices };
+};
+
+const useIsDirtyChoices = () => {
+  const [isDirtyChoices, setIsDirtyChoices] = useState(false);
+  const setDirty = useCallback(() => {
+    setIsDirtyChoices(true);
+  }, []);
+  return { isDirtyChoices, setDirty };
+};
+
+const useQuantity = () => {
+  const [quantity, setQuantity] = useState(1);
+  const addQuantity = useCallback(() => {
+    setQuantity((value) => value + 1);
+  }, []);
+  const subtractQuantity = useCallback(() => {
+    setQuantity((value) => {
+      return value > 1 ? value - 1 : 1;
+    });
+  }, []);
+  return { quantity, addQuantity, subtractQuantity };
+};
+
+const useTextBlockChildElement = () => {
+  const { isScreenLg } = useScreen();
+  return useMemo(() => {
+    if (isScreenLg) {
+      return 'div';
+    } else {
+      return BlockContent;
+    }
+  }, [isScreenLg]);
+};
+
+const useShownAboutSize = () => {
+  const [hasShownAboutSize, setHasShownAboutSize] = useState(false);
+  const showSizeContent = useCallback(() => {
+    setHasShownAboutSize(true);
+  }, []);
+  const hideSizeContent = useCallback(() => {
+    setHasShownAboutSize(false);
+  }, []);
+  return { hasShownAboutSize, showSizeContent, hideSizeContent };
+};
+
+const ProductView: VFC<Props> = ({ product, productContent, relatedPosts }) => {
+  const { choices, setChoices } = useChoices(product);
+  const { isDirtyChoices, setDirty } = useIsDirtyChoices();
+  const { quantity, addQuantity, subtractQuantity } = useQuantity();
+  const { addToCart, loading } = useAddToCart();
+  const handleOnClickAddToCart = useCallback(() => {
+    addToCart({
+      product,
+      choices,
+      quantity,
+    });
+  }, [addToCart, product, choices, quantity]);
+
+  const variant = getVariant(product, choices);
   const { price } = usePrice({
-    amount: product.price.value,
+    amount: variant ? variant.price : product.price.value,
     baseAmount: product.price.retailPrice,
     currencyCode: product.price.currencyCode!,
   });
-  const { openSidebar } = useUI();
-  const [loading, setLoading] = useState(false);
-  const [choices, setChoices] = useState<SelectedOptions>({});
+  const customPriceText = useCustomPriceText(price);
 
-  useEffect(() => {
-    // Selects the default option
-    product.variants[0].options?.forEach((v) => {
-      setChoices((choices) => ({
-        ...choices,
-        [v.displayName.toLowerCase()]: v.values[0].label.toLowerCase(),
-      }));
-    });
-  }, []);
+  const {
+    hasShownAboutSize,
+    showSizeContent,
+    hideSizeContent,
+  } = useShownAboutSize();
 
-  const variant = getVariant(product, choices);
+  const f = useIntlMessage();
+  const titleText = productContent.title ?? '';
+  const descriptionText = '';
 
-  const addToCart = async () => {
-    setLoading(true);
-    try {
-      await addItem({
-        productId: String(product.id),
-        variantId: String(variant ? variant.id : product.variants[0].id),
-      });
-      openSidebar();
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-    }
-  };
+  const TextBlockChildElement = useTextBlockChildElement();
+  const hasSizeOption = product.options?.some((option) =>
+    /^size$/i.test(option.displayName)
+  );
 
   return (
-    <Container className="max-w-none w-full">
-      <NextSeo
-        title={product.name}
-        description={product.description}
-        openGraph={{
-          type: 'website',
-          title: product.name,
-          description: product.description,
-          images: [
-            {
-              url: product.images[0]?.url!,
-              width: 800,
-              height: 600,
-              alt: product.name,
-            },
-          ],
-        }}
+    <>
+      <Seo
+        title={titleText}
+        description={descriptionText}
+        image={product.images?.[0]}
       />
-      <div className={cn(s.root, 'fit')}>
-        <div className={cn(s.productDisplay, 'fit')}>
-          <div className={s.nameBox}>
-            <h1 className={s.name}>{product.name}</h1>
-            <div className={s.price}>
-              {price}
-              {` `}
-              {product.price?.currencyCode}
-            </div>
-          </div>
-
-          <div className={s.sliderContainer}>
-            <ProductSlider key={product.id}>
-              {product.images.map((image, i) => (
-                <div key={image.url} className={s.imageContainer}>
-                  <Image
-                    className={s.img}
-                    src={image.url!}
-                    alt={image.alt || 'Product Image'}
-                    width={1050}
-                    height={1050}
-                    priority={i === 0}
-                    quality="85"
-                  />
-                </div>
-              ))}
-            </ProductSlider>
-          </div>
-        </div>
-        <div className={s.sidebar}>
-          <section>
-            {product.options?.map((opt) => (
-              <div className="pb-4" key={opt.displayName}>
-                <h2 className="uppercase font-medium">{opt.displayName}</h2>
-                <div className="flex flex-row py-4">
-                  {opt.values.map((v, i: number) => {
-                    const active = (choices as any)[
-                      opt.displayName.toLowerCase()
-                    ];
-
-                    return (
-                      <Swatch
-                        key={`${opt.id}-${i}`}
-                        active={v.label.toLowerCase() === active}
-                        variant={opt.displayName}
-                        color={v.hexColors ? v.hexColors[0] : ''}
-                        label={v.label}
-                        onClick={() => {
-                          setChoices((choices) => {
-                            return {
-                              ...choices,
-                              [opt.displayName.toLowerCase()]: v.label.toLowerCase(),
-                            };
-                          });
-                        }}
-                      />
-                    );
-                  })}
-                </div>
+      <Grid>
+        <div className={cn('relative')}>
+          <ProductSlider
+            key={product.id}
+            images={product.images}
+            currentSelectedVariantImageId={
+              isDirtyChoices ? variant.image?.id : undefined
+            }
+          >
+            {product.images.map((image, i) => (
+              <div key={image.url} className={s.imageContainer}>
+                <Image
+                  className={cn(
+                    'w-full',
+                    'h-auto',
+                    'max-h-full',
+                    'object-cover'
+                  )}
+                  src={image.url!}
+                  alt={image.alt || 'Product Image'}
+                  width={1050}
+                  height={1050}
+                  priority={i === 0}
+                  quality="85"
+                />
               </div>
             ))}
-
-            <div className="pb-14 break-words w-full max-w-xl">
-              <Text html={product.descriptionHtml || product.description} />
-            </div>
-          </section>
-          <div>
-            <Button
-              aria-label="Add to Cart"
-              type="button"
-              className={s.button}
-              onClick={addToCart}
-              loading={loading}
-              disabled={variant?.availableForSale === false}
-            >
-              {variant?.availableForSale === false
-                ? 'Not Available'
-                : 'Add To Cart'}
-            </Button>
-          </div>
+          </ProductSlider>
+          {hasShownAboutSize && productContent.size && (
+            <SizeContent
+              className={cn('fixed', 'md:absolute', 'z-20', 'inset-0')}
+              content={productContent.size}
+              onClick={hideSizeContent}
+            />
+          )}
         </div>
-        {process.env.COMMERCE_WISHLIST_ENABLED && (
+        <Block title={titleText} isCentering={true}>
+          <TextBlockChildElement>
+            <div>
+              <div>
+                <span
+                  className={cn('text-2xl', 'align-middle', 'leading-snug')}
+                >
+                  {customPriceText}
+                </span>
+                <span className={cn('text-sm', 'align-middle', 'ml-1')}>
+                  {f('store.taxIncluded')}
+                </span>
+              </div>
+              <p className={cn('text-sm')}>{f('store.freeShipping')}</p>
+            </div>
+            <div className={cn('text-sm', 'mt-2')}>
+              {product.options?.map((option) => {
+                return (
+                  <Fragment key={option.displayName}>
+                    <Option
+                      className={s.option}
+                      choices={choices}
+                      setChoices={setChoices}
+                      color={productContent.color}
+                      setDirty={setDirty}
+                      {...option}
+                    />
+                    {hasSizeOption &&
+                      productContent.size &&
+                      option.displayName.toLowerCase() === 'size' && (
+                        <AboutSizeButton onClick={showSizeContent} />
+                      )}
+                  </Fragment>
+                );
+              })}
+              {!hasSizeOption && productContent.size && (
+                <AboutSizeButton onClick={showSizeContent} />
+              )}
+              <Quantity
+                className={cn('mt-4')}
+                quantity={quantity}
+                addQuantity={addQuantity}
+                subtractQuantity={subtractQuantity}
+              />
+            </div>
+
+            <div className={cn('flex', 'justify-center', 'mt-10')}>
+              <Button
+                aria-label={f('store.addToCart')}
+                type="button"
+                className={cn(s.cartButton)}
+                onClick={handleOnClickAddToCart}
+                loading={loading}
+                disabled={variant?.availableForSale === false}
+              >
+                {variant?.availableForSale === false
+                  ? f('store.notAvailable')
+                  : f('store.addToCart')}
+              </Button>
+            </div>
+          </TextBlockChildElement>
+        </Block>
+        {/* {process.env.COMMERCE_WISHLIST_ENABLED && (
           <WishlistButton
             className={s.wishlistButton}
             productId={product.id}
             variant={product.variants[0]! as any}
           />
-        )}
-      </div>
-    </Container>
+        )} */}
+      </Grid>
+      {productContent?.videoId && (
+        <div className={cn('aspect-w-16', 'aspect-h-9')}>
+          <YouTube
+            className={cn('pointer-events-none')}
+            videoId={productContent.videoId}
+            isAuto={true}
+            isLoop={true}
+          />
+        </div>
+      )}
+      {productContent?.details && (
+        <Block title={f('store.product.details')} titleTag="h2">
+          <BlockContent>
+            <Container className={cn(s.details)}>
+              {renderRichTextReact(productContent.details)}
+            </Container>
+          </BlockContent>
+        </Block>
+      )}
+      {relatedPosts && relatedPosts.length > 0 && (
+        <LaboRelatedPosts relatedPosts={relatedPosts} />
+      )}
+    </>
   );
 };
 

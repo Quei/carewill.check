@@ -45,8 +45,7 @@ const Post: VFC<Props> = ({
 }) => {
   const f = useIntlMessage();
   const image = imageCollection?.items?.[0];
-  // const href = `/product/${slug}`;
-  const href = 'https://www.makuake.com/project/carewill/';
+  const href = `/product/${slug}`;
   const TextBlockChildElement = useTextBlockChildElement();
 
   return (
@@ -58,12 +57,7 @@ const Post: VFC<Props> = ({
         className={cn(s.textBlock)}
         href={href}
       >
-        <TextBlockChildElement>
-          {description}
-          <p>
-            <span className={cn('underline')}>{f('makuakeLink')}</span>
-          </p>
-        </TextBlockChildElement>
+        <TextBlockChildElement>{description}</TextBlockChildElement>
       </Block>
       <div className={cn('relative', 'aspect-w-1', 'aspect-h-1')}>
         <Link href={href}>

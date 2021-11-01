@@ -1,0 +1,28 @@
+.contentContainer {
+  width: 80%;
+  height: 70%;
+  @screen md {
+    --thumbnail-height: calc(100% / 6);
+    margin-top: calc(-1 * var(--thumbnail-height));
+    max-height: calc((100% - var(--thumbnail-height)) * 0.8);
+    width: 70%;
+    max-width: 450px;
+  }
+}
+
+.content {
+  & h2 {
+    @apply text-base mr-4;
+  }
+  & > * + * {
+    @apply mt-4;
+  }
+  & :global(.image-wrapper) {
+    & > div {
+      width: 100%;
+    }
+  }
+  & img {
+    @apply w-full;
+  }
+}

@@ -15,7 +15,14 @@
 }
 
 .header-menu-title {
-  @apply block px-site-vertical text-3xl leading-tight pb-2.5 md:leading-none md:px-site-vertical-md md:pb-3.5;
+  @apply block px-site-vertical text-3xl leading-tight pb-2.5 md:leading-none md:pb-3.5;
+  @screen md {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  @screen lg {
+    @apply px-site-vertical-md
+  }
 }
 
 .footer-menu-title {

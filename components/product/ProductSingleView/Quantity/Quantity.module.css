@@ -1,0 +1,29 @@
+.row {
+  & > * {
+    @apply relative flex-grow flex-shrink inline-flex items-center justify-center h-12 border-1 border-current;
+    & + * {
+      border-left: none;
+    }
+    & > span {
+      @apply absolute leading-none;
+      & svg {
+        @apply w-4 mt-0.5;
+      }
+    }
+  }
+}
+
+.button {
+  &::after {
+    @apply absolute z-10 w-full h-full pointer-events-none;
+    content: '';
+  }
+  &.active,
+  &:hover,
+  &:focus {
+    @apply bg-white text-green;
+    &::after {
+      @apply border border-current;
+    }
+  }
+}

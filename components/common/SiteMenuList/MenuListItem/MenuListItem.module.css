@@ -8,8 +8,18 @@
         }
       }
     }
+
+    &.longTitleItem {
+      @screen md {
+        min-width: 160px;
+      }
+      @screen lg {
+        min-width: 190px;
+      }
+    }
+
     & .children {
-      @apply sr-only bg-white text-sm md:text-base md:border md:border-green md:transform md:translate-y-full;
+      @apply sr-only bg-white text-sm lg:text-base md:border md:border-green md:transform md:translate-y-full;
       @screen less-than-md {
         &.hasShownChildrenForMobile {
           @apply not-sr-only mx-site-vertical pb-3;
@@ -23,6 +33,14 @@
       }
       & a {
         @apply py-2 md:py-0;
+      }
+      @screen md {
+        &:first-of-type {
+          @apply md:hidden;
+        }
+        &:nth-of-type(2) {
+          @apply md:mt-0;
+        }
       }
     }
   }

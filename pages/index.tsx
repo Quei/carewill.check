@@ -191,11 +191,6 @@ export default function Home({
         about={about ?? undefined}
         aboutNavigation={allNavigations.about}
       />
-      {/* <HomeAllProductsGrid
-        newestProducts={products}
-        categories={categories}
-        brands={brands}
-      /> */}
     </>
   );
 }
