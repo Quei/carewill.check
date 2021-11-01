@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import cn from 'classnames';
 import s from './Post.module.css';
+import { renderRichTextReact } from '@lib/contentful/utils/rich-text';
 import { useIntlMessage } from '@lib/hooks/useIntlMessage';
 import { useScreen } from '@lib/hooks/useScreen';
 import { Block, BlockContent, Link } from '@components/ui';
@@ -16,7 +17,9 @@ export const productArchiveViewPostFragment = /* GraphQL */ `
   fragment ProductArchiveViewPost on Product {
     title
     slug
-    description
+    description {
+      json
+    }
     imageCollection(limit: 1) {
       items {
         url
@@ -57,7 +60,9 @@ const Post: VFC<Props> = ({
         className={cn(s.textBlock)}
         href={href}
       >
-        <TextBlockChildElement>{description}</TextBlockChildElement>
+        <TextBlockChildElement>
+          {renderRichTextReact(description)}
+        </TextBlockChildElement>
       </Block>
       <div className={cn('relative', 'aspect-w-1', 'aspect-h-1')}>
         <Link href={href}>

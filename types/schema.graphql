@@ -1774,6 +1774,108 @@ enum NewsCategoryOrder {
   sys_publishedVersion_DESC
 }
 
+type ProductCollection {
+  total: Int!
+  skip: Int!
+  limit: Int!
+  items: [Product]!
+}
+
+"""
+[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product)
+"""
+type Product implements Entry {
+  sys: Sys!
+  contentfulMetadata: ContentfulMetadata!
+  linkedFrom(allowedLocales: [String]): ProductLinkingCollections
+  title(locale: String): String
+  slug(locale: String): String
+  date(locale: String): DateTime
+  description(locale: String): ProductDescription
+  imageCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): AssetCollection
+  videoId(locale: String): String
+  color(locale: String): JSON
+  size(locale: String): ProductSize
+  details(locale: String): ProductDetails
+}
+
+type ProductLinkingCollections {
+  entryCollection(
+    skip: Int = 0
+    limit: Int = 100
+    preview: Boolean
+    locale: String
+  ): EntryCollection
+}
+
+type ProductDescription {
+  json: JSON!
+  links: ProductDescriptionLinks!
+}
+
+type ProductDescriptionLinks {
+  entries: ProductDescriptionEntries!
+  assets: ProductDescriptionAssets!
+}
+
+type ProductDescriptionEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type ProductDescriptionAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type ProductSize {
+  json: JSON!
+  links: ProductSizeLinks!
+}
+
+type ProductSizeLinks {
+  entries: ProductSizeEntries!
+  assets: ProductSizeAssets!
+}
+
+type ProductSizeEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type ProductSizeAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
+type ProductDetails {
+  json: JSON!
+  links: ProductDetailsLinks!
+}
+
+type ProductDetailsLinks {
+  entries: ProductDetailsEntries!
+  assets: ProductDetailsAssets!
+}
+
+type ProductDetailsEntries {
+  inline: [Entry]!
+  hyperlink: [Entry]!
+  block: [Entry]!
+}
+
+type ProductDetailsAssets {
+  hyperlink: [Asset]!
+  block: [Asset]!
+}
+
 type HomeProductHomeDescription {
   json: JSON!
   links: HomeProductHomeDescriptionLinks!
@@ -1875,87 +1977,6 @@ type HomeCollaborationHomeDescriptionEntries {
 }
 
 type HomeCollaborationHomeDescriptionAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type ProductCollection {
-  total: Int!
-  skip: Int!
-  limit: Int!
-  items: [Product]!
-}
-
-"""
-[See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product)
-"""
-type Product implements Entry {
-  sys: Sys!
-  contentfulMetadata: ContentfulMetadata!
-  linkedFrom(allowedLocales: [String]): ProductLinkingCollections
-  title(locale: String): String
-  slug(locale: String): String
-  date(locale: String): DateTime
-  description(locale: String): String
-  imageCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): AssetCollection
-  videoId(locale: String): String
-  color(locale: String): JSON
-  size(locale: String): ProductSize
-  details(locale: String): ProductDetails
-}
-
-type ProductLinkingCollections {
-  entryCollection(
-    skip: Int = 0
-    limit: Int = 100
-    preview: Boolean
-    locale: String
-  ): EntryCollection
-}
-
-type ProductSize {
-  json: JSON!
-  links: ProductSizeLinks!
-}
-
-type ProductSizeLinks {
-  entries: ProductSizeEntries!
-  assets: ProductSizeAssets!
-}
-
-type ProductSizeEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type ProductSizeAssets {
-  hyperlink: [Asset]!
-  block: [Asset]!
-}
-
-type ProductDetails {
-  json: JSON!
-  links: ProductDetailsLinks!
-}
-
-type ProductDetailsLinks {
-  entries: ProductDetailsEntries!
-  assets: ProductDetailsAssets!
-}
-
-type ProductDetailsEntries {
-  inline: [Entry]!
-  hyperlink: [Entry]!
-  block: [Entry]!
-}
-
-type ProductDetailsAssets {
   hyperlink: [Asset]!
   block: [Asset]!
 }
@@ -2158,10 +2179,6 @@ input ProductFilter {
   date_lt: DateTime
   date_lte: DateTime
   description_exists: Boolean
-  description: String
-  description_not: String
-  description_in: [String]
-  description_not_in: [String]
   description_contains: String
   description_not_contains: String
   imageCollection_exists: Boolean
