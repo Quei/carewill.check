@@ -2293,6 +2293,171 @@ export enum NewsCategoryOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC',
 }
 
+export type ProductCollection = {
+  __typename?: 'ProductCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Product>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type Product = Entry & {
+  __typename?: 'Product';
+  sys: Sys;
+  contentfulMetadata: ContentfulMetadata;
+  linkedFrom?: Maybe<ProductLinkingCollections>;
+  title?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<ProductDescription>;
+  imageCollection?: Maybe<AssetCollection>;
+  videoId?: Maybe<Scalars['String']>;
+  color?: Maybe<Scalars['JSON']>;
+  size?: Maybe<ProductSize>;
+  details?: Maybe<ProductDetails>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductTitleArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductSlugArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductDateArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductDescriptionArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductImageCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductVideoIdArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductColorArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductSizeArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
+export type ProductDetailsArgs = {
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type ProductLinkingCollections = {
+  __typename?: 'ProductLinkingCollections';
+  entryCollection?: Maybe<EntryCollection>;
+};
+
+export type ProductLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview?: Maybe<Scalars['Boolean']>;
+  locale?: Maybe<Scalars['String']>;
+};
+
+export type ProductDescription = {
+  __typename?: 'ProductDescription';
+  json: Scalars['JSON'];
+  links: ProductDescriptionLinks;
+};
+
+export type ProductDescriptionLinks = {
+  __typename?: 'ProductDescriptionLinks';
+  entries: ProductDescriptionEntries;
+  assets: ProductDescriptionAssets;
+};
+
+export type ProductDescriptionEntries = {
+  __typename?: 'ProductDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type ProductDescriptionAssets = {
+  __typename?: 'ProductDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type ProductSize = {
+  __typename?: 'ProductSize';
+  json: Scalars['JSON'];
+  links: ProductSizeLinks;
+};
+
+export type ProductSizeLinks = {
+  __typename?: 'ProductSizeLinks';
+  entries: ProductSizeEntries;
+  assets: ProductSizeAssets;
+};
+
+export type ProductSizeEntries = {
+  __typename?: 'ProductSizeEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type ProductSizeAssets = {
+  __typename?: 'ProductSizeAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type ProductDetails = {
+  __typename?: 'ProductDetails';
+  json: Scalars['JSON'];
+  links: ProductDetailsLinks;
+};
+
+export type ProductDetailsLinks = {
+  __typename?: 'ProductDetailsLinks';
+  entries: ProductDetailsEntries;
+  assets: ProductDetailsAssets;
+};
+
+export type ProductDetailsEntries = {
+  __typename?: 'ProductDetailsEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type ProductDetailsAssets = {
+  __typename?: 'ProductDetailsAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
 export type HomeProductHomeDescription = {
   __typename?: 'HomeProductHomeDescription';
   json: Scalars['JSON'];
@@ -2414,146 +2579,6 @@ export type HomeCollaborationHomeDescriptionEntries = {
 
 export type HomeCollaborationHomeDescriptionAssets = {
   __typename?: 'HomeCollaborationHomeDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type ProductCollection = {
-  __typename?: 'ProductCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Product>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type Product = Entry & {
-  __typename?: 'Product';
-  sys: Sys;
-  contentfulMetadata: ContentfulMetadata;
-  linkedFrom?: Maybe<ProductLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
-  date?: Maybe<Scalars['DateTime']>;
-  description?: Maybe<Scalars['String']>;
-  imageCollection?: Maybe<AssetCollection>;
-  videoId?: Maybe<Scalars['String']>;
-  color?: Maybe<Scalars['JSON']>;
-  size?: Maybe<ProductSize>;
-  details?: Maybe<ProductDetails>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductLinkedFromArgs = {
-  allowedLocales?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductTitleArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductSlugArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductDateArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductDescriptionArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductImageCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductVideoIdArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductColorArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductSizeArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-/** [See type definition](https://app.contentful.com/spaces/pdt7v3ruuhi4/content_types/product) */
-export type ProductDetailsArgs = {
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type ProductLinkingCollections = {
-  __typename?: 'ProductLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-};
-
-export type ProductLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-};
-
-export type ProductSize = {
-  __typename?: 'ProductSize';
-  json: Scalars['JSON'];
-  links: ProductSizeLinks;
-};
-
-export type ProductSizeLinks = {
-  __typename?: 'ProductSizeLinks';
-  entries: ProductSizeEntries;
-  assets: ProductSizeAssets;
-};
-
-export type ProductSizeEntries = {
-  __typename?: 'ProductSizeEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type ProductSizeAssets = {
-  __typename?: 'ProductSizeAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type ProductDetails = {
-  __typename?: 'ProductDetails';
-  json: Scalars['JSON'];
-  links: ProductDetailsLinks;
-};
-
-export type ProductDetailsLinks = {
-  __typename?: 'ProductDetailsLinks';
-  entries: ProductDetailsEntries;
-  assets: ProductDetailsAssets;
-};
-
-export type ProductDetailsEntries = {
-  __typename?: 'ProductDetailsEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type ProductDetailsAssets = {
-  __typename?: 'ProductDetailsAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
 };
@@ -2880,10 +2905,6 @@ export type ProductFilter = {
   date_lt?: Maybe<Scalars['DateTime']>;
   date_lte?: Maybe<Scalars['DateTime']>;
   description_exists?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
-  description_not?: Maybe<Scalars['String']>;
-  description_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  description_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   description_contains?: Maybe<Scalars['String']>;
   description_not_contains?: Maybe<Scalars['String']>;
   imageCollection_exists?: Maybe<Scalars['Boolean']>;
@@ -3301,8 +3322,11 @@ export type HomeStoreViewFragment = { __typename?: 'Home' } & {
 
 export type ProductArchiveViewPostFragment = { __typename?: 'Product' } & Pick<
   Product,
-  'title' | 'slug' | 'description'
+  'title' | 'slug'
 > & {
+    description?: Maybe<
+      { __typename?: 'ProductDescription' } & Pick<ProductDescription, 'json'>
+    >;
     imageCollection?: Maybe<
       { __typename?: 'AssetCollection' } & {
         items: Array<Maybe<{ __typename?: 'Asset' } & Pick<Asset, 'url'>>>;
